@@ -15,7 +15,18 @@ export default defineConfig({
   // Hard-pin o preset de deploy pra Vercel (o padrão do pacote da Lovable é
   // Cloudflare) — necessário pra rodar as server functions (ex: geração de
   // imagem com Gemini) como Vercel Functions em vez de Cloudflare Workers.
+  //
+  // Força runtime Node.js explicitamente: sem isso, o preset "vercel" do
+  // Nitro auto-detecta o runtime pela presença de "Bun" no processo de
+  // build (bun1.x) — e como a Vercel executa a function em Node.js, isso
+  // causa incompatibilidade nos módulos isomórficos do TanStack Start
+  // (ex: createCsrfMiddleware vira undefined em runtime -> TypeError).
   nitro: {
     preset: "vercel",
+    vercel: {
+      functions: {
+        runtime: "nodejs22.x",
+      },
+    },
   },
 });
