@@ -11,8 +11,22 @@ import { MarketplaceBadge } from "@/components/products/marketplace-badge";
 import { PostScriptModal } from "@/components/products/post-script-modal";
 import { GENERAL_GROUPS, NICHES } from "@/data/demo-groups";
 import { DEMO_PRODUCTS, type DemoProduct } from "@/data/demo-products";
-import { useAffiliateStore } from "@/stores/affiliate-store";
+import { useAffiliateStore, type Marketplace } from "@/stores/affiliate-store";
 import { useT } from "@/i18n/translations";
+
+// Um item aqui pode vir do catálogo (produto pré-carregado, com preço/nota
+// pra um script mais completo) ou ser "ad-hoc" — salvo automaticamente pela
+// extensão do Chrome a partir de QUALQUER produto real da Shopee. Sem esse
+// segundo caso os links capturados pela extensão nunca apareciam aqui, só em
+// Meus Links (mesmo bug que já tinha sido corrigido lá).
+type AffiliatedItem = {
+  id: string;
+  title: string;
+  marketplace: Marketplace;
+  image?: string;
+  savedAt: string;
+  demoProduct?: DemoProduct;
+};
 
 type GruposSearch = { niche?: string };
 
@@ -46,17 +60,40 @@ function GruposDivulgacaoPage() {
   const { niche } = Route.useSearch();
   const [tab, setTab] = useState<string>(niche ?? "geral");
   const links = useAffiliateStore((s) => s.links);
-  const [postProduct, setPostProduct] = useState<DemoProduct | null>(null);
+  const [postProduct, setPostProduct] = useState<AffiliatedItem | null>(null);
   const [postOpen, setPostOpen] = useState(false);
 
-  const affiliatedProducts = useMemo(() => {
-    return Object.keys(links)
-      .map((id) => DEMO_PRODUCTS.find((p) => p.id === id))
-      .filter((p): p is DemoProduct => Boolean(p));
+  const affiliatedProducts = useMemo<AffiliatedItem[]>(() => {
+    return Object.entries(links)
+      .map<AffiliatedItem | null>(([id, saved]) => {
+        const demoProduct = DEMO_PRODUCTS.find((p) => p.id === id);
+        if (demoProduct) {
+          return {
+            id,
+            title: demoProduct.title,
+            marketplace: demoProduct.marketplace,
+            image: demoProduct.image,
+            savedAt: saved.savedAt,
+            demoProduct,
+          };
+        }
+        if (saved.meta) {
+          return {
+            id,
+            title: saved.meta.title,
+            marketplace: saved.meta.marketplace,
+            image: saved.meta.image,
+            savedAt: saved.savedAt,
+          };
+        }
+        return null;
+      })
+      .filter((item): item is AffiliatedItem => Boolean(item))
+      .sort((a, b) => new Date(b.savedAt).getTime() - new Date(a.savedAt).getTime());
   }, [links]);
 
-  const openPostModal = (product: DemoProduct) => {
-    setPostProduct(product);
+  const openPostModal = (item: AffiliatedItem) => {
+    setPostProduct(item);
     setPostOpen(true);
   };
 
@@ -96,23 +133,35 @@ function GruposDivulgacaoPage() {
           />
         ) : (
           <div className="divide-y divide-border">
-            {affiliatedProducts.map((product) => (
-              <div key={product.id} className="flex items-center gap-3 px-5 py-3.5">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="size-11 shrink-0 rounded-lg border border-border object-cover"
-                />
+            {affiliatedProducts.map((item) => (
+              <div key={item.id} className="flex items-center gap-3 px-5 py-3.5">
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="size-11 shrink-0 rounded-lg border border-border object-cover"
+                  />
+                ) : (
+                  <div className="grid size-11 shrink-0 place-items-center rounded-lg border border-border bg-surface-hover text-muted-foreground">
+                    <Package2 className="size-4" />
+                  </div>
+                )}
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-[13px] font-medium text-foreground">
-                    {product.title}
-                  </p>
-                  <MarketplaceBadge marketplace={product.marketplace} className="mt-1" />
+                  <p className="truncate text-[13px] font-medium text-foreground">{item.title}</p>
+                  <div className="mt-1 flex flex-wrap items-center gap-2">
+                    <MarketplaceBadge marketplace={item.marketplace} />
+                    {!item.demoProduct && (
+                      <span className="inline-flex items-center gap-1 rounded-md border border-brand/30 bg-brand/10 px-1.5 py-0.5 text-[10.5px] font-medium text-brand">
+                        <Wand2 className="size-2.5" />
+                        Extensão
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <Button
                   size="sm"
                   className="h-8 shrink-0 gap-1.5 text-[12.5px]"
-                  onClick={() => openPostModal(product)}
+                  onClick={() => openPostModal(item)}
                 >
                   <Wand2 className="size-3.5" />
                   Gerar post
@@ -213,7 +262,18 @@ function GruposDivulgacaoPage() {
       </div>
 
       <PostScriptModal
-        product={postProduct}
+        product={
+          postProduct
+            ? {
+                title: postProduct.title,
+                image: postProduct.image,
+                priceCents: postProduct.demoProduct?.priceCents,
+                originalPriceCents: postProduct.demoProduct?.originalPriceCents,
+                rating: postProduct.demoProduct?.rating,
+                reviews: postProduct.demoProduct?.reviews,
+              }
+            : null
+        }
         link={postProduct ? links[postProduct.id]?.url : undefined}
         open={postOpen}
         onOpenChange={setPostOpen}

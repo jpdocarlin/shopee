@@ -1,16 +1,20 @@
 import { useEffect, useMemo, useState } from "react";
-import { Check, Copy, ImageIcon } from "lucide-react";
+import { Check, Copy, ImageIcon, Package2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Modal } from "@/components/shared/modal";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { generatePostScript, type ScriptTone } from "@/lib/post-script";
-import type { DemoProduct } from "@/data/demo-products";
+import { generatePostScript, type PostScriptProduct, type ScriptTone } from "@/lib/post-script";
+
+// Produto do catálogo tem todos os campos de PostScriptProduct; um produto
+// salvo pela extensão do Chrome (fora do catálogo) só tem título e, na
+// maioria das vezes, imagem — por isso a imagem também é opcional aqui.
+type ModalProduct = PostScriptProduct & { image?: string };
 
 type Props = {
-  product: DemoProduct | null;
+  product: ModalProduct | null;
   link: string | undefined;
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -52,6 +56,7 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
   };
 
   const handleCopyImageUrl = async () => {
+    if (!product.image) return;
     try {
       await navigator.clipboard.writeText(product.image);
       setCopiedImage(true);
@@ -78,22 +83,30 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
         )}
 
         <div className="flex items-center gap-3">
-          <img
-            src={product.image}
-            alt={product.title}
-            className="size-16 shrink-0 rounded-lg border border-border object-cover"
-          />
+          {product.image ? (
+            <img
+              src={product.image}
+              alt={product.title}
+              className="size-16 shrink-0 rounded-lg border border-border object-cover"
+            />
+          ) : (
+            <div className="grid size-16 shrink-0 place-items-center rounded-lg border border-border bg-surface-hover text-muted-foreground">
+              <Package2 className="size-5" />
+            </div>
+          )}
           <div className="min-w-0 flex-1">
             <p className="truncate text-[13px] font-medium text-foreground">{product.title}</p>
-            <Button
-              variant="outline"
-              size="sm"
-              className="mt-1.5 h-7 gap-1.5 text-[11.5px]"
-              onClick={handleCopyImageUrl}
-            >
-              {copiedImage ? <Check className="size-3" /> : <ImageIcon className="size-3" />}
-              Copiar imagem do produto
-            </Button>
+            {product.image && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="mt-1.5 h-7 gap-1.5 text-[11.5px]"
+                onClick={handleCopyImageUrl}
+              >
+                {copiedImage ? <Check className="size-3" /> : <ImageIcon className="size-3" />}
+                Copiar imagem do produto
+              </Button>
+            )}
           </div>
         </div>
 
