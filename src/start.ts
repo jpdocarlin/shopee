@@ -4,7 +4,7 @@
 // cliente puxar @tanstack/start-storage-context -> node:async_hooks,
 // quebrando a página com
 // "AsyncLocalStorage is not a constructor" (tela preta).
-import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/react-start";
+import { createStart, createMiddleware } from "@tanstack/react-start";
 
 import { renderErrorPage } from "./lib/error-page";
 import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
@@ -53,15 +53,16 @@ export const startInstance = createStart(() => {
     }
   });
 
-  // Start installs this automatically when src/start.ts is absent; defining
-  // the file opts out, so re-add it explicitly to keep server functions
-  // protected from cross-site requests.
-  const csrfMiddleware = createCsrfMiddleware({
-    filter: (ctx) => ctx.handlerType === "serverFn",
-  });
-
+  // NOTE: createCsrfMiddleware() is temporarily disabled here. Calling it
+  // (even lazily, inside this factory) currently throws
+  // "TypeError: createCsrfMiddleware is not a function" in the production
+  // SSR bundle -- an upstream Vite/Rolldown re-export binding bug affecting
+  // this specific named export when re-exported through @tanstack/react-start's
+  // barrel module (see TanStack/router#7459, #7285, vitejs/vite#22491).
+  // Removing the call restores the site; re-add CSRF protection for server
+  // functions once the upstream bug is fixed or a workaround is found.
   return {
     functionMiddleware: [attachSupabaseAuth],
-    requestMiddleware: [errorMiddleware, csrfMiddleware],
+    requestMiddleware: [errorMiddleware],
   };
 });
