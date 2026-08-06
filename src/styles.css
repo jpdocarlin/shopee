@@ -196,6 +196,18 @@
   --sidebar-ring: oklch(0.72 0.19 42);
 }
 
+/* Réplica do liveboard da Shopee (painel claro, tema fixo por design) */
+:root {
+  --lb-bg: oklch(0.968 0.003 286);
+  --lb-panel: oklch(1 0 0);
+  --lb-border: oklch(0.9 0.004 286);
+  --lb-text: oklch(0.28 0.01 286);
+  --lb-muted: oklch(0.58 0.008 286);
+  --lb-red: oklch(0.62 0.22 30);
+  --lb-red-soft: oklch(0.72 0.19 32);
+  --lb-compare: oklch(0.86 0.05 200);
+}
+
 .dark {
   color-scheme: dark;
 }
