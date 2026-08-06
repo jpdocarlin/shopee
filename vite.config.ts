@@ -17,11 +17,11 @@ export default defineConfig({
   // imagem com Gemini) como Vercel Functions em vez de Cloudflare Workers.
   nitro: {
     preset: "vercel",
-    vercel: {
-      functions: {
-        runtime: "nodejs22.x",
-      },
-    },
+    // `vercel` não está no tipo público do preset do pacote da Lovable, mas o
+    // nitro aceita a chave em runtime — daí o cast.
+    ...({
+      vercel: { functions: { runtime: "nodejs22.x" } },
+    } as Record<string, unknown>),
   },
   // Workaround for a known, still-open upstream bug class where Vite's SSR
   // module graph can observe an incomplete re-exported namespace from
