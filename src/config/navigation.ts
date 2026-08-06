@@ -1,6 +1,7 @@
 import {
   LayoutDashboard,
   Package,
+  Radio,
   Heart,
   Sparkles,
   Plug,
@@ -43,6 +44,12 @@ export const navigation: NavGroup[] = [
         to: "/ranking",
         icon: Trophy,
         description: "Quem mais vende dentro do Shoppfy",
+      },
+      {
+        label: "Monitor ao vivo",
+        to: "/monitor-vendas",
+        icon: Radio,
+        description: "Vendas do dia em tempo real, tendência por hora e top produtos",
       },
     ],
   },
