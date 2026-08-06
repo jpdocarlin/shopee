@@ -130,6 +130,18 @@
   --color-meli: var(--meli);
 }
 
+/* Réplica do liveboard (monitor de vendas) da Shopee — painel claro */
+@theme inline {
+  --color-lb-bg: var(--lb-bg);
+  --color-lb-panel: var(--lb-panel);
+  --color-lb-border: var(--lb-border);
+  --color-lb-text: var(--lb-text);
+  --color-lb-muted: var(--lb-muted);
+  --color-lb-red: var(--lb-red);
+  --color-lb-red-soft: var(--lb-red-soft);
+  --color-lb-compare: var(--lb-compare);
+}
+
 :root {
   --radius: 0.625rem;
 
