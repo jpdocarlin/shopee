@@ -1,10 +1,10 @@
-// Import diretamente de @tanstack/start-client-core (não de
-// @tanstack/react-start) — o pacote react-start apenas re-exporta esses
-// símbolos sem alterá-los, mas seu barrel participa do ciclo de import
-// circular via @tanstack/react-start-client -> #tanstack-start-entry ->
-// este arquivo (ver comentário abaixo). Importar direto da fonte evita
-// esse hop extra no grafo circular.
-import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/start-client-core";
+// IMPORTANTE: importar de "@tanstack/react-start" (o entrypoint público).
+// Um deep import de "@tanstack/start-client-core" ignora a resolução
+// browser/client feita pelo plugin do TanStack Start e faz o bundle do
+// cliente puxar @tanstack/start-storage-context -> node:async_hooks,
+// quebrando a página com
+// "AsyncLocalStorage is not a constructor" (tela preta).
+import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/react-start";
 
 import { renderErrorPage } from "./lib/error-page";
 import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
