@@ -15,6 +15,7 @@ import { Route as ShellIndexRouteImport } from './routes/_shell.index'
 import { Route as ShellCatalogoRouteImport } from './routes/_shell.catalogo'
 import { Route as ShellComissoesRouteImport } from './routes/_shell.comissoes'
 import { Route as ShellConfiguracoesRouteImport } from './routes/_shell.configuracoes'
+import { Route as ShellEditorVideoRouteImport } from './routes/_shell.editor-video'
 import { Route as ShellFavoritosRouteImport } from './routes/_shell.favoritos'
 import { Route as ShellGruposDivulgacaoRouteImport } from './routes/_shell.grupos-divulgacao'
 import { Route as ShellIaRouteImport } from './routes/_shell.ia'
@@ -52,6 +53,11 @@ const ShellComissoesRoute = ShellComissoesRouteImport.update({
 const ShellConfiguracoesRoute = ShellConfiguracoesRouteImport.update({
   id: '/configuracoes',
   path: '/configuracoes',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellEditorVideoRoute = ShellEditorVideoRouteImport.update({
+  id: '/editor-video',
+  path: '/editor-video',
   getParentRoute: () => ShellRoute,
 } as any)
 const ShellFavoritosRoute = ShellFavoritosRouteImport.update({
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/catalogo': typeof ShellCatalogoRoute
   '/comissoes': typeof ShellComissoesRoute
   '/configuracoes': typeof ShellConfiguracoesRoute
+  '/editor-video': typeof ShellEditorVideoRoute
   '/favoritos': typeof ShellFavoritosRoute
   '/grupos-divulgacao': typeof ShellGruposDivulgacaoRoute
   '/ia': typeof ShellIaRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/catalogo': typeof ShellCatalogoRoute
   '/comissoes': typeof ShellComissoesRoute
   '/configuracoes': typeof ShellConfiguracoesRoute
+  '/editor-video': typeof ShellEditorVideoRoute
   '/favoritos': typeof ShellFavoritosRoute
   '/grupos-divulgacao': typeof ShellGruposDivulgacaoRoute
   '/ia': typeof ShellIaRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/_shell/catalogo': typeof ShellCatalogoRoute
   '/_shell/comissoes': typeof ShellComissoesRoute
   '/_shell/configuracoes': typeof ShellConfiguracoesRoute
+  '/_shell/editor-video': typeof ShellEditorVideoRoute
   '/_shell/favoritos': typeof ShellFavoritosRoute
   '/_shell/grupos-divulgacao': typeof ShellGruposDivulgacaoRoute
   '/_shell/ia': typeof ShellIaRoute
@@ -158,6 +167,7 @@ export interface FileRouteTypes {
     | '/catalogo'
     | '/comissoes'
     | '/configuracoes'
+    | '/editor-video'
     | '/favoritos'
     | '/grupos-divulgacao'
     | '/ia'
@@ -173,6 +183,7 @@ export interface FileRouteTypes {
     | '/catalogo'
     | '/comissoes'
     | '/configuracoes'
+    | '/editor-video'
     | '/favoritos'
     | '/grupos-divulgacao'
     | '/ia'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/_shell/catalogo'
     | '/_shell/comissoes'
     | '/_shell/configuracoes'
+    | '/_shell/editor-video'
     | '/_shell/favoritos'
     | '/_shell/grupos-divulgacao'
     | '/_shell/ia'
@@ -249,6 +261,13 @@ declare module '@tanstack/react-router' {
       path: '/configuracoes'
       fullPath: '/configuracoes'
       preLoaderRoute: typeof ShellConfiguracoesRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/editor-video': {
+      id: '/_shell/editor-video'
+      path: '/editor-video'
+      fullPath: '/editor-video'
+      preLoaderRoute: typeof ShellEditorVideoRouteImport
       parentRoute: typeof ShellRoute
     }
     '/_shell/favoritos': {
@@ -321,6 +340,7 @@ interface ShellRouteChildren {
   ShellCatalogoRoute: typeof ShellCatalogoRoute
   ShellComissoesRoute: typeof ShellComissoesRoute
   ShellConfiguracoesRoute: typeof ShellConfiguracoesRoute
+  ShellEditorVideoRoute: typeof ShellEditorVideoRoute
   ShellFavoritosRoute: typeof ShellFavoritosRoute
   ShellGruposDivulgacaoRoute: typeof ShellGruposDivulgacaoRoute
   ShellIaRoute: typeof ShellIaRoute
@@ -337,6 +357,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellCatalogoRoute: ShellCatalogoRoute,
   ShellComissoesRoute: ShellComissoesRoute,
   ShellConfiguracoesRoute: ShellConfiguracoesRoute,
+  ShellEditorVideoRoute: ShellEditorVideoRoute,
   ShellFavoritosRoute: ShellFavoritosRoute,
   ShellGruposDivulgacaoRoute: ShellGruposDivulgacaoRoute,
   ShellIaRoute: ShellIaRoute,
