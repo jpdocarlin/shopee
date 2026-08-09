@@ -8,6 +8,28 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { generatePostScript, type PostScriptProduct, type ScriptTone } from "@/lib/post-script";
 
+async function imageUrlToPngBlob(url: string): Promise<Blob> {
+  const res = await fetch(url);
+  const blob = await res.blob();
+  if (blob.type === "image/png") return blob;
+
+  // Reencoda pra PNG — é o único formato de imagem com suporte garantido
+  // na Clipboard API dos navegadores.
+  const bitmap = await createImageBitmap(blob);
+  const canvas = document.createElement("canvas");
+  canvas.width = bitmap.width;
+  canvas.height = bitmap.height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Canvas não suportado nesse navegador.");
+  ctx.drawImage(bitmap, 0, 0);
+  return await new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (b) => (b ? resolve(b) : reject(new Error("Falha ao converter a imagem."))),
+      "image/png",
+    );
+  });
+}
+
 // Produto do catálogo tem todos os campos de PostScriptProduct; um produto
 // salvo pela extensão do Chrome (fora do catálogo) só tem título e, na
 // maioria das vezes, imagem — por isso a imagem também é opcional aqui.
@@ -29,12 +51,14 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
   const [tone, setTone] = useState<ScriptTone>("emoji");
   const [copiedText, setCopiedText] = useState(false);
   const [copiedImage, setCopiedImage] = useState(false);
+  const [copiedCombined, setCopiedCombined] = useState(false);
 
   useEffect(() => {
     if (open) {
       setTone("emoji");
       setCopiedText(false);
       setCopiedImage(false);
+      setCopiedCombined(false);
     }
   }, [open]);
 
@@ -63,6 +87,35 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
       toast.success("Link da imagem copiado");
     } catch {
       toast.info("Copie manualmente o link da imagem");
+    }
+  };
+
+  const handleCopyPhotoAndText = async () => {
+    if (!product.image) {
+      await handleCopyText();
+      return;
+    }
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "image/png": imageUrlToPngBlob(product.image),
+          "text/plain": new Blob([script], { type: "text/plain" }),
+        }),
+      ]);
+      setCopiedCombined(true);
+      toast.success("Foto e texto copiados", {
+        description: "Cole (Ctrl+V) direto na caixa de post do grupo no Facebook",
+      });
+    } catch {
+      // Navegador sem suporte, ou a imagem é de um domínio que bloqueia CORS.
+      try {
+        await navigator.clipboard.writeText(script);
+        toast.info(
+          'Não deu pra copiar a foto junto (bloqueio do navegador ou do site da imagem) — copiei só o texto. Use "Link da imagem" abaixo.',
+        );
+      } catch {
+        toast.info("Copie manualmente o texto abaixo");
+      }
     }
   };
 
@@ -104,7 +157,7 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
                 onClick={handleCopyImageUrl}
               >
                 {copiedImage ? <Check className="size-3" /> : <ImageIcon className="size-3" />}
-                Copiar imagem do produto
+                Link da imagem
               </Button>
             )}
           </div>
@@ -136,14 +189,22 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
           onFocus={(e) => e.currentTarget.select()}
         />
 
-        <Button className="w-full gap-2" onClick={handleCopyText}>
-          {copiedText ? <Check className="size-4" /> : <Copy className="size-4" />}
-          Copiar texto do post
+        <Button className="w-full gap-2" onClick={handleCopyPhotoAndText}>
+          {copiedCombined ? <Check className="size-4" /> : <Copy className="size-4" />}
+          {product.image ? "Copiar foto + texto" : "Copiar texto do post"}
         </Button>
 
+        {product.image && (
+          <Button variant="outline" size="sm" className="w-full gap-2" onClick={handleCopyText}>
+            {copiedText ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+            Copiar só o texto
+          </Button>
+        )}
+
         <p className="text-[11.5px] text-muted-foreground">
-          Vídeo e imagem gerados por IA ainda não estão disponíveis — por enquanto o post usa a foto
-          original do produto. Cole o texto e a imagem direto no grupo.
+          {product.image
+            ? 'Clique em "Copiar foto + texto", entre no grupo do Facebook e cole (Ctrl+V) direto na caixa de post — a foto e o texto entram juntos.'
+            : "Vídeo e imagem gerados por IA ainda não estão disponíveis — por enquanto o post usa a foto original do produto."}
         </p>
       </div>
     </Modal>
