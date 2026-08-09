@@ -21,7 +21,6 @@ import { Route as ShellIaRouteImport } from './routes/_shell.ia'
 import { Route as ShellIntegracoesRouteImport } from './routes/_shell.integracoes'
 import { Route as ShellMarketplaceRouteImport } from './routes/_shell.marketplace'
 import { Route as ShellMeusLinksRouteImport } from './routes/_shell.meus-links'
-import { Route as ShellMonitorVendasRouteImport } from './routes/_shell.monitor-vendas'
 import { Route as ShellPedidosRouteImport } from './routes/_shell.pedidos'
 import { Route as ShellProdutosRouteImport } from './routes/_shell.produtos'
 import { Route as ShellRankingRouteImport } from './routes/_shell.ranking'
@@ -85,11 +84,6 @@ const ShellMeusLinksRoute = ShellMeusLinksRouteImport.update({
   path: '/meus-links',
   getParentRoute: () => ShellRoute,
 } as any)
-const ShellMonitorVendasRoute = ShellMonitorVendasRouteImport.update({
-  id: '/monitor-vendas',
-  path: '/monitor-vendas',
-  getParentRoute: () => ShellRoute,
-} as any)
 const ShellPedidosRoute = ShellPedidosRouteImport.update({
   id: '/pedidos',
   path: '/pedidos',
@@ -118,7 +112,6 @@ export interface FileRoutesByFullPath {
   '/integracoes': typeof ShellIntegracoesRoute
   '/marketplace': typeof ShellMarketplaceRoute
   '/meus-links': typeof ShellMeusLinksRoute
-  '/monitor-vendas': typeof ShellMonitorVendasRoute
   '/pedidos': typeof ShellPedidosRoute
   '/produtos': typeof ShellProdutosRoute
   '/ranking': typeof ShellRankingRoute
@@ -134,7 +127,6 @@ export interface FileRoutesByTo {
   '/integracoes': typeof ShellIntegracoesRoute
   '/marketplace': typeof ShellMarketplaceRoute
   '/meus-links': typeof ShellMeusLinksRoute
-  '/monitor-vendas': typeof ShellMonitorVendasRoute
   '/pedidos': typeof ShellPedidosRoute
   '/produtos': typeof ShellProdutosRoute
   '/ranking': typeof ShellRankingRoute
@@ -153,7 +145,6 @@ export interface FileRoutesById {
   '/_shell/integracoes': typeof ShellIntegracoesRoute
   '/_shell/marketplace': typeof ShellMarketplaceRoute
   '/_shell/meus-links': typeof ShellMeusLinksRoute
-  '/_shell/monitor-vendas': typeof ShellMonitorVendasRoute
   '/_shell/pedidos': typeof ShellPedidosRoute
   '/_shell/produtos': typeof ShellProdutosRoute
   '/_shell/ranking': typeof ShellRankingRoute
@@ -173,7 +164,6 @@ export interface FileRouteTypes {
     | '/integracoes'
     | '/marketplace'
     | '/meus-links'
-    | '/monitor-vendas'
     | '/pedidos'
     | '/produtos'
     | '/ranking'
@@ -189,7 +179,6 @@ export interface FileRouteTypes {
     | '/integracoes'
     | '/marketplace'
     | '/meus-links'
-    | '/monitor-vendas'
     | '/pedidos'
     | '/produtos'
     | '/ranking'
@@ -207,7 +196,6 @@ export interface FileRouteTypes {
     | '/_shell/integracoes'
     | '/_shell/marketplace'
     | '/_shell/meus-links'
-    | '/_shell/monitor-vendas'
     | '/_shell/pedidos'
     | '/_shell/produtos'
     | '/_shell/ranking'
@@ -305,13 +293,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellMeusLinksRouteImport
       parentRoute: typeof ShellRoute
     }
-    '/_shell/monitor-vendas': {
-      id: '/_shell/monitor-vendas'
-      path: '/monitor-vendas'
-      fullPath: '/monitor-vendas'
-      preLoaderRoute: typeof ShellMonitorVendasRouteImport
-      parentRoute: typeof ShellRoute
-    }
     '/_shell/pedidos': {
       id: '/_shell/pedidos'
       path: '/pedidos'
@@ -346,7 +327,6 @@ interface ShellRouteChildren {
   ShellIntegracoesRoute: typeof ShellIntegracoesRoute
   ShellMarketplaceRoute: typeof ShellMarketplaceRoute
   ShellMeusLinksRoute: typeof ShellMeusLinksRoute
-  ShellMonitorVendasRoute: typeof ShellMonitorVendasRoute
   ShellPedidosRoute: typeof ShellPedidosRoute
   ShellProdutosRoute: typeof ShellProdutosRoute
   ShellRankingRoute: typeof ShellRankingRoute
@@ -363,7 +343,6 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellIntegracoesRoute: ShellIntegracoesRoute,
   ShellMarketplaceRoute: ShellMarketplaceRoute,
   ShellMeusLinksRoute: ShellMeusLinksRoute,
-  ShellMonitorVendasRoute: ShellMonitorVendasRoute,
   ShellPedidosRoute: ShellPedidosRoute,
   ShellProdutosRoute: ShellProdutosRoute,
   ShellRankingRoute: ShellRankingRoute,
