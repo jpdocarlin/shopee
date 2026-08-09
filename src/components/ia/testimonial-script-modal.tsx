@@ -6,6 +6,7 @@ import { Modal } from "@/components/shared/modal";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { generateTestimonialScript } from "@/lib/testimonial-script";
+import { generateTikTokCaption } from "@/lib/tiktok-caption";
 import type { DemoProduct } from "@/data/demo-products";
 
 type Props = {
@@ -25,6 +26,8 @@ export function TestimonialScriptModal({
 }: Props) {
   const [script, setScript] = useState("");
   const [copied, setCopied] = useState(false);
+  const [caption, setCaption] = useState("");
+  const [captionCopied, setCaptionCopied] = useState(false);
 
   useEffect(() => {
     if (open && product) {
@@ -32,6 +35,8 @@ export function TestimonialScriptModal({
       setScript(next);
       setCopied(false);
       onScriptChange?.(next);
+      setCaption(generateTikTokCaption(product));
+      setCaptionCopied(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, product, link]);
@@ -50,6 +55,21 @@ export function TestimonialScriptModal({
       await navigator.clipboard.writeText(script);
       setCopied(true);
       toast.success("Depoimento copiado");
+    } catch {
+      toast.info("Copie manualmente o texto abaixo");
+    }
+  };
+
+  const handleRegenerateCaption = () => {
+    setCaption(generateTikTokCaption(product));
+    setCaptionCopied(false);
+  };
+
+  const handleCopyCaption = async () => {
+    try {
+      await navigator.clipboard.writeText(caption);
+      setCaptionCopied(true);
+      toast.success("Legenda copiada");
     } catch {
       toast.info("Copie manualmente o texto abaixo");
     }
@@ -94,6 +114,27 @@ export function TestimonialScriptModal({
           Estilo achadinhos: em primeira pessoa, contando o "antes e depois" com o produto. Ajuste
           os detalhes se quiser deixar mais parecido com sua própria experiência antes de postar.
         </p>
+
+        <div className="border-t border-border pt-4">
+          <p className="mb-2 text-[13px] font-medium text-foreground">Legenda pronta pro TikTok</p>
+          <Textarea
+            readOnly
+            value={caption}
+            rows={3}
+            className="text-[12.5px] leading-relaxed"
+            onFocus={(e) => e.currentTarget.select()}
+          />
+          <div className="mt-2 flex gap-2">
+            <Button variant="outline" size="sm" className="gap-2" onClick={handleRegenerateCaption}>
+              <RefreshCw className="size-3.5" />
+              Outra versão
+            </Button>
+            <Button size="sm" className="flex-1 gap-2" onClick={handleCopyCaption}>
+              {captionCopied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+              Copiar legenda
+            </Button>
+          </div>
+        </div>
       </div>
     </Modal>
   );

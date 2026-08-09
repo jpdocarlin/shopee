@@ -36,3 +36,6 @@ vercel.env.txt
 *.njsproj
 *.sln
 *.sw?
+
+# Vercel build output (local artifact, not source)
+.vercel/
