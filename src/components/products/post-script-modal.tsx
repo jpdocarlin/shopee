@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Check, Copy, ImageIcon, Package2 } from "lucide-react";
+import { Check, Copy, ImageIcon, Package2, Type } from "lucide-react";
 import { toast } from "sonner";
 
 import { Modal } from "@/components/shared/modal";
@@ -51,14 +51,17 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
   const [tone, setTone] = useState<ScriptTone>("emoji");
   const [copiedText, setCopiedText] = useState(false);
   const [copiedImage, setCopiedImage] = useState(false);
-  const [copiedCombined, setCopiedCombined] = useState(false);
+  // O Facebook, quando recebe foto + texto juntos no clipboard, só aceita a
+  // foto e descarta o texto — então o fluxo vira 2 passos no mesmo botão:
+  // 1º clique copia a foto, 2º clique (depois de colar a foto) copia o texto.
+  const [flowStep, setFlowStep] = useState<"foto" | "texto">("foto");
 
   useEffect(() => {
     if (open) {
       setTone("emoji");
       setCopiedText(false);
       setCopiedImage(false);
-      setCopiedCombined(false);
+      setFlowStep("foto");
     }
   }, [open]);
 
@@ -90,32 +93,38 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
     }
   };
 
-  const handleCopyPhotoAndText = async () => {
+  const handlePhotoTextFlow = async () => {
     if (!product.image) {
       await handleCopyText();
       return;
     }
+
+    if (flowStep === "foto") {
+      try {
+        const blob = await imageUrlToPngBlob(product.image);
+        await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+        setFlowStep("texto");
+        toast.success("1/2 · Foto copiada", {
+          description:
+            "Cole (Ctrl+V) no post do grupo — depois clique aqui de novo pra copiar o texto",
+        });
+      } catch {
+        // Navegador sem suporte, ou a imagem é de um domínio que bloqueia CORS.
+        toast.info(
+          'Não deu pra copiar a foto (bloqueio do navegador ou do site) — use "Link da imagem" abaixo.',
+        );
+      }
+      return;
+    }
+
     try {
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          "image/png": imageUrlToPngBlob(product.image),
-          "text/plain": new Blob([script], { type: "text/plain" }),
-        }),
-      ]);
-      setCopiedCombined(true);
-      toast.success("Foto e texto copiados", {
-        description: "Cole (Ctrl+V) direto na caixa de post do grupo no Facebook",
+      await navigator.clipboard.writeText(script);
+      setFlowStep("foto");
+      toast.success("2/2 · Texto copiado", {
+        description: "Cole (Ctrl+V) embaixo da foto pra completar o post",
       });
     } catch {
-      // Navegador sem suporte, ou a imagem é de um domínio que bloqueia CORS.
-      try {
-        await navigator.clipboard.writeText(script);
-        toast.info(
-          'Não deu pra copiar a foto junto (bloqueio do navegador ou do site da imagem) — copiei só o texto. Use "Link da imagem" abaixo.',
-        );
-      } catch {
-        toast.info("Copie manualmente o texto abaixo");
-      }
+      toast.info("Copie manualmente o texto abaixo");
     }
   };
 
@@ -189,9 +198,19 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
           onFocus={(e) => e.currentTarget.select()}
         />
 
-        <Button className="w-full gap-2" onClick={handleCopyPhotoAndText}>
-          {copiedCombined ? <Check className="size-4" /> : <Copy className="size-4" />}
-          {product.image ? "Copiar foto + texto" : "Copiar texto do post"}
+        <Button className="w-full gap-2" onClick={handlePhotoTextFlow}>
+          {!product.image ? (
+            <Copy className="size-4" />
+          ) : flowStep === "foto" ? (
+            <ImageIcon className="size-4" />
+          ) : (
+            <Type className="size-4" />
+          )}
+          {product.image
+            ? flowStep === "foto"
+              ? "1. Copiar foto"
+              : "2. Copiar texto"
+            : "Copiar texto do post"}
         </Button>
 
         {product.image && (
@@ -203,7 +222,9 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
 
         <p className="text-[11.5px] text-muted-foreground">
           {product.image
-            ? 'Clique em "Copiar foto + texto", entre no grupo do Facebook e cole (Ctrl+V) direto na caixa de post — a foto e o texto entram juntos.'
+            ? flowStep === "foto"
+              ? 'O Facebook não aceita foto + texto colados juntos, então são 2 cliques: clique em "1. Copiar foto", cole (Ctrl+V) no post do grupo — o botão vira "2. Copiar texto" pra você colar embaixo.'
+              : 'Foto copiada. Cole (Ctrl+V) no post do grupo e depois clique em "2. Copiar texto" pra colar a legenda embaixo.'
             : "Vídeo e imagem gerados por IA ainda não estão disponíveis — por enquanto o post usa a foto original do produto."}
         </p>
       </div>
