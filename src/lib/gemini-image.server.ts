@@ -149,6 +149,42 @@ export async function generateProductPhoto({
   return callInteractionsApi(prompt, "1:1");
 }
 
+// Refaz a foto original do produto (geralmente comprimida/mal iluminada, como
+// vem do catálogo do marketplace) numa versão de qualidade profissional de
+// catálogo, mantendo o produto idêntico — usado no post pronto pro Facebook.
+export async function generateEnhancedProductPhoto({
+  title,
+  category,
+  productImageUrl,
+}: {
+  title: string;
+  category?: string;
+  productImageUrl: string;
+}): Promise<GenerateImageResult> {
+  const referenceImage = await fetchImageAsBase64(productImageUrl);
+
+  const productInstruction = referenceImage
+    ? [
+        "Use exatamente o produto mostrado na imagem de referência anexada — mesma cor, formato,",
+        "material, rótulo, textura e proporções. Não redesenhe, não substitua, não estilize e não",
+        "adicione nada ao produto (sem acessórios extras, sem itens novos, sem alterar o design):",
+        "ele deve ficar idêntico à foto de referência, só que fotografado com qualidade profissional.",
+      ].join(" ")
+    : `Produto: "${title}"${category ? ` (categoria: ${category})` : ""}.`;
+
+  const prompt = [
+    "Refaça esta foto de produto de e-commerce com qualidade de catálogo profissional, altíssima",
+    "resolução e nitidez.",
+    productInstruction,
+    "Fundo neutro liso (branco ou cinza bem claro) e levemente desfocado, iluminação de estúdio",
+    "suave e uniforme, produto perfeitamente centralizado e em foco total, sem ruído, sem",
+    "pixelização, sem artefato de compressão, sem texto, sem marca d'água, sem pessoas, sem",
+    "sombras duras.",
+  ].join(" ");
+
+  return callInteractionsApi(prompt, "1:1", referenceImage);
+}
+
 export async function generateVideoScenePhoto({
   title,
   category,

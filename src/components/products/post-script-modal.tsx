@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
-import { Check, Copy, ImageIcon, Package2, Type } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { Check, Copy, ImageIcon, Package2, Sparkles, Type } from "lucide-react";
 import { toast } from "sonner";
 
 import { Modal } from "@/components/shared/modal";
@@ -7,6 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { generatePostScript, type PostScriptProduct, type ScriptTone } from "@/lib/post-script";
+import { generateEnhancedProductPhoto } from "@/lib/gemini-image.functions";
+
+// Cache em memória (sobrevive a fechar/reabrir o modal, some só ao recarregar
+// a página) — evita gastar cota da IA gerando a mesma foto de novo toda vez
+// que o usuário reabre o post do mesmo produto.
+const enhancedPhotoCache = new Map<string, string>();
 
 async function imageUrlToPngBlob(url: string): Promise<Blob> {
   const res = await fetch(url);
@@ -33,7 +40,7 @@ async function imageUrlToPngBlob(url: string): Promise<Blob> {
 // Produto do catálogo tem todos os campos de PostScriptProduct; um produto
 // salvo pela extensão do Chrome (fora do catálogo) só tem título e, na
 // maioria das vezes, imagem — por isso a imagem também é opcional aqui.
-type ModalProduct = PostScriptProduct & { image?: string };
+type ModalProduct = PostScriptProduct & { image?: string; category?: string };
 
 type Props = {
   product: ModalProduct | null;
@@ -55,6 +62,12 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
   // foto e descarta o texto — então o fluxo vira 2 passos no mesmo botão:
   // 1º clique copia a foto, 2º clique (depois de colar a foto) copia o texto.
   const [flowStep, setFlowStep] = useState<"foto" | "texto">("foto");
+  // Foto refeita pela IA em qualidade de catálogo, a partir da foto original
+  // do produto — gerada automaticamente assim que o modal abre.
+  const [enhancedPhoto, setEnhancedPhoto] = useState<string | null>(null);
+  const [photoStatus, setPhotoStatus] = useState<"idle" | "generating" | "done" | "error">("idle");
+  const generatePhoto = useServerFn(generateEnhancedProductPhoto);
+  const requestIdRef = useRef(0);
 
   useEffect(() => {
     if (open) {
@@ -65,12 +78,50 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
     }
   }, [open]);
 
+  useEffect(() => {
+    if (!open || !product?.image) {
+      setEnhancedPhoto(null);
+      setPhotoStatus("idle");
+      return;
+    }
+
+    const cached = enhancedPhotoCache.get(product.image);
+    if (cached) {
+      setEnhancedPhoto(cached);
+      setPhotoStatus("done");
+      return;
+    }
+
+    const requestId = ++requestIdRef.current;
+    setEnhancedPhoto(null);
+    setPhotoStatus("generating");
+
+    generatePhoto({
+      data: { title: product.title, category: product.category, productImageUrl: product.image },
+    })
+      .then((result) => {
+        if (requestIdRef.current !== requestId) return; // modal trocou de produto enquanto gerava
+        enhancedPhotoCache.set(product.image as string, result.dataUrl);
+        setEnhancedPhoto(result.dataUrl);
+        setPhotoStatus("done");
+      })
+      .catch((err) => {
+        if (requestIdRef.current !== requestId) return;
+        console.error("[PostScriptModal] falha ao gerar foto melhorada:", err);
+        setPhotoStatus("error");
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, product?.image, product?.title, product?.category]);
+
   const script = useMemo(
     () => (product ? generatePostScript(product, { link, tone }) : ""),
     [product, link, tone],
   );
 
   if (!product) return null;
+
+  const photoToCopy = enhancedPhoto ?? product.image;
+  const isGeneratingPhoto = photoStatus === "generating";
 
   const handleCopyText = async () => {
     try {
@@ -100,8 +151,12 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
     }
 
     if (flowStep === "foto") {
+      if (isGeneratingPhoto) {
+        toast.info("Ainda gerando a foto em qualidade melhor — só um instante");
+        return;
+      }
       try {
-        const blob = await imageUrlToPngBlob(product.image);
+        const blob = await imageUrlToPngBlob(photoToCopy as string);
         await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
         setFlowStep("texto");
         toast.success("1/2 · Foto copiada", {
@@ -146,11 +201,18 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
 
         <div className="flex items-center gap-3">
           {product.image ? (
-            <img
-              src={product.image}
-              alt={product.title}
-              className="size-16 shrink-0 rounded-lg border border-border object-cover"
-            />
+            <div className="relative size-16 shrink-0">
+              <img
+                src={photoToCopy}
+                alt={product.title}
+                className="size-16 rounded-lg border border-border object-cover"
+              />
+              {isGeneratingPhoto && (
+                <div className="absolute inset-0 grid place-items-center rounded-lg bg-background/80">
+                  <Sparkles className="size-4 animate-pulse text-brand" />
+                </div>
+              )}
+            </div>
           ) : (
             <div className="grid size-16 shrink-0 place-items-center rounded-lg border border-border bg-surface-hover text-muted-foreground">
               <Package2 className="size-5" />
@@ -159,15 +221,23 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
           <div className="min-w-0 flex-1">
             <p className="truncate text-[13px] font-medium text-foreground">{product.title}</p>
             {product.image && (
-              <Button
-                variant="outline"
-                size="sm"
-                className="mt-1.5 h-7 gap-1.5 text-[11.5px]"
-                onClick={handleCopyImageUrl}
-              >
-                {copiedImage ? <Check className="size-3" /> : <ImageIcon className="size-3" />}
-                Link da imagem
-              </Button>
+              <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-7 gap-1.5 text-[11.5px]"
+                  onClick={handleCopyImageUrl}
+                >
+                  {copiedImage ? <Check className="size-3" /> : <ImageIcon className="size-3" />}
+                  Link da imagem original
+                </Button>
+                {photoStatus === "done" && (
+                  <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground">
+                    <Sparkles className="size-3 text-brand" />
+                    Foto melhorada pela IA
+                  </span>
+                )}
+              </div>
             )}
           </div>
         </div>
@@ -198,9 +268,15 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
           onFocus={(e) => e.currentTarget.select()}
         />
 
-        <Button className="w-full gap-2" onClick={handlePhotoTextFlow}>
+        <Button
+          className="w-full gap-2"
+          onClick={handlePhotoTextFlow}
+          disabled={Boolean(product.image) && flowStep === "foto" && isGeneratingPhoto}
+        >
           {!product.image ? (
             <Copy className="size-4" />
+          ) : flowStep === "foto" && isGeneratingPhoto ? (
+            <Sparkles className="size-4 animate-pulse" />
           ) : flowStep === "foto" ? (
             <ImageIcon className="size-4" />
           ) : (
@@ -208,7 +284,9 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
           )}
           {product.image
             ? flowStep === "foto"
-              ? "1. Copiar foto"
+              ? isGeneratingPhoto
+                ? "Gerando foto em qualidade melhor…"
+                : "1. Copiar foto"
               : "2. Copiar texto"
             : "Copiar texto do post"}
         </Button>
@@ -223,7 +301,9 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
         <p className="text-[11.5px] text-muted-foreground">
           {product.image
             ? flowStep === "foto"
-              ? 'O Facebook não aceita foto + texto colados juntos, então são 2 cliques: clique em "1. Copiar foto", cole (Ctrl+V) no post do grupo — o botão vira "2. Copiar texto" pra você colar embaixo.'
+              ? isGeneratingPhoto
+                ? "A IA está refazendo a foto do produto em qualidade de catálogo, parecida com a original só que mais nítida — alguns segundos."
+                : 'O Facebook não aceita foto + texto colados juntos, então são 2 cliques: clique em "1. Copiar foto", cole (Ctrl+V) no post do grupo — o botão vira "2. Copiar texto" pra você colar embaixo.'
               : 'Foto copiada. Cole (Ctrl+V) no post do grupo e depois clique em "2. Copiar texto" pra colar a legenda embaixo.'
             : "Vídeo e imagem gerados por IA ainda não estão disponíveis — por enquanto o post usa a foto original do produto."}
         </p>
