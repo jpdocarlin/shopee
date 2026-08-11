@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { CheckCircle2, X } from "lucide-react";
 import { toast } from "sonner";
 
@@ -131,36 +132,41 @@ export function SaleDemoButton() {
         />
       </button>
 
-      {sale && (
-        <div
-          role="status"
-          className="fixed right-4 top-4 z-[60] w-[min(20rem,calc(100vw-2rem))] animate-in slide-in-from-top-2 fade-in duration-300"
-        >
-          <div className="flex items-start gap-3 rounded-xl border border-success/40 bg-card p-3.5 shadow-lg shadow-black/30">
-            <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-success" />
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center justify-between gap-2">
-                <p className="text-[13.5px] font-semibold text-foreground">Venda aprovada</p>
-                <button
-                  type="button"
-                  onClick={() => setSale(null)}
-                  aria-label="Fechar"
-                  className="shrink-0 text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  <X className="size-3.5" />
-                </button>
+      {/* Portal pro body: o header tem backdrop-blur, e um ancestral com
+          backdrop-filter vira o bloco de referência do position:fixed — sem o
+          portal a notificação grudava no header em vez do canto da tela. */}
+      {sale &&
+        createPortal(
+          <div
+            role="status"
+            className="fixed right-4 top-4 z-[60] w-[min(20rem,calc(100vw-2rem))] animate-in slide-in-from-top-2 fade-in duration-300"
+          >
+            <div className="flex items-start gap-3 rounded-xl border border-success/40 bg-card p-3.5 shadow-lg shadow-black/30">
+              <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-success" />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-[13.5px] font-semibold text-foreground">Venda aprovada</p>
+                  <button
+                    type="button"
+                    onClick={() => setSale(null)}
+                    aria-label="Fechar"
+                    className="shrink-0 text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <X className="size-3.5" />
+                  </button>
+                </div>
+                <p className="mt-0.5 text-[11.5px] text-muted-foreground">via Facebook</p>
+                <p className="mt-1.5 line-clamp-2 text-[12.5px] leading-snug text-foreground">
+                  {sale.productTitle}
+                </p>
+                <p className="mt-1.5 text-[15px] font-semibold tabular-nums text-success">
+                  + {formatBRL(sale.amountCents)}
+                </p>
               </div>
-              <p className="mt-0.5 text-[11.5px] text-muted-foreground">via Facebook</p>
-              <p className="mt-1.5 line-clamp-2 text-[12.5px] leading-snug text-foreground">
-                {sale.productTitle}
-              </p>
-              <p className="mt-1.5 text-[15px] font-semibold tabular-nums text-success">
-                + {formatBRL(sale.amountCents)}
-              </p>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </>
   );
 }
