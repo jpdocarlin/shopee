@@ -5,6 +5,7 @@ import { useAuthStore } from "@/stores/auth-store";
 import { useProfileStore } from "@/stores/profile-store";
 import { useAffiliateStore } from "@/stores/affiliate-store";
 import { useFavoritesStore } from "@/stores/favorites-store";
+import { useDemoBoostStore } from "@/stores/demo-boost-store";
 
 // Marca, no navegador, qual foi o último usuário logado — usado só pra saber
 // quando trocou de conta (não guarda nada sensível, é só um id).
@@ -18,6 +19,7 @@ function clearPerUserStores() {
   useAffiliateStore.getState().reset();
   useFavoritesStore.getState().reset();
   useProfileStore.getState().reset();
+  useDemoBoostStore.getState().reset();
 }
 
 // Sempre que o id do usuário logado for diferente do último visto (incluindo

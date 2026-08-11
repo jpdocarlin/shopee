@@ -4,6 +4,7 @@ import { BrandMark } from "./brand-mark";
 import { GlobalSearchTrigger } from "./global-search-trigger";
 import { MobileNav } from "./mobile-nav";
 import { NotificationsMenu } from "./notifications-menu";
+import { SaleDemoButton } from "./sale-demo-button";
 import { UserMenu } from "./user-menu";
 import { Badge } from "@/components/ui/badge";
 
@@ -27,6 +28,7 @@ export function AppHeader() {
           <span className="size-1.5 rounded-full bg-brand" />
           Plano Pro
         </Badge>
+        <SaleDemoButton />
         <NotificationsMenu />
         <UserMenu />
       </div>

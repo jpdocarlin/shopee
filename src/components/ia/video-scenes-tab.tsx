@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { AlertTriangle, Check, Download, Loader2, Sparkles, Wand2 } from "lucide-react";
+import {
+  AlertTriangle,
+  Check,
+  Copy,
+  Download,
+  Loader2,
+  MessageSquareQuote,
+  RefreshCw,
+  Sparkles,
+  Wand2,
+} from "lucide-react";
+import { toast } from "sonner";
 
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { ProductPicker } from "@/components/ia/product-picker";
 import {
   CUSTOM_SCENARIO_ID,
@@ -13,6 +25,8 @@ import {
   VIDEO_SHOT_TYPES,
 } from "@/data/video-scenes";
 import { generateVideoScenePhoto } from "@/lib/gemini-image.functions";
+import { generateVideoScript } from "@/lib/gemini-text.functions";
+import { buildFallbackVideoScript } from "@/lib/video-script";
 import type { DemoProduct } from "@/data/demo-products";
 import { cn } from "@/lib/utils";
 
@@ -27,8 +41,20 @@ export function VideoScenesTab() {
   const [status, setStatus] = useState<Status>("idle");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // Fala do vídeo — só aparece depois que a pessoa clica em "Gerar script".
+  const [script, setScript] = useState<string | null>(null);
+  const [scriptLoading, setScriptLoading] = useState(false);
+  const [scriptCopied, setScriptCopied] = useState(false);
+  const scriptVariantRef = useRef(0);
 
   const generateScene = useServerFn(generateVideoScenePhoto);
+  const generateScript = useServerFn(generateVideoScript);
+
+  const resetScript = () => {
+    setScript(null);
+    setScriptCopied(false);
+    scriptVariantRef.current = 0;
+  };
 
   const selectProduct = (product: DemoProduct) => {
     setSelected(product);
@@ -39,6 +65,7 @@ export function VideoScenesTab() {
     setStatus("idle");
     setImageUrl(null);
     setError(null);
+    resetScript();
   };
 
   const isCustomScenario = scenarioId === CUSTOM_SCENARIO_ID;
@@ -51,6 +78,7 @@ export function VideoScenesTab() {
     setStatus("generating");
     setError(null);
     setImageUrl(null);
+    resetScript();
     try {
       const result = await generateScene({
         data: {
@@ -70,6 +98,45 @@ export function VideoScenesTab() {
         err instanceof Error ? err.message : "Não foi possível gerar a cena agora. Tente de novo.",
       );
       setStatus("idle");
+    }
+  };
+
+  const scenarioLabel = isCustomScenario
+    ? customScenario.trim()
+    : VIDEO_SCENARIOS.find((s) => s.id === scenarioId)?.label;
+
+  const handleGenerateScript = async () => {
+    if (!selected) return;
+    setScriptLoading(true);
+    setScriptCopied(false);
+    try {
+      const result = await generateScript({
+        data: {
+          title: selected.title,
+          category: selected.category,
+          scenario: scenarioLabel || undefined,
+          variant: scriptVariantRef.current,
+        },
+      });
+      setScript(result.script);
+      scriptVariantRef.current += 1;
+    } catch (err) {
+      // Fallback local: melhor um script pronto no formato certo do que nada.
+      console.error("[VideoScenesTab] falha ao gerar script:", err);
+      setScript(buildFallbackVideoScript(selected));
+    } finally {
+      setScriptLoading(false);
+    }
+  };
+
+  const handleCopyScript = async () => {
+    if (!script) return;
+    try {
+      await navigator.clipboard.writeText(script);
+      setScriptCopied(true);
+      toast.success("Script copiado");
+    } catch {
+      toast.info("Copie manualmente o texto acima");
     }
   };
 
@@ -217,11 +284,72 @@ export function VideoScenesTab() {
                   Use como referência de still pra gravar seu vídeo (ou pra guiar a edição). Geração
                   de vídeo completo por IA ainda não está disponível.
                 </p>
-                <Button variant="outline" size="sm" className="mt-2.5 gap-1.5" asChild>
-                  <a href={imageUrl} download={`${selected.id}-cena.jpg`}>
-                    <Download className="size-3.5" />
-                    Baixar imagem
-                  </a>
+                <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                  <Button
+                    size="sm"
+                    className="gap-1.5"
+                    onClick={handleGenerateScript}
+                    disabled={scriptLoading}
+                  >
+                    {scriptLoading ? (
+                      <Loader2 className="size-3.5 animate-spin" />
+                    ) : (
+                      <MessageSquareQuote className="size-3.5" />
+                    )}
+                    {scriptLoading
+                      ? "Escrevendo…"
+                      : script
+                        ? "Gerar outro script"
+                        : "Gerar script do vídeo"}
+                  </Button>
+                  <Button variant="outline" size="sm" className="gap-1.5" asChild>
+                    <a href={imageUrl} download={`${selected.id}-cena.jpg`}>
+                      <Download className="size-3.5" />
+                      Baixar imagem
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {status === "done" && script && (
+            <div className="mt-3 rounded-lg border border-border bg-card p-3.5">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <p className="inline-flex items-center gap-1.5 text-[13px] font-medium text-foreground">
+                  <MessageSquareQuote className="size-3.5 text-brand" />
+                  Fala do vídeo
+                </p>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 gap-1.5 text-[11.5px]"
+                  onClick={handleGenerateScript}
+                  disabled={scriptLoading}
+                >
+                  <RefreshCw className={cn("size-3", scriptLoading && "animate-spin")} />
+                  Outra versão
+                </Button>
+              </div>
+              <Textarea
+                readOnly
+                value={script}
+                rows={3}
+                className="text-[12.5px] leading-relaxed"
+                onFocus={(e) => e.currentTarget.select()}
+              />
+              <div className="mt-2 flex items-center justify-between gap-2">
+                <p className="text-[11.5px] text-muted-foreground">
+                  É o que você fala olhando pra câmera, segurando o produto — uns 12 segundos.
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-7 shrink-0 gap-1.5 text-[11.5px]"
+                  onClick={handleCopyScript}
+                >
+                  {scriptCopied ? <Check className="size-3" /> : <Copy className="size-3" />}
+                  Copiar
                 </Button>
               </div>
             </div>

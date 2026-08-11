@@ -122,7 +122,10 @@ function cleanStory(raw: string): string {
     .trim();
 }
 
-export async function generateProductStory(input: ProductStoryInput): Promise<{ story: string }> {
+// Chamada base do modelo, compartilhada pelos geradores de texto.
+// `minLines` = quantas linhas não vazias a resposta precisa ter pra ser
+// considerada completa (proteção contra corte no meio).
+async function callGemini(prompt: string, minLines: number): Promise<string> {
   const apiKey = requireApiKey();
 
   const res = await fetch(ENDPOINT, {
@@ -132,15 +135,15 @@ export async function generateProductStory(input: ProductStoryInput): Promise<{ 
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      contents: [{ parts: [{ text: buildPrompt(input) }] }],
+      contents: [{ parts: [{ text: prompt }] }],
       generationConfig: {
-        // Baixa de propósito: o formato das 5 linhas é rígido (copia o exemplo),
-        // a variação tem que vir do conteúdo, não do modelo inventando estrutura
-        // e tom de propaganda.
+        // Baixa de propósito: o formato é rígido (copia o exemplo), a variação
+        // tem que vir do conteúdo, não do modelo inventando estrutura e tom de
+        // propaganda.
         temperature: 0.85,
         // O 2.5-flash vem com "thinking" ligado por padrão, e esses tokens de
-        // raciocínio saem do mesmo orçamento da resposta — com o limite baixo a
-        // história vinha cortada na 1ª linha. Desligar o thinking (a tarefa é
+        // raciocínio saem do mesmo orçamento da resposta — com o limite baixo o
+        // texto vinha cortado na 1ª linha. Desligar o thinking (a tarefa é
         // simples) + orçamento folgado resolve.
         thinkingConfig: { thinkingBudget: 0 },
         maxOutputTokens: 1200,
@@ -151,27 +154,90 @@ export async function generateProductStory(input: ProductStoryInput): Promise<{ 
   if (!res.ok) {
     const errText = await res.text();
     console.error(`[Gemini texto] ${res.status} ${errText.slice(0, 500)}`);
-    throw new Error(`Não foi possível gerar a história agora (erro ${res.status}).`);
+    throw new Error(`Não foi possível gerar o texto agora (erro ${res.status}).`);
   }
 
   const json = (await res.json()) as GenerateContentResponse;
   const candidate = json.candidates?.[0];
   const raw = candidate?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
-  const story = cleanStory(raw);
+  const text = cleanStory(raw);
 
-  if (!story) {
+  if (!text) {
     console.error("[Gemini texto] resposta sem texto:", JSON.stringify(json).slice(0, 600));
-    throw new Error("A IA não devolveu uma história no formato esperado.");
+    throw new Error("A IA não devolveu um texto no formato esperado.");
   }
 
   // Corta na metade (limite de tokens / filtro de segurança) → melhor cair no
-  // fallback local do que entregar um post pela metade pro usuário colar.
+  // fallback local do que entregar um texto pela metade pro usuário usar.
   const finish = candidate?.finishReason;
-  const truncated = (finish && finish !== "STOP") || story.split("\n").filter(Boolean).length < 3;
+  const truncated =
+    (finish && finish !== "STOP") || text.split("\n").filter(Boolean).length < minLines;
   if (truncated) {
-    console.error(`[Gemini texto] história incompleta (finishReason=${finish}):`, story);
-    throw new Error("A IA devolveu uma história incompleta.");
+    console.error(`[Gemini texto] texto incompleto (finishReason=${finish}):`, text);
+    throw new Error("A IA devolveu um texto incompleto.");
   }
 
-  return { story };
+  return text;
+}
+
+export async function generateProductStory(input: ProductStoryInput): Promise<{ story: string }> {
+  return { story: await callGemini(buildPrompt(input), 3) };
+}
+
+// ---------------------------------------------------------------------------
+// Script falado do vídeo (aba IA → Cenas de Vídeo)
+// ---------------------------------------------------------------------------
+
+export type VideoScriptInput = {
+  title: string;
+  category?: string;
+  // Cenário escolhido pra imagem, em texto ("na cozinha", "no banheiro"…) —
+  // ajuda o script a combinar com o vídeo que a pessoa vai gravar.
+  scenario?: string;
+  variant?: number;
+};
+
+function buildVideoScriptPrompt(input: VideoScriptInput): string {
+  const { title, category, scenario, variant } = input;
+
+  return [
+    "Você escreve a FALA de vídeos curtos de divulgação (TikTok/Reels), estilo “achadinhos”.",
+    "É texto pra pessoa FALAR olhando pra câmera segurando o produto — não é legenda, não é post.",
+    "",
+    "Copie EXATAMENTE o tom, o tamanho e o ritmo deste exemplo (mude só o conteúdo):",
+    "",
+    "<exemplo>",
+    "Gente, olha o que eu achei! Esse removedor de cutículas e essa lixa elétrica facilitam muito",
+    "na hora de fazer as unhas. Eu tô apaixonada, sério!",
+    "</exemplo>",
+    "",
+    "AGORA ESCREVA A FALA PARA ESTE PRODUTO:",
+    `PRODUTO: "${title}"`,
+    category ? `CATEGORIA: ${category}` : "",
+    scenario ? `A pessoa está gravando: ${scenario}` : "",
+    "",
+    "REGRAS:",
+    "- 3 frases curtas, no MÁXIMO. Dá pra falar em uns 12 segundos.",
+    '- Frase 1: abertura de descoberta, tipo "Gente, olha o que eu achei!".',
+    "- Frase 2: o que é e pra que serve, com 1 característica concreta que aparece no título",
+    "  do produto. É aqui que a fala se conecta com ESTE produto e não com outro qualquer.",
+    "- Frase 3: uma reação pessoal curta e empolgada, tipo “Eu tô apaixonada, sério!”.",
+    "- Português do Brasil falado, natural, como se contasse pra uma amiga.",
+    "- Tudo num parágrafo só, sem quebra de linha, sem emoji (é fala, não legenda).",
+    "- PROIBIDO: hashtag, link, preço, “link na bio”, “corre”, “imperdível”, CAPS LOCK,",
+    "  marcação de cena tipo “[mostra o produto]”, aspas envolvendo o texto, ou qualquer",
+    "  comentário seu. Devolva SOMENTE a fala.",
+    "- Não invente característica que não dá pra deduzir do título, nem prometa resultado,",
+    "  prazo, cura ou efeito de saúde.",
+    variant && variant > 0
+      ? `\nEsta é a variação nº ${variant + 1}: mesma estrutura, mas mude o ângulo e as palavras.`
+      : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+export async function generateVideoScript(input: VideoScriptInput): Promise<{ script: string }> {
+  // minLines 1: o script é um parágrafo único de propósito.
+  return { script: await callGemini(buildVideoScriptPrompt(input), 1) };
 }

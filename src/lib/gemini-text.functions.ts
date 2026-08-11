@@ -18,3 +18,12 @@ export const generateProductStory = createServerFn({ method: "POST" })
     const { generateProductStory: generate } = await import("@/lib/gemini-text.server");
     return generate(data);
   });
+
+export const generateVideoScript = createServerFn({ method: "POST" })
+  .validator(
+    (data: { title: string; category?: string; scenario?: string; variant?: number }) => data,
+  )
+  .handler(async ({ data }) => {
+    const { generateVideoScript: generate } = await import("@/lib/gemini-text.server");
+    return generate(data);
+  });

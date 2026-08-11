@@ -38,6 +38,7 @@ import { useProfileStore } from "@/stores/profile-store";
 import { useAffiliateStore } from "@/stores/affiliate-store";
 import { useFavoritesStore } from "@/stores/favorites-store";
 import { useAuthStore } from "@/stores/auth-store";
+import { useDemoBoostStore } from "@/stores/demo-boost-store";
 import { useIsOwner } from "@/lib/owner";
 import { cn } from "@/lib/utils";
 import { useT } from "@/i18n/translations";
@@ -113,6 +114,10 @@ function IndexPage() {
   const marketplaceConnected = useAuthStore((s) => Boolean(s.marketplaceConnected));
   const hasAnyLink = useAffiliateStore((s) => Object.keys(s.links).length > 0);
   const isOwner = useIsOwner();
+  // Vendas simuladas pela bolinha do header (demonstração) — somam por cima
+  // dos números estáticos, sem alterar os dados de origem.
+  const boostEarningsCents = useDemoBoostStore((s) => s.extraEarningsCents);
+  const boostSales = useDemoBoostStore((s) => s.extraSales);
   const [contentDone, setContentDone] = useState(false);
   const favorites = useFavoritesStore((s) => s.ids);
   const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
@@ -137,7 +142,16 @@ function IndexPage() {
 
   // Dados de demonstração só aparecem pra conta do dono — qualquer outra
   // conta que logar vê a ferramenta zerada, como um usuário novo de verdade.
-  const periodStats = isOwner ? PERIOD_STATS[period] : ZERO_STATS;
+  // As vendas simuladas pela bolinha do header entram somando por cima.
+  const basePeriodStats = isOwner ? PERIOD_STATS[period] : ZERO_STATS;
+  const periodStats = useMemo(
+    () => ({
+      ...basePeriodStats,
+      earningsCents: basePeriodStats.earningsCents + boostEarningsCents,
+      sales: basePeriodStats.sales + boostSales,
+    }),
+    [basePeriodStats, boostEarningsCents, boostSales],
+  );
 
   const statCards = useMemo(
     () => [
