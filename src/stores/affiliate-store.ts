@@ -42,6 +42,7 @@ type AffiliateState = {
   removeLink: (productId: string) => void;
   getLink: (productId: string) => SavedLink | undefined;
   hasAnyLink: () => boolean;
+  reset: () => void;
 };
 
 export const useAffiliateStore = create<AffiliateState>()(
@@ -69,6 +70,9 @@ export const useAffiliateStore = create<AffiliateState>()(
         }),
       getLink: (productId) => get().links[productId],
       hasAnyLink: () => Object.keys(get().links).length > 0,
+      // Zera ao trocar de usuário no mesmo navegador, pra links salvos de uma
+      // conta nunca vazarem pra outra.
+      reset: () => set({ registered: {}, links: {} }),
     }),
     { name: "shoppfy.affiliate" },
   ),

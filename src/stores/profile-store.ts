@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 type ProfileState = {
   name: string;
   setName: (name: string) => void;
+  reset: () => void;
 };
 
 export const useProfileStore = create<ProfileState>()(
@@ -11,6 +12,9 @@ export const useProfileStore = create<ProfileState>()(
     (set) => ({
       name: "",
       setName: (name) => set({ name: name.trim() }),
+      // Zera ao trocar de usuário no mesmo navegador, pra nome de uma conta
+      // nunca vazar pra outra.
+      reset: () => set({ name: "" }),
     }),
     {
       name: "shoppfy.profile",

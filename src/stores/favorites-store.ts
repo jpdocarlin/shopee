@@ -9,6 +9,7 @@ type FavoritesState = {
   ids: string[];
   toggleFavorite: (id: string) => void;
   isFavorite: (id: string) => boolean;
+  reset: () => void;
 };
 
 export const useFavoritesStore = create<FavoritesState>()(
@@ -22,6 +23,9 @@ export const useFavoritesStore = create<FavoritesState>()(
             : [...state.ids, id],
         })),
       isFavorite: (id) => get().ids.includes(id),
+      // Zera ao trocar de usuário no mesmo navegador, pra favoritos de uma
+      // conta nunca vazarem pra outra.
+      reset: () => set({ ids: [] }),
     }),
     { name: "shoppfy.favorites" },
   ),
