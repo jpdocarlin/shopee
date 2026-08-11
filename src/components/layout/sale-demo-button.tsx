@@ -8,14 +8,20 @@ import { formatBRL } from "@/lib/format";
 import { useIsOwner } from "@/lib/owner";
 import { useAffiliateStore } from "@/stores/affiliate-store";
 import { useDemoBoostStore } from "@/stores/demo-boost-store";
-import { cn } from "@/lib/utils";
 
 const DELAY_MS = 10_000; // espera até a notificação cair
 const VISIBLE_MS = 5_000; // quanto tempo ela fica na tela
 
-// "Cha-ching" sintetizado na hora com a Web Audio API — sem arquivo de áudio,
-// sem download, sem depender de CDN. O AudioContext é criado no clique (gesto
-// do usuário), então tocar o som 10s depois já sai liberado pelo navegador.
+// Som de venda aprovada ("ka-ching") sintetizado na hora com a Web Audio API —
+// sem arquivo de áudio, sem download, sem depender de CDN. O AudioContext é
+// criado no clique (gesto do usuário), então tocar o som 10s depois já sai
+// liberado pelo navegador.
+//
+// É montado em duas camadas, como um caixa registradora de verdade:
+//   1. um estalo curto de ruído filtrado — o mecanismo/gaveta;
+//   2. dois sinos em intervalo ascendente, cada um com parciais inarmônicos
+//      (1 / 2.76 / 5.4), que é o que faz o ouvido reconhecer "sino" em vez de
+//      "bip". Só oscilador puro soava sintético demais.
 function createCashSound(): () => void {
   const Ctx =
     window.AudioContext ??
@@ -27,29 +33,60 @@ function createCashSound(): () => void {
 
   return () => {
     const now = ctx.currentTime;
-    // Duas batidas metálicas em sequência, a segunda mais aguda — é o que dá a
-    // impressão de "caixa registradora".
-    const notes: Array<[freq: number, start: number, dur: number, gain: number]> = [
-      [1046, 0, 0.18, 0.28],
-      [1568, 0.07, 0.5, 0.22],
-      [2093, 0.09, 0.45, 0.12],
+
+    const master = ctx.createGain();
+    master.gain.value = 0.85;
+    master.connect(ctx.destination);
+
+    // 1) Estalo do mecanismo: ruído branco decaindo rápido, passado por um
+    // bandpass agudo pra soar metálico em vez de "chiado".
+    const noiseLen = Math.floor(ctx.sampleRate * 0.07);
+    const buffer = ctx.createBuffer(1, noiseLen, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < noiseLen; i++) {
+      data[i] = (Math.random() * 2 - 1) * (1 - i / noiseLen) ** 2;
+    }
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+    const bandpass = ctx.createBiquadFilter();
+    bandpass.type = "bandpass";
+    bandpass.frequency.value = 2800;
+    bandpass.Q.value = 1.1;
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.22, now);
+    noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
+    noise.connect(bandpass).connect(noiseGain).connect(master);
+    noise.start(now);
+
+    // 2) Os dois sinos.
+    const PARTIALS: Array<[ratio: number, gain: number, decay: number]> = [
+      [1, 1, 1],
+      [2.76, 0.45, 0.7],
+      [5.4, 0.18, 0.45],
     ];
 
-    for (const [freq, start, dur, gain] of notes) {
-      const osc = ctx.createOscillator();
-      const env = ctx.createGain();
-      osc.type = "triangle";
-      osc.frequency.value = freq;
-      env.gain.setValueAtTime(0.0001, now + start);
-      env.gain.exponentialRampToValueAtTime(gain, now + start + 0.012);
-      env.gain.exponentialRampToValueAtTime(0.0001, now + start + dur);
-      osc.connect(env).connect(ctx.destination);
-      osc.start(now + start);
-      osc.stop(now + start + dur + 0.05);
-    }
+    const bell = (freq: number, start: number, dur: number, gain: number) => {
+      for (const [ratio, partialGain, decayScale] of PARTIALS) {
+        const osc = ctx.createOscillator();
+        const env = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq * ratio;
+        const peak = gain * partialGain;
+        const life = dur * decayScale;
+        env.gain.setValueAtTime(0.0001, now + start);
+        env.gain.exponentialRampToValueAtTime(peak, now + start + 0.006);
+        env.gain.exponentialRampToValueAtTime(0.0001, now + start + life);
+        osc.connect(env).connect(master);
+        osc.start(now + start);
+        osc.stop(now + start + life + 0.05);
+      }
+    };
+
+    bell(1318.51, 0.01, 1.0, 0.22); // E6
+    bell(1975.53, 0.14, 1.5, 0.19); // B6 — quinta acima, dá o "ka-CHING"
 
     // Fecha o contexto depois que o som acabou, pra não deixar áudio aberto à toa.
-    window.setTimeout(() => void ctx.close(), 1500);
+    window.setTimeout(() => void ctx.close(), 2500);
   };
 }
 
@@ -114,22 +151,17 @@ export function SaleDemoButton() {
 
   return (
     <>
+      {/* Discreta de propósito: nada muda de aparência no clique (sem pulso,
+          sem cor, sem tooltip) — quem está assistindo a demonstração não pode
+          perceber que o botão foi acionado. O único retorno é a venda caindo
+          10 segundos depois. */}
       <button
         type="button"
         onClick={handleClick}
         aria-label="Simular venda aprovada"
-        title={pending ? "Venda a caminho…" : "Simular uma venda aprovada do último link copiado"}
-        className={cn(
-          "grid size-7 shrink-0 place-items-center rounded-full border border-border bg-card transition-colors hover:border-success/50",
-          pending && "border-success/60",
-        )}
+        className="grid size-7 shrink-0 place-items-center rounded-full border border-border bg-card"
       >
-        <span
-          className={cn(
-            "size-2 rounded-full bg-muted-foreground/50 transition-colors",
-            pending && "animate-pulse bg-success",
-          )}
-        />
+        <span className="size-2 rounded-full bg-muted-foreground/50" />
       </button>
 
       {/* Portal pro body: o header tem backdrop-blur, e um ancestral com
