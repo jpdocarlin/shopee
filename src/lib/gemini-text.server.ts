@@ -12,6 +12,7 @@ const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODE
 type GenerateContentResponse = {
   candidates?: Array<{
     content?: { parts?: Array<{ text?: string }> };
+    finishReason?: string;
   }>;
 };
 
@@ -119,7 +120,12 @@ export async function generateProductStory(input: ProductStoryInput): Promise<{ 
         // Alto o suficiente pra cada clique em "Regenerar" dar uma história
         // diferente, sem viajar e inventar característica do produto.
         temperature: 1.1,
-        maxOutputTokens: 600,
+        // O 2.5-flash vem com "thinking" ligado por padrão, e esses tokens de
+        // raciocínio saem do mesmo orçamento da resposta — com o limite baixo a
+        // história vinha cortada na 1ª linha. Desligar o thinking (a tarefa é
+        // simples) + orçamento folgado resolve.
+        thinkingConfig: { thinkingBudget: 0 },
+        maxOutputTokens: 1200,
       },
     }),
   });
@@ -131,12 +137,22 @@ export async function generateProductStory(input: ProductStoryInput): Promise<{ 
   }
 
   const json = (await res.json()) as GenerateContentResponse;
-  const raw = json.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
+  const candidate = json.candidates?.[0];
+  const raw = candidate?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
   const story = cleanStory(raw);
 
   if (!story) {
     console.error("[Gemini texto] resposta sem texto:", JSON.stringify(json).slice(0, 600));
     throw new Error("A IA não devolveu uma história no formato esperado.");
+  }
+
+  // Corta na metade (limite de tokens / filtro de segurança) → melhor cair no
+  // fallback local do que entregar um post pela metade pro usuário colar.
+  const finish = candidate?.finishReason;
+  const truncated = (finish && finish !== "STOP") || story.split("\n").filter(Boolean).length < 3;
+  if (truncated) {
+    console.error(`[Gemini texto] história incompleta (finishReason=${finish}):`, story);
+    throw new Error("A IA devolveu uma história incompleta.");
   }
 
   return { story };
