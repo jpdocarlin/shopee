@@ -3,7 +3,7 @@
 // inside a server function handler — never import it at the top level of a
 // route file or a *.functions.ts module (those ship to the client bundle).
 // Load inside server handlers: const { generateProductPhoto } = await import("@/lib/gemini-image.server");
-import { getScenarioPrompt, getShotTypePrompt } from "@/data/video-scenes";
+import { getScenarioPrompt, getShotType, getShotTypePrompt } from "@/data/video-scenes";
 
 type GenerateImageResult = {
   dataUrl: string;
@@ -203,6 +203,7 @@ export async function generateVideoScenePhoto({
   shotTypeId: string;
 }): Promise<GenerateImageResult> {
   const shot = getShotTypePrompt(shotTypeId, genderId);
+  const shotNegative = getShotType(shotTypeId).negative;
   const scenario = getScenarioPrompt(scenarioId, customScenario);
   const referenceImage = await fetchImageAsBase64(productImageUrl);
 
@@ -219,7 +220,8 @@ export async function generateVideoScenePhoto({
   const prompt = [
     "Still de referência fotorrealista pra gravação de vídeo de rede social (estilo achadinhos/UGC), formato vertical.",
     productInstruction,
-    `${shot}.`,
+    `ENQUADRAMENTO (siga à risca): ${shot}.`,
+    `NÃO PODE APARECER: ${shotNegative}.`,
     `Cenário: ${scenario}.`,
     "Super realista, iluminação natural, sem texto sobreposto na imagem, sem marca d'água,",
     "parece still real de vídeo autêntico e não foto de estúdio posada.",

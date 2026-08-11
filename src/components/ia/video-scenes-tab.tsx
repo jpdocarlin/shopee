@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import {
   AlertTriangle,
   Check,
+  Clapperboard,
   Copy,
   Download,
   Loader2,
@@ -27,6 +28,7 @@ import {
 import { generateVideoScenePhoto } from "@/lib/gemini-image.functions";
 import { generateVideoScript } from "@/lib/gemini-text.functions";
 import { buildFallbackVideoScript } from "@/lib/video-script";
+import { buildFlowPrompt } from "@/lib/flow-prompt";
 import type { DemoProduct } from "@/data/demo-products";
 import { cn } from "@/lib/utils";
 
@@ -45,6 +47,7 @@ export function VideoScenesTab() {
   const [script, setScript] = useState<string | null>(null);
   const [scriptLoading, setScriptLoading] = useState(false);
   const [scriptCopied, setScriptCopied] = useState(false);
+  const [flowCopied, setFlowCopied] = useState(false);
   const scriptVariantRef = useRef(0);
 
   const generateScene = useServerFn(generateVideoScenePhoto);
@@ -53,6 +56,7 @@ export function VideoScenesTab() {
   const resetScript = () => {
     setScript(null);
     setScriptCopied(false);
+    setFlowCopied(false);
     scriptVariantRef.current = 0;
   };
 
@@ -135,6 +139,31 @@ export function VideoScenesTab() {
       await navigator.clipboard.writeText(script);
       setScriptCopied(true);
       toast.success("Script copiado");
+    } catch {
+      toast.info("Copie manualmente o texto acima");
+    }
+  };
+
+  // Prompt pro Flow (Veo): repete tudo que já foi escolhido aqui pra ele não
+  // trocar produto, cenário nem enquadramento na hora de animar.
+  const flowPrompt =
+    selected && script && scenarioId && genderId && shotTypeId
+      ? buildFlowPrompt({
+          productTitle: selected.title,
+          scenarioId,
+          customScenario: isCustomScenario ? customScenario.trim() : undefined,
+          genderId,
+          shotTypeId,
+          script,
+        })
+      : null;
+
+  const handleCopyFlowPrompt = async () => {
+    if (!flowPrompt) return;
+    try {
+      await navigator.clipboard.writeText(flowPrompt);
+      setFlowCopied(true);
+      toast.success("Prompt copiado", { description: "Cole no Flow junto com a imagem da cena" });
     } catch {
       toast.info("Copie manualmente o texto acima");
     }
@@ -352,6 +381,38 @@ export function VideoScenesTab() {
                   Copiar
                 </Button>
               </div>
+            </div>
+          )}
+
+          {status === "done" && flowPrompt && (
+            <div className="mt-3 rounded-lg border border-brand/30 bg-brand/5 p-3.5">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <p className="inline-flex items-center gap-1.5 text-[13px] font-medium text-foreground">
+                  <Clapperboard className="size-3.5 text-brand" />
+                  Prompt pro Flow (vídeo)
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-7 shrink-0 gap-1.5 text-[11.5px]"
+                  onClick={handleCopyFlowPrompt}
+                >
+                  {flowCopied ? <Check className="size-3" /> : <Copy className="size-3" />}
+                  Copiar prompt
+                </Button>
+              </div>
+              <Textarea
+                readOnly
+                value={flowPrompt}
+                rows={10}
+                className="text-[11.5px] leading-relaxed"
+                onFocus={(e) => e.currentTarget.select()}
+              />
+              <p className="mt-2 text-[11.5px] text-muted-foreground">
+                Cole no Flow <span className="text-foreground">junto com a imagem da cena</span> (o
+                botão "Baixar imagem" acima). O prompt já trava o produto, o cenário e o
+                enquadramento que você escolheu, e manda a fala com a voz certa.
+              </p>
             </div>
           )}
         </Reveal>
