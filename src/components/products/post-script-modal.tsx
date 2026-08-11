@@ -1,19 +1,29 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Check, Copy, ImageIcon, Package2, Sparkles, Type } from "lucide-react";
+import { Check, Copy, ImageIcon, Package2, RefreshCw, Sparkles, Type } from "lucide-react";
 import { toast } from "sonner";
 
 import { Modal } from "@/components/shared/modal";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { generatePostScript, type PostScriptProduct, type ScriptTone } from "@/lib/post-script";
+import {
+  buildFallbackStory,
+  buildStoryPost,
+  generatePostScript,
+  type PostScriptProduct,
+  type ScriptTone,
+} from "@/lib/post-script";
 import { generateEnhancedProductPhoto } from "@/lib/gemini-image.functions";
+import { generateProductStory } from "@/lib/gemini-text.functions";
 
 // Cache em memória (sobrevive a fechar/reabrir o modal, some só ao recarregar
 // a página) — evita gastar cota da IA gerando a mesma foto de novo toda vez
 // que o usuário reabre o post do mesmo produto.
 const enhancedPhotoCache = new Map<string, string>();
+// Mesma ideia pra história: reabrir o post do mesmo produto não gasta cota de
+// novo. O botão "Outra história" ignora o cache de propósito.
+const storyCache = new Map<string, string>();
 
 async function imageUrlToPngBlob(url: string): Promise<Blob> {
   const res = await fetch(url);
@@ -50,12 +60,13 @@ type Props = {
 };
 
 const TONES: { id: ScriptTone; label: string }[] = [
-  { id: "emoji", label: "Casual" },
+  { id: "historia", label: "Mini história" },
+  { id: "emoji", label: "Curto" },
   { id: "direto", label: "Direto" },
 ];
 
 export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
-  const [tone, setTone] = useState<ScriptTone>("emoji");
+  const [tone, setTone] = useState<ScriptTone>("historia");
   const [copiedText, setCopiedText] = useState(false);
   const [copiedImage, setCopiedImage] = useState(false);
   // O Facebook, quando recebe foto + texto juntos no clipboard, só aceita a
@@ -69,9 +80,16 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
   const generatePhoto = useServerFn(generateEnhancedProductPhoto);
   const requestIdRef = useRef(0);
 
+  // Mini-história escrita pela IA a partir do produto real — é o corpo do post.
+  const [story, setStory] = useState<string | null>(null);
+  const [storyStatus, setStoryStatus] = useState<"idle" | "generating" | "done" | "error">("idle");
+  const generateStory = useServerFn(generateProductStory);
+  const storyRequestIdRef = useRef(0);
+  const storyVariantRef = useRef(0);
+
   useEffect(() => {
     if (open) {
-      setTone("emoji");
+      setTone("historia");
       setCopiedText(false);
       setCopiedImage(false);
       setFlowStep("foto");
@@ -113,17 +131,81 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, product?.image, product?.title, product?.category]);
 
-  const script = useMemo(
-    () => (product ? generatePostScript(product, { link, tone }) : ""),
-    [product, link, tone],
+  // Gera a história do produto. `force` = clique em "Outra história": ignora o
+  // cache e pede uma variação nova pro modelo.
+  const runStoryGeneration = useCallback(
+    (target: ModalProduct, force: boolean) => {
+      const cacheKey = target.title;
+
+      if (!force) {
+        const cached = storyCache.get(cacheKey);
+        if (cached) {
+          setStory(cached);
+          setStoryStatus("done");
+          return;
+        }
+        storyVariantRef.current = 0;
+      } else {
+        storyVariantRef.current += 1;
+      }
+
+      const requestId = ++storyRequestIdRef.current;
+      setStoryStatus("generating");
+
+      generateStory({
+        data: {
+          title: target.title,
+          category: target.category,
+          priceCents: target.priceCents,
+          originalPriceCents: target.originalPriceCents,
+          variant: storyVariantRef.current,
+        },
+      })
+        .then((result) => {
+          if (storyRequestIdRef.current !== requestId) return; // trocou de produto no meio
+          storyCache.set(cacheKey, result.story);
+          setStory(result.story);
+          setStoryStatus("done");
+        })
+        .catch((err) => {
+          if (storyRequestIdRef.current !== requestId) return;
+          console.error("[PostScriptModal] falha ao gerar história:", err);
+          // Fallback local — o usuário nunca fica sem post por causa da IA.
+          setStory(buildFallbackStory(target));
+          setStoryStatus("error");
+        });
+    },
+    [generateStory],
   );
+
+  useEffect(() => {
+    if (!open || !product) {
+      setStory(null);
+      setStoryStatus("idle");
+      return;
+    }
+    runStoryGeneration(product, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, product?.title]);
+
+  const script = useMemo(() => {
+    if (!product) return "";
+    if (tone !== "historia") return generatePostScript(product, { link, tone });
+    // Enquanto a IA escreve, mostra o fallback local pra caixa nunca ficar vazia.
+    return buildStoryPost(story ?? buildFallbackStory(product), link);
+  }, [product, link, tone, story]);
 
   if (!product) return null;
 
   const photoToCopy = enhancedPhoto ?? product.image;
   const isGeneratingPhoto = photoStatus === "generating";
+  const isWritingStory = tone === "historia" && storyStatus === "generating";
 
   const handleCopyText = async () => {
+    if (isWritingStory) {
+      toast.info("A IA ainda está escrevendo a história — só um instante");
+      return;
+    }
     try {
       await navigator.clipboard.writeText(script);
       setCopiedText(true);
@@ -169,6 +251,11 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
           'Não deu pra copiar a foto (bloqueio do navegador ou do site) — use "Link da imagem" abaixo.',
         );
       }
+      return;
+    }
+
+    if (isWritingStory) {
+      toast.info("A IA ainda está escrevendo a história — só um instante");
       return;
     }
 
@@ -242,7 +329,7 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5">
           {TONES.map((t) => (
             <button
               key={t.id}
@@ -258,15 +345,46 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
               {t.label}
             </button>
           ))}
+
+          {tone === "historia" && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="ml-auto h-7 gap-1.5 text-[11.5px]"
+              onClick={() => runStoryGeneration(product, true)}
+              disabled={isWritingStory}
+            >
+              <RefreshCw className={cn("size-3", isWritingStory && "animate-spin")} />
+              {isWritingStory ? "Escrevendo…" : "Outra história"}
+            </Button>
+          )}
         </div>
 
-        <Textarea
-          readOnly
-          value={script}
-          rows={7}
-          className="text-[12.5px] leading-relaxed"
-          onFocus={(e) => e.currentTarget.select()}
-        />
+        <div className="relative">
+          <Textarea
+            readOnly
+            value={script}
+            rows={9}
+            className={cn(
+              "text-[12.5px] leading-relaxed",
+              isWritingStory && "text-muted-foreground",
+            )}
+            onFocus={(e) => e.currentTarget.select()}
+          />
+          {isWritingStory && (
+            <span className="absolute right-2.5 top-2.5 inline-flex items-center gap-1 rounded-md bg-background/90 px-1.5 py-0.5 text-[11px] text-muted-foreground">
+              <Sparkles className="size-3 animate-pulse text-brand" />
+              IA escrevendo a história…
+            </span>
+          )}
+        </div>
+
+        {tone === "historia" && storyStatus === "error" && (
+          <p className="text-[11.5px] text-muted-foreground">
+            A IA não respondeu agora, então usei um texto padrão. Clique em "Outra história" pra
+            tentar de novo.
+          </p>
+        )}
 
         <Button
           className="w-full gap-2"
