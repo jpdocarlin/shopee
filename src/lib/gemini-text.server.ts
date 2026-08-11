@@ -54,35 +54,52 @@ function buildPrompt(input: ProductStoryInput): string {
     : "O preço não foi informado — não invente preço nenhum e não cite valor na história.";
 
   return [
-    "Você escreve posts de divulgação de produto para grupos de Facebook no Brasil, no estilo",
-    '"achadinhos". Escreva UMA mini-história curta, em português do Brasil, primeira pessoa,',
-    "tom de conversa espontânea entre amigos — como uma pessoa comum contando um achado, não",
-    "como propaganda de loja.",
+    "Você escreve posts de divulgação para grupos de Facebook no Brasil, no estilo “achadinhos”.",
+    "Escreva UMA mini-história curta em português do Brasil, primeira pessoa, como uma pessoa",
+    "comum contando pros amigos um produto que ela achou.",
     "",
+    "Copie EXATAMENTE o formato, o ritmo e o tom deste exemplo (é o padrão obrigatório — mude",
+    "só o conteúdo pro produto de agora):",
+    "",
+    "<exemplo>",
+    "Gente, eu estava precisando de uma coisa pra deixar meus cílios mais bonitos sem precisar",
+    "ficar indo toda hora fazer extensão 😅",
+    "Foi aí que encontrei esse Kit de Extensão DIY para Cílios 40D, com vários tamanhos e 200",
+    "unidades.",
+    "Achei muito interessante porque dá pra fazer em casa e escolher o efeito que você quer, sem",
+    "precisar comprar vários produtos separados.",
+    "E o melhor: encontrei por um preço que eu realmente não esperava 👀🔥",
+    "Pra quem também gosta de cílios mais destacados, vale a pena dar uma olhada!",
+    "</exemplo>",
+    "",
+    "AGORA ESCREVA A MESMA COISA PARA ESTE PRODUTO:",
     `PRODUTO: "${title}"`,
     category ? `CATEGORIA: ${category}` : "",
     priceInfo,
     "",
-    "ESTRUTURA OBRIGATÓRIA (5 a 6 linhas curtas, uma por parágrafo, separadas por quebra de linha):",
-    "1. Abertura com uma necessidade/incômodo REAL e específico que ESTE produto resolve.",
-    "   Comece com algo como “Gente,” / “Pessoal,” e conte a situação em 1 frase.",
-    "2. “Foi aí que encontrei” + o nome do produto, citando 1 ou 2 características concretas que",
-    "   aparecem no próprio título (tamanho, quantidade, material, modelo, cor, potência etc.).",
-    "3. Por que achou interessante — o benefício prático, ligado à necessidade da linha 1.",
-    "4. Uma linha sobre o preço ter surpreendido (só se o preço foi informado acima).",
-    "5. Fechamento convidando quem tem o mesmo problema a dar uma olhada.",
+    "AS 5 LINHAS, NESTA ORDEM (uma por linha, separadas por quebra de linha simples):",
+    '1. "Gente, eu estava precisando de..." — a necessidade concreta que ESTE produto resolve,',
+    "   contada como algo que aconteceu com você. 1 emoji leve no fim (😅 ou parecido).",
+    '2. "Foi aí que encontrei esse " + nome do produto + 1 ou 2 características concretas que',
+    "   aparecem no próprio título (quantidade, tamanho, modelo, material, cor, potência…).",
+    '3. "Achei muito interessante porque " + o benefício prático, ligado à linha 1.',
+    priceInfo.startsWith("O preço não")
+      ? '4. "E o melhor: encontrei por um preço que eu realmente não esperava 👀🔥"'
+      : '4. "E o melhor: encontrei por " + o preço informado acima + " 👀🔥"',
+    '5. "Pra quem também..." — convida quem tem o mesmo problema a dar uma olhada. Termina com "!"',
     "",
-    "REGRAS:",
-    "- A história TEM que ter conexão direta com este produto específico. Nada genérico que",
-    "  serviria pra qualquer produto.",
-    "- Use no máximo 4 emojis no texto todo, espalhados de forma natural.",
-    '- Use "encontrei"/"achei" em vez de afirmar que usou por meses — não invente resultado,',
-    "  prazo, testes, laudo, nem promessa de cura ou de saúde.",
-    "- Não invente característica que não dá pra deduzir do título do produto.",
-    "- Não escreva hashtags, não escreva título, não escreva nenhum link e não escreva nenhuma",
-    "  observação sua: devolva SOMENTE o texto da história, pronto pra colar.",
+    "PROIBIDO:",
+    "- Começar com pergunta retórica (“quem mais aqui…”, “você também…”, “já passou por isso?”).",
+    "  A linha 1 é SEMPRE um relato seu, no passado, começando com “Gente, eu estava…”.",
+    "- Tom de anúncio/loja: “imperdível”, “corre”, “oferta relâmpago”, “transforme seu”,",
+    "  “sonha com”, “efeito power”, CAPS LOCK, ponto de exclamação em toda linha.",
+    "- Inventar característica que não dá pra deduzir do título, ou prometer resultado, prazo,",
+    "  cura ou efeito de saúde. Nada de dizer que usou por semanas/meses — você só ENCONTROU.",
+    "- Hashtag, link, título, negrito, bullet, aspas envolvendo o texto ou qualquer comentário",
+    "  seu. Devolva SOMENTE as 5 linhas, prontas pra colar.",
+    "- Passar de 4 emojis no texto todo.",
     variant && variant > 0
-      ? `- Esta é a variação nº ${variant + 1}: escreva uma história com abertura e ângulo diferentes das anteriores.`
+      ? `\nEsta é a variação nº ${variant + 1}: mantenha exatamente o mesmo formato das 5 linhas, mas mude a necessidade da linha 1 e o benefício da linha 3 pra um ângulo diferente do produto.`
       : "",
   ]
     .filter(Boolean)
@@ -117,9 +134,10 @@ export async function generateProductStory(input: ProductStoryInput): Promise<{ 
     body: JSON.stringify({
       contents: [{ parts: [{ text: buildPrompt(input) }] }],
       generationConfig: {
-        // Alto o suficiente pra cada clique em "Regenerar" dar uma história
-        // diferente, sem viajar e inventar característica do produto.
-        temperature: 1.1,
+        // Baixa de propósito: o formato das 5 linhas é rígido (copia o exemplo),
+        // a variação tem que vir do conteúdo, não do modelo inventando estrutura
+        // e tom de propaganda.
+        temperature: 0.85,
         // O 2.5-flash vem com "thinking" ligado por padrão, e esses tokens de
         // raciocínio saem do mesmo orçamento da resposta — com o limite baixo a
         // história vinha cortada na 1ª linha. Desligar o thinking (a tarefa é
