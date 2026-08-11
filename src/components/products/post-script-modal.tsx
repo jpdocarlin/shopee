@@ -21,9 +21,6 @@ import { generateProductStory } from "@/lib/gemini-text.functions";
 // a página) — evita gastar cota da IA gerando a mesma foto de novo toda vez
 // que o usuário reabre o post do mesmo produto.
 const enhancedPhotoCache = new Map<string, string>();
-// Mesma ideia pra história: reabrir o post do mesmo produto não gasta cota de
-// novo. O botão "Outra história" ignora o cache de propósito.
-const storyCache = new Map<string, string>();
 
 async function imageUrlToPngBlob(url: string): Promise<Blob> {
   const res = await fetch(url);
@@ -131,24 +128,11 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, product?.image, product?.title, product?.category]);
 
-  // Gera a história do produto. `force` = clique em "Outra história": ignora o
-  // cache e pede uma variação nova pro modelo.
+  // Só roda no clique em "Reescrever com IA" — cada clique pede uma variação
+  // diferente da história pro modelo.
   const runStoryGeneration = useCallback(
-    (target: ModalProduct, force: boolean) => {
-      const cacheKey = target.title;
-
-      if (!force) {
-        const cached = storyCache.get(cacheKey);
-        if (cached) {
-          setStory(cached);
-          setStoryStatus("done");
-          return;
-        }
-        storyVariantRef.current = 0;
-      } else {
-        storyVariantRef.current += 1;
-      }
-
+    (target: ModalProduct) => {
+      storyVariantRef.current += 1;
       const requestId = ++storyRequestIdRef.current;
       setStoryStatus("generating");
 
@@ -163,29 +147,29 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
       })
         .then((result) => {
           if (storyRequestIdRef.current !== requestId) return; // trocou de produto no meio
-          storyCache.set(cacheKey, result.story);
           setStory(result.story);
           setStoryStatus("done");
         })
         .catch((err) => {
           if (storyRequestIdRef.current !== requestId) return;
           console.error("[PostScriptModal] falha ao gerar história:", err);
-          // Fallback local — o usuário nunca fica sem post por causa da IA.
-          setStory(buildFallbackStory(target));
+          // Volta pro texto local — o usuário nunca fica sem post por causa da IA.
+          setStory(null);
           setStoryStatus("error");
         });
     },
     [generateStory],
   );
 
+  // Ao abrir, NÃO chama a IA: mostra na hora a história montada localmente, que
+  // segue o formato certo e cita o produto. A IA só entra quando o usuário
+  // clica em "Outra história" — antes ela sobrescrevia o texto bom por um pior
+  // alguns segundos depois de abrir o modal.
   useEffect(() => {
-    if (!open || !product) {
-      setStory(null);
-      setStoryStatus("idle");
-      return;
-    }
-    runStoryGeneration(product, false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setStory(null);
+    setStoryStatus("idle");
+    storyVariantRef.current = 0;
+    storyRequestIdRef.current += 1; // descarta resposta de um produto anterior
   }, [open, product?.title]);
 
   const script = useMemo(() => {
@@ -347,16 +331,32 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
           ))}
 
           {tone === "historia" && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="ml-auto h-7 gap-1.5 text-[11.5px]"
-              onClick={() => runStoryGeneration(product, true)}
-              disabled={isWritingStory}
-            >
-              <RefreshCw className={cn("size-3", isWritingStory && "animate-spin")} />
-              {isWritingStory ? "Escrevendo…" : "Outra história"}
-            </Button>
+            <div className="ml-auto flex items-center gap-1">
+              {story && !isWritingStory && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-7 text-[11.5px]"
+                  onClick={() => {
+                    storyRequestIdRef.current += 1;
+                    setStory(null);
+                    setStoryStatus("idle");
+                  }}
+                >
+                  Voltar ao original
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 gap-1.5 text-[11.5px]"
+                onClick={() => runStoryGeneration(product)}
+                disabled={isWritingStory}
+              >
+                <RefreshCw className={cn("size-3", isWritingStory && "animate-spin")} />
+                {isWritingStory ? "Escrevendo…" : "Reescrever com IA"}
+              </Button>
+            </div>
           )}
         </div>
 
@@ -381,8 +381,7 @@ export function PostScriptModal({ product, link, open, onOpenChange }: Props) {
 
         {tone === "historia" && storyStatus === "error" && (
           <p className="text-[11.5px] text-muted-foreground">
-            A IA não respondeu agora, então usei um texto padrão. Clique em "Outra história" pra
-            tentar de novo.
+            A IA não respondeu agora — o texto abaixo é o original, que já está pronto pra colar.
           </p>
         )}
 
