@@ -38,8 +38,19 @@ import { useProfileStore } from "@/stores/profile-store";
 import { useAffiliateStore } from "@/stores/affiliate-store";
 import { useFavoritesStore } from "@/stores/favorites-store";
 import { useAuthStore } from "@/stores/auth-store";
+import { useDemoBoostStore } from "@/stores/demo-boost-store";
+import { useIsOwner } from "@/lib/owner";
 import { cn } from "@/lib/utils";
 import { useT } from "@/i18n/translations";
+
+const ZERO_STATS = {
+  earningsCents: 0,
+  earningsDeltaPct: 0,
+  clicks: 0,
+  clicksToday: 0,
+  sales: 0,
+  activeProducts: 0,
+};
 
 const PERIODS: DashboardPeriod[] = ["today", "7d", "30d"];
 
@@ -102,6 +113,11 @@ function IndexPage() {
 
   const marketplaceConnected = useAuthStore((s) => Boolean(s.marketplaceConnected));
   const hasAnyLink = useAffiliateStore((s) => Object.keys(s.links).length > 0);
+  const isOwner = useIsOwner();
+  // Vendas simuladas pela bolinha do header (demonstração) — somam por cima
+  // dos números estáticos, sem alterar os dados de origem.
+  const boostEarningsCents = useDemoBoostStore((s) => s.extraEarningsCents);
+  const boostSales = useDemoBoostStore((s) => s.extraSales);
   const [contentDone, setContentDone] = useState(false);
   const favorites = useFavoritesStore((s) => s.ids);
   const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
@@ -124,7 +140,18 @@ function IndexPage() {
     if (id === "content") setContentDone((prev) => !prev);
   };
 
-  const periodStats = PERIOD_STATS[period];
+  // Dados de demonstração só aparecem pra conta do dono — qualquer outra
+  // conta que logar vê a ferramenta zerada, como um usuário novo de verdade.
+  // As vendas simuladas pela bolinha do header entram somando por cima.
+  const basePeriodStats = isOwner ? PERIOD_STATS[period] : ZERO_STATS;
+  const periodStats = useMemo(
+    () => ({
+      ...basePeriodStats,
+      earningsCents: basePeriodStats.earningsCents + boostEarningsCents,
+      sales: basePeriodStats.sales + boostSales,
+    }),
+    [basePeriodStats, boostEarningsCents, boostSales],
+  );
 
   const statCards = useMemo(
     () => [
@@ -132,7 +159,9 @@ function IndexPage() {
         key: "earnings",
         label: "Ganhos no período",
         value: formatBRL(periodStats.earningsCents),
-        delta: `+${periodStats.earningsDeltaPct.toLocaleString("pt-BR", { maximumFractionDigits: 1 })}%`,
+        delta: isOwner
+          ? `+${periodStats.earningsDeltaPct.toLocaleString("pt-BR", { maximumFractionDigits: 1 })}%`
+          : "Sem vendas ainda",
         icon: Wallet,
         highlight: true,
       },
@@ -140,7 +169,7 @@ function IndexPage() {
         key: "clicks",
         label: "Cliques no seu link",
         value: formatCompact(periodStats.clicks),
-        delta: `${periodStats.clicksToday} hoje`,
+        delta: isOwner ? `${periodStats.clicksToday} hoje` : "0 hoje",
         icon: MousePointerClick,
         highlight: false,
       },
@@ -148,16 +177,23 @@ function IndexPage() {
         key: "sales",
         label: "Vendas atribuídas",
         value: String(periodStats.sales),
-        delta: `${periodStats.activeProducts} produtos ativos`,
+        delta: isOwner ? `${periodStats.activeProducts} produtos ativos` : "0 produtos ativos",
         icon: ShoppingCart,
         highlight: false,
       },
     ],
-    [periodStats],
+    [periodStats, isOwner],
   );
 
-  const dailySeries = DAILY_SERIES_BY_PERIOD[period];
-  const topSold = TOP_SOLD_BY_PERIOD[period];
+  const dailySeries = useMemo(
+    () =>
+      isOwner
+        ? DAILY_SERIES_BY_PERIOD[period]
+        : DAILY_SERIES_BY_PERIOD[period].map((point) => ({ ...point, clicks: 0, conversion: 0 })),
+    [period, isOwner],
+  );
+  const topSold = isOwner ? TOP_SOLD_BY_PERIOD[period] : [];
+  const recentActivity = isOwner ? RECENT_ACTIVITY : [];
 
   return (
     <div className="space-y-7">
@@ -421,34 +457,42 @@ function IndexPage() {
             <p className="text-[14px] font-medium text-foreground">Atividade recente</p>
           </div>
           <div className="divide-y divide-border">
-            {RECENT_ACTIVITY.map((event) => (
-              <div key={event.id} className="flex items-center gap-3 px-5 py-3.5">
-                <span
-                  className={cn(
-                    "size-1.5 shrink-0 rounded-full",
-                    event.kind === "sale" && "bg-success",
-                    event.kind === "click" && "bg-brand",
-                    event.kind === "system" && "bg-muted-foreground",
+            {recentActivity.length === 0 ? (
+              <p className="px-5 py-6 text-[13px] text-muted-foreground">
+                Nenhuma atividade ainda — assim que você tiver cliques ou vendas, aparecem aqui.
+              </p>
+            ) : (
+              recentActivity.map((event) => (
+                <div key={event.id} className="flex items-center gap-3 px-5 py-3.5">
+                  <span
+                    className={cn(
+                      "size-1.5 shrink-0 rounded-full",
+                      event.kind === "sale" && "bg-success",
+                      event.kind === "click" && "bg-brand",
+                      event.kind === "system" && "bg-muted-foreground",
+                    )}
+                  />
+                  <p className="min-w-0 flex-1 truncate text-[13px] text-foreground/90">
+                    {event.label}
+                  </p>
+                  {event.amountCents ? (
+                    <span className="shrink-0 text-[13px] font-semibold tabular-nums text-success">
+                      {formatBRL(event.amountCents)}
+                    </span>
+                  ) : (
+                    <span className="shrink-0 text-[11px] text-muted-foreground">{event.time}</span>
                   )}
-                />
-                <p className="min-w-0 flex-1 truncate text-[13px] text-foreground/90">
-                  {event.label}
-                </p>
-                {event.amountCents ? (
-                  <span className="shrink-0 text-[13px] font-semibold tabular-nums text-success">
-                    {formatBRL(event.amountCents)}
-                  </span>
-                ) : (
-                  <span className="shrink-0 text-[11px] text-muted-foreground">{event.time}</span>
-                )}
-              </div>
-            ))}
+                </div>
+              ))
+            )}
           </div>
         </Reveal>
       </div>
 
       <p className="text-[12px] text-muted-foreground">
-        Dados de demonstração — conecte sua conta Shopee/Mercado Livre pra ver seus números reais.
+        {isOwner
+          ? "Dados de demonstração — conecte sua conta Shopee/Mercado Livre pra ver seus números reais."
+          : "Suas vendas e ganhos aparecem aqui assim que começarem a entrar."}
       </p>
     </div>
   );

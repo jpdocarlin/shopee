@@ -3,7 +3,7 @@
 // inside a server function handler — never import it at the top level of a
 // route file or a *.functions.ts module (those ship to the client bundle).
 // Load inside server handlers: const { generateProductPhoto } = await import("@/lib/gemini-image.server");
-import { getScenarioPrompt, getShotTypePrompt } from "@/data/video-scenes";
+import { getScenarioPrompt, getShotType, getShotTypePrompt } from "@/data/video-scenes";
 
 type GenerateImageResult = {
   dataUrl: string;
@@ -149,6 +149,42 @@ export async function generateProductPhoto({
   return callInteractionsApi(prompt, "1:1");
 }
 
+// Refaz a foto original do produto (geralmente comprimida/mal iluminada, como
+// vem do catálogo do marketplace) numa versão de qualidade profissional de
+// catálogo, mantendo o produto idêntico — usado no post pronto pro Facebook.
+export async function generateEnhancedProductPhoto({
+  title,
+  category,
+  productImageUrl,
+}: {
+  title: string;
+  category?: string;
+  productImageUrl: string;
+}): Promise<GenerateImageResult> {
+  const referenceImage = await fetchImageAsBase64(productImageUrl);
+
+  const productInstruction = referenceImage
+    ? [
+        "Use exatamente o produto mostrado na imagem de referência anexada — mesma cor, formato,",
+        "material, rótulo, textura e proporções. Não redesenhe, não substitua, não estilize e não",
+        "adicione nada ao produto (sem acessórios extras, sem itens novos, sem alterar o design):",
+        "ele deve ficar idêntico à foto de referência, só que fotografado com qualidade profissional.",
+      ].join(" ")
+    : `Produto: "${title}"${category ? ` (categoria: ${category})` : ""}.`;
+
+  const prompt = [
+    "Refaça esta foto de produto de e-commerce com qualidade de catálogo profissional, altíssima",
+    "resolução e nitidez.",
+    productInstruction,
+    "Fundo neutro liso (branco ou cinza bem claro) e levemente desfocado, iluminação de estúdio",
+    "suave e uniforme, produto perfeitamente centralizado e em foco total, sem ruído, sem",
+    "pixelização, sem artefato de compressão, sem texto, sem marca d'água, sem pessoas, sem",
+    "sombras duras.",
+  ].join(" ");
+
+  return callInteractionsApi(prompt, "1:1", referenceImage);
+}
+
 export async function generateVideoScenePhoto({
   title,
   category,
@@ -167,6 +203,7 @@ export async function generateVideoScenePhoto({
   shotTypeId: string;
 }): Promise<GenerateImageResult> {
   const shot = getShotTypePrompt(shotTypeId, genderId);
+  const shotNegative = getShotType(shotTypeId).negative;
   const scenario = getScenarioPrompt(scenarioId, customScenario);
   const referenceImage = await fetchImageAsBase64(productImageUrl);
 
@@ -183,7 +220,8 @@ export async function generateVideoScenePhoto({
   const prompt = [
     "Still de referência fotorrealista pra gravação de vídeo de rede social (estilo achadinhos/UGC), formato vertical.",
     productInstruction,
-    `${shot}.`,
+    `ENQUADRAMENTO (siga à risca): ${shot}.`,
+    `NÃO PODE APARECER: ${shotNegative}.`,
     `Cenário: ${scenario}.`,
     "Super realista, iluminação natural, sem texto sobreposto na imagem, sem marca d'água,",
     "parece still real de vídeo autêntico e não foto de estúdio posada.",

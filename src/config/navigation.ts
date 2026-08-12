@@ -8,6 +8,7 @@ import {
   Facebook,
   Link2,
   Trophy,
+  Clapperboard,
   type LucideIcon,
 } from "lucide-react";
 
@@ -92,6 +93,12 @@ export const navigation: NavGroup[] = [
         icon: Sparkles,
         description: "Geração de conteúdo e insights",
         badge: "Beta",
+      },
+      {
+        label: "Editor de Vídeo",
+        to: "/editor-video",
+        icon: Clapperboard,
+        description: "Corte e legende seu vídeo direto no navegador",
       },
       {
         label: "Integrações",

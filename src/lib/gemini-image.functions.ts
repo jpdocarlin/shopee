@@ -30,6 +30,13 @@ export const generateProductPhoto = createServerFn({ method: "POST" })
     return result;
   });
 
+export const generateEnhancedProductPhoto = createServerFn({ method: "POST" })
+  .validator((data: { title: string; category?: string; productImageUrl: string }) => data)
+  .handler(async ({ data }) => {
+    const { generateEnhancedProductPhoto: generate } = await import("@/lib/gemini-image.server");
+    return generate(data);
+  });
+
 export const generateVideoScenePhoto = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .validator(

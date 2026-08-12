@@ -50,6 +50,28 @@ export const Route = createFileRoute("/_shell/ia")({
 type MediaType = "foto" | "video";
 type GenStatus = "idle" | "generating" | "done";
 
+async function dataUrlToPngBlob(dataUrl: string): Promise<Blob> {
+  const res = await fetch(dataUrl);
+  const blob = await res.blob();
+  if (blob.type === "image/png") return blob;
+
+  // Reencoda pra PNG — é o único formato de imagem com suporte garantido
+  // na Clipboard API dos navegadores.
+  const bitmap = await createImageBitmap(blob);
+  const canvas = document.createElement("canvas");
+  canvas.width = bitmap.width;
+  canvas.height = bitmap.height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("Canvas não suportado nesse navegador.");
+  ctx.drawImage(bitmap, 0, 0);
+  return await new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (b) => (b ? resolve(b) : reject(new Error("Falha ao converter a imagem."))),
+      "image/png",
+    );
+  });
+}
+
 function FotoScriptTab() {
   const [selected, setSelected] = useState<DemoProduct | null>(null);
   const [mediaType, setMediaType] = useState<MediaType | null>(null);
@@ -110,6 +132,32 @@ function FotoScriptTab() {
       toast.success("Depoimento copiado");
     } catch {
       toast.info('Copie manualmente pelo botão "Criar script do produto" acima');
+    }
+  };
+
+  const handleCopyPhotoAndScript = async () => {
+    if (!photoUrl) {
+      await handleCopyScript();
+      return;
+    }
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          "image/png": dataUrlToPngBlob(photoUrl),
+          "text/plain": new Blob([lastScript], { type: "text/plain" }),
+        }),
+      ]);
+      toast.success("Foto e legenda copiadas — é só colar direto no grupo");
+    } catch {
+      // Navegador sem suporte a copiar imagem + texto juntos (ex: Firefox).
+      try {
+        await navigator.clipboard.writeText(lastScript);
+        toast.info(
+          "Esse navegador não deixa copiar foto e legenda juntas — copiei só a legenda. Baixe a foto ao lado.",
+        );
+      } catch {
+        toast.info('Copie manualmente pelo botão "Criar script do produto" acima');
+      }
     }
   };
 
@@ -240,19 +288,36 @@ function FotoScriptTab() {
           </p>
 
           <div className="mb-4 flex flex-wrap gap-2.5">
-            <Button variant="outline" size="sm" className="gap-2" onClick={handleCopyScript}>
+            <Button
+              variant="default"
+              size="sm"
+              className="gap-2"
+              onClick={handleCopyPhotoAndScript}
+            >
               <Copy className="size-3.5" />
-              Copiar script
+              {photoUrl ? "Copiar foto + legenda" : "Copiar script"}
             </Button>
             {photoUrl && (
-              <Button variant="outline" size="sm" className="gap-2" asChild>
-                <a href={photoUrl} download={`${selected.id}-foto.jpg`}>
-                  <Download className="size-3.5" />
-                  Baixar foto
-                </a>
-              </Button>
+              <>
+                <Button variant="outline" size="sm" className="gap-2" onClick={handleCopyScript}>
+                  <Copy className="size-3.5" />
+                  Só o texto
+                </Button>
+                <Button variant="outline" size="sm" className="gap-2" asChild>
+                  <a href={photoUrl} download={`${selected.id}-foto.jpg`}>
+                    <Download className="size-3.5" />
+                    Baixar foto
+                  </a>
+                </Button>
+              </>
             )}
           </div>
+          {photoUrl && (
+            <p className="mb-4 -mt-2 text-[11.5px] text-muted-foreground">
+              "Copiar foto + legenda" cola os dois juntos direto na caixa de post do grupo (no
+              Chrome). Se o grupo só aceitar um por vez, use os botões separados ao lado.
+            </p>
+          )}
 
           <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-3">
             {groupsInfo.groups.map((group) => (

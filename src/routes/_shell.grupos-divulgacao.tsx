@@ -267,6 +267,7 @@ function GruposDivulgacaoPage() {
             ? {
                 title: postProduct.title,
                 image: postProduct.image,
+                category: postProduct.demoProduct?.category,
                 priceCents: postProduct.demoProduct?.priceCents,
                 originalPriceCents: postProduct.demoProduct?.originalPriceCents,
                 rating: postProduct.demoProduct?.rating,
