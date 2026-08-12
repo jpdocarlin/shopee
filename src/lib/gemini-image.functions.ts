@@ -31,10 +31,23 @@ export const generateProductPhoto = createServerFn({ method: "POST" })
   });
 
 export const generateEnhancedProductPhoto = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .validator((data: { title: string; category?: string; productImageUrl: string }) => data)
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    const { enforceAiRateLimit, logAiUsage } = await import("@/lib/ai-usage.server");
+    await enforceAiRateLimit(context.supabase, context.userId);
+
     const { generateEnhancedProductPhoto: generate } = await import("@/lib/gemini-image.server");
-    return generate(data);
+    const result = await generate(data);
+
+    await logAiUsage(context.supabase, {
+      userId: context.userId,
+      kind: "enhanced_photo",
+      model: "gemini-2.5-flash-image",
+      prompt: data.title,
+      output: "[imagem gerada]",
+    });
+    return result;
   });
 
 export const generateVideoScenePhoto = createServerFn({ method: "POST" })
