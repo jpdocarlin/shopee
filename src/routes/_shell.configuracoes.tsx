@@ -8,6 +8,7 @@ import {
   CreditCard,
   Globe,
   KeyRound,
+  Loader2,
   LogOut,
   Mail,
   Monitor,
@@ -37,7 +38,7 @@ import { cn } from "@/lib/utils";
 import { useT } from "@/i18n/translations";
 import { useLocaleStore } from "@/stores/locale-store";
 import { useAuthStore } from "@/stores/auth-store";
-import { updateProfileFullName } from "@/lib/profile";
+import { updateProfileFullName, updateProfilePlan } from "@/lib/profile";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_shell/configuracoes")({
@@ -185,53 +186,172 @@ function PerfilTab() {
   );
 }
 
+// Planos reais vigentes. Não temos gateway de pagamento integrado pra saber
+// automaticamente em qual plano cada pessoa está — por isso ela declara aqui
+// qual está usando, e isso fica salvo em profiles.plan.
+const PLAN_OPTIONS: {
+  value: "mensal" | "vitalicio";
+  name: string;
+  price: string;
+  detail: string;
+}[] = [
+  {
+    value: "mensal",
+    name: "Plano Mensal",
+    price: "R$ 149,00",
+    detail: "por mês",
+  },
+  {
+    value: "vitalicio",
+    name: "Plano Vitalício",
+    price: "R$ 249,00",
+    detail: "pagamento único",
+  },
+];
+
 function PlanoTab() {
   const t = useT();
+  const userId = useAuthStore((s) => s.session?.user.id);
+  const currentPlan = useAuthStore((s) => s.profile?.plan ?? null);
+  const setProfile = useAuthStore((s) => s.setProfile);
+  const [selected, setSelected] = useState<"mensal" | "vitalicio" | null>(currentPlan);
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    if (!userId || !selected) return;
+    setSaving(true);
+    const { data, error } = await updateProfilePlan(userId, selected);
+    setSaving(false);
+    if (error) {
+      toast.error(t("Não foi possível salvar agora"), { description: error.message });
+      return;
+    }
+    if (data) setProfile(data);
+    toast.success(t("Plano atualizado"));
+  };
+
   return (
     <div className="space-y-5">
-      <SettingsCard title={t("Seu plano")}>
-        <div className="flex flex-col justify-between gap-4 rounded-lg border border-brand/30 bg-brand/5 p-4 sm:flex-row sm:items-center">
-          <div>
-            <p className="text-[13.5px] font-semibold text-foreground">{t("Plano Pro")}</p>
-            <p className="mt-0.5 text-[12.5px] text-muted-foreground">
-              {t("R$ 49,00/mês · próxima cobrança em 5 de setembro")}
-            </p>
-          </div>
-          <Button
-            variant="outline"
-            onClick={() => toast.info(t("Planos disponíveis em breve nesta tela"))}
-          >
-            {t("Trocar plano")}
-          </Button>
-        </div>
-      </SettingsCard>
-
       <SettingsCard
-        title={t("Cobrança")}
-        description={t("Forma de pagamento e histórico de faturas.")}
+        title={t("Seu plano")}
+        description={t(
+          "A gente ainda não sabe automaticamente qual plano você está usando — selecione abaixo.",
+        )}
       >
-        <div className="flex items-center justify-between gap-3 rounded-lg border border-border bg-card px-4 py-3">
-          <div className="flex items-center gap-2.5 text-[13px] text-foreground">
-            <CreditCard className="size-4 text-muted-foreground" />
-            {t("Cartão terminado em 4242")}
-          </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => toast.info(t("Atualização de cartão em breve nesta tela"))}
-          >
-            {t("Atualizar")}
-          </Button>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {PLAN_OPTIONS.map((plan) => {
+            const isSelected = selected === plan.value;
+            return (
+              <button
+                key={plan.value}
+                type="button"
+                onClick={() => setSelected(plan.value)}
+                className={cn(
+                  "flex flex-col gap-1 rounded-lg border p-4 text-left transition-colors",
+                  isSelected
+                    ? "border-brand bg-brand/5"
+                    : "border-border bg-card hover:border-ring/40",
+                )}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-[13.5px] font-semibold text-foreground">{t(plan.name)}</p>
+                  {isSelected && <Check className="size-4 shrink-0 text-brand" />}
+                </div>
+                <p className="text-[15px] font-semibold text-foreground">{plan.price}</p>
+                <p className="text-[12px] text-muted-foreground">{t(plan.detail)}</p>
+              </button>
+            );
+          })}
         </div>
         <Button
-          variant="outline"
+          onClick={handleSave}
+          disabled={saving || !selected || selected === currentPlan}
           className="gap-2"
-          onClick={() => toast.info(t("Nenhuma fatura anterior ainda"))}
         >
-          {t("Ver faturas")}
+          {saving ? <Loader2 className="size-4 animate-spin" /> : <Check className="size-4" />}
+          {t("Salvar plano")}
         </Button>
+        {currentPlan && (
+          <p className="text-[12px] text-muted-foreground">
+            {t("Plano atual:")} {t(PLAN_OPTIONS.find((p) => p.value === currentPlan)?.name ?? "")}
+          </p>
+        )}
       </SettingsCard>
     </div>
+  );
+}
+
+function AlterarSenhaCard() {
+  const t = useT();
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  const tooShort = newPassword.length > 0 && newPassword.length < 6;
+  const mismatch = confirmPassword.length > 0 && newPassword !== confirmPassword;
+  const isValid = newPassword.length >= 6 && newPassword === confirmPassword;
+
+  const handleChangePassword = async () => {
+    if (!isValid) return;
+    setSaving(true);
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    setSaving(false);
+    if (error) {
+      toast.error(t("Não foi possível alterar a senha"), { description: error.message });
+      return;
+    }
+    setNewPassword("");
+    setConfirmPassword("");
+    toast.success(t("Senha alterada com sucesso"));
+  };
+
+  return (
+    <SettingsCard title={t("Senha")} description={t("Escolha uma nova senha para sua conta.")}>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="settings-new-password">{t("Nova senha")}</Label>
+          <Input
+            id="settings-new-password"
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            placeholder={t("Mínimo de 6 caracteres")}
+            autoComplete="new-password"
+          />
+          {tooShort && (
+            <p className="text-[11.5px] text-destructive">
+              {t("A senha precisa ter pelo menos 6 caracteres.")}
+            </p>
+          )}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="settings-confirm-password">{t("Confirmar nova senha")}</Label>
+          <Input
+            id="settings-confirm-password"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder={t("Repita a nova senha")}
+            autoComplete="new-password"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") void handleChangePassword();
+            }}
+          />
+          {mismatch && (
+            <p className="text-[11.5px] text-destructive">{t("As senhas não coincidem.")}</p>
+          )}
+        </div>
+      </div>
+      <Button
+        variant="outline"
+        className="w-fit gap-2"
+        onClick={handleChangePassword}
+        disabled={saving || !isValid}
+      >
+        {saving ? <Loader2 className="size-4 animate-spin" /> : <KeyRound className="size-4" />}
+        {t("Alterar senha")}
+      </Button>
+    </SettingsCard>
   );
 }
 
@@ -241,20 +361,7 @@ function SegurancaTab() {
 
   return (
     <div className="space-y-5">
-      <SettingsCard title={t("Senha")}>
-        <Button
-          variant="outline"
-          className="w-fit gap-2"
-          onClick={() =>
-            toast.success(t("Link de redefinição enviado"), {
-              description: t("Confira sua caixa de entrada em conta@shoppfy.com"),
-            })
-          }
-        >
-          <KeyRound className="size-4" />
-          {t("Alterar senha")}
-        </Button>
-      </SettingsCard>
+      <AlterarSenhaCard />
 
       <SettingsCard
         title={t("Verificação em duas etapas")}

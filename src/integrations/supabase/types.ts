@@ -754,6 +754,7 @@ export type Database = {
           id: string
           onboarding_done: boolean
           phone: string | null
+          plan: Database["public"]["Enums"]["billing_plan"] | null
           updated_at: string
         }
         Insert: {
@@ -766,6 +767,7 @@ export type Database = {
           id: string
           onboarding_done?: boolean
           phone?: string | null
+          plan?: Database["public"]["Enums"]["billing_plan"] | null
           updated_at?: string
         }
         Update: {
@@ -778,6 +780,7 @@ export type Database = {
           id?: string
           onboarding_done?: boolean
           phone?: string | null
+          plan?: Database["public"]["Enums"]["billing_plan"] | null
           updated_at?: string
         }
         Relationships: []
@@ -1015,6 +1018,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "staff" | "affiliate"
+      billing_plan: "mensal" | "vitalicio"
       commission_status: "pending" | "approved" | "paid" | "canceled"
       order_status:
         | "pending"
@@ -1159,6 +1163,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "staff", "affiliate"],
+      billing_plan: ["mensal", "vitalicio"],
       commission_status: ["pending", "approved", "paid", "canceled"],
       order_status: [
         "pending",

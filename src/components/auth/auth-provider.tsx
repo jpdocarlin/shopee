@@ -53,7 +53,7 @@ export function AuthProvider() {
       const [{ data: profile }, { data: accounts }] = await Promise.all([
         supabase
           .from("profiles")
-          .select("id, email, full_name, onboarding_done")
+          .select("id, email, full_name, onboarding_done, plan")
           .eq("id", userId)
           .maybeSingle(),
         supabase.from("marketplace_accounts").select("id").limit(1),

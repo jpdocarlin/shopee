@@ -6,6 +6,9 @@ export type Profile = {
   email: string | null;
   full_name: string | null;
   onboarding_done: boolean;
+  // Plano autodeclarado em Configurações — não temos gateway de pagamento
+  // integrado, então a pessoa escolhe manualmente qual plano está usando.
+  plan: "mensal" | "vitalicio" | null;
 };
 
 type AuthState = {

@@ -31,6 +31,8 @@ export function EditProfileModal({ open, onOpenChange }: Props) {
     if (userId) {
       setSaving(true);
       const { data, error } = await updateProfileFullName(userId, draft);
+      // note: updateProfileFullName já retorna a coluna "plan" no select,
+      // então setProfile(data) abaixo preserva o plano atual sem sobrescrever.
       setSaving(false);
       if (error) {
         toast.error("Não foi possível salvar agora", { description: error.message });
