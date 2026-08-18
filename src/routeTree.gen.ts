@@ -25,6 +25,7 @@ import { Route as ShellMeusLinksRouteImport } from './routes/_shell.meus-links'
 import { Route as ShellPedidosRouteImport } from './routes/_shell.pedidos'
 import { Route as ShellProdutosRouteImport } from './routes/_shell.produtos'
 import { Route as ShellRankingRouteImport } from './routes/_shell.ranking'
+import { Route as ApiWebhooksApplyfyRouteImport } from './routes/api.webhooks.applyfy'
 
 const ShellRoute = ShellRouteImport.update({
   id: '/_shell',
@@ -105,6 +106,11 @@ const ShellRankingRoute = ShellRankingRouteImport.update({
   path: '/ranking',
   getParentRoute: () => ShellRoute,
 } as any)
+const ApiWebhooksApplyfyRoute = ApiWebhooksApplyfyRouteImport.update({
+  id: '/api/webhooks/applyfy',
+  path: '/api/webhooks/applyfy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof ShellIndexRoute
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/pedidos': typeof ShellPedidosRoute
   '/produtos': typeof ShellProdutosRoute
   '/ranking': typeof ShellRankingRoute
+  '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -139,6 +146,7 @@ export interface FileRoutesByTo {
   '/produtos': typeof ShellProdutosRoute
   '/ranking': typeof ShellRankingRoute
   '/': typeof ShellIndexRoute
+  '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -158,6 +166,7 @@ export interface FileRoutesById {
   '/_shell/produtos': typeof ShellProdutosRoute
   '/_shell/ranking': typeof ShellRankingRoute
   '/_shell/': typeof ShellIndexRoute
+  '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -177,6 +186,7 @@ export interface FileRouteTypes {
     | '/pedidos'
     | '/produtos'
     | '/ranking'
+    | '/api/webhooks/applyfy'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -194,6 +204,7 @@ export interface FileRouteTypes {
     | '/produtos'
     | '/ranking'
     | '/'
+    | '/api/webhooks/applyfy'
   id:
     | '__root__'
     | '/_shell'
@@ -212,11 +223,13 @@ export interface FileRouteTypes {
     | '/_shell/produtos'
     | '/_shell/ranking'
     | '/_shell/'
+    | '/api/webhooks/applyfy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   ShellRoute: typeof ShellRouteWithChildren
   LoginRoute: typeof LoginRoute
+  ApiWebhooksApplyfyRoute: typeof ApiWebhooksApplyfyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -333,6 +346,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellRankingRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/api/webhooks/applyfy': {
+      id: '/api/webhooks/applyfy'
+      path: '/api/webhooks/applyfy'
+      fullPath: '/api/webhooks/applyfy'
+      preLoaderRoute: typeof ApiWebhooksApplyfyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -375,6 +395,7 @@ const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   ShellRoute: ShellRouteWithChildren,
   LoginRoute: LoginRoute,
+  ApiWebhooksApplyfyRoute: ApiWebhooksApplyfyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

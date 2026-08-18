@@ -48,6 +48,16 @@ export function AuthProvider() {
 
   useEffect(() => {
     let cancelled = false;
+    // supabase-js dispara onAuthStateChange (evento inicial) e resolve
+    // getSession() em paralelo — em alguns carregamentos o evento chega
+    // primeiro com session momentaneamente null, antes da sessão salva no
+    // localStorage terminar de ser restaurada. Se a gente confiasse nesse
+    // evento pra decidir "trocou de usuário" e limpar os stores locais
+    // (links salvos, favoritos...), isso apagava os dados de um usuário que
+    // continua logado, só porque a aba recarregou. getSession() é a fonte
+    // confiável do estado inicial; só depois dela resolver é que os eventos
+    // subsequentes (login/logout de verdade, sempre explícitos) valem.
+    let hasInitialized = false;
 
     async function loadUserData(userId: string) {
       const [{ data: profile }, { data: accounts }] = await Promise.all([
@@ -70,6 +80,7 @@ export function AuthProvider() {
       syncUserScopedStorage(session?.user?.id ?? null);
       setSession(session);
       setInitialized(true);
+      hasInitialized = true;
       if (session?.user) void loadUserData(session.user.id);
     });
 
@@ -77,9 +88,14 @@ export function AuthProvider() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (cancelled) return;
+      // Enquanto o getSession() acima ainda não resolveu, ignora eventos daqui
+      // pra não limpar os stores locais com base numa session momentaneamente
+      // null (ver comentário acima). Depois de inicializado, todo evento é
+      // uma transição real (login, logout, refresh de token) e deve sincronizar
+      // normalmente.
+      if (!hasInitialized) return;
       syncUserScopedStorage(session?.user?.id ?? null);
       setSession(session);
-      setInitialized(true);
       if (session?.user) {
         void loadUserData(session.user.id);
       } else {
