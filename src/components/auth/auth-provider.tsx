@@ -44,6 +44,7 @@ export function AuthProvider() {
   const setSession = useAuthStore((s) => s.setSession);
   const setProfile = useAuthStore((s) => s.setProfile);
   const setMarketplaceConnected = useAuthStore((s) => s.setMarketplaceConnected);
+  const setIsAdmin = useAuthStore((s) => s.setIsAdmin);
   const reset = useAuthStore((s) => s.reset);
 
   useEffect(() => {
@@ -60,18 +61,22 @@ export function AuthProvider() {
     let hasInitialized = false;
 
     async function loadUserData(userId: string) {
-      const [{ data: profile }, { data: accounts }] = await Promise.all([
+      const [{ data: profile }, { data: accounts }, { data: roles }] = await Promise.all([
         supabase
           .from("profiles")
           .select("id, email, full_name, onboarding_done, plan")
           .eq("id", userId)
           .maybeSingle(),
         supabase.from("marketplace_accounts").select("id").limit(1),
+        // user_roles_select_own: cada usuário só enxerga as próprias roles —
+        // é assim que a gente sabe se é admin sem comparar e-mail no cliente.
+        supabase.from("user_roles").select("role").eq("user_id", userId),
       ]);
 
       if (cancelled) return;
       setProfile(profile ?? null);
       setMarketplaceConnected((accounts?.length ?? 0) > 0);
+      setIsAdmin((roles ?? []).some((r) => r.role === "admin"));
       if (profile?.full_name) useProfileStore.getState().setName(profile.full_name);
     }
 

@@ -19,10 +19,15 @@ type AuthState = {
   profile: Profile | null;
   // null = ainda não checou; true/false = já sabemos se tem marketplace conectado
   marketplaceConnected: boolean | null;
+  // Vem da tabela user_roles (RLS: cada usuário só lê a própria role) — troca
+  // o antigo esquema de comparar um e-mail fixo escrito no código do cliente
+  // (isso vazava o e-mail do dono no bundle JS público de qualquer visitante).
+  isAdmin: boolean;
   setInitialized: (value: boolean) => void;
   setSession: (session: Session | null) => void;
   setProfile: (profile: Profile | null) => void;
   setMarketplaceConnected: (value: boolean | null) => void;
+  setIsAdmin: (value: boolean) => void;
   reset: () => void;
 };
 
@@ -31,9 +36,11 @@ export const useAuthStore = create<AuthState>()((set) => ({
   session: null,
   profile: null,
   marketplaceConnected: null,
+  isAdmin: false,
   setInitialized: (value) => set({ initialized: value }),
   setSession: (session) => set({ session }),
   setProfile: (profile) => set({ profile }),
   setMarketplaceConnected: (value) => set({ marketplaceConnected: value }),
-  reset: () => set({ session: null, profile: null, marketplaceConnected: null }),
+  setIsAdmin: (value) => set({ isAdmin: value }),
+  reset: () => set({ session: null, profile: null, marketplaceConnected: null, isAdmin: false }),
 }));
