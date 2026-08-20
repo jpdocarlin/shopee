@@ -25,6 +25,10 @@ export type SavedLinkMeta = {
   marketplace: Marketplace;
   image?: string;
   productUrl?: string;
+  // Quem gerou esse link ad-hoc: a extensão do Chrome (padrão, quando o campo
+  // não vem preenchido — mantém compatibilidade com o que já estava salvo) ou
+  // o próprio usuário, colando manualmente em Meus Links.
+  source?: "extension" | "manual";
 };
 
 type SavedLink = {

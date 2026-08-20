@@ -1,13 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { Check, Copy, Package2, Sparkles, Trash2 } from "lucide-react";
+import { Check, Copy, Package2, Plus, Sparkles, SquarePen, Trash2 } from "lucide-react";
 
 import { PageHeader } from "@/components/shared/page-header";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { MarketplaceBadge } from "@/components/products/marketplace-badge";
+import { AddManualLinkModal } from "@/components/products/add-manual-link-modal";
 import { DEMO_PRODUCTS } from "@/data/demo-products";
 import { formatBRL, formatPercent } from "@/lib/format";
 import { useAffiliateStore, type Marketplace } from "@/stores/affiliate-store";
@@ -27,8 +28,9 @@ export const Route = createFileRoute("/_shell/meus-links")({
 });
 
 // Uma linha pode vir do catálogo (produto pré-carregado, com comissão/categoria
-// reais) ou ser "ad-hoc" — salva automaticamente pela extensão do Chrome a
-// partir de QUALQUER produto real da Shopee, sem esses dados extras.
+// reais), ser "ad-hoc" salva automaticamente pela extensão do Chrome a partir
+// de QUALQUER produto real da Shopee, ou ter sido colada manualmente pela
+// pessoa pra um produto que ela já divulga e não está no Shoppfy.
 type LinkRow = {
   productId: string;
   title: string;
@@ -38,7 +40,7 @@ type LinkRow = {
   commissionRate?: number;
   url: string;
   savedAt: string;
-  fromExtension: boolean;
+  origin: "catalog" | "extension" | "manual";
 };
 
 function formatDate(iso: string) {
@@ -98,10 +100,16 @@ function LinkRowItem({ row, onRemove }: { row: LinkRow; onRemove: (productId: st
               </span>
             </>
           )}
-          {row.fromExtension && (
+          {row.origin === "extension" && (
             <span className="inline-flex items-center gap-1 rounded-md border border-brand/30 bg-brand/10 px-1.5 py-0.5 text-[10.5px] font-medium text-brand">
               <Sparkles className="size-2.5" />
               Extensão
+            </span>
+          )}
+          {row.origin === "manual" && (
+            <span className="inline-flex items-center gap-1 rounded-md border border-border bg-surface-hover px-1.5 py-0.5 text-[10.5px] font-medium text-muted-foreground">
+              <SquarePen className="size-2.5" />
+              Manual
             </span>
           )}
         </div>
@@ -145,6 +153,7 @@ function MeusLinksPage() {
   const t = useT();
   const links = useAffiliateStore((s) => s.links);
   const removeLink = useAffiliateStore((s) => s.removeLink);
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   const rows = useMemo<LinkRow[]>(() => {
     return Object.entries(links)
@@ -160,7 +169,7 @@ function MeusLinksPage() {
             commissionRate: product.commissionRate,
             url: saved.url,
             savedAt: saved.savedAt,
-            fromExtension: false,
+            origin: "catalog",
           };
         }
         if (saved.meta) {
@@ -171,7 +180,7 @@ function MeusLinksPage() {
             image: saved.meta.image,
             url: saved.url,
             savedAt: saved.savedAt,
-            fromExtension: true,
+            origin: saved.meta.source === "manual" ? "manual" : "extension",
           };
         }
         return null;
@@ -200,7 +209,15 @@ function MeusLinksPage() {
         description={t(
           "Todos os links de afiliado que você já gerou, num só lugar — copie de novo ou remova quando não quiser mais divulgar.",
         )}
+        actions={
+          <Button size="sm" className="gap-1.5" onClick={() => setAddModalOpen(true)}>
+            <Plus className="size-3.5" />
+            Adicionar link
+          </Button>
+        }
       />
+
+      <AddManualLinkModal open={addModalOpen} onOpenChange={setAddModalOpen} />
 
       {rows.length > 0 && (
         <Stagger className="grid gap-3 sm:grid-cols-3">
@@ -239,9 +256,15 @@ function MeusLinksPage() {
           title="Nenhum link de afiliado salvo ainda"
           description='Vá em "Produtos", clique em "Afiliar" e cole o link gerado na Shopee — ele aparece aqui. Ou instale a extensão do Shoppfy pra isso acontecer sozinho.'
           action={
-            <Button asChild size="sm" variant="outline">
-              <Link to="/produtos">Ir pra Produtos</Link>
-            </Button>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <Button asChild size="sm" variant="outline">
+                <Link to="/produtos">Ir pra Produtos</Link>
+              </Button>
+              <Button size="sm" className="gap-1.5" onClick={() => setAddModalOpen(true)}>
+                <Plus className="size-3.5" />
+                Adicionar link manual
+              </Button>
+            </div>
           }
         />
       ) : (
