@@ -1067,16 +1067,19 @@ export type Database = {
         Row: {
           id: string
           extra_commission_cents: number
+          reset_day: string
           updated_at: string
         }
         Insert: {
           id: string
           extra_commission_cents?: number
+          reset_day?: string
           updated_at?: string
         }
         Update: {
           id?: string
           extra_commission_cents?: number
+          reset_day?: string
           updated_at?: string
         }
         Relationships: []
@@ -1086,6 +1089,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_panel_commission: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

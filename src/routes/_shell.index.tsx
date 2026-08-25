@@ -38,7 +38,7 @@ import { useProfileStore } from "@/stores/profile-store";
 import { useAffiliateStore } from "@/stores/affiliate-store";
 import { useFavoritesStore } from "@/stores/favorites-store";
 import { useAuthStore } from "@/stores/auth-store";
-import { useDemoBoostStore } from "@/stores/demo-boost-store";
+import { useEffectiveBoost } from "@/stores/demo-boost-store";
 import { useIsOwner } from "@/lib/owner";
 import { cn } from "@/lib/utils";
 import { useT } from "@/i18n/translations";
@@ -116,8 +116,7 @@ function IndexPage() {
   const isOwner = useIsOwner();
   // Vendas simuladas pela bolinha do header (demonstração) — somam por cima
   // dos números estáticos, sem alterar os dados de origem.
-  const boostEarningsCents = useDemoBoostStore((s) => s.extraEarningsCents);
-  const boostSales = useDemoBoostStore((s) => s.extraSales);
+  const { extraEarningsCents: boostEarningsCents, extraSales: boostSales } = useEffectiveBoost();
   const [contentDone, setContentDone] = useState(false);
   const favorites = useFavoritesStore((s) => s.ids);
   const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
