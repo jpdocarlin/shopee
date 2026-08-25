@@ -331,6 +331,66 @@ export type Database = {
           },
         ]
       }
+      fulfillment_requests: {
+        Row: {
+          cost_cents: number
+          created_at: string
+          id: string
+          label_path: string | null
+          notes: string | null
+          product_name: string
+          proof_path: string | null
+          status: Database["public"]["Enums"]["fulfillment_status"]
+          submitter_document: string
+          submitter_email: string
+          submitter_name: string
+          submitter_person_type: Database["public"]["Enums"]["person_type"]
+          submitter_phone: string
+          tracking_code: string | null
+          tracking_sent_at: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cost_cents: number
+          created_at?: string
+          id?: string
+          label_path?: string | null
+          notes?: string | null
+          product_name: string
+          proof_path?: string | null
+          status?: Database["public"]["Enums"]["fulfillment_status"]
+          submitter_document: string
+          submitter_email: string
+          submitter_name: string
+          submitter_person_type?: Database["public"]["Enums"]["person_type"]
+          submitter_phone: string
+          tracking_code?: string | null
+          tracking_sent_at?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cost_cents?: number
+          created_at?: string
+          id?: string
+          label_path?: string | null
+          notes?: string | null
+          product_name?: string
+          proof_path?: string | null
+          status?: Database["public"]["Enums"]["fulfillment_status"]
+          submitter_document?: string
+          submitter_email?: string
+          submitter_name?: string
+          submitter_person_type?: Database["public"]["Enums"]["person_type"]
+          submitter_phone?: string
+          tracking_code?: string | null
+          tracking_sent_at?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       marketplace_accounts: {
         Row: {
           affiliate_id: string | null
@@ -1003,6 +1063,24 @@ export type Database = {
           },
         ]
       }
+      panel_sync: {
+        Row: {
+          id: string
+          extra_commission_cents: number
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          extra_commission_cents?: number
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          extra_commission_cents?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -1015,11 +1093,18 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_panel_commission: {
+        Args: {
+          amount_cents: number
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "staff" | "affiliate"
       billing_plan: "mensal" | "vitalicio"
       commission_status: "pending" | "approved" | "paid" | "canceled"
+      fulfillment_status: "pending" | "confirmed" | "shipped" | "canceled"
       order_status:
         | "pending"
         | "approved"
@@ -1027,6 +1112,7 @@ export type Database = {
         | "delivered"
         | "canceled"
         | "refunded"
+      person_type: "fisica" | "juridica"
       pix_key_type: "cpf" | "cnpj" | "email" | "phone" | "random"
       subscription_status:
         | "trialing"
@@ -1165,6 +1251,7 @@ export const Constants = {
       app_role: ["admin", "staff", "affiliate"],
       billing_plan: ["mensal", "vitalicio"],
       commission_status: ["pending", "approved", "paid", "canceled"],
+      fulfillment_status: ["pending", "confirmed", "shipped", "canceled"],
       order_status: [
         "pending",
         "approved",
@@ -1173,6 +1260,7 @@ export const Constants = {
         "canceled",
         "refunded",
       ],
+      person_type: ["fisica", "juridica"],
       pix_key_type: ["cpf", "cnpj", "email", "phone", "random"],
       subscription_status: [
         "trialing",
