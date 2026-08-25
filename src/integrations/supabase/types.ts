@@ -1084,6 +1084,36 @@ export type Database = {
         }
         Relationships: []
       }
+      affiliate_links: {
+        Row: {
+          id: string
+          user_id: string
+          product_id: string
+          url: string
+          meta: Json | null
+          saved_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          product_id: string
+          url: string
+          meta?: Json | null
+          saved_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          product_id?: string
+          url?: string
+          meta?: Json | null
+          saved_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuthStore } from "@/stores/auth-store";
 import { useProfileStore } from "@/stores/profile-store";
-import { useAffiliateStore } from "@/stores/affiliate-store";
+import { useAffiliateStore, setAffiliateUserId, hydrateAffiliateLinksFromSupabase } from "@/stores/affiliate-store";
 import { useFavoritesStore } from "@/stores/favorites-store";
 import { useDemoBoostStore } from "@/stores/demo-boost-store";
 
@@ -78,11 +78,17 @@ export function AuthProvider() {
       setMarketplaceConnected((accounts?.length ?? 0) > 0);
       setIsAdmin((roles ?? []).some((r) => r.role === "admin"));
       if (profile?.full_name) useProfileStore.getState().setName(profile.full_name);
+
+      // Substitui o cache local de "Meus Links" pelos links reais do
+      // usuário no Supabase — é isso que faz o link salvo no PC aparecer no
+      // celular (e qualquer outro aparelho que ele logar).
+      void hydrateAffiliateLinksFromSupabase(userId);
     }
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (cancelled) return;
       syncUserScopedStorage(session?.user?.id ?? null);
+      setAffiliateUserId(session?.user?.id ?? null);
       setSession(session);
       setInitialized(true);
       hasInitialized = true;
@@ -100,6 +106,7 @@ export function AuthProvider() {
       // normalmente.
       if (!hasInitialized) return;
       syncUserScopedStorage(session?.user?.id ?? null);
+      setAffiliateUserId(session?.user?.id ?? null);
       setSession(session);
       if (session?.user) {
         void loadUserData(session.user.id);
