@@ -141,9 +141,19 @@ export const useAffiliateStore = create<AffiliateState>()(
   ),
 );
 
-// Busca todos os links do usuário no Supabase e substitui o cache local pela
-// verdade do banco — chamado pelo auth-provider ao restaurar sessão/logar,
-// garante que qualquer aparelho novo mostre os mesmos links salvos.
+// Busca todos os links do usuário no Supabase e mescla no cache local —
+// chamado pelo auth-provider ao restaurar sessão/logar, garante que qualquer
+// aparelho novo mostre os mesmos links salvos.
+//
+// É uma MESCLA, não uma substituição: antes dessa migração, os links viviam
+// só no localStorage (nunca foram escritos no Supabase). Se a gente
+// simplesmente trocasse o cache local pelo que o banco conhece, quem já
+// tinha links salvos veria todos sumirem no primeiro login depois do deploy
+// — o banco ainda não sabia que eles existiam. Em vez disso: o Supabase
+// ganha em caso de conflito (é a fonte de verdade pra tudo que ele já
+// conhece), mas um link só-local que o banco ainda não tem continua visível,
+// e essa função aproveita pra migrá-lo pro Supabase na hora — assim ele
+// também passa a aparecer nos outros aparelhos dali em diante.
 export async function hydrateAffiliateLinksFromSupabase(userId: string) {
   const { data, error } = await supabase
     .from("affiliate_links")
@@ -155,13 +165,37 @@ export async function hydrateAffiliateLinksFromSupabase(userId: string) {
     return;
   }
 
-  const links: Record<string, SavedLink> = {};
+  const remoteLinks: Record<string, SavedLink> = {};
   for (const row of data ?? []) {
-    links[row.product_id] = {
+    remoteLinks[row.product_id] = {
       url: row.url,
       savedAt: row.saved_at,
       meta: (row.meta as SavedLinkMeta | null) ?? undefined,
     };
   }
-  useAffiliateStore.getState().hydrateLinks(links);
+
+  const localLinks = useAffiliateStore.getState().links;
+  useAffiliateStore.getState().hydrateLinks({ ...localLinks, ...remoteLinks });
+
+  for (const [productId, link] of Object.entries(localLinks)) {
+    if (remoteLinks[productId]) continue; // já sincronizado, nada a fazer
+
+    supabase
+      .from("affiliate_links")
+      .upsert(
+        {
+          user_id: userId,
+          product_id: productId,
+          url: link.url,
+          meta: (link.meta ?? null) as never,
+          saved_at: link.savedAt,
+        },
+        { onConflict: "user_id,product_id" },
+      )
+      .then(({ error: migrateError }) => {
+        if (migrateError) {
+          console.error("[affiliate-store] falha ao migrar link local pro Supabase:", migrateError);
+        }
+      });
+  }
 }
