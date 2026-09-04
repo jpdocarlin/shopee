@@ -22,10 +22,12 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
     // 04/09/2026: a loja sandbox (Singapura) devolve algumas categorias-folha
     // sem category_name (string vazia/undefined) — o .sort() com
     // localeCompare quebrava a função inteira nesse caso (erro só apareceu
-    // testando ao vivo). Filtra fora as sem nome em vez de derrubar a lista toda.
+    // testando ao vivo). Em vez de filtrar fora (o que pode zerar a lista
+    // inteira se NENHUMA vier com nome — já vimos isso acontecer), usa um
+    // nome de fallback com o próprio id: a categoria continua selecionável e
+    // válida pro product/add_item, só perde o nome bonito na UI.
     return categories
-      .filter((c) => !!c.category_name)
-      .map((c) => ({ id: c.category_id, name: c.category_name }))
+      .map((c) => ({ id: c.category_id, name: c.category_name || `Categoria ${c.category_id}` }))
       .sort((a, b) => a.name.localeCompare(b.name));
   });
 
