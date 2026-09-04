@@ -225,6 +225,34 @@ export function getAttributeTree(accessToken: string, shopId: number, categoryId
   });
 }
 
+export type ShopeeBrand = {
+  brand_id: number;
+  original_brand_name: string;
+};
+
+// 04/09/2026: descoberto ao vivo — algumas categorias da Shopee (ex: a
+// 100021 usada no teste) recusam product/add_item com
+// "product.error_invalid_brand" / "Brand information required" se o body
+// não trouxer `brand`. get_brand_list devolve as marcas válidas PRA AQUELA
+// categoria (cada categoria tem sua própria lista) — quando existe uma
+// opção "No Brand" (bem comum), ela serve como marca genérica pra
+// categorias que só exigem "algum" valor preenchido. Se a categoria não usa
+// marca, a Shopee devolve lista vazia (não é erro).
+export async function getBrandList(
+  accessToken: string,
+  shopId: number,
+  categoryId: number,
+): Promise<ShopeeBrand[]> {
+  const json = await callShopeeApi<{
+    response: { brand_list: ShopeeBrand[] };
+  }>("/api/v2/product/get_brand_list", {
+    accessToken,
+    shopId,
+    query: { category_id: categoryId, offset: 0, page_size: 50, language: "pt-br" },
+  });
+  return json.response.brand_list ?? [];
+}
+
 export type ShopeeLogisticsChannel = {
   logistics_channel_id: number;
   logistics_channel_name: string;
@@ -324,6 +352,7 @@ export type PublishProductInput = {
   weightKg: number;
   imageIds: string[]; // ver uploadProductImage()
   logisticIds: number[]; // ids habilitados, ver getLogisticsChannelList()
+  brand?: { brandId: number; originalBrandName: string }; // ver getBrandList()
 };
 
 // Publica o produto de verdade na Shopee. IMPORTANTE: isso ainda não foi
@@ -342,6 +371,7 @@ export async function publishProduct(input: PublishProductInput) {
     weightKg,
     imageIds,
     logisticIds,
+    brand,
   } = input;
 
   return callShopeeApi("/api/v2/product/add_item", {
@@ -357,6 +387,9 @@ export async function publishProduct(input: PublishProductInput) {
       normal_stock: stock,
       image: { image_id_list: imageIds },
       logistic_info: logisticIds.map((logistic_id) => ({ logistic_id, enabled: true })),
+      ...(brand
+        ? { brand: { brand_id: brand.brandId, original_brand_name: brand.originalBrandName } }
+        : {}),
     },
   });
 }

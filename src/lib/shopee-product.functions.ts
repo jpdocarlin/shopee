@@ -65,6 +65,7 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
       uploadProductImage,
       uploadProductImageFromDataUrl,
       getLogisticsChannelList,
+      getBrandList,
       publishProduct,
     } = await import("@/lib/shopee-api.server");
 
@@ -84,6 +85,28 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
       ? await uploadProductImageFromDataUrl(accessToken, shopId, data.imageDataUrl)
       : await uploadProductImage(accessToken, shopId, data.imageUrl);
 
+    // 04/09/2026: descoberto ao vivo — algumas categorias exigem `brand` no
+    // add_item ("Brand information required"), outras não usam marca
+    // nenhuma. get_brand_list devolve a lista válida PRA ESSA categoria;
+    // prioriza a opção "No Brand" (existe pra maioria das categorias que só
+    // querem *algum* valor preenchido) e cai pra primeira marca da lista se
+    // não houver "No Brand" — sem isso o add_item quebra pra quem exige
+    // marca. Se a categoria não usa marca, a lista vem vazia e segue sem
+    // enviar o campo (comportamento antigo, preservado).
+    let brand: { brandId: number; originalBrandName: string } | undefined;
+    try {
+      const brands = await getBrandList(accessToken, shopId, data.categoryId);
+      const noBrand = brands.find((b) => /no brand/i.test(b.original_brand_name));
+      const chosen = noBrand ?? brands[0];
+      if (chosen) {
+        brand = { brandId: chosen.brand_id, originalBrandName: chosen.original_brand_name };
+      }
+    } catch {
+      // get_brand_list falhando não deve travar a publicação — segue sem
+      // brand e deixa o add_item original decidir (categoria pode nem
+      // exigir marca).
+    }
+
     const result = await publishProduct({
       accessToken,
       shopId,
@@ -95,6 +118,7 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
       weightKg: data.weightKg,
       imageIds: [imageId],
       logisticIds: channels.map((c) => c.logistics_channel_id),
+      brand,
     });
 
     const parsed = result as { response?: { item_id?: number } };
