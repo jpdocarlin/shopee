@@ -145,15 +145,14 @@ async function callGemini(
     body: JSON.stringify({
       contents: [{ parts: [{ text: prompt }] }],
       generationConfig: {
-        // Baixa de propósito: o formato é rígido (copia o exemplo), a variação
-        // tem que vir do conteúdo, não do modelo inventando estrutura e tom de
-        // propaganda.
-        temperature: 0.85,
-        // O 2.5-flash vem com "thinking" ligado por padrão, e esses tokens de
-        // raciocínio saem do mesmo orçamento da resposta — com o limite baixo o
-        // texto vinha cortado na 1ª linha. Desligar o thinking (a tarefa é
-        // simples) + orçamento folgado resolve.
-        thinkingConfig: { thinkingBudget: 0 },
+        // 04/09/2026: migrado de gemini-2.5-flash pra gemini-3.6-flash (o
+        // 2.5 parou de aceitar chamadas — ver comentário no MODEL acima).
+        // Nos modelos Gemini 3, `temperature` solto e `thinkingConfig.
+        // thinkingBudget` (número) não são mais aceitos e a API devolve 400 —
+        // confirmado ao vivo. O equivalente novo é `thinkingConfig.
+        // thinkingLevel` (string: "low"/"medium"/"high"). Usa "low" porque a
+        // tarefa é simples e rígida em formato — não precisa de raciocínio.
+        thinkingConfig: { thinkingLevel: "low" },
         maxOutputTokens: 1200,
       },
     }),
