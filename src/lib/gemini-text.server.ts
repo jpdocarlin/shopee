@@ -4,9 +4,13 @@
 // vão pro bundle do cliente. Mesma regra do gemini-image.server.ts.
 import { formatBRL } from "@/lib/format";
 
-// Modelo de texto rápido e com tier gratuito generoso — a história é curta,
-// não precisa de um modelo grande.
-const MODEL = "gemini-2.5-flash";
+// 04/09/2026: gemini-2.5-flash parou de aceitar chamadas ("no longer
+// available to new users" — a Google migrou as chaves de API pra um novo
+// esquema de "auth keys" em set/2026 e junto empurrou os projetos mais novos
+// pra modelos mais recentes). Erro confirmado ao vivo: "erro 404" na geração
+// de título/descrição do Criar Anúncio. Trocado pro modelo que a própria
+// resposta de erro do Google recomendou pra esta chave.
+const MODEL = "gemini-3.6-flash";
 const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
 
 type GenerateContentResponse = {
