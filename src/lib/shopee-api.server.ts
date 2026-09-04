@@ -243,12 +243,16 @@ export async function getBrandList(
   shopId: number,
   categoryId: number,
 ): Promise<ShopeeBrand[]> {
+  // 04/09/2026: descoberto ao vivo — get_brand_list exige `status` (filtro
+  // de status da marca na Shopee: 1 = NORMAL, ou seja marcas ativas/válidas
+  // pra usar num anúncio novo). Sem esse param a Shopee devolve
+  // "product.error_param" / "status is required".
   const json = await callShopeeApi<{
     response: { brand_list: ShopeeBrand[] };
   }>("/api/v2/product/get_brand_list", {
     accessToken,
     shopId,
-    query: { category_id: categoryId, offset: 0, page_size: 50, language: "pt-br" },
+    query: { category_id: categoryId, offset: 0, page_size: 50, status: 1, language: "pt-br" },
   });
   return json.response.brand_list ?? [];
 }
