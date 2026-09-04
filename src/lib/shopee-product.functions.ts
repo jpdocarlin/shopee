@@ -19,7 +19,12 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
     await assertShopeeOwner(context.userId);
     const { accessToken, shopId } = await getValidShopeeAccessToken();
     const categories = await getCategoryList(accessToken, shopId);
+    // 04/09/2026: a loja sandbox (Singapura) devolve algumas categorias-folha
+    // sem category_name (string vazia/undefined) — o .sort() com
+    // localeCompare quebrava a função inteira nesse caso (erro só apareceu
+    // testando ao vivo). Filtra fora as sem nome em vez de derrubar a lista toda.
     return categories
+      .filter((c) => !!c.category_name)
       .map((c) => ({ id: c.category_id, name: c.category_name }))
       .sort((a, b) => a.name.localeCompare(b.name));
   });
