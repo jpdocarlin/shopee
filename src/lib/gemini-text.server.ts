@@ -153,7 +153,14 @@ async function callGemini(
         // thinkingLevel` (string: "low"/"medium"/"high"). Usa "low" porque a
         // tarefa é simples e rígida em formato — não precisa de raciocínio.
         thinkingConfig: { thinkingLevel: "low" },
-        maxOutputTokens: 1200,
+        // 04/09/2026: nos modelos Gemini 3 não dá pra desligar o "thinking"
+        // de vez (thinkingBudget: 0 não existe mais, só thinkingLevel low/
+        // medium/high) — mesmo em "low" ele gasta uma parte do orçamento de
+        // saída antes de responder. Com 1200 (valor herdado do 2.5-flash,
+        // que conseguia zerar o thinking) a resposta vinha cortada no meio
+        // ("A IA devolveu um texto incompleto", confirmado ao vivo). Subiu
+        // pra sobrar espaço pro raciocínio + o texto de verdade.
+        maxOutputTokens: 3000,
       },
     }),
   });
