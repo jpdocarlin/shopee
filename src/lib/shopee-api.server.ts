@@ -384,7 +384,12 @@ export async function publishProduct(input: PublishProductInput) {
     shopId,
     body: {
       original_price: originalPrice,
-      description,
+      // 04/09/2026: descoberto ao vivo — pelo menos duas categorias
+      // sandbox rejeitaram a descrição gerada pela IA (~1000+ caracteres)
+      // com "description length must be between 1 and 200 characters".
+      // Corta em 200 por segurança — mesmo limite visto nas duas
+      // categorias testadas até agora.
+      description: description.slice(0, 200),
       weight: weightKg,
       item_name: itemName.slice(0, 120),
       category_id: categoryId,
