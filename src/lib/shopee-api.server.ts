@@ -262,8 +262,16 @@ async function uploadImageBuffer(
   const baseString = `${partnerId}${path}${timestamp}${accessToken}${shopId}`;
   const signature = sign(baseString, partnerKey);
 
+  // 04/09/2026: as fotos do catálogo C7Drop vêm em .webp (é como o Vercel
+  // Blob guarda os uploads) — a Shopee rejeitava com "image is invalid or
+  // not supported" (confirmado ao vivo), porque media_space/upload_image só
+  // aceita JPG/PNG de verdade, não só o filename dizendo ".jpg". Reconverte
+  // sempre pra JPEG aqui antes de subir, não importa o formato de origem.
+  const { default: sharp } = await import("sharp");
+  const jpegBuffer = await sharp(buffer).jpeg({ quality: 90 }).toBuffer();
+
   const form = new FormData();
-  form.append("image", new Blob([buffer]), filename);
+  form.append("image", new Blob([jpegBuffer], { type: "image/jpeg" }), filename);
 
   const url = new URL(`${HOST}${path}`);
   url.searchParams.set("partner_id", String(partnerId));
