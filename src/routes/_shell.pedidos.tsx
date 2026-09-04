@@ -1,48 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ShoppingCart } from "lucide-react";
+import { useState } from "react";
 
 import { PageHeader } from "@/components/shared/page-header";
-import { ModulePlaceholder } from "@/components/shared/module-placeholder";
-import { useT } from "@/i18n/translations";
+import { PedidoForm } from "@/components/pedidos/pedido-form";
+import { PedidosList } from "@/components/pedidos/pedidos-list";
+
+const DESCRIPTION =
+  "Registre cada venda com produto, custo, etiqueta e comprovante do PIX — tudo num só lugar.";
 
 export const Route = createFileRoute("/_shell/pedidos")({
   head: () => ({
     meta: [
       { title: "Pedidos · Shoppfy" },
-      {
-        name: "description",
-        content: "Vendas atribuídas aos seus links, com status e valor de comissão.",
-      },
+      { name: "description", content: DESCRIPTION },
       { property: "og:title", content: "Pedidos · Shoppfy" },
-      {
-        property: "og:description",
-        content: "Vendas atribuídas aos seus links, com status e valor de comissão.",
-      },
+      { property: "og:description", content: DESCRIPTION },
     ],
   }),
   component: PedidosPage,
 });
 
 function PedidosPage() {
-  const t = useT();
+  const [refreshKey, setRefreshKey] = useState(0);
+
   return (
     <div className="space-y-7">
       <PageHeader
-        title={t("Pedidos")}
-        description={t("Vendas atribuídas aos seus links, com status e valor de comissão.")}
+        title="Pedidos"
+        description="Quando fechar uma venda, registre aqui: produto, custo sem a sua margem, etiqueta de envio e comprovante do PIX. Assim a gente sempre sabe quem pediu o quê."
       />
-      <ModulePlaceholder
-        icon={ShoppingCart}
-        title="Atribuição de vendas"
-        summary="Do clique ao pedido pago, com rastreio completo do funil."
-        capabilities={[
-          "Linha do tempo do pedido",
-          "Status de aprovação",
-          "Filtro por período",
-          "Comissão prevista",
-          "Exportação contábil",
-        ]}
-      />
+      <PedidoForm onCreated={() => setRefreshKey((k) => k + 1)} />
+      <PedidosList refreshKey={refreshKey} />
     </div>
   );
 }

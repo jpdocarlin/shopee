@@ -12,7 +12,8 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command";
-import { navigation } from "@/config/navigation";
+import { getNavigationForUser } from "@/config/navigation";
+import { useIsOwner } from "@/lib/owner";
 import { useUIStore } from "@/stores/ui-store";
 import { useT } from "@/i18n/translations";
 
@@ -21,6 +22,8 @@ export function CommandPalette() {
   const setOpen = useUIStore((s) => s.setCommandOpen);
   const navigate = useNavigate();
   const t = useT();
+  const isOwner = useIsOwner();
+  const navigation = getNavigationForUser(isOwner);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {

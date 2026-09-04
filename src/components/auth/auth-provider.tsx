@@ -3,7 +3,11 @@ import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuthStore } from "@/stores/auth-store";
 import { useProfileStore } from "@/stores/profile-store";
-import { useAffiliateStore, setAffiliateUserId, hydrateAffiliateLinksFromSupabase } from "@/stores/affiliate-store";
+import {
+  useAffiliateStore,
+  setAffiliateUserId,
+  hydrateAffiliateLinksFromSupabase,
+} from "@/stores/affiliate-store";
 import { useFavoritesStore } from "@/stores/favorites-store";
 import { useDemoBoostStore } from "@/stores/demo-boost-store";
 

@@ -4,12 +4,15 @@ import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { BrandWordmark } from "./brand-mark";
 import { SidebarNavItem } from "./sidebar-nav-item";
-import { navigation } from "@/config/navigation";
+import { getNavigationForUser } from "@/config/navigation";
+import { useIsOwner } from "@/lib/owner";
 import { useT } from "@/i18n/translations";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const t = useT();
+  const isOwner = useIsOwner();
+  const navigation = getNavigationForUser(isOwner);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>

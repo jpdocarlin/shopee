@@ -15,10 +15,7 @@ export function MarketplaceBadge({ marketplace, className }: Props) {
         className,
       )}
     >
-      <span
-        className="size-1.5 rounded-full"
-        style={{ backgroundColor: meta.color }}
-      />
+      <span className="size-1.5 rounded-full" style={{ backgroundColor: meta.color }} />
       {meta.label}
     </span>
   );

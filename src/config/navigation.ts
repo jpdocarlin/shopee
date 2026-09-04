@@ -9,6 +9,9 @@ import {
   Link2,
   Trophy,
   Clapperboard,
+  Store,
+  Receipt,
+  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
 
@@ -19,6 +22,8 @@ export type NavItem = {
   description: string;
   badge?: string;
   shortcut?: string;
+  // Só aparece pra conta com role "admin" (user_roles). Ver useIsOwner().
+  ownerOnly?: boolean;
 };
 
 export type NavGroup = {
@@ -63,6 +68,20 @@ export const navigation: NavGroup[] = [
         icon: Heart,
         description: "Produtos salvos por você",
       },
+      {
+        label: "Criar Anúncio",
+        to: "/criar-anuncio",
+        icon: Store,
+        description: "Venda como lojista, sem precisar ser afiliado",
+        badge: "Novo",
+      },
+      {
+        label: "Pedidos",
+        to: "/pedidos",
+        icon: Receipt,
+        description: "Produto, custo, etiqueta e comprovante do PIX de cada venda",
+        badge: "Novo",
+      },
     ],
   },
   {
@@ -80,6 +99,19 @@ export const navigation: NavGroup[] = [
         to: "/meus-links",
         icon: Link2,
         description: "Todos os links de afiliado que você já gerou",
+      },
+    ],
+  },
+  {
+    id: "admin",
+    label: "Admin",
+    items: [
+      {
+        label: "Pedidos (Admin)",
+        to: "/pedidos-admin",
+        icon: ShieldCheck,
+        description: "Todos os pedidos enviados pelos revendedores, com dados de contato",
+        ownerOnly: true,
       },
     ],
   },
@@ -117,3 +149,12 @@ export const navigation: NavGroup[] = [
 ];
 
 export const flatNavigation: NavItem[] = navigation.flatMap((g) => g.items);
+
+// Remove itens `ownerOnly` pra quem não é o dono, e descarta grupos que
+// ficarem vazios depois do filtro (ex: o grupo "Admin").
+export function getNavigationForUser(isOwner: boolean): NavGroup[] {
+  if (isOwner) return navigation;
+  return navigation
+    .map((group) => ({ ...group, items: group.items.filter((item) => !item.ownerOnly) }))
+    .filter((group) => group.items.length > 0);
+}

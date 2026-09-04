@@ -125,7 +125,11 @@ function cleanStory(raw: string): string {
 // Chamada base do modelo, compartilhada pelos geradores de texto.
 // `minLines` = quantas linhas não vazias a resposta precisa ter pra ser
 // considerada completa (proteção contra corte no meio).
-async function callGemini(prompt: string, minLines: number): Promise<string> {
+async function callGemini(
+  prompt: string,
+  minLines: number,
+  clean: (raw: string) => string = cleanStory,
+): Promise<string> {
   const apiKey = requireApiKey();
 
   const res = await fetch(ENDPOINT, {
@@ -160,7 +164,7 @@ async function callGemini(prompt: string, minLines: number): Promise<string> {
   const json = (await res.json()) as GenerateContentResponse;
   const candidate = json.candidates?.[0];
   const raw = candidate?.content?.parts?.map((p) => p.text ?? "").join("") ?? "";
-  const text = cleanStory(raw);
+  const text = clean(raw);
 
   if (!text) {
     console.error("[Gemini texto] resposta sem texto:", JSON.stringify(json).slice(0, 600));
@@ -240,4 +244,117 @@ function buildVideoScriptPrompt(input: VideoScriptInput): string {
 export async function generateVideoScript(input: VideoScriptInput): Promise<{ script: string }> {
   // minLines 1: o script é um parágrafo único de propósito.
   return { script: await callGemini(buildVideoScriptPrompt(input), 1) };
+}
+
+// ---------------------------------------------------------------------------
+// Anúncio de lojista (revenda / dropshipping)
+// ---------------------------------------------------------------------------
+
+export type ListingInput = {
+  productTitle: string;
+  category?: string;
+  marketplace: "shopee" | "mercado-livre";
+  variant?: number;
+};
+
+export type ListingResult = {
+  title: string;
+  description: string;
+  keywords: string[];
+};
+
+/** Limite de caracteres do título em cada marketplace. */
+const TITLE_LIMIT: Record<ListingInput["marketplace"], number> = {
+  shopee: 120,
+  "mercado-livre": 60,
+};
+
+function buildListingPrompt(input: ListingInput): string {
+  const { productTitle, category, marketplace, variant } = input;
+  const limit = TITLE_LIMIT[marketplace];
+  const marketplaceLabel = marketplace === "shopee" ? "Shopee" : "Mercado Livre";
+
+  return [
+    `Você cria anúncios de vendedor na ${marketplaceLabel} no Brasil. Escreva o anúncio de um`,
+    "vendedor que vai revender este produto na própria loja.",
+    "",
+    `PRODUTO DE ORIGEM: "${productTitle}"`,
+    category ? `CATEGORIA: ${category}` : "",
+    "",
+    "Devolva EXATAMENTE neste formato, com estes rótulos, e nada além disso:",
+    "",
+    "TITULO: <uma linha>",
+    "DESCRICAO:",
+    "<várias linhas>",
+    "PALAVRAS-CHAVE: <termo1, termo2, termo3, ...>",
+    "",
+    "REGRAS DO TÍTULO:",
+    `- No MÁXIMO ${limit} caracteres. Conte os caracteres, é limite da plataforma.`,
+    "- Começa pelo nome do produto (o termo que a pessoa digita na busca), depois características",
+    "  que ajudam a achar: tipo, quantidade, tamanho, material, cor, modelo, compatibilidade.",
+    "- Sem CAPS LOCK, sem emoji, sem “frete grátis”, sem “promoção”, sem “imperdível”, sem preço,",
+    "  sem nome de loja, sem caractere especial tipo estrela ou check.",
+    "- Não repita a mesma palavra várias vezes só pra encher.",
+    "",
+    "REGRAS DA DESCRIÇÃO:",
+    "- Em português do Brasil, fácil de escanear, entre 120 e 220 palavras.",
+    "- Comece com 2 linhas dizendo o que é e pra que serve, em linguagem simples.",
+    '- Depois uma seção "Por que comprar:" com 4 a 5 bullets começando com "- ", cada bullet',
+    "  ligando uma característica a um benefício prático.",
+    '- Depois "Especificações:" com os dados que dá pra deduzir do título de origem',
+    "  (tamanho, quantidade, material, voltagem, compatibilidade). Se um dado não aparece no",
+    '  título, escreva "conforme a foto do anúncio" em vez de inventar número.',
+    '- Depois "O que vem na embalagem:" listando o conteúdo, se der pra deduzir.',
+    "- Termine com 1 linha convidando a comprar, sem exagero.",
+    "",
+    "REGRAS DAS PALAVRAS-CHAVE:",
+    "- 8 a 12 termos de busca separados por vírgula, tudo minúsculo, do mais buscado pro menos.",
+    "- Incluir sinônimos e como a pessoa comum escreve (inclusive sem acento).",
+    "",
+    "PROIBIDO EM TODO O ANÚNCIO:",
+    "- Inventar marca, garantia, certificação, laudo, prazo de entrega ou origem que não estejam",
+    "  no título de origem.",
+    "- Prometer resultado de saúde, cura, emagrecimento ou efeito terapêutico.",
+    "- Citar preço, link, cupom, WhatsApp, rede social ou contato fora da plataforma.",
+    variant && variant > 0
+      ? `\nEsta é a variação nº ${variant + 1}: mesmo formato, mas mude o ângulo do título e os bullets.`
+      : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+// A limpeza da história come linhas demais (hashtag, link) e aqui o texto é
+// estruturado — então o anúncio usa uma limpeza mínima, só pra tirar cerca de
+// código e negrito de markdown.
+function cleanListing(raw: string): string {
+  return raw
+    .trim()
+    .replace(/^```[a-z]*\n?/i, "")
+    .replace(/```$/, "")
+    .replace(/\*\*/g, "")
+    .trim();
+}
+
+export async function generateListing(input: ListingInput): Promise<ListingResult> {
+  const text = await callGemini(buildListingPrompt(input), 4, cleanListing);
+
+  const titleMatch = text.match(/TITULO:\s*(.+)/i);
+  const keywordsMatch = text.match(/PALAVRAS-CHAVE:\s*(.+)/i);
+  const descriptionMatch = text.match(/DESCRICAO:\s*([\s\S]*?)(?=\nPALAVRAS-CHAVE:|$)/i);
+
+  const limit = TITLE_LIMIT[input.marketplace];
+  const title = (titleMatch?.[1] ?? "").trim().slice(0, limit);
+  const description = (descriptionMatch?.[1] ?? "").trim();
+  const keywords = (keywordsMatch?.[1] ?? "")
+    .split(",")
+    .map((k) => k.trim().toLowerCase())
+    .filter(Boolean);
+
+  if (!title || !description) {
+    console.error("[Gemini anúncio] resposta fora do formato:", text.slice(0, 600));
+    throw new Error("A IA não devolveu o anúncio no formato esperado.");
+  }
+
+  return { title, description, keywords };
 }

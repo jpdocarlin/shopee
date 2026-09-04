@@ -3,13 +3,7 @@ import type { ReactNode } from "react";
 
 import { easePremium } from "./motion-presets";
 
-export function PageTransition({
-  children,
-  routeKey,
-}: {
-  children: ReactNode;
-  routeKey: string;
-}) {
+export function PageTransition({ children, routeKey }: { children: ReactNode; routeKey: string }) {
   return (
     <motion.div
       key={routeKey}

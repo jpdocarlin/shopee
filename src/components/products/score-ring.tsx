@@ -42,10 +42,7 @@ export function ScoreRing({ value, size = 34, className }: Props) {
           style={{ transition: "stroke-dashoffset 700ms cubic-bezier(.22,1,.36,1)" }}
         />
       </svg>
-      <span
-        className="absolute text-[10px] font-semibold tabular-nums"
-        style={{ color }}
-      >
+      <span className="absolute text-[10px] font-semibold tabular-nums" style={{ color }}>
         {value}
       </span>
     </div>

@@ -15,6 +15,7 @@ import { Route as ShellIndexRouteImport } from './routes/_shell.index'
 import { Route as ShellCatalogoRouteImport } from './routes/_shell.catalogo'
 import { Route as ShellComissoesRouteImport } from './routes/_shell.comissoes'
 import { Route as ShellConfiguracoesRouteImport } from './routes/_shell.configuracoes'
+import { Route as ShellCriarAnuncioRouteImport } from './routes/_shell.criar-anuncio'
 import { Route as ShellEditorVideoRouteImport } from './routes/_shell.editor-video'
 import { Route as ShellFavoritosRouteImport } from './routes/_shell.favoritos'
 import { Route as ShellGruposDivulgacaoRouteImport } from './routes/_shell.grupos-divulgacao'
@@ -23,8 +24,11 @@ import { Route as ShellIntegracoesRouteImport } from './routes/_shell.integracoe
 import { Route as ShellMarketplaceRouteImport } from './routes/_shell.marketplace'
 import { Route as ShellMeusLinksRouteImport } from './routes/_shell.meus-links'
 import { Route as ShellPedidosRouteImport } from './routes/_shell.pedidos'
+import { Route as ShellPedidosAdminRouteImport } from './routes/_shell.pedidos-admin'
 import { Route as ShellProdutosRouteImport } from './routes/_shell.produtos'
 import { Route as ShellRankingRouteImport } from './routes/_shell.ranking'
+import { Route as ApiShopeeCallbackRouteImport } from './routes/api.shopee.callback'
+import { Route as ApiShopeeConnectRouteImport } from './routes/api.shopee.connect'
 import { Route as ApiWebhooksApplyfyRouteImport } from './routes/api.webhooks.applyfy'
 
 const ShellRoute = ShellRouteImport.update({
@@ -54,6 +58,11 @@ const ShellComissoesRoute = ShellComissoesRouteImport.update({
 const ShellConfiguracoesRoute = ShellConfiguracoesRouteImport.update({
   id: '/configuracoes',
   path: '/configuracoes',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellCriarAnuncioRoute = ShellCriarAnuncioRouteImport.update({
+  id: '/criar-anuncio',
+  path: '/criar-anuncio',
   getParentRoute: () => ShellRoute,
 } as any)
 const ShellEditorVideoRoute = ShellEditorVideoRouteImport.update({
@@ -96,6 +105,11 @@ const ShellPedidosRoute = ShellPedidosRouteImport.update({
   path: '/pedidos',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellPedidosAdminRoute = ShellPedidosAdminRouteImport.update({
+  id: '/pedidos-admin',
+  path: '/pedidos-admin',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ShellProdutosRoute = ShellProdutosRouteImport.update({
   id: '/produtos',
   path: '/produtos',
@@ -105,6 +119,16 @@ const ShellRankingRoute = ShellRankingRouteImport.update({
   id: '/ranking',
   path: '/ranking',
   getParentRoute: () => ShellRoute,
+} as any)
+const ApiShopeeCallbackRoute = ApiShopeeCallbackRouteImport.update({
+  id: '/api/shopee/callback',
+  path: '/api/shopee/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiShopeeConnectRoute = ApiShopeeConnectRouteImport.update({
+  id: '/api/shopee/connect',
+  path: '/api/shopee/connect',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiWebhooksApplyfyRoute = ApiWebhooksApplyfyRouteImport.update({
   id: '/api/webhooks/applyfy',
@@ -118,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/catalogo': typeof ShellCatalogoRoute
   '/comissoes': typeof ShellComissoesRoute
   '/configuracoes': typeof ShellConfiguracoesRoute
+  '/criar-anuncio': typeof ShellCriarAnuncioRoute
   '/editor-video': typeof ShellEditorVideoRoute
   '/favoritos': typeof ShellFavoritosRoute
   '/grupos-divulgacao': typeof ShellGruposDivulgacaoRoute
@@ -126,8 +151,11 @@ export interface FileRoutesByFullPath {
   '/marketplace': typeof ShellMarketplaceRoute
   '/meus-links': typeof ShellMeusLinksRoute
   '/pedidos': typeof ShellPedidosRoute
+  '/pedidos-admin': typeof ShellPedidosAdminRoute
   '/produtos': typeof ShellProdutosRoute
   '/ranking': typeof ShellRankingRoute
+  '/api/shopee/callback': typeof ApiShopeeCallbackRoute
+  '/api/shopee/connect': typeof ApiShopeeConnectRoute
   '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
 }
 export interface FileRoutesByTo {
@@ -135,6 +163,7 @@ export interface FileRoutesByTo {
   '/catalogo': typeof ShellCatalogoRoute
   '/comissoes': typeof ShellComissoesRoute
   '/configuracoes': typeof ShellConfiguracoesRoute
+  '/criar-anuncio': typeof ShellCriarAnuncioRoute
   '/editor-video': typeof ShellEditorVideoRoute
   '/favoritos': typeof ShellFavoritosRoute
   '/grupos-divulgacao': typeof ShellGruposDivulgacaoRoute
@@ -143,9 +172,12 @@ export interface FileRoutesByTo {
   '/marketplace': typeof ShellMarketplaceRoute
   '/meus-links': typeof ShellMeusLinksRoute
   '/pedidos': typeof ShellPedidosRoute
+  '/pedidos-admin': typeof ShellPedidosAdminRoute
   '/produtos': typeof ShellProdutosRoute
   '/ranking': typeof ShellRankingRoute
   '/': typeof ShellIndexRoute
+  '/api/shopee/callback': typeof ApiShopeeCallbackRoute
+  '/api/shopee/connect': typeof ApiShopeeConnectRoute
   '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
 }
 export interface FileRoutesById {
@@ -155,6 +187,7 @@ export interface FileRoutesById {
   '/_shell/catalogo': typeof ShellCatalogoRoute
   '/_shell/comissoes': typeof ShellComissoesRoute
   '/_shell/configuracoes': typeof ShellConfiguracoesRoute
+  '/_shell/criar-anuncio': typeof ShellCriarAnuncioRoute
   '/_shell/editor-video': typeof ShellEditorVideoRoute
   '/_shell/favoritos': typeof ShellFavoritosRoute
   '/_shell/grupos-divulgacao': typeof ShellGruposDivulgacaoRoute
@@ -163,9 +196,12 @@ export interface FileRoutesById {
   '/_shell/marketplace': typeof ShellMarketplaceRoute
   '/_shell/meus-links': typeof ShellMeusLinksRoute
   '/_shell/pedidos': typeof ShellPedidosRoute
+  '/_shell/pedidos-admin': typeof ShellPedidosAdminRoute
   '/_shell/produtos': typeof ShellProdutosRoute
   '/_shell/ranking': typeof ShellRankingRoute
   '/_shell/': typeof ShellIndexRoute
+  '/api/shopee/callback': typeof ApiShopeeCallbackRoute
+  '/api/shopee/connect': typeof ApiShopeeConnectRoute
   '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
 }
 export interface FileRouteTypes {
@@ -176,6 +212,7 @@ export interface FileRouteTypes {
     | '/catalogo'
     | '/comissoes'
     | '/configuracoes'
+    | '/criar-anuncio'
     | '/editor-video'
     | '/favoritos'
     | '/grupos-divulgacao'
@@ -184,8 +221,11 @@ export interface FileRouteTypes {
     | '/marketplace'
     | '/meus-links'
     | '/pedidos'
+    | '/pedidos-admin'
     | '/produtos'
     | '/ranking'
+    | '/api/shopee/callback'
+    | '/api/shopee/connect'
     | '/api/webhooks/applyfy'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -193,6 +233,7 @@ export interface FileRouteTypes {
     | '/catalogo'
     | '/comissoes'
     | '/configuracoes'
+    | '/criar-anuncio'
     | '/editor-video'
     | '/favoritos'
     | '/grupos-divulgacao'
@@ -201,9 +242,12 @@ export interface FileRouteTypes {
     | '/marketplace'
     | '/meus-links'
     | '/pedidos'
+    | '/pedidos-admin'
     | '/produtos'
     | '/ranking'
     | '/'
+    | '/api/shopee/callback'
+    | '/api/shopee/connect'
     | '/api/webhooks/applyfy'
   id:
     | '__root__'
@@ -212,6 +256,7 @@ export interface FileRouteTypes {
     | '/_shell/catalogo'
     | '/_shell/comissoes'
     | '/_shell/configuracoes'
+    | '/_shell/criar-anuncio'
     | '/_shell/editor-video'
     | '/_shell/favoritos'
     | '/_shell/grupos-divulgacao'
@@ -220,15 +265,20 @@ export interface FileRouteTypes {
     | '/_shell/marketplace'
     | '/_shell/meus-links'
     | '/_shell/pedidos'
+    | '/_shell/pedidos-admin'
     | '/_shell/produtos'
     | '/_shell/ranking'
     | '/_shell/'
+    | '/api/shopee/callback'
+    | '/api/shopee/connect'
     | '/api/webhooks/applyfy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   ShellRoute: typeof ShellRouteWithChildren
   LoginRoute: typeof LoginRoute
+  ApiShopeeCallbackRoute: typeof ApiShopeeCallbackRoute
+  ApiShopeeConnectRoute: typeof ApiShopeeConnectRoute
   ApiWebhooksApplyfyRoute: typeof ApiWebhooksApplyfyRoute
 }
 
@@ -274,6 +324,13 @@ declare module '@tanstack/react-router' {
       path: '/configuracoes'
       fullPath: '/configuracoes'
       preLoaderRoute: typeof ShellConfiguracoesRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/criar-anuncio': {
+      id: '/_shell/criar-anuncio'
+      path: '/criar-anuncio'
+      fullPath: '/criar-anuncio'
+      preLoaderRoute: typeof ShellCriarAnuncioRouteImport
       parentRoute: typeof ShellRoute
     }
     '/_shell/editor-video': {
@@ -332,6 +389,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellPedidosRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/pedidos-admin': {
+      id: '/_shell/pedidos-admin'
+      path: '/pedidos-admin'
+      fullPath: '/pedidos-admin'
+      preLoaderRoute: typeof ShellPedidosAdminRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/produtos': {
       id: '/_shell/produtos'
       path: '/produtos'
@@ -345,6 +409,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/ranking'
       preLoaderRoute: typeof ShellRankingRouteImport
       parentRoute: typeof ShellRoute
+    }
+    '/api/shopee/callback': {
+      id: '/api/shopee/callback'
+      path: '/api/shopee/callback'
+      fullPath: '/api/shopee/callback'
+      preLoaderRoute: typeof ApiShopeeCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/shopee/connect': {
+      id: '/api/shopee/connect'
+      path: '/api/shopee/connect'
+      fullPath: '/api/shopee/connect'
+      preLoaderRoute: typeof ApiShopeeConnectRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/webhooks/applyfy': {
       id: '/api/webhooks/applyfy'
@@ -360,6 +438,7 @@ interface ShellRouteChildren {
   ShellCatalogoRoute: typeof ShellCatalogoRoute
   ShellComissoesRoute: typeof ShellComissoesRoute
   ShellConfiguracoesRoute: typeof ShellConfiguracoesRoute
+  ShellCriarAnuncioRoute: typeof ShellCriarAnuncioRoute
   ShellEditorVideoRoute: typeof ShellEditorVideoRoute
   ShellFavoritosRoute: typeof ShellFavoritosRoute
   ShellGruposDivulgacaoRoute: typeof ShellGruposDivulgacaoRoute
@@ -368,6 +447,7 @@ interface ShellRouteChildren {
   ShellMarketplaceRoute: typeof ShellMarketplaceRoute
   ShellMeusLinksRoute: typeof ShellMeusLinksRoute
   ShellPedidosRoute: typeof ShellPedidosRoute
+  ShellPedidosAdminRoute: typeof ShellPedidosAdminRoute
   ShellProdutosRoute: typeof ShellProdutosRoute
   ShellRankingRoute: typeof ShellRankingRoute
   ShellIndexRoute: typeof ShellIndexRoute
@@ -377,6 +457,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellCatalogoRoute: ShellCatalogoRoute,
   ShellComissoesRoute: ShellComissoesRoute,
   ShellConfiguracoesRoute: ShellConfiguracoesRoute,
+  ShellCriarAnuncioRoute: ShellCriarAnuncioRoute,
   ShellEditorVideoRoute: ShellEditorVideoRoute,
   ShellFavoritosRoute: ShellFavoritosRoute,
   ShellGruposDivulgacaoRoute: ShellGruposDivulgacaoRoute,
@@ -385,6 +466,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellMarketplaceRoute: ShellMarketplaceRoute,
   ShellMeusLinksRoute: ShellMeusLinksRoute,
   ShellPedidosRoute: ShellPedidosRoute,
+  ShellPedidosAdminRoute: ShellPedidosAdminRoute,
   ShellProdutosRoute: ShellProdutosRoute,
   ShellRankingRoute: ShellRankingRoute,
   ShellIndexRoute: ShellIndexRoute,
@@ -395,6 +477,8 @@ const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   ShellRoute: ShellRouteWithChildren,
   LoginRoute: LoginRoute,
+  ApiShopeeCallbackRoute: ApiShopeeCallbackRoute,
+  ApiShopeeConnectRoute: ApiShopeeConnectRoute,
   ApiWebhooksApplyfyRoute: ApiWebhooksApplyfyRoute,
 }
 export const routeTree = rootRouteImport

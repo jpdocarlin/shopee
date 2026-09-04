@@ -37,9 +37,7 @@ export function SideDrawer({
         <SheetHeader>
           <SheetTitle className="text-[15px]">{title}</SheetTitle>
           {description && (
-            <SheetDescription className="text-[13px]">
-              {description}
-            </SheetDescription>
+            <SheetDescription className="text-[13px]">{description}</SheetDescription>
           )}
         </SheetHeader>
         <div className="flex-1 overflow-y-auto px-4">{children}</div>

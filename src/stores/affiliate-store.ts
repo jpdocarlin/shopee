@@ -106,7 +106,8 @@ export const useAffiliateStore = create<AffiliateState>()(
               { onConflict: "user_id,product_id" },
             )
             .then(({ error }) => {
-              if (error) console.error("[affiliate-store] falha ao salvar link no Supabase:", error);
+              if (error)
+                console.error("[affiliate-store] falha ao salvar link no Supabase:", error);
             });
         }
       },
@@ -124,7 +125,8 @@ export const useAffiliateStore = create<AffiliateState>()(
             .eq("user_id", currentUserId)
             .eq("product_id", productId)
             .then(({ error }) => {
-              if (error) console.error("[affiliate-store] falha ao remover link no Supabase:", error);
+              if (error)
+                console.error("[affiliate-store] falha ao remover link no Supabase:", error);
             });
         }
       },

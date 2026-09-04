@@ -3,10 +3,7 @@ import { cn } from "@/lib/utils";
 export function Shimmer({ className }: { className?: string }) {
   return (
     <div
-      className={cn(
-        "shimmer relative overflow-hidden rounded-md bg-surface-hover",
-        className,
-      )}
+      className={cn("shimmer relative overflow-hidden rounded-md bg-surface-hover", className)}
     />
   );
 }

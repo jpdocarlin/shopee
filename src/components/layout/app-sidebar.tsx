@@ -1,8 +1,12 @@
 import { DockNavItem } from "./dock-nav-item";
-import { navigation } from "@/config/navigation";
+import { getNavigationForUser } from "@/config/navigation";
+import { useIsOwner } from "@/lib/owner";
 import { cn } from "@/lib/utils";
 
 export function AppSidebar() {
+  const isOwner = useIsOwner();
+  const navigation = getNavigationForUser(isOwner);
+
   return (
     <aside className="fixed inset-x-0 bottom-4 z-40 hidden justify-center lg:flex">
       <nav

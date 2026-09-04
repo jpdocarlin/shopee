@@ -99,17 +99,18 @@ export const useDemoBoostStore = create<DemoBoostState>()(
         const amount = state.pendingSyncCents;
         if (amount <= 0) return;
 
-        supabase
-          .rpc("increment_panel_commission", { amount_cents: amount })
-          .then(({ error }) => {
-            if (error) {
-              console.error("[demo-boost] falha ao sincronizar com o painel, tentando de novo em breve:", error);
-              return;
-            }
-            // Só abate o que confirmou enviar agora — outra venda pode ter
-            // aumentado pendingSyncCents nesse meio-tempo.
-            set((s) => ({ pendingSyncCents: Math.max(0, s.pendingSyncCents - amount) }));
-          });
+        supabase.rpc("increment_panel_commission", { amount_cents: amount }).then(({ error }) => {
+          if (error) {
+            console.error(
+              "[demo-boost] falha ao sincronizar com o painel, tentando de novo em breve:",
+              error,
+            );
+            return;
+          }
+          // Só abate o que confirmou enviar agora — outra venda pode ter
+          // aumentado pendingSyncCents nesse meio-tempo.
+          set((s) => ({ pendingSyncCents: Math.max(0, s.pendingSyncCents - amount) }));
+        });
       },
       // Zera ao trocar de usuário no mesmo navegador — é só demonstração, não
       // pode "vazar" venda fake pra conta de outra pessoa.

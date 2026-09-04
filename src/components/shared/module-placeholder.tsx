@@ -10,12 +10,7 @@ type Props = {
   capabilities: string[];
 };
 
-export function ModulePlaceholder({
-  icon: Icon,
-  title,
-  summary,
-  capabilities,
-}: Props) {
+export function ModulePlaceholder({ icon: Icon, title, summary, capabilities }: Props) {
   return (
     <Stagger stagger={0.06} delay={0.05} className="space-y-6">
       <StaggerItem>

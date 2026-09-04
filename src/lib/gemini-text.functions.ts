@@ -38,6 +38,33 @@ export const generateProductStory = createServerFn({ method: "POST" })
     return result;
   });
 
+export const generateListing = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .validator(
+    (data: {
+      productTitle: string;
+      category?: string;
+      marketplace: "shopee" | "mercado-livre";
+      variant?: number;
+    }) => data,
+  )
+  .handler(async ({ data, context }) => {
+    const { enforceAiRateLimit, logAiUsage } = await import("@/lib/ai-usage.server");
+    await enforceAiRateLimit(context.supabase, context.userId);
+
+    const { generateListing: generate } = await import("@/lib/gemini-text.server");
+    const result = await generate(data);
+
+    await logAiUsage(context.supabase, {
+      userId: context.userId,
+      kind: "listing",
+      model: "gemini-2.5-flash",
+      prompt: data.productTitle,
+      output: result.title,
+    });
+    return result;
+  });
+
 export const generateVideoScript = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .validator(

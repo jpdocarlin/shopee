@@ -12,9 +12,7 @@ export function PlanUsageCard() {
         <Zap className="size-3.5 text-brand" />
         <span className="text-[12px] font-medium text-foreground">Plano Pro</span>
       </div>
-      <p className="mt-1 text-[11px] text-muted-foreground">
-        {used}% das buscas mensais usadas
-      </p>
+      <p className="mt-1 text-[11px] text-muted-foreground">{used}% das buscas mensais usadas</p>
       <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-surface-hover">
         <motion.div
           className="h-full rounded-full bg-brand"

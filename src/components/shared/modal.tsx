@@ -41,9 +41,7 @@ export function Modal({
         <DialogHeader>
           <DialogTitle className="text-[15px]">{title}</DialogTitle>
           {description && (
-            <DialogDescription className="text-[13px]">
-              {description}
-            </DialogDescription>
+            <DialogDescription className="text-[13px]">{description}</DialogDescription>
           )}
         </DialogHeader>
         {children}

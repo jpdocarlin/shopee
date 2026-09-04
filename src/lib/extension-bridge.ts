@@ -46,6 +46,58 @@ function makeAdHocId(title: string) {
   return `ext-${Math.abs(hash).toString(36)}`;
 }
 
+export type PublishRequestPayload = {
+  title: string;
+  description: string;
+  keywords: string[];
+  priceLabel: string;
+  /** Data URL (base64) da foto gerada pela IA, se já tiver sido gerada. */
+  photoDataUrl?: string | null;
+};
+
+/**
+ * Manda os dados do anúncio pra extensão, antes de abrir a tela de "Novo
+ * Produto" da Shopee — o content script `shopee-new-product.js` lê isso via
+ * chrome.storage.local e preenche o campo Nome do Produto sozinho, deixando
+ * o resto pronto pra copiar num painel flutuante. Não faz nada se a extensão
+ * não estiver instalada (a página só ignora a mensagem).
+ *
+ * Retorna uma Promise que só resolve depois que a extensão confirma (via
+ * PUBLISH_REQUEST_ACK) que já gravou os dados em chrome.storage.local — isso
+ * existe pra evitar uma corrida: `chrome.storage.local.set` é assíncrono, e
+ * se a gente chamasse `window.open` pra Shopee logo em seguida sem esperar,
+ * a aba nova podia carregar e consultar o storage ANTES da gravação
+ * terminar, achando "nada pendente" e não preenchendo nada. Se a extensão
+ * não estiver instalada, ninguém responde o ACK — por isso tem um timeout
+ * curto de fallback, pra não travar o botão de publicar pra sempre.
+ */
+export function requestExtensionPublish(payload: PublishRequestPayload): Promise<void> {
+  return new Promise((resolve) => {
+    let settled = false;
+    const settle = () => {
+      if (settled) return;
+      settled = true;
+      window.removeEventListener("message", handleAck);
+      window.clearTimeout(timeoutId);
+      resolve();
+    };
+
+    function handleAck(event: MessageEvent) {
+      if (event.source !== window) return;
+      const data = event.data as { source?: string; type?: string } | null;
+      if (data?.source === INCOMING_SOURCE && data?.type === "PUBLISH_REQUEST_ACK") {
+        settle();
+      }
+    }
+
+    window.addEventListener("message", handleAck);
+    // Extensão não instalada (ou lenta) — não trava o fluxo de publicação.
+    const timeoutId = window.setTimeout(settle, 1200);
+
+    window.postMessage({ source: OUTGOING_SOURCE, type: "PUBLISH_REQUEST", payload }, "*");
+  });
+}
+
 /**
  * Monta o listener de mensagens da extensão. Deve ser chamado uma única vez,
  * perto da raiz do app (ver AppShell).

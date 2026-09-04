@@ -6,8 +6,7 @@ import { formatBRL, formatPercent } from "@/lib/format";
 
 export function ProductStats({ products }: { products: DemoProduct[] }) {
   const count = products.length || 1;
-  const avgCommission =
-    products.reduce((a, p) => a + p.commissionRate, 0) / count;
+  const avgCommission = products.reduce((a, p) => a + p.commissionRate, 0) / count;
   const avgTicket = products.reduce((a, p) => a + p.priceCents, 0) / count;
   const topScore = products.reduce((a, p) => Math.max(a, p.score), 0);
 
@@ -27,9 +26,7 @@ export function ProductStats({ products }: { products: DemoProduct[] }) {
         >
           <div className="flex items-center gap-2 text-muted-foreground">
             <item.icon className="size-3.5" />
-            <span className="text-[11.5px] uppercase tracking-wide">
-              {item.label}
-            </span>
+            <span className="text-[11.5px] uppercase tracking-wide">{item.label}</span>
           </div>
           <p className="mt-2 text-[20px] font-semibold tracking-tight tabular-nums text-foreground">
             {item.value}

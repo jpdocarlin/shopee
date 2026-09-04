@@ -26,7 +26,10 @@ export const Route = createFileRoute("/api/shopee/callback")({
           await saveShopeeConnection(tokens);
 
           console.log("[shopee-callback] loja conectada:", tokens.shopId);
-          return Response.redirect(new URL("/integracoes?shopee=connected", url.origin).toString(), 302);
+          return Response.redirect(
+            new URL("/integracoes?shopee=connected", url.origin).toString(),
+            302,
+          );
         } catch (err) {
           console.error("[shopee-callback] falha ao conectar:", err);
           return Response.redirect(

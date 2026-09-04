@@ -9,12 +9,7 @@ type PaginationBarProps = {
   onPageChange: (page: number) => void;
 };
 
-export function PaginationBar({
-  page,
-  pageCount,
-  total,
-  onPageChange,
-}: PaginationBarProps) {
+export function PaginationBar({ page, pageCount, total, onPageChange }: PaginationBarProps) {
   return (
     <div className="flex w-full items-center justify-between gap-3">
       <p className="text-[12px] text-muted-foreground">

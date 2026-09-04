@@ -46,17 +46,9 @@ const SORTS: Array<{ value: SortKey; label: string }> = [
   { value: "price-desc", label: "Maior preço" },
 ];
 
-export function ProductFilters({
-  value,
-  onChange,
-  view,
-  onViewChange,
-  total,
-}: Props) {
-  const set = <K extends keyof ProductFilterState>(
-    key: K,
-    val: ProductFilterState[K],
-  ) => onChange({ ...value, [key]: val });
+export function ProductFilters({ value, onChange, view, onViewChange, total }: Props) {
+  const set = <K extends keyof ProductFilterState>(key: K, val: ProductFilterState[K]) =>
+    onChange({ ...value, [key]: val });
 
   const dirty =
     value.query !== "" ||
@@ -75,10 +67,7 @@ export function ProductFilters({
       />
 
       <div className="flex flex-wrap items-center gap-2 lg:ml-auto">
-        <Select
-          value={value.marketplace}
-          onValueChange={(v) => set("marketplace", v)}
-        >
+        <Select value={value.marketplace} onValueChange={(v) => set("marketplace", v)}>
           <SelectTrigger className="h-9 w-[150px] bg-background text-[13px]">
             <SelectValue />
           </SelectTrigger>
@@ -103,10 +92,7 @@ export function ProductFilters({
           </SelectContent>
         </Select>
 
-        <Select
-          value={value.sort}
-          onValueChange={(v) => set("sort", v as SortKey)}
-        >
+        <Select value={value.sort} onValueChange={(v) => set("sort", v as SortKey)}>
           <SelectTrigger className="h-9 w-[180px] bg-background text-[13px]">
             <SlidersHorizontal className="size-3.5 text-muted-foreground" />
             <SelectValue />

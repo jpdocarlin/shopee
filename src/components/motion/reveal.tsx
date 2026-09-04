@@ -11,12 +11,7 @@ type RevealProps = HTMLMotionProps<"div"> & {
 
 const variantMap = { fade: fadeIn, up: fadeUp, slide: slideInLeft } as const;
 
-export function Reveal({
-  children,
-  variant = "up",
-  delay = 0,
-  ...props
-}: RevealProps) {
+export function Reveal({ children, variant = "up", delay = 0, ...props }: RevealProps) {
   return (
     <motion.div
       initial="hidden"
@@ -36,12 +31,7 @@ type StaggerProps = HTMLMotionProps<"div"> & {
   delay?: number;
 };
 
-export function Stagger({
-  children,
-  stagger = 0.05,
-  delay = 0,
-  ...props
-}: StaggerProps) {
+export function Stagger({ children, stagger = 0.05, delay = 0, ...props }: StaggerProps) {
   return (
     <motion.div
       initial="hidden"
