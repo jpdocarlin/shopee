@@ -27,9 +27,10 @@ import crypto from "node:crypto";
 // causava "error_sign" ("Wrong sign") em toda chamada, mesmo com partner_id e
 // partner_key corretos (confirmado rodando get_shops_by_partner na API Test
 // Tool: só funcionou trocando pra este host).
-const HOST = process.env.SHOPEE_ENV === "live"
-  ? "https://partner.shopeemobile.com"
-  : "https://openplatform.sandbox.test-stable.shopee.sg";
+const HOST =
+  process.env.SHOPEE_ENV === "live"
+    ? "https://partner.shopeemobile.com"
+    : "https://openplatform.sandbox.test-stable.shopee.sg";
 
 function requireCreds(): { partnerId: number; partnerKey: string } {
   const isLive = process.env.SHOPEE_ENV === "live";
@@ -187,10 +188,29 @@ export async function callShopeeApi<T = unknown>(
   return json as T;
 }
 
-// Lista as categorias da Shopee (BR) — passo obrigatório antes de publicar,
-// já que category_id é exigido e precisa ser um id válido da árvore deles.
-export function getCategoryList(accessToken: string, shopId: number) {
-  return callShopeeApi("/api/v2/product/get_category", { accessToken, shopId, query: { language: "pt-br" } });
+export type ShopeeCategory = {
+  category_id: number;
+  category_name: string;
+  parent_category_id: number;
+  has_children: boolean;
+};
+
+// Lista as categorias da loja conectada — passo obrigatório antes de
+// publicar, já que category_id é exigido e precisa ser um id válido da
+// árvore deles (a árvore muda por região: a loja de teste sandbox usada
+// hoje é de Singapura, então os nomes vêm em inglês — o mapeamento pra
+// categorias em português só faz sentido depois do Go-Live com a loja BR
+// real). Só devolve as categorias-folha (has_children: false), que são as
+// únicas aceitas em product/add_item.
+export async function getCategoryList(
+  accessToken: string,
+  shopId: number,
+): Promise<ShopeeCategory[]> {
+  const json = await callShopeeApi<{ response: { category_list: ShopeeCategory[] } }>(
+    "/api/v2/product/get_category",
+    { accessToken, shopId, query: { language: "en" } },
+  );
+  return json.response.category_list.filter((c) => !c.has_children);
 }
 
 // Atributos obrigatórios/opcionais de uma categoria específica — cada
@@ -205,18 +225,36 @@ export function getAttributeTree(accessToken: string, shopId: number, categoryId
   });
 }
 
-// Canais de logística habilitados na loja — também exigido em
-// product/add_item (logistic_info).
-export function getLogisticsChannelList(accessToken: string, shopId: number) {
-  return callShopeeApi("/api/v2/logistics/get_channel_list", { accessToken, shopId });
-}
+export type ShopeeLogisticsChannel = {
+  logistics_channel_id: number;
+  logistics_channel_name: string;
+  enabled: boolean;
+};
 
-// Sobe uma imagem pro CDN da Shopee — devolve um image_id pra usar em
-// product/add_item (a Shopee não aceita URL de imagem externa direto).
-export async function uploadProductImage(
+// Canais de logística habilitados na loja — também exigido em
+// product/add_item (logistic_info). Só devolve os já habilitados na loja
+// (enabled: true) — os desabilitados não podem ser usados num anúncio novo.
+export async function getLogisticsChannelList(
   accessToken: string,
   shopId: number,
-  imageUrl: string,
+): Promise<ShopeeLogisticsChannel[]> {
+  const json = await callShopeeApi<{
+    response: { logistics_channel_list: ShopeeLogisticsChannel[] };
+  }>("/api/v2/logistics/get_channel_list", { accessToken, shopId });
+  return json.response.logistics_channel_list.filter((c) => c.enabled);
+}
+
+// Sobe os bytes de uma imagem pro CDN da Shopee — devolve um image_id pra
+// usar em product/add_item (a Shopee não aceita URL de imagem externa
+// direto). Núcleo compartilhado por uploadProductImage() (baixa de uma URL
+// http) e uploadProductImageFromDataUrl() (decodifica um data: URL base64,
+// como o que a geração de foto por IA devolve — sem precisar de um "fetch"
+// de data: URL, que é redundante já que os bytes já estão em mãos).
+async function uploadImageBuffer(
+  accessToken: string,
+  shopId: number,
+  buffer: Buffer,
+  filename: string,
 ): Promise<string> {
   const { partnerId, partnerKey } = requireCreds();
   const path = "/api/v2/media_space/upload_image";
@@ -224,12 +262,8 @@ export async function uploadProductImage(
   const baseString = `${partnerId}${path}${timestamp}${accessToken}${shopId}`;
   const signature = sign(baseString, partnerKey);
 
-  const imgRes = await fetch(imageUrl);
-  if (!imgRes.ok) throw new Error(`[Shopee] não consegui baixar a imagem: ${imageUrl}`);
-  const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
-
   const form = new FormData();
-  form.append("image", new Blob([imgBuffer]), "produto.jpg");
+  form.append("image", new Blob([buffer]), filename);
 
   const url = new URL(`${HOST}${path}`);
   url.searchParams.set("partner_id", String(partnerId));
@@ -244,6 +278,31 @@ export async function uploadProductImage(
     throw new Error(`[Shopee] upload de imagem falhou: ${JSON.stringify(json)}`);
   }
   return json.response.image_info.image_id as string;
+}
+
+export async function uploadProductImage(
+  accessToken: string,
+  shopId: number,
+  imageUrl: string,
+): Promise<string> {
+  const imgRes = await fetch(imageUrl);
+  if (!imgRes.ok) throw new Error(`[Shopee] não consegui baixar a imagem: ${imageUrl}`);
+  const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+  return uploadImageBuffer(accessToken, shopId, imgBuffer, "produto.jpg");
+}
+
+// Foto gerada pela IA (generateEnhancedProductPhoto) vem como data URL
+// (`data:image/jpeg;base64,...`) — decodifica direto em vez de dar fetch
+// numa data: URL.
+export async function uploadProductImageFromDataUrl(
+  accessToken: string,
+  shopId: number,
+  dataUrl: string,
+): Promise<string> {
+  const match = /^data:([^;]+);base64,(.+)$/.exec(dataUrl);
+  if (!match) throw new Error("[Shopee] data URL de imagem inválido.");
+  const buffer = Buffer.from(match[2], "base64");
+  return uploadImageBuffer(accessToken, shopId, buffer, "produto.jpg");
 }
 
 export type PublishProductInput = {
@@ -264,7 +323,18 @@ export type PublishProductInput = {
 // escrito) — antes de plugar no botão "Publicar" do Criar Anúncio, testar
 // esse fluxo ponta a ponta com um produto de teste e conferir o retorno.
 export async function publishProduct(input: PublishProductInput) {
-  const { accessToken, shopId, categoryId, itemName, description, originalPrice, stock, weightKg, imageIds, logisticIds } = input;
+  const {
+    accessToken,
+    shopId,
+    categoryId,
+    itemName,
+    description,
+    originalPrice,
+    stock,
+    weightKg,
+    imageIds,
+    logisticIds,
+  } = input;
 
   return callShopeeApi("/api/v2/product/add_item", {
     method: "POST",

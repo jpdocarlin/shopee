@@ -35,9 +35,26 @@ async function getOwnerUserId(): Promise<string> {
   return data.user_id;
 }
 
+// Publicar produto via API mexe na loja Shopee REAL do Jp (só ele conectou
+// a conta) — mesmo a página Criar Anúncio sendo aberta a qualquer usuário do
+// Shoppfy, ninguém além do dono pode disparar uma publicação de verdade
+// (senão o produto de outro usuário apareceria na loja pessoal do Jp). Toda
+// server function que chama a API da Shopee em nome da loja deve chamar
+// isso primeiro com o `userId` que veio do `requireSupabaseAuth`.
+export async function assertShopeeOwner(userId: string): Promise<void> {
+  const ownerId = await getOwnerUserId();
+  if (userId !== ownerId) {
+    throw new Error("Só o dono da loja Shopee conectada pode fazer isso.");
+  }
+}
+
 async function getShopeeMarketplaceId(): Promise<string> {
   const admin = getAdminClient();
-  const { data, error } = await admin.from("marketplaces").select("id").eq("slug", "shopee").maybeSingle();
+  const { data, error } = await admin
+    .from("marketplaces")
+    .select("id")
+    .eq("slug", "shopee")
+    .maybeSingle();
   if (error) throw error;
   if (!data) throw new Error('Marketplace "shopee" não encontrado na tabela marketplaces.');
   return data.id;
@@ -100,7 +117,11 @@ export async function saveShopeeConnection(tokens: ShopeeTokenSet): Promise<void
   if (existing) {
     const { error } = await admin
       .from("marketplace_accounts")
-      .update({ status: "active", label: "Loja Shopee (API oficial)", metadata: metadata as unknown as never })
+      .update({
+        status: "active",
+        label: "Loja Shopee (API oficial)",
+        metadata: metadata as unknown as never,
+      })
       .eq("id", existing.id);
     if (error) throw error;
   } else {
@@ -115,7 +136,9 @@ export async function saveShopeeConnection(tokens: ShopeeTokenSet): Promise<void
   }
 }
 
-export async function getShopeeConnection(): Promise<ShopeeConnectionMetadata["shopee_api"] | null> {
+export async function getShopeeConnection(): Promise<
+  ShopeeConnectionMetadata["shopee_api"] | null
+> {
   const admin = getAdminClient();
   const [userId, marketplaceId] = await Promise.all([getOwnerUserId(), getShopeeMarketplaceId()]);
 
@@ -135,7 +158,10 @@ export async function getShopeeConnection(): Promise<ShopeeConnectionMetadata["s
 // Chama antes de qualquer publishProduct/callShopeeApi — renova o
 // access_token se estiver perto de expirar (margem de 5 min) e já salva o
 // novo par de tokens.
-export async function getValidShopeeAccessToken(): Promise<{ accessToken: string; shopId: number }> {
+export async function getValidShopeeAccessToken(): Promise<{
+  accessToken: string;
+  shopId: number;
+}> {
   const conn = await getShopeeConnection();
   if (!conn) {
     throw new Error("Loja Shopee não conectada — conecte em Integrações antes de publicar.");
