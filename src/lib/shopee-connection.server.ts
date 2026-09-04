@@ -53,6 +53,34 @@ export type ShopeeConnectionMetadata = {
   };
 };
 
+// IMPORTANTE (04/09/2026): a tabela marketplace_accounts NÃO tem constraint
+// de unicidade em (user_id, marketplace_id) — a conta do dono já tinha 6
+// linhas "Conta Shopee" (metadata vazio) sobrando da função antiga de
+// afiliados via extensão. Um `.maybeSingle()` filtrado só por essas duas
+// colunas quebra nesse cenário: o Postgrest devolve erro de "multiple rows"
+// quando bate mais de uma linha, e se o `error` não é checado (como estava
+// aqui) o código segue com `existing = undefined` e insere uma linha nova a
+// cada conexão — e se o `error` É checado (como em getShopeeConnection),
+// a função inteira lança e o status vira "desconectado" mesmo com o token
+// certo já salvo. Corrigido usando `.limit(1)` + `order(updated_at desc)` em
+// vez de `.maybeSingle()`, que nunca lança por causa de múltiplas linhas e
+// sempre opera na mais recente.
+async function findExistingAccountRow(
+  admin: ReturnType<typeof getAdminClient>,
+  userId: string,
+  marketplaceId: string,
+): Promise<{ id: string } | null> {
+  const { data, error } = await admin
+    .from("marketplace_accounts")
+    .select("id")
+    .eq("user_id", userId)
+    .eq("marketplace_id", marketplaceId)
+    .order("updated_at", { ascending: false })
+    .limit(1);
+  if (error) throw error;
+  return data?.[0] ?? null;
+}
+
 export async function saveShopeeConnection(tokens: ShopeeTokenSet): Promise<void> {
   const admin = getAdminClient();
   const [userId, marketplaceId] = await Promise.all([getOwnerUserId(), getShopeeMarketplaceId()]);
@@ -67,17 +95,12 @@ export async function saveShopeeConnection(tokens: ShopeeTokenSet): Promise<void
     },
   };
 
-  const { data: existing } = await admin
-    .from("marketplace_accounts")
-    .select("id")
-    .eq("user_id", userId)
-    .eq("marketplace_id", marketplaceId)
-    .maybeSingle();
+  const existing = await findExistingAccountRow(admin, userId, marketplaceId);
 
   if (existing) {
     const { error } = await admin
       .from("marketplace_accounts")
-      .update({ status: "active", metadata: metadata as unknown as never })
+      .update({ status: "active", label: "Loja Shopee (API oficial)", metadata: metadata as unknown as never })
       .eq("id", existing.id);
     if (error) throw error;
   } else {
@@ -101,10 +124,11 @@ export async function getShopeeConnection(): Promise<ShopeeConnectionMetadata["s
     .select("metadata")
     .eq("user_id", userId)
     .eq("marketplace_id", marketplaceId)
-    .maybeSingle();
+    .order("updated_at", { ascending: false })
+    .limit(1);
   if (error) throw error;
 
-  const metadata = data?.metadata as ShopeeConnectionMetadata | undefined;
+  const metadata = data?.[0]?.metadata as ShopeeConnectionMetadata | undefined;
   return metadata?.shopee_api ?? null;
 }
 
