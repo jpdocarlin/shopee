@@ -389,6 +389,12 @@ export async function publishProduct(input: PublishProductInput) {
       item_name: itemName.slice(0, 120),
       category_id: categoryId,
       normal_stock: stock,
+      // 04/09/2026: descoberto ao vivo — além de normal_stock (formato
+      // antigo), a Shopee agora exige seller_stock (array, formato novo
+      // multi-armazém) preenchido, senão add_item quebra com
+      // "seller_stock, value must Not Null". Manda os dois pra cobrir as
+      // duas validações.
+      seller_stock: [{ stock }],
       image: { image_id_list: imageIds },
       logistic_info: logisticIds.map((logistic_id) => ({ logistic_id, enabled: true })),
       ...(brand
