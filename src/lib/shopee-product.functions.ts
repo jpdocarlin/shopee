@@ -52,14 +52,15 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
       // regex) e coloca o resultado do SEARCH primeiro no dump — a árvore
       // completa de 104330 é grande e consumia todo o orçamento de
       // caracteres antes, cortando o SEARCH fora.
+      const { callShopeeApiRawText } = await import("@/lib/shopee-api.server");
       const attrId = 100578;
       let searchJson = "no-attr-id";
       try {
-        const searchRes = await callShopeeApi<Record<string, unknown>>(
+        const { status, text } = await callShopeeApiRawText(
           "/api/v2/product/search_attribute_value_list",
           { accessToken, shopId, query: { category_id: 104330, attribute_id: attrId, language: "pt-br" } },
         );
-        searchJson = JSON.stringify(searchRes);
+        searchJson = `status=${status} body=${text}`;
       } catch (err) {
         searchJson = `ERR:${String(err).slice(0, 500)}`;
       }

@@ -188,6 +188,40 @@ export async function callShopeeApi<T = unknown>(
   return json as T;
 }
 
+// 04/09/2026 DEBUG TEMPORÁRIO: variante de callShopeeApi que devolve o texto
+// bruto da resposta em vez de tentar JSON.parse — usado só pra diagnosticar
+// por que search_attribute_value_list devolveu "Unexpected non-whitespace
+// character after JSON" (res.json() normal perde o corpo real do erro).
+// Tirar assim que confirmar o motivo.
+export async function callShopeeApiRawText(
+  path: string,
+  {
+    method = "GET",
+    accessToken,
+    shopId,
+    query,
+  }: { method?: "GET" | "POST"; accessToken: string; shopId: number; query?: Record<string, string | number> },
+): Promise<{ status: number; text: string }> {
+  const { partnerId, partnerKey } = requireCreds();
+  const timestamp = Math.floor(Date.now() / 1000);
+  const baseString = `${partnerId}${path}${timestamp}${accessToken}${shopId}`;
+  const signature = sign(baseString, partnerKey);
+
+  const url = new URL(`${HOST}${path}`);
+  url.searchParams.set("partner_id", String(partnerId));
+  url.searchParams.set("timestamp", String(timestamp));
+  url.searchParams.set("sign", signature);
+  url.searchParams.set("access_token", accessToken);
+  url.searchParams.set("shop_id", String(shopId));
+  if (query) {
+    for (const [key, value] of Object.entries(query)) url.searchParams.set(key, String(value));
+  }
+
+  const res = await fetch(url.toString(), { method });
+  const text = await res.text();
+  return { status: res.status, text };
+}
+
 export type ShopeeCategory = {
   category_id: number;
   category_name: string;
