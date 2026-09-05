@@ -188,40 +188,6 @@ export async function callShopeeApi<T = unknown>(
   return json as T;
 }
 
-// 04/09/2026 DEBUG TEMPORÁRIO: variante de callShopeeApi que devolve o texto
-// bruto da resposta em vez de tentar JSON.parse — usado só pra diagnosticar
-// por que search_attribute_value_list devolveu "Unexpected non-whitespace
-// character after JSON" (res.json() normal perde o corpo real do erro).
-// Tirar assim que confirmar o motivo.
-export async function callShopeeApiRawText(
-  path: string,
-  {
-    method = "GET",
-    accessToken,
-    shopId,
-    query,
-  }: { method?: "GET" | "POST"; accessToken: string; shopId: number; query?: Record<string, string | number> },
-): Promise<{ status: number; text: string }> {
-  const { partnerId, partnerKey } = requireCreds();
-  const timestamp = Math.floor(Date.now() / 1000);
-  const baseString = `${partnerId}${path}${timestamp}${accessToken}${shopId}`;
-  const signature = sign(baseString, partnerKey);
-
-  const url = new URL(`${HOST}${path}`);
-  url.searchParams.set("partner_id", String(partnerId));
-  url.searchParams.set("timestamp", String(timestamp));
-  url.searchParams.set("sign", signature);
-  url.searchParams.set("access_token", accessToken);
-  url.searchParams.set("shop_id", String(shopId));
-  if (query) {
-    for (const [key, value] of Object.entries(query)) url.searchParams.set(key, String(value));
-  }
-
-  const res = await fetch(url.toString(), { method });
-  const text = await res.text();
-  return { status: res.status, text };
-}
-
 export type ShopeeCategory = {
   category_id: number;
   category_name: string;
@@ -305,10 +271,23 @@ export async function getAttributeTree(
 // ("hello world", "malaysiaku"...). Pra destravar a publicação em QUALQUER
 // categoria sem montar uma tela de formulário dinâmico, resolve cada
 // atributo obrigatório automaticamente: se tiver lista de valores válidos
-// (combo box), usa o primeiro; se for campo livre (sem lista, ex:
-// "malaysiaku" com input_type texto), preenche com um texto genérico. Isso
-// não faz sentido pra um catálogo real (o valor é arbitrário), mas é o
-// suficiente pra passar na validação da Shopee.
+// (combo box), usa o primeiro; se for campo livre (sem lista), preenche com
+// um texto genérico. Isso não faz sentido pra um catálogo real (o valor é
+// arbitrário), mas é o suficiente pra passar na validação da Shopee.
+//
+// LIMITAÇÃO CONHECIDA (não corrigível do nosso lado): categorias 104325 a
+// 104331 do sandbox têm um atributo obrigatório com attribute_id 100578
+// ("malaysiaku", input_type 5) que NÃO tem attribute_value_list nenhuma —
+// nem no get_attribute_tree, nem em busca separada (o endpoint
+// product/search_attribute_value_list nem existe: 404 confirmado ao vivo).
+// Mesmo assim, product/add_item recusa com "AttributeValue.ValueId: ValueId
+// is required" pra esse atributo específico — ou seja, a Shopee marcou como
+// obrigatório um atributo cujo valor válido não é descobrível por nenhuma
+// API pública. É um bug/limitação do sandbox de teste deles, não do nosso
+// código. Categorias fora dessa faixa (ex: 100021, já confirmada publicando
+// de ponta a ponta) funcionam normalmente — é por isso que o Criar Anúncio
+// pré-seleciona 100021 por padrão em vez de deixar o usuário escolher uma
+// categoria quebrada por acidente.
 export function buildMandatoryAttributeList(
   attributes: ShopeeAttribute[],
 ): Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }> {
