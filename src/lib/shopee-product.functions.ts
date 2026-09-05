@@ -30,30 +30,7 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
       .map((c) => ({ id: c.category_id, name: c.category_name || `Categoria ${c.category_id}` }))
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    // 04/09/2026 DEBUG TEMPORÁRIO: entradas falsas (id negativo, nunca
-    // usadas de verdade) só pra inspecionar o JSON bruto de
-    // get_attribute_tree pelo dropdown — não afeta a lista real de
-    // categorias nem o fluxo de publicação. Tira assim que confirmar o
-    // shape certo. IMPORTANTE: usa unshift (não push) — o dropdown corta em
-    // list.slice(0, 200) no criar-anuncio.tsx, e a lista real já tem ~233
-    // categorias, então qualquer coisa no fim do array nunca aparece.
-    const debugEntries: { id: number; name: string }[] = [];
-    try {
-      const { callShopeeApi } = await import("@/lib/shopee-api.server");
-      const raw = await callShopeeApi<Record<string, unknown>>(
-        "/api/v2/product/get_attribute_tree",
-        { accessToken, shopId, query: { category_id_list: 104327, language: "pt-br" } },
-      );
-      const json = JSON.stringify(raw);
-      const chunkSize = 90;
-      for (let i = 0; i < Math.min(json.length, 90 * 8); i += chunkSize) {
-        debugEntries.push({ id: -1000 - i, name: `DEBUG:${json.slice(i, i + chunkSize)}` });
-      }
-    } catch (err) {
-      debugEntries.push({ id: -1, name: `DEBUG_ERR:${String(err).slice(0, 150)}` });
-    }
-
-    return [...debugEntries, ...result];
+    return result;
   });
 
 export const getShopeeLogisticsChannels = createServerFn({ method: "GET" })

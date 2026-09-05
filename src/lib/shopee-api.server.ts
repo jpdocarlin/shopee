@@ -213,17 +213,29 @@ export async function getCategoryList(
   return json.response.category_list.filter((c) => !c.has_children);
 }
 
+// Formato de ENVIO (product/add_item) — confirmado contra a doc da Shopee:
+// ou `value_id` (valor de uma lista pré-definida) ou `original_value_name`
+// (texto livre).
 export type ShopeeAttributeValue = {
   value_id?: number;
   original_value_name?: string;
 };
 
+// Formato de RESPOSTA (get_attribute_tree) — confirmado ao vivo em
+// 04/09/2026 via dump bruto do JSON (ver histórico): a Shopee devolve
+// `name` (não `original_attribute_name`) e `mandatory` (não
+// `is_mandatory`). Os valores da lista também vêm com `name`, não
+// `original_value_name` — esse campo só existe do lado do ENVIO.
+export type ShopeeAttributeResponseValue = {
+  value_id?: number;
+  name?: string;
+};
+
 export type ShopeeAttribute = {
   attribute_id: number;
-  original_attribute_name: string;
-  is_mandatory: boolean;
-  input_validation_type?: string;
-  attribute_value_list?: ShopeeAttributeValue[];
+  name: string;
+  mandatory: boolean;
+  attribute_value_list?: ShopeeAttributeResponseValue[];
 };
 
 // Atributos obrigatórios/opcionais de uma categoria específica — cada
@@ -239,27 +251,19 @@ export async function getAttributeTree(
   // 04/09/2026: descoberto ao vivo — o parâmetro certo é `category_id_list`
   // (plural), não `category_id` — a Shopee devolvia "CategoryIdList is
   // required" com o nome no singular.
-  const json = await callShopeeApi<Record<string, unknown>>(
-    "/api/v2/product/get_attribute_tree",
-    { accessToken, shopId, query: { category_id_list: categoryId, language: "pt-br" } },
-  );
-  // 04/09/2026: o shape exato de `response` ainda não foi confirmado ao
-  // vivo (duas tentativas erradas até agora — objeto direto com
-  // attribute_list, e array de {category_id, attribute_list}). Em vez de
-  // travar a publicação enquanto isso não é descoberto, tenta as duas
-  // formas conhecidas e cai pra lista vazia se nenhuma bater — pior caso,
-  // a categoria fica sem auto-preenchimento de atributos (comportamento
-  // anterior a essa feature), não quebra o fluxo inteiro.
-  const response = (json as { response?: unknown }).response;
-  if (Array.isArray(response)) {
-    const first = response[0] as { attribute_list?: ShopeeAttribute[] } | undefined;
-    return first?.attribute_list ?? [];
-  }
-  if (response && typeof response === "object") {
-    const attrs = (response as { attribute_list?: ShopeeAttribute[] }).attribute_list;
-    if (Array.isArray(attrs)) return attrs;
-  }
-  return [];
+  const json = await callShopeeApi<{
+    response?: { list?: Array<{ category_id: number; attribute_tree?: ShopeeAttribute[] }> };
+  }>("/api/v2/product/get_attribute_tree", {
+    accessToken,
+    shopId,
+    query: { category_id_list: categoryId, language: "pt-br" },
+  });
+  // 04/09/2026: shape confirmado ao vivo — `response.list[].attribute_tree`
+  // (não `response.attribute_list` nem `response[].attribute_list`, os dois
+  // palpites errados testados antes). Achata todas as entradas de `list`
+  // por segurança (na prática, um só category_id_list devolve 1 entrada).
+  const list = json.response?.list ?? [];
+  return list.flatMap((entry) => entry.attribute_tree ?? []);
 }
 
 // 04/09/2026: descoberto ao vivo — toda categoria da loja sandbox exige N
@@ -267,19 +271,20 @@ export async function getAttributeTree(
 // ("hello world", "malaysiaku"...). Pra destravar a publicação em QUALQUER
 // categoria sem montar uma tela de formulário dinâmico, resolve cada
 // atributo obrigatório automaticamente: se tiver lista de valores válidos
-// (combo box), usa o primeiro; se for campo livre (sem lista), preenche com
-// um texto genérico. Isso não faz sentido pra um catálogo real (o valor é
-// arbitrário), mas é o suficiente pra passar na validação da Shopee.
+// (combo box), usa o primeiro; se for campo livre (sem lista, ex:
+// "malaysiaku" com input_type texto), preenche com um texto genérico. Isso
+// não faz sentido pra um catálogo real (o valor é arbitrário), mas é o
+// suficiente pra passar na validação da Shopee.
 export function buildMandatoryAttributeList(
   attributes: ShopeeAttribute[],
 ): Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }> {
   return attributes
-    .filter((attr) => attr.is_mandatory)
+    .filter((attr) => attr.mandatory)
     .map((attr) => {
       const firstValue = attr.attribute_value_list?.[0];
       const value: ShopeeAttributeValue = firstValue?.value_id
         ? { value_id: firstValue.value_id }
-        : { original_value_name: firstValue?.original_value_name ?? "Padrão" };
+        : { original_value_name: firstValue?.name ?? "Padrão" };
       return { attribute_id: attr.attribute_id, attribute_value_list: [value] };
     });
 }
