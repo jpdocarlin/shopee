@@ -116,11 +116,13 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
     // toda categoria da sandbox. Falhando a busca, segue sem atributos
     // (categoria pode não exigir nenhum).
     let attributeList: ReturnType<typeof buildMandatoryAttributeList> = [];
-    try {
-      const attributes = await getAttributeTree(accessToken, shopId, data.categoryId);
-      attributeList = buildMandatoryAttributeList(attributes);
-    } catch {
-      // categoria pode não ter atributos obrigatórios — segue sem eles.
+    const attributes = await getAttributeTree(accessToken, shopId, data.categoryId);
+    attributeList = buildMandatoryAttributeList(attributes);
+    // 04/09/2026 DEBUG TEMPORÁRIO: forçando erro com o shape bruto da
+    // resposta pra descobrir por que o auto-preenchimento não tá pegando os
+    // atributos obrigatórios — tira isso assim que confirmar a causa.
+    if (attributeList.length === 0) {
+      throw new Error(`DEBUG raw attributes: ${JSON.stringify(attributes.slice(0, 3))}`);
     }
 
     const result = await publishProduct({
