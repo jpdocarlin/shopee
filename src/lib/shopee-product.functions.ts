@@ -26,9 +26,31 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
     // inteira se NENHUMA vier com nome — já vimos isso acontecer), usa um
     // nome de fallback com o próprio id: a categoria continua selecionável e
     // válida pro product/add_item, só perde o nome bonito na UI.
-    return categories
+    const result = categories
       .map((c) => ({ id: c.category_id, name: c.category_name || `Categoria ${c.category_id}` }))
       .sort((a, b) => a.name.localeCompare(b.name));
+
+    // 04/09/2026 DEBUG TEMPORÁRIO: entradas falsas (id negativo, nunca
+    // usadas de verdade) só pra inspecionar o JSON bruto de
+    // get_attribute_tree pelo dropdown — não afeta a lista real de
+    // categorias nem o fluxo de publicação. Tira assim que confirmar o
+    // shape certo.
+    try {
+      const { callShopeeApi } = await import("@/lib/shopee-api.server");
+      const raw = await callShopeeApi<Record<string, unknown>>(
+        "/api/v2/product/get_attribute_tree",
+        { accessToken, shopId, query: { category_id_list: 104327, language: "pt-br" } },
+      );
+      const json = JSON.stringify(raw);
+      const chunkSize = 90;
+      for (let i = 0; i < Math.min(json.length, 90 * 8); i += chunkSize) {
+        result.push({ id: -1000 - i, name: `DEBUG:${json.slice(i, i + chunkSize)}` });
+      }
+    } catch (err) {
+      result.push({ id: -1, name: `DEBUG_ERR:${String(err).slice(0, 150)}` });
+    }
+
+    return result;
   });
 
 export const getShopeeLogisticsChannels = createServerFn({ method: "GET" })
@@ -108,13 +130,6 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
       // categoria pode não usar marca nenhuma — segue sem o campo.
     }
 
-    // 04/09/2026: descoberto ao vivo — toda categoria da loja sandbox exige
-    // um conjunto diferente de atributos obrigatórios (nomes de teste sem
-    // sentido, tipo "hello world"). Busca a árvore de atributos da
-    // categoria escolhida e resolve automaticamente cada um obrigatório
-    // (buildMandatoryAttributeList) — sem isso o add_item quebra em quase
-    // toda categoria da sandbox. Falhando a busca, segue sem atributos
-    // (categoria pode não exigir nenhum).
     // 04/09/2026: toda categoria da loja sandbox exige um conjunto
     // diferente de atributos obrigatórios (nomes de teste sem sentido, tipo
     // "hello world"). Busca a árvore de atributos e resolve automaticamente
