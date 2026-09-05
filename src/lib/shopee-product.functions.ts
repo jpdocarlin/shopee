@@ -34,7 +34,10 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
     // usadas de verdade) só pra inspecionar o JSON bruto de
     // get_attribute_tree pelo dropdown — não afeta a lista real de
     // categorias nem o fluxo de publicação. Tira assim que confirmar o
-    // shape certo.
+    // shape certo. IMPORTANTE: usa unshift (não push) — o dropdown corta em
+    // list.slice(0, 200) no criar-anuncio.tsx, e a lista real já tem ~233
+    // categorias, então qualquer coisa no fim do array nunca aparece.
+    const debugEntries: { id: number; name: string }[] = [];
     try {
       const { callShopeeApi } = await import("@/lib/shopee-api.server");
       const raw = await callShopeeApi<Record<string, unknown>>(
@@ -44,13 +47,13 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
       const json = JSON.stringify(raw);
       const chunkSize = 90;
       for (let i = 0; i < Math.min(json.length, 90 * 8); i += chunkSize) {
-        result.push({ id: -1000 - i, name: `DEBUG:${json.slice(i, i + chunkSize)}` });
+        debugEntries.push({ id: -1000 - i, name: `DEBUG:${json.slice(i, i + chunkSize)}` });
       }
     } catch (err) {
-      result.push({ id: -1, name: `DEBUG_ERR:${String(err).slice(0, 150)}` });
+      debugEntries.push({ id: -1, name: `DEBUG_ERR:${String(err).slice(0, 150)}` });
     }
 
-    return result;
+    return [...debugEntries, ...result];
   });
 
 export const getShopeeLogisticsChannels = createServerFn({ method: "GET" })
