@@ -213,16 +213,56 @@ export async function getCategoryList(
   return json.response.category_list.filter((c) => !c.has_children);
 }
 
+export type ShopeeAttributeValue = {
+  value_id?: number;
+  original_value_name?: string;
+};
+
+export type ShopeeAttribute = {
+  attribute_id: number;
+  original_attribute_name: string;
+  is_mandatory: boolean;
+  input_validation_type?: string;
+  attribute_value_list?: ShopeeAttributeValue[];
+};
+
 // Atributos obrigatórios/opcionais de uma categoria específica — cada
-// categoria da Shopee exige um conjunto diferente (ex: "Marca", "Voltagem").
-// Sem isso, product/add_item devolve erro de validação pra categorias com
-// atributo obrigatório não preenchido.
-export function getAttributeTree(accessToken: string, shopId: number, categoryId: number) {
-  return callShopeeApi("/api/v2/product/get_attribute_tree", {
-    accessToken,
-    shopId,
-    query: { category_id: categoryId, language: "pt-br" },
-  });
+// categoria da Shopee exige um conjunto diferente e, na loja sandbox, os
+// nomes são literalmente aleatórios ("hello world", "malaysiaku", "Battery
+// Type") — não tem como adivinhar. Sem isso, product/add_item devolve erro
+// de validação pra categorias com atributo obrigatório não preenchido.
+export async function getAttributeTree(
+  accessToken: string,
+  shopId: number,
+  categoryId: number,
+): Promise<ShopeeAttribute[]> {
+  const json = await callShopeeApi<{ response: { attribute_list: ShopeeAttribute[] } }>(
+    "/api/v2/product/get_attribute_tree",
+    { accessToken, shopId, query: { category_id: categoryId, language: "pt-br" } },
+  );
+  return json.response.attribute_list ?? [];
+}
+
+// 04/09/2026: descoberto ao vivo — toda categoria da loja sandbox exige N
+// atributos obrigatórios com nomes/valores de teste sem sentido nenhum
+// ("hello world", "malaysiaku"...). Pra destravar a publicação em QUALQUER
+// categoria sem montar uma tela de formulário dinâmico, resolve cada
+// atributo obrigatório automaticamente: se tiver lista de valores válidos
+// (combo box), usa o primeiro; se for campo livre (sem lista), preenche com
+// um texto genérico. Isso não faz sentido pra um catálogo real (o valor é
+// arbitrário), mas é o suficiente pra passar na validação da Shopee.
+export function buildMandatoryAttributeList(
+  attributes: ShopeeAttribute[],
+): Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }> {
+  return attributes
+    .filter((attr) => attr.is_mandatory)
+    .map((attr) => {
+      const firstValue = attr.attribute_value_list?.[0];
+      const value: ShopeeAttributeValue = firstValue?.value_id
+        ? { value_id: firstValue.value_id }
+        : { original_value_name: firstValue?.original_value_name ?? "Padrão" };
+      return { attribute_id: attr.attribute_id, attribute_value_list: [value] };
+    });
 }
 
 export type ShopeeBrand = {
@@ -357,6 +397,7 @@ export type PublishProductInput = {
   imageIds: string[]; // ver uploadProductImage()
   logisticIds: number[]; // ids habilitados, ver getLogisticsChannelList()
   brand?: { brandId: number; originalBrandName: string }; // ver getBrandList()
+  attributeList?: Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }>; // ver buildMandatoryAttributeList()
 };
 
 // Publica o produto de verdade na Shopee. IMPORTANTE: isso ainda não foi
@@ -376,6 +417,7 @@ export async function publishProduct(input: PublishProductInput) {
     imageIds,
     logisticIds,
     brand,
+    attributeList,
   } = input;
 
   return callShopeeApi("/api/v2/product/add_item", {
@@ -411,6 +453,11 @@ export async function publishProduct(input: PublishProductInput) {
       ...(brand
         ? { brand: { brand_id: brand.brandId, original_brand_name: brand.originalBrandName } }
         : {}),
+      // 04/09/2026: descoberto ao vivo — toda categoria da loja sandbox
+      // exige atributos obrigatórios diferentes (get_attribute_tree). Ver
+      // buildMandatoryAttributeList() — quem chama publishProduct() já
+      // resolve isso e manda pronto aqui.
+      ...(attributeList && attributeList.length > 0 ? { attribute_list: attributeList } : {}),
     },
   });
 }

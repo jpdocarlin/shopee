@@ -66,6 +66,8 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
       uploadProductImageFromDataUrl,
       getLogisticsChannelList,
       getBrandList,
+      getAttributeTree,
+      buildMandatoryAttributeList,
       publishProduct,
     } = await import("@/lib/shopee-api.server");
 
@@ -92,17 +94,33 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
     // querem *algum* valor preenchido) e cai pra primeira marca da lista se
     // não houver "No Brand" — sem isso o add_item quebra pra quem exige
     // marca. Se a categoria não usa marca, a lista vem vazia e segue sem
-    // enviar o campo (comportamento antigo, preservado).
-    // 04/09/2026 DEBUG TEMPORÁRIO: deixando o erro de getBrandList propagar
-    // (sem try/catch) só pra descobrir ao vivo por que a lista veio vazia /
-    // falhou — depois de confirmar a causa real, volta a engolir erro aqui
-    // (categoria pode legitimamente não usar marca nenhuma).
+    // enviar o campo. get_brand_list falhando (categoria sem suporte a
+    // marca nenhuma) não deve travar a publicação.
     let brand: { brandId: number; originalBrandName: string } | undefined;
-    const brands = await getBrandList(accessToken, shopId, data.categoryId);
-    const noBrand = brands.find((b) => /no brand/i.test(b.original_brand_name));
-    const chosen = noBrand ?? brands[0];
-    if (chosen) {
-      brand = { brandId: chosen.brand_id, originalBrandName: chosen.original_brand_name };
+    try {
+      const brands = await getBrandList(accessToken, shopId, data.categoryId);
+      const noBrand = brands.find((b) => /no brand/i.test(b.original_brand_name));
+      const chosen = noBrand ?? brands[0];
+      if (chosen) {
+        brand = { brandId: chosen.brand_id, originalBrandName: chosen.original_brand_name };
+      }
+    } catch {
+      // categoria pode não usar marca nenhuma — segue sem o campo.
+    }
+
+    // 04/09/2026: descoberto ao vivo — toda categoria da loja sandbox exige
+    // um conjunto diferente de atributos obrigatórios (nomes de teste sem
+    // sentido, tipo "hello world"). Busca a árvore de atributos da
+    // categoria escolhida e resolve automaticamente cada um obrigatório
+    // (buildMandatoryAttributeList) — sem isso o add_item quebra em quase
+    // toda categoria da sandbox. Falhando a busca, segue sem atributos
+    // (categoria pode não exigir nenhum).
+    let attributeList: ReturnType<typeof buildMandatoryAttributeList> = [];
+    try {
+      const attributes = await getAttributeTree(accessToken, shopId, data.categoryId);
+      attributeList = buildMandatoryAttributeList(attributes);
+    } catch {
+      // categoria pode não ter atributos obrigatórios — segue sem eles.
     }
 
     const result = await publishProduct({
@@ -117,6 +135,7 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
       imageIds: [imageId],
       logisticIds: channels.map((c) => c.logistics_channel_id),
       brand,
+      attributeList,
     });
 
     const parsed = result as { response?: { item_id?: number } };
