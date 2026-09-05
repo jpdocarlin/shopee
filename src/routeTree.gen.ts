@@ -27,6 +27,7 @@ import { Route as ShellPedidosRouteImport } from './routes/_shell.pedidos'
 import { Route as ShellPedidosAdminRouteImport } from './routes/_shell.pedidos-admin'
 import { Route as ShellProdutosRouteImport } from './routes/_shell.produtos'
 import { Route as ShellRankingRouteImport } from './routes/_shell.ranking'
+import { Route as ShellAnuncioItemIdRouteImport } from './routes/_shell.anuncio.$itemId'
 import { Route as ApiShopeeCallbackRouteImport } from './routes/api.shopee.callback'
 import { Route as ApiShopeeConnectRouteImport } from './routes/api.shopee.connect'
 import { Route as ApiWebhooksApplyfyRouteImport } from './routes/api.webhooks.applyfy'
@@ -120,6 +121,11 @@ const ShellRankingRoute = ShellRankingRouteImport.update({
   path: '/ranking',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellAnuncioItemIdRoute = ShellAnuncioItemIdRouteImport.update({
+  id: '/anuncio/$itemId',
+  path: '/anuncio/$itemId',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ApiShopeeCallbackRoute = ApiShopeeCallbackRouteImport.update({
   id: '/api/shopee/callback',
   path: '/api/shopee/callback',
@@ -154,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/pedidos-admin': typeof ShellPedidosAdminRoute
   '/produtos': typeof ShellProdutosRoute
   '/ranking': typeof ShellRankingRoute
+  '/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
   '/api/shopee/callback': typeof ApiShopeeCallbackRoute
   '/api/shopee/connect': typeof ApiShopeeConnectRoute
   '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
@@ -176,6 +183,7 @@ export interface FileRoutesByTo {
   '/produtos': typeof ShellProdutosRoute
   '/ranking': typeof ShellRankingRoute
   '/': typeof ShellIndexRoute
+  '/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
   '/api/shopee/callback': typeof ApiShopeeCallbackRoute
   '/api/shopee/connect': typeof ApiShopeeConnectRoute
   '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
@@ -200,6 +208,7 @@ export interface FileRoutesById {
   '/_shell/produtos': typeof ShellProdutosRoute
   '/_shell/ranking': typeof ShellRankingRoute
   '/_shell/': typeof ShellIndexRoute
+  '/_shell/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
   '/api/shopee/callback': typeof ApiShopeeCallbackRoute
   '/api/shopee/connect': typeof ApiShopeeConnectRoute
   '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
@@ -224,6 +233,7 @@ export interface FileRouteTypes {
     | '/pedidos-admin'
     | '/produtos'
     | '/ranking'
+    | '/anuncio/$itemId'
     | '/api/shopee/callback'
     | '/api/shopee/connect'
     | '/api/webhooks/applyfy'
@@ -246,6 +256,7 @@ export interface FileRouteTypes {
     | '/produtos'
     | '/ranking'
     | '/'
+    | '/anuncio/$itemId'
     | '/api/shopee/callback'
     | '/api/shopee/connect'
     | '/api/webhooks/applyfy'
@@ -269,6 +280,7 @@ export interface FileRouteTypes {
     | '/_shell/produtos'
     | '/_shell/ranking'
     | '/_shell/'
+    | '/_shell/anuncio/$itemId'
     | '/api/shopee/callback'
     | '/api/shopee/connect'
     | '/api/webhooks/applyfy'
@@ -410,6 +422,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellRankingRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/anuncio/$itemId': {
+      id: '/_shell/anuncio/$itemId'
+      path: '/anuncio/$itemId'
+      fullPath: '/anuncio/$itemId'
+      preLoaderRoute: typeof ShellAnuncioItemIdRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/api/shopee/callback': {
       id: '/api/shopee/callback'
       path: '/api/shopee/callback'
@@ -451,6 +470,7 @@ interface ShellRouteChildren {
   ShellProdutosRoute: typeof ShellProdutosRoute
   ShellRankingRoute: typeof ShellRankingRoute
   ShellIndexRoute: typeof ShellIndexRoute
+  ShellAnuncioItemIdRoute: typeof ShellAnuncioItemIdRoute
 }
 
 const ShellRouteChildren: ShellRouteChildren = {
@@ -470,6 +490,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellProdutosRoute: ShellProdutosRoute,
   ShellRankingRoute: ShellRankingRoute,
   ShellIndexRoute: ShellIndexRoute,
+  ShellAnuncioItemIdRoute: ShellAnuncioItemIdRoute,
 }
 
 const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)

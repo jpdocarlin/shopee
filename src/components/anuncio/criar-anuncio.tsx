@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import {
   AlertTriangle,
@@ -936,6 +937,15 @@ export function CriarAnuncio() {
                                 · status: {itemPreview.status}
                               </p>
                             </div>
+                            <Link
+                              to="/anuncio/$itemId"
+                              params={{ itemId: String(itemPreview.itemId) }}
+                              target="_blank"
+                              className="ml-2 flex shrink-0 items-center gap-1 text-[12px] text-brand underline underline-offset-2"
+                            >
+                              Ver anúncio
+                              <ExternalLink className="size-3" />
+                            </Link>
                           </>
                         ) : null}
                       </div>
