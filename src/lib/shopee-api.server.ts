@@ -236,11 +236,17 @@ export async function getAttributeTree(
   shopId: number,
   categoryId: number,
 ): Promise<ShopeeAttribute[]> {
-  const json = await callShopeeApi<{ response: { attribute_list: ShopeeAttribute[] } }>(
-    "/api/v2/product/get_attribute_tree",
-    { accessToken, shopId, query: { category_id: categoryId, language: "pt-br" } },
-  );
-  return json.response.attribute_list ?? [];
+  // 04/09/2026: descoberto ao vivo — o parâmetro certo é `category_id_list`
+  // (plural), não `category_id` — a Shopee devolvia "CategoryIdList is
+  // required" com o nome no singular.
+  const json = await callShopeeApi<{
+    response: Array<{ category_id: number; attribute_list: ShopeeAttribute[] }>;
+  }>("/api/v2/product/get_attribute_tree", {
+    accessToken,
+    shopId,
+    query: { category_id_list: categoryId, language: "pt-br" },
+  });
+  return json.response?.[0]?.attribute_list ?? [];
 }
 
 // 04/09/2026: descoberto ao vivo — toda categoria da loja sandbox exige N
