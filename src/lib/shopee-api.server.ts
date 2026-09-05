@@ -239,14 +239,14 @@ export async function getAttributeTree(
   // 04/09/2026: descoberto ao vivo — o parâmetro certo é `category_id_list`
   // (plural), não `category_id` — a Shopee devolvia "CategoryIdList is
   // required" com o nome no singular.
-  const json = await callShopeeApi<{
-    response: Array<{ category_id: number; attribute_list: ShopeeAttribute[] }>;
-  }>("/api/v2/product/get_attribute_tree", {
-    accessToken,
-    shopId,
-    query: { category_id_list: categoryId, language: "pt-br" },
-  });
-  return json.response?.[0]?.attribute_list ?? [];
+  const json = await callShopeeApi<Record<string, unknown>>(
+    "/api/v2/product/get_attribute_tree",
+    { accessToken, shopId, query: { category_id_list: categoryId, language: "pt-br" } },
+  );
+  // 04/09/2026 DEBUG TEMPORÁRIO: o shape exato da resposta ainda não bateu
+  // com o esperado (tentativa 2) — joga o JSON bruto pra descobrir o
+  // formato certo antes de tirar esse debug.
+  throw new Error(`DEBUG raw get_attribute_tree: ${JSON.stringify(json).slice(0, 1500)}`);
 }
 
 // 04/09/2026: descoberto ao vivo — toda categoria da loja sandbox exige N
