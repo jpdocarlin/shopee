@@ -115,11 +115,20 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
     // (buildMandatoryAttributeList) — sem isso o add_item quebra em quase
     // toda categoria da sandbox. Falhando a busca, segue sem atributos
     // (categoria pode não exigir nenhum).
-    // 04/09/2026 DEBUG TEMPORÁRIO: sem try/catch aqui só até confirmar o
-    // shape certo da resposta (ver debug em getAttributeTree).
+    // 04/09/2026: toda categoria da loja sandbox exige um conjunto
+    // diferente de atributos obrigatórios (nomes de teste sem sentido, tipo
+    // "hello world"). Busca a árvore de atributos e resolve automaticamente
+    // cada um obrigatório (buildMandatoryAttributeList). Falhando a busca
+    // (ou o shape da resposta não bater — getAttributeTree já degrada pra
+    // lista vazia nesse caso), segue sem atributos em vez de travar a
+    // publicação inteira.
     let attributeList: ReturnType<typeof buildMandatoryAttributeList> = [];
-    const attributes = await getAttributeTree(accessToken, shopId, data.categoryId);
-    attributeList = buildMandatoryAttributeList(attributes);
+    try {
+      const attributes = await getAttributeTree(accessToken, shopId, data.categoryId);
+      attributeList = buildMandatoryAttributeList(attributes);
+    } catch {
+      // categoria pode não ter atributos obrigatórios — segue sem eles.
+    }
 
     const result = await publishProduct({
       accessToken,

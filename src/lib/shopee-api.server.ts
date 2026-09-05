@@ -243,10 +243,23 @@ export async function getAttributeTree(
     "/api/v2/product/get_attribute_tree",
     { accessToken, shopId, query: { category_id_list: categoryId, language: "pt-br" } },
   );
-  // 04/09/2026 DEBUG TEMPORÁRIO: o shape exato da resposta ainda não bateu
-  // com o esperado (tentativa 2) — joga o JSON bruto pra descobrir o
-  // formato certo antes de tirar esse debug.
-  throw new Error(`DEBUG raw get_attribute_tree: ${JSON.stringify(json).slice(0, 1500)}`);
+  // 04/09/2026: o shape exato de `response` ainda não foi confirmado ao
+  // vivo (duas tentativas erradas até agora — objeto direto com
+  // attribute_list, e array de {category_id, attribute_list}). Em vez de
+  // travar a publicação enquanto isso não é descoberto, tenta as duas
+  // formas conhecidas e cai pra lista vazia se nenhuma bater — pior caso,
+  // a categoria fica sem auto-preenchimento de atributos (comportamento
+  // anterior a essa feature), não quebra o fluxo inteiro.
+  const response = (json as { response?: unknown }).response;
+  if (Array.isArray(response)) {
+    const first = response[0] as { attribute_list?: ShopeeAttribute[] } | undefined;
+    return first?.attribute_list ?? [];
+  }
+  if (response && typeof response === "object") {
+    const attrs = (response as { attribute_list?: ShopeeAttribute[] }).attribute_list;
+    if (Array.isArray(attrs)) return attrs;
+  }
+  return [];
 }
 
 // 04/09/2026: descoberto ao vivo — toda categoria da loja sandbox exige N
