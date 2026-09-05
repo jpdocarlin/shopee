@@ -20,6 +20,23 @@
 // comum, mas precisa ser validado contra a "API Test Tool" do console (ou
 // contra uma chamada real em sandbox) antes de confiar 100% nele em produção.
 import crypto from "node:crypto";
+import { ProxyAgent } from "undici";
+
+// IP fixo (QuotaGuard) exigido pela Shopee no formulário de Go-Live ("APP IP
+// Address Management") — a Vercel não tem IP de saída fixo por padrão em
+// funções serverless, e a Shopee quer pelo menos um IP declarado por onde as
+// chamadas da API saem. QUOTAGUARDSTATIC_URL vem do dashboard do QuotaGuard
+// (formato http://usuario:senha@host:porta). Passa via `dispatcher` só nas
+// chamadas fetch deste arquivo (não usamos setGlobalDispatcher pra não afetar
+// outras integrações do app, como Supabase/Gemini/Creatomate).
+const shopeeProxyAgent = process.env.QUOTAGUARDSTATIC_URL
+  ? new ProxyAgent(process.env.QUOTAGUARDSTATIC_URL)
+  : undefined;
+
+function shopeeFetch(url: string, init: RequestInit = {}): Promise<Response> {
+    if (!shopeeProxyAgent) return fetch(url, init);
+    return fetch(url, { ...init, dispatcher: shopeeProxyAgent } as RequestInit);
+}
 
 // Host de sandbox confirmado direto na "API Test Tool" do console da Shopee
 // (que assina as chamadas pra gente) — NÃO é o "partner.test-stable.shopeemobile.com"
@@ -86,7 +103,7 @@ export async function exchangeCodeForToken(code: string, shopId: number): Promis
   url.searchParams.set("timestamp", String(timestamp));
   url.searchParams.set("sign", signature);
 
-  const res = await fetch(url.toString(), {
+  const res = await shopeeFetch(url.toString(), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ code, shop_id: shopId, partner_id: partnerId }),
@@ -122,7 +139,7 @@ export async function refreshAccessToken(
   url.searchParams.set("timestamp", String(timestamp));
   url.searchParams.set("sign", signature);
 
-  const res = await fetch(url.toString(), {
+  const res = await shopeeFetch(url.toString(), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ refresh_token: refreshToken, shop_id: shopId, partner_id: partnerId }),
@@ -175,7 +192,7 @@ export async function callShopeeApi<T = unknown>(
     for (const [key, value] of Object.entries(query)) url.searchParams.set(key, String(value));
   }
 
-  const res = await fetch(url.toString(), {
+  const res = await shopeeFetch(url.toString(), {
     method,
     headers: method === "POST" ? { "Content-Type": "application/json" } : undefined,
     body: method === "POST" ? JSON.stringify(body ?? {}) : undefined,
@@ -420,7 +437,7 @@ async function uploadImageBuffer(
   url.searchParams.set("access_token", accessToken);
   url.searchParams.set("shop_id", String(shopId));
 
-  const res = await fetch(url.toString(), { method: "POST", body: form });
+  const res = await shopeeFetch(url.toString(), { method: "POST", body: form });
   const json = await res.json();
   if (!res.ok || json.error) {
     throw new Error(`[Shopee] upload de imagem falhou: ${JSON.stringify(json)}`);
