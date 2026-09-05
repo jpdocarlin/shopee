@@ -400,6 +400,12 @@ export async function publishProduct(input: PublishProductInput) {
       // "seller_stock, value must Not Null". Manda os dois pra cobrir as
       // duas validações.
       seller_stock: [{ stock }],
+      // 04/09/2026: descoberto ao vivo — algumas categorias exigem as
+      // dimensões do pacote ("Parcel size is required" / dimension is
+      // mandatory). O formulário do Criar Anúncio ainda não coleta isso,
+      // então manda um valor padrão conservador (pacote pequeno/médio) só
+      // pra satisfazer a validação — não reflete a caixa real do produto.
+      dimension: { package_length: 20, package_width: 20, package_height: 10 },
       image: { image_id_list: imageIds },
       logistic_info: logisticIds.map((logistic_id) => ({ logistic_id, enabled: true })),
       ...(brand
