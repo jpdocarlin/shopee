@@ -46,23 +46,26 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
         { accessToken, shopId, query: { category_id_list: 104330, language: "pt-br" } },
       );
       const treeJson = JSON.stringify(raw);
-      const match = /"attribute_id":(\d+)/.exec(treeJson);
-      const attrId = match ? Number(match[1]) : null;
+      // 04/09/2026: já confirmamos que o atributo obrigatório problemático é
+      // sempre o 100578 ("malaysiaku") — mesmo id em 104327 e 104330, sem
+      // attribute_value_list na árvore. Fixa o id (em vez de extrair via
+      // regex) e coloca o resultado do SEARCH primeiro no dump — a árvore
+      // completa de 104330 é grande e consumia todo o orçamento de
+      // caracteres antes, cortando o SEARCH fora.
+      const attrId = 100578;
       let searchJson = "no-attr-id";
-      if (attrId) {
-        try {
-          const searchRes = await callShopeeApi<Record<string, unknown>>(
-            "/api/v2/product/search_attribute_value_list",
-            { accessToken, shopId, query: { category_id: 104330, attribute_id: attrId, language: "pt-br" } },
-          );
-          searchJson = JSON.stringify(searchRes);
-        } catch (err) {
-          searchJson = `ERR:${String(err).slice(0, 300)}`;
-        }
+      try {
+        const searchRes = await callShopeeApi<Record<string, unknown>>(
+          "/api/v2/product/search_attribute_value_list",
+          { accessToken, shopId, query: { category_id: 104330, attribute_id: attrId, language: "pt-br" } },
+        );
+        searchJson = JSON.stringify(searchRes);
+      } catch (err) {
+        searchJson = `ERR:${String(err).slice(0, 500)}`;
       }
-      const combined = `TREE:${treeJson}|||SEARCH(attr=${attrId}):${searchJson}`;
+      const combined = `SEARCH(attr=${attrId}):${searchJson}|||TREE:${treeJson}`;
       const chunkSize = 90;
-      for (let i = 0; i < Math.min(combined.length, 90 * 25); i += chunkSize) {
+      for (let i = 0; i < Math.min(combined.length, 90 * 40); i += chunkSize) {
         debugEntries.push({ id: -1000 - i, name: `DEBUG:${combined.slice(i, i + chunkSize)}` });
       }
     } catch (err) {
