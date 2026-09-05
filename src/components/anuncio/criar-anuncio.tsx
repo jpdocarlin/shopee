@@ -196,6 +196,11 @@ export function CriarAnuncio() {
   const [categoriesError, setCategoriesError] = useState<string | null>(null);
   const [categorySearch, setCategorySearch] = useState("");
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+  // 04/09/2026: categoria é pré-selecionada automaticamente (ver
+  // runShopeeCategories abaixo) — esse toggle só abre a busca manual pra
+  // quem quiser testar outra categoria de propósito. Por padrão fica
+  // escondido: publicar não deve exigir nenhum clique extra do usuário.
+  const [showCategoryPicker, setShowCategoryPicker] = useState(false);
   const [stockInput, setStockInput] = useState("10");
   const [weightInput, setWeightInput] = useState("0,3");
   const [publishApiLoading, setPublishApiLoading] = useState(false);
@@ -225,7 +230,21 @@ export function CriarAnuncio() {
     setCategoriesLoading(true);
     setCategoriesError(null);
     runShopeeCategories()
-      .then((result) => setCategories(result))
+      .then((result) => {
+        setCategories(result);
+        // 04/09/2026: a Shopee EXIGE category_id em todo produto — não dá
+        // pra publicar sem categoria (regra da própria plataforma, não
+        // nossa). Mas no sandbox a lista vem sem nomes reais (só
+        // "Categoria 123456"), então escolher manualmente é praticamente
+        // um chute. Pra tirar esse atrito enquanto testamos, pré-seleciona
+        // automaticamente a 100021 — já confirmada funcionando ponta a
+        // ponta (marca + atributos + publish OK). O usuário ainda pode
+        // trocar se quiser testar outra categoria.
+        const KNOWN_WORKING_CATEGORY_ID = 100021;
+        if (result.some((c) => c.id === KNOWN_WORKING_CATEGORY_ID)) {
+          setSelectedCategoryId((prev) => prev ?? KNOWN_WORKING_CATEGORY_ID);
+        }
+      })
       .catch((err) =>
         setCategoriesError(
           err instanceof Error ? err.message : "Não consegui carregar as categorias.",
@@ -747,37 +766,57 @@ export function CriarAnuncio() {
 
                     <div className="grid gap-3 sm:grid-cols-2">
                       <div>
-                        <label
-                          className="mb-1.5 block text-[12px] text-muted-foreground"
-                          htmlFor="categoria-shopee"
-                        >
+                        <label className="mb-1.5 block text-[12px] text-muted-foreground">
                           Categoria na Shopee
                         </label>
-                        <Input
-                          id="categoria-shopee"
-                          value={categorySearch}
-                          onChange={(e) => setCategorySearch(e.target.value)}
-                          placeholder="Buscar categoria…"
-                          className="mb-1.5 h-9 text-[13px]"
-                          disabled={categoriesLoading || categories.length === 0}
-                        />
-                        <select
-                          value={selectedCategoryId ?? ""}
-                          onChange={(e) =>
-                            setSelectedCategoryId(e.target.value ? Number(e.target.value) : null)
-                          }
-                          disabled={categoriesLoading || categories.length === 0}
-                          className="h-9 w-full rounded-md border border-border bg-card px-2.5 text-[13px] text-foreground disabled:opacity-50"
-                        >
-                          <option value="">
-                            {categoriesLoading ? "Carregando categorias…" : "Selecione…"}
-                          </option>
-                          {filteredCategories.map((c) => (
-                            <option key={c.id} value={c.id}>
-                              {c.name}
-                            </option>
-                          ))}
-                        </select>
+
+                        {!showCategoryPicker ? (
+                          <div className="flex h-9 items-center justify-between rounded-md border border-border bg-card px-2.5 text-[13px]">
+                            <span className="truncate text-foreground">
+                              {categoriesLoading
+                                ? "Carregando…"
+                                : selectedCategoryId
+                                  ? (categories.find((c) => c.id === selectedCategoryId)?.name ??
+                                    `Categoria ${selectedCategoryId}`)
+                                  : "Nenhuma categoria disponível"}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => setShowCategoryPicker(true)}
+                              className="ml-2 shrink-0 text-[12px] text-brand underline underline-offset-2"
+                            >
+                              trocar
+                            </button>
+                          </div>
+                        ) : (
+                          <>
+                            <Input
+                              id="categoria-shopee"
+                              value={categorySearch}
+                              onChange={(e) => setCategorySearch(e.target.value)}
+                              placeholder="Buscar categoria…"
+                              className="mb-1.5 h-9 text-[13px]"
+                              disabled={categoriesLoading || categories.length === 0}
+                            />
+                            <select
+                              value={selectedCategoryId ?? ""}
+                              onChange={(e) =>
+                                setSelectedCategoryId(e.target.value ? Number(e.target.value) : null)
+                              }
+                              disabled={categoriesLoading || categories.length === 0}
+                              className="h-9 w-full rounded-md border border-border bg-card px-2.5 text-[13px] text-foreground disabled:opacity-50"
+                            >
+                              <option value="">
+                                {categoriesLoading ? "Carregando categorias…" : "Selecione…"}
+                              </option>
+                              {filteredCategories.map((c) => (
+                                <option key={c.id} value={c.id}>
+                                  {c.name}
+                                </option>
+                              ))}
+                            </select>
+                          </>
+                        )}
                       </div>
                       <div className="grid grid-cols-2 gap-3">
                         <div>

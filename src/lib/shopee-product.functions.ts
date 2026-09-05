@@ -30,7 +30,46 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
       .map((c) => ({ id: c.category_id, name: c.category_name || `Categoria ${c.category_id}` }))
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    return result;
+    // 04/09/2026 DEBUG TEMPORÁRIO #2: categoria 104330 devolveu "ValueId is
+    // required" pro atributo obrigatório[0] mesmo sem attribute_value_list
+    // na árvore (mesmo padrão visto antes na 104327) — ou seja, não é um
+    // caso isolado. Hipótese: existe uma lista de valores válida que só vem
+    // por um endpoint separado (product/search_attribute_value_list), não
+    // inline no get_attribute_tree. Dump bruto dos dois pra confirmar antes
+    // de codar o fix de verdade. Tira assim que confirmar. Prepend (não
+    // append) — dropdown corta em 200 itens.
+    const debugEntries: { id: number; name: string }[] = [];
+    try {
+      const { callShopeeApi } = await import("@/lib/shopee-api.server");
+      const raw = await callShopeeApi<Record<string, unknown>>(
+        "/api/v2/product/get_attribute_tree",
+        { accessToken, shopId, query: { category_id_list: 104330, language: "pt-br" } },
+      );
+      const treeJson = JSON.stringify(raw);
+      const match = /"attribute_id":(\d+)/.exec(treeJson);
+      const attrId = match ? Number(match[1]) : null;
+      let searchJson = "no-attr-id";
+      if (attrId) {
+        try {
+          const searchRes = await callShopeeApi<Record<string, unknown>>(
+            "/api/v2/product/search_attribute_value_list",
+            { accessToken, shopId, query: { category_id: 104330, attribute_id: attrId, language: "pt-br" } },
+          );
+          searchJson = JSON.stringify(searchRes);
+        } catch (err) {
+          searchJson = `ERR:${String(err).slice(0, 300)}`;
+        }
+      }
+      const combined = `TREE:${treeJson}|||SEARCH(attr=${attrId}):${searchJson}`;
+      const chunkSize = 90;
+      for (let i = 0; i < Math.min(combined.length, 90 * 25); i += chunkSize) {
+        debugEntries.push({ id: -1000 - i, name: `DEBUG:${combined.slice(i, i + chunkSize)}` });
+      }
+    } catch (err) {
+      debugEntries.push({ id: -1, name: `DEBUG_ERR:${String(err).slice(0, 150)}` });
+    }
+
+    return [...debugEntries, ...result];
   });
 
 export const getShopeeLogisticsChannels = createServerFn({ method: "GET" })
