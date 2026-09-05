@@ -29,7 +29,11 @@ import { calcPricing, suggestPrice } from "@/lib/marketplace-fees";
 import { generateListing } from "@/lib/gemini-text.functions";
 import { generateEnhancedProductPhoto } from "@/lib/gemini-image.functions";
 import { getShopeeStatus } from "@/lib/shopee.functions";
-import { getShopeeCategories, publishShopeeProduct } from "@/lib/shopee-product.functions";
+import {
+  getShopeeCategories,
+  getShopeeItemPreview,
+  publishShopeeProduct,
+} from "@/lib/shopee-product.functions";
 import { useIsOwner } from "@/lib/owner";
 import { cn } from "@/lib/utils";
 
@@ -206,12 +210,21 @@ export function CriarAnuncio() {
   const [publishApiLoading, setPublishApiLoading] = useState(false);
   const [publishApiError, setPublishApiError] = useState<string | null>(null);
   const [publishApiItemId, setPublishApiItemId] = useState<number | null>(null);
+  const [itemPreview, setItemPreview] = useState<{
+    itemId: number;
+    name: string;
+    status: string;
+    priceReais: number | null;
+    imageUrl: string | null;
+  } | null>(null);
+  const [itemPreviewLoading, setItemPreviewLoading] = useState(false);
 
   const runListing = useServerFn(generateListing);
   const runPhoto = useServerFn(generateEnhancedProductPhoto);
   const runShopeeStatus = useServerFn(getShopeeStatus);
   const runShopeeCategories = useServerFn(getShopeeCategories);
   const runPublishApi = useServerFn(publishShopeeProduct);
+  const runItemPreview = useServerFn(getShopeeItemPreview);
 
   // Só busca status/categoria pra quem é dono — pra qualquer outro usuário
   // do Shoppfy nem faz sentido chamar (a loja conectada é sempre a do Jp).
@@ -424,6 +437,7 @@ export function CriarAnuncio() {
     setPublishApiLoading(true);
     setPublishApiError(null);
     setPublishApiItemId(null);
+    setItemPreview(null);
     try {
       const result = await runPublishApi({
         data: {
@@ -441,6 +455,22 @@ export function CriarAnuncio() {
       toast.success("Produto publicado na loja Shopee (sandbox)", {
         description: result.itemId ? `item_id ${result.itemId}` : undefined,
       });
+
+      // Busca os dados reais do anúncio (foto/título/preço/status) direto na
+      // Shopee, já que o sandbox não tem vitrine navegável — assim dá pra
+      // conferir na hora que ficou como esperado, sem precisar sair do app.
+      if (result.itemId) {
+        setItemPreview(null);
+        setItemPreviewLoading(true);
+        try {
+          const preview = await runItemPreview({ data: { itemId: result.itemId } });
+          setItemPreview(preview);
+        } catch (previewErr) {
+          console.error("[CriarAnuncio] falha ao buscar preview do anúncio:", previewErr);
+        } finally {
+          setItemPreviewLoading(false);
+        }
+      }
     } catch (err) {
       console.error("[CriarAnuncio] falha ao publicar via API:", err);
       setPublishApiError(
@@ -870,6 +900,44 @@ export function CriarAnuncio() {
                       <div className="flex items-start gap-2 rounded-lg border border-success/30 bg-success/10 px-3 py-2.5 text-[12px] text-success">
                         <CheckCircle2 className="mt-0.5 size-3.5 shrink-0" />
                         <p>Publicado na loja de teste — item_id {publishApiItemId}.</p>
+                      </div>
+                    )}
+
+                    {publishApiItemId !== null && (itemPreviewLoading || itemPreview) && (
+                      <div className="flex items-center gap-3 rounded-lg border border-border bg-card p-3">
+                        {itemPreviewLoading ? (
+                          <>
+                            <div className="size-14 shrink-0 animate-pulse rounded-md bg-muted" />
+                            <p className="text-[12px] text-muted-foreground">
+                              Buscando o anúncio direto na Shopee…
+                            </p>
+                          </>
+                        ) : itemPreview ? (
+                          <>
+                            {itemPreview.imageUrl ? (
+                              <img
+                                src={itemPreview.imageUrl}
+                                alt={itemPreview.name}
+                                className="size-14 shrink-0 rounded-md object-cover"
+                              />
+                            ) : (
+                              <div className="flex size-14 shrink-0 items-center justify-center rounded-md bg-muted text-[10px] text-muted-foreground">
+                                sem foto
+                              </div>
+                            )}
+                            <div className="min-w-0 flex-1">
+                              <p className="truncate text-[13px] text-foreground">
+                                {itemPreview.name}
+                              </p>
+                              <p className="text-[11.5px] text-muted-foreground">
+                                {itemPreview.priceReais !== null
+                                  ? formatBRL(Math.round(itemPreview.priceReais * 100))
+                                  : "—"}{" "}
+                                · status: {itemPreview.status}
+                              </p>
+                            </div>
+                          </>
+                        ) : null}
                       </div>
                     )}
 

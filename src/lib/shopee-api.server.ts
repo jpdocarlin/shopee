@@ -188,6 +188,37 @@ export async function callShopeeApi<T = unknown>(
   return json as T;
 }
 
+export type ShopeeItemBaseInfo = {
+  item_id: number;
+  item_name: string;
+  item_status: string;
+  price_info?: Array<{ current_price: number }>;
+  image?: { image_url_list?: string[] };
+};
+
+// Busca os dados reais do anúncio já publicado (título, foto, preço, status)
+// — usado pra mostrar "o que ficou de verdade na Shopee" depois de
+// publicar, já que o sandbox não tem uma loja/vitrine navegável pra
+// conferir visualmente como num site de produção.
+export async function getItemBaseInfo(
+  accessToken: string,
+  shopId: number,
+  itemId: number,
+): Promise<ShopeeItemBaseInfo | null> {
+  const json = await callShopeeApi<{
+    response?: { item_list?: ShopeeItemBaseInfo[] };
+  }>("/api/v2/product/get_item_base_info", {
+    accessToken,
+    shopId,
+    query: {
+      item_id_list: String(itemId),
+      need_tax_info: "false",
+      need_complaint_policy: "false",
+    },
+  });
+  return json.response?.item_list?.[0] ?? null;
+}
+
 export type ShopeeCategory = {
   category_id: number;
   category_name: string;

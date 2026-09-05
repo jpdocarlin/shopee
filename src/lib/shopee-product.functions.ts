@@ -46,6 +46,31 @@ export const getShopeeLogisticsChannels = createServerFn({ method: "GET" })
     return channels.map((c) => ({ id: c.logistics_channel_id, name: c.logistics_channel_name }));
   });
 
+// Busca o anúncio real já publicado (título, foto, preço, status) — usado
+// pra mostrar "o que ficou de verdade na Shopee" logo depois de publicar,
+// já que a loja sandbox não tem vitrine navegável pra conferir visualmente.
+export const getShopeeItemPreview = createServerFn({ method: "GET" })
+  .validator((data: { itemId: number }) => data)
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context, data }) => {
+    const { assertShopeeOwner, getValidShopeeAccessToken } =
+      await import("@/lib/shopee-connection.server");
+    const { getItemBaseInfo } = await import("@/lib/shopee-api.server");
+
+    await assertShopeeOwner(context.userId);
+    const { accessToken, shopId } = await getValidShopeeAccessToken();
+    const item = await getItemBaseInfo(accessToken, shopId, data.itemId);
+    if (!item) return null;
+
+    return {
+      itemId: item.item_id,
+      name: item.item_name,
+      status: item.item_status,
+      priceReais: item.price_info?.[0]?.current_price ?? null,
+      imageUrl: item.image?.image_url_list?.[0] ?? null,
+    };
+  });
+
 type PublishInput = {
   categoryId: number;
   itemName: string;
