@@ -38,11 +38,37 @@ function NotFoundComponent() {
   );
 }
 
+// Erro clássico de conexão instável (celular, sinal fraco) ou de cache
+// desatualizado logo após um deploy novo: o navegador falha ao buscar um dos
+// ~60 chunks JS que a página carrega (cada ícone/rota é um arquivo separado)
+// e o React Router captura isso como um erro de renderização qualquer,
+// mostrando a tela de erro pro usuário sem necessidade — na prática, um
+// simples reload quase sempre resolve, porque o chunk que falhou é só mais
+// uma requisição de rede que pode ter sido uma falha pontual.
+const CHUNK_LOAD_ERROR_PATTERN =
+  /failed to fetch dynamically imported module|loading chunk|importing a module script failed|error loading dynamically imported module/i;
+
+function isChunkLoadError(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error);
+  return CHUNK_LOAD_ERROR_PATTERN.test(message);
+}
+
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
+
+    // Só tenta recarregar sozinho uma vez por sessão de navegação — se o
+    // reload não resolver (erro de verdade, não só uma requisição que
+    // falhou), a tela de erro normal aparece na segunda vez, sem loop.
+    if (isChunkLoadError(error) && typeof window !== "undefined") {
+      const key = "shoppfy:chunk-error-reload-attempted";
+      if (!window.sessionStorage.getItem(key)) {
+        window.sessionStorage.setItem(key, "1");
+        window.location.reload();
+      }
+    }
   }, [error]);
 
   return (
@@ -143,6 +169,10 @@ function RootComponent() {
 
   useEffect(() => {
     watchForNewDeploy();
+    // A página renderizou de verdade — libera a trava de retry de chunk
+    // (ver ErrorComponent) pra próxima vez que um chunk falhar, em vez de
+    // deixar "gasta" pra sempre na mesma aba depois do primeiro reload.
+    window.sessionStorage?.removeItem("shoppfy:chunk-error-reload-attempted");
   }, []);
 
   return (
