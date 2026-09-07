@@ -132,6 +132,7 @@ export function subscribeToTrackingUpdates(
   userId: string,
   onTrackingReceived: (request: FulfillmentRequest) => void,
 ): () => void {
+try {
   const channel = supabase
     .channel(`fulfillment-tracking-${userId}`)
     .on(
@@ -155,4 +156,8 @@ export function subscribeToTrackingUpdates(
   return () => {
     void supabase.removeChannel(channel);
   };
+} catch (error) {
+  console.error("[fulfillment] realtime indisponivel, seguindo sem notificacao ao vivo:", error);
+  return () => {};
+}
 }
