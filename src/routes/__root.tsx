@@ -64,9 +64,15 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     // falhou), a tela de erro normal aparece na segunda vez, sem loop.
     if (isChunkLoadError(error) && typeof window !== "undefined") {
       const key = "shoppfy:chunk-error-reload-attempted";
-      if (!window.sessionStorage.getItem(key)) {
-        window.sessionStorage.setItem(key, "1");
-        window.location.reload();
+      try {
+        if (!window.sessionStorage.getItem(key)) {
+          window.sessionStorage.setItem(key, "1");
+          window.location.reload();
+        }
+      } catch {
+        // Alguns navegadores/webviews (Safari com cookies bloqueados,
+        // in-app browser do Instagram/TikTok) lançam erro só de acessar
+        // sessionStorage — nesse caso, ignora e mostra a tela de erro normal.
       }
     }
   }, [error]);
@@ -172,8 +178,13 @@ function RootComponent() {
     // A página renderizou de verdade — libera a trava de retry de chunk
     // (ver ErrorComponent) pra próxima vez que um chunk falhar, em vez de
     // deixar "gasta" pra sempre na mesma aba depois do primeiro reload.
+  try {
     window.sessionStorage?.removeItem("shoppfy:chunk-error-reload-attempted");
-  }, []);
+  } catch {
+    // Mesmo motivo do ErrorComponent acima: acessar sessionStorage pode
+    // lançar erro em alguns navegadores/webviews — ignora e segue.
+  }
+    }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
