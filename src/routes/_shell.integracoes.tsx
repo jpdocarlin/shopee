@@ -95,14 +95,14 @@ function IntegracoesPage() {
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <h3 className="text-[14px] font-semibold text-foreground">Shopee — API oficial</h3>
-                <span className="inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-[10.5px] font-medium text-amber-500">
-                  Beta · sandbox
+                <span className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0.5 text-[10.5px] font-medium text-emerald-500">
+                  Ao vivo
                 </span>
               </div>
               <p className="max-w-lg text-[13px] text-muted-foreground">
                 Conecta sua loja direto pela API da Shopee Open Platform, sem depender da extensão.
-                Por enquanto só funciona em ambiente de teste, até a Shopee aprovar o app pra
-                produção (Go-Live).
+                Já em produção (Go-Live aprovado pela Shopee) — os produtos publicados por aqui
+                vão direto pra loja de verdade.
               </p>
             </div>
           </div>
