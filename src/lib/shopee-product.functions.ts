@@ -62,12 +62,25 @@ export const getShopeeItemPreview = createServerFn({ method: "GET" })
     const item = await getItemBaseInfo(accessToken, shopId, data.itemId);
     if (!item) return null;
 
+    // 08/09/2026: descoberto ao vivo (primeiro anuncio publicado em producao)
+    // -- o link "Ver na Shopee" ainda apontava pra tela de edicao do produto
+    // no Seller Centre SANDBOX (seller.sandbox.test-stable.shopee.sg), mesmo
+    // ja estando em Go-Live. Em ambiente live a Shopee tem vitrine publica de
+    // verdade (shopee.com.br/produto-i.SHOP_ID.ITEM_ID), entao monta o link
+    // pra ela direto aqui -- em sandbox nao existe essa vitrine (comentario
+    // acima), entao mantem apontando pro Seller Centre sandbox nesse caso.
+    const isLive = process.env.SHOPEE_ENV === "live";
+    const productUrl = isLive
+      ? `https://shopee.com.br/produto-i.${shopId}.${item.item_id}`
+      : `https://seller.sandbox.test-stable.shopee.sg/portal/product/${item.item_id}`;
+
     return {
       itemId: item.item_id,
       name: item.item_name,
       status: item.item_status,
       priceReais: item.price_info?.[0]?.current_price ?? null,
       imageUrl: item.image?.image_url_list?.[0] ?? null,
+      productUrl,
     };
   });
 
