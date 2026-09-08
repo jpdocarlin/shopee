@@ -216,6 +216,7 @@ export function CriarAnuncio() {
     status: string;
     priceReais: number | null;
     imageUrl: string | null;
+    productUrl: string;
   } | null>(null);
   const [itemPreviewLoading, setItemPreviewLoading] = useState(false);
 
@@ -937,7 +938,7 @@ export function CriarAnuncio() {
                               </p>
                             </div>
                             <a
-                              href={`https://seller.sandbox.test-stable.shopee.sg/portal/product/${itemPreview.itemId}`}
+                              href={itemPreview.productUrl}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="ml-2 flex shrink-0 items-center gap-1 text-[12px] text-brand underline underline-offset-2"
