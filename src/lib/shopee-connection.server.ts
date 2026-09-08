@@ -152,9 +152,11 @@ export async function getShopeeConnection(): Promise<
   if (error) throw error;
 
   const metadata = data?.[0]?.metadata as ShopeeConnectionMetadata | undefined;
-  return metadata?.shopee_api ?? null;
+      const conn = metadata?.shopee_api ?? null;
+      const currentEnv = process.env.SHOPEE_ENV === "live" ? "live" : "sandbox";
+      if (conn && conn.environment !== currentEnv) return null;
+      return conn;
 }
-
 // Chama antes de qualquer publishProduct/callShopeeApi — renova o
 // access_token se estiver perto de expirar (margem de 5 min) e já salva o
 // novo par de tokens.
