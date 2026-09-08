@@ -169,7 +169,11 @@ export function getNavigationForUser({
       .map((group) => ({ ...group, items: group.items.filter((item) => item.pedidosAdminOnly) }))
       .filter((group) => group.items.length > 0);
   }
-  if (isOwner) return navigation;
+  if (isOwner) {
+    return navigation
+      .map((group) => ({ ...group, items: group.items.filter((item) => !item.pedidosAdminOnly) }))
+      .filter((group) => group.items.length > 0);
+  }
   return navigation
     .map((group) => ({
       ...group,
