@@ -5,14 +5,15 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/s
 import { BrandWordmark } from "./brand-mark";
 import { SidebarNavItem } from "./sidebar-nav-item";
 import { getNavigationForUser } from "@/config/navigation";
-import { useIsOwner } from "@/lib/owner";
+import { useIsOwner, useIsPedidosAdmin } from "@/lib/owner";
 import { useT } from "@/i18n/translations";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const t = useT();
   const isOwner = useIsOwner();
-  const navigation = getNavigationForUser(isOwner);
+  const isPedidosAdmin = useIsPedidosAdmin();
+  const navigation = getNavigationForUser({ isOwner, isPedidosAdmin });
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
