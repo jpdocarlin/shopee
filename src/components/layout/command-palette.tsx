@@ -13,7 +13,7 @@ import {
   CommandShortcut,
 } from "@/components/ui/command";
 import { getNavigationForUser } from "@/config/navigation";
-import { useIsOwner } from "@/lib/owner";
+import { useIsOwner, useIsPedidosAdmin } from "@/lib/owner";
 import { useUIStore } from "@/stores/ui-store";
 import { useT } from "@/i18n/translations";
 
@@ -23,7 +23,8 @@ export function CommandPalette() {
   const navigate = useNavigate();
   const t = useT();
   const isOwner = useIsOwner();
-  const navigation = getNavigationForUser(isOwner);
+  const isPedidosAdmin = useIsPedidosAdmin();
+  const navigation = getNavigationForUser({ isOwner, isPedidosAdmin });
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
