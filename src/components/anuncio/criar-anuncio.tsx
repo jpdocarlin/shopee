@@ -788,11 +788,6 @@ export function CriarAnuncio() {
 
                 {shopeeConnected === true && (
                   <div className="space-y-3">
-                    <p className="text-[12px] text-muted-foreground">
-                      Publica de verdade na loja de teste conectada — ainda não vale pra loja real
-                      (falta a Shopee aprovar o app no Go-Live).
-                    </p>
-
                     <div className="grid gap-3 sm:grid-cols-2">
                       <div>
                         <label className="mb-1.5 block text-[12px] text-muted-foreground">
@@ -975,38 +970,6 @@ export function CriarAnuncio() {
                   </div>
                 )}
               </div>
-            )}
-
-            <p className="mb-3 text-[12.5px] text-muted-foreground">
-              {isOwner
-                ? "Prefere fazer manualmente? Copie cada campo abaixo e clique em publicar, que já te levamos direto pra tela de cadastro de produto."
-                : "Não conseguimos publicar sozinhos por enquanto — a Shopee só libera isso pra parceiros aprovados. Mas deixamos tudo pronto: copie cada campo abaixo e clique em publicar, que já te levamos direto pra tela de cadastro de produto."}
-            </p>
-
-            <div className="grid gap-2 sm:grid-cols-2">
-              <QuickCopyRow label="Título" value={listing?.title ?? ""} />
-              <QuickCopyRow label="Descrição" value={listing?.description ?? ""} />
-              <QuickCopyRow label="Preço de venda" value={priceInput ? `R$ ${priceInput}` : ""} />
-              <QuickCopyRow label="Palavras-chave" value={listing?.keywords.join(", ") ?? ""} />
-            </div>
-
-            <p className="mt-3 text-[11.5px] text-muted-foreground">
-              Não esqueça de anexar a foto que você baixou no passo 4.
-            </p>
-
-            <Button
-              size="lg"
-              className="mt-4 w-full gap-2 sm:w-auto"
-              onClick={handlePublish}
-              disabled={!listing || !priceInput}
-            >
-              <ExternalLink className="size-4" />
-              Publicar produto na {marketplaceLabel}
-            </Button>
-            {!listing && (
-              <p className="mt-2 text-[11.5px] text-muted-foreground">
-                Gere o título e a descrição no passo 3 antes de publicar.
-              </p>
             )}
           </Reveal>
         </>
