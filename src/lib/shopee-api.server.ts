@@ -527,6 +527,8 @@ export async function publishProduct(input: PublishProductInput) {
       // "seller_stock, value must Not Null". Manda os dois pra cobrir as
       // duas validações.
       seller_stock: [{ stock }],
+      // 08/09/2026: descoberto ao vivo (produção) - add_item exige condition. Shoppfy só vende produto novo, entao usa sempre NEW.
+      condition: "NEW",
       // 04/09/2026: descoberto ao vivo — algumas categorias exigem as
       // dimensões do pacote ("Parcel size is required" / dimension is
       // mandatory). O formulário do Criar Anúncio ainda não coleta isso,
