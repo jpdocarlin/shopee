@@ -90,16 +90,3 @@ type AuthState = {
   reset: () => void;
 };
 
-export const useAuthStore = create<AuthState>()((set) => ({
-  initialized: false,
-  session: null,
-  profile: null,
-  marketplaceConnected: null,
-  isAdmin: false,
-  setInitialized: (value) => set({ initialized: value }),
-  setSession: (session) => set({ session }),
-  setProfile: (profile) => set({ profile }),
-  setMarketplaceConnected: (value) => set({ marketplaceConnected: value }),
-  setIsAdmin: (value) => set({ isAdmin: value }),
-  reset: () => set({ session: null, profile: null, marketplaceConnected: null, isAdmin: false }),
-}));
