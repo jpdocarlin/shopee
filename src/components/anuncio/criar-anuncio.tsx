@@ -453,7 +453,7 @@ export function CriarAnuncio() {
         },
       });
       setPublishApiItemId(result.itemId);
-      toast.success("Produto publicado na loja Shopee (sandbox)", {
+      toast.success("Produto publicado na loja Shopee", {
         description: result.itemId ? `item_id ${result.itemId}` : undefined,
       });
 
@@ -769,9 +769,7 @@ export function CriarAnuncio() {
                   <p className="text-[13px] font-semibold text-foreground">
                     Publicar direto pela API oficial
                   </p>
-                  <span className="rounded-md border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-[10.5px] font-medium text-amber-500">
-                    Sandbox
-                  </span>
+
                 </div>
 
                 {shopeeConnected === null && (
@@ -900,7 +898,7 @@ export function CriarAnuncio() {
                     {publishApiItemId !== null && (
                       <div className="flex items-start gap-2 rounded-lg border border-success/30 bg-success/10 px-3 py-2.5 text-[12px] text-success">
                         <CheckCircle2 className="mt-0.5 size-3.5 shrink-0" />
-                        <p>Publicado na loja de teste — item_id {publishApiItemId}.</p>
+                        <p>Publicado na Shopee — item_id {publishApiItemId}.</p>
                       </div>
                     )}
 
@@ -967,7 +965,7 @@ export function CriarAnuncio() {
                       ) : (
                         <UploadCloud className="size-4" />
                       )}
-                      {publishApiLoading ? "Publicando…" : "Publicar via API (sandbox)"}
+                      {publishApiLoading ? "Publicando…" : "Publicar via API"}
                     </Button>
                     {!selectedCategoryId && categories.length > 0 && (
                       <p className="text-[11.5px] text-muted-foreground">
