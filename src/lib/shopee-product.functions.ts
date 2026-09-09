@@ -87,6 +87,9 @@ type PublishInput = {
   weightKg: number;
   imageDataUrl: string | null;
   imageUrl: string;
+  // Link da página do produto na C7Drop (ex.: c7drop.com.br/produto/{slug}) —
+  // usado pra buscar a galeria real de fotos na hora de publicar.
+  productUrl: string;
 };
 
 export const publishShopeeProduct = createServerFn({ method: "POST" })
@@ -103,6 +106,7 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
       buildMandatoryAttributeList,
       publishProduct,
     } = await import("@/lib/shopee-api.server");
+    const { getC7DropGalleryImages } = await import("@/lib/c7drop-images.server");
 
     const { accessToken, shopId } = await getValidShopeeAccessToken(context.userId);
 
@@ -115,9 +119,35 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
       );
     }
 
-    const imageId = data.imageDataUrl
-      ? await uploadProductImageFromDataUrl(accessToken, shopId, data.imageDataUrl)
-      : await uploadProductImage(accessToken, shopId, data.imageUrl);
+    // Shopee exige pelo menos 3 fotos por anúncio (e recusava os publicados só
+    // com 1). Busca a galeria real do produto na C7Drop (até 5 fotos, ao vivo —
+    // não fica uma cópia desatualizada salva em lugar nenhum) e soma com a foto
+    // gerada por IA, se tiver uma. Cada upload é tentado individualmente
+    // (Promise.allSettled) pra uma foto com link quebrado não derrubar a
+    // publicação inteira — no pior caso sobra só a foto de capa.
+    const galleryUrls = await getC7DropGalleryImages(data.productUrl);
+    const uploadTasks = data.imageDataUrl
+      ? [
+          () => uploadProductImageFromDataUrl(accessToken, shopId, data.imageDataUrl as string),
+          ...galleryUrls.map((url) => () => uploadProductImage(accessToken, shopId, url)),
+        ]
+      : [
+          () => uploadProductImage(accessToken, shopId, data.imageUrl),
+          ...galleryUrls
+            .filter((url) => url !== data.imageUrl)
+            .map((url) => () => uploadProductImage(accessToken, shopId, url)),
+        ];
+
+    const uploadResults = await Promise.allSettled(uploadTasks.map((task) => task()));
+    const imageIds = uploadResults
+      .filter((r): r is PromiseFulfilledResult<string> => r.status === "fulfilled")
+      .map((r) => r.value);
+
+    if (imageIds.length === 0) {
+      throw new Error(
+        "Não foi possível subir nenhuma foto do produto pra Shopee — tente novamente.",
+      );
+    }
 
     // 04/09/2026: descoberto ao vivo — algumas categorias exigem `brand` no
     // add_item ("Brand information required"), outras não usam marca
@@ -164,7 +194,7 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
       originalPrice: data.priceReais,
       stock: data.stock,
       weightKg: data.weightKg,
-      imageIds: [imageId],
+      imageIds,
       logisticIds: channels.map((c) => c.logistics_channel_id),
       brand,
       attributeList,
