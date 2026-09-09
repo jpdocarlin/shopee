@@ -3,21 +3,19 @@
 // si. Implementação real fica em shopee-api.server.ts / shopee-connection.server.ts,
 // carregada dinamicamente dentro do handler.
 //
-// Protegido em duas camadas: `requireSupabaseAuth` (precisa estar logado) +
-// `assertShopeeOwner` (só o dono da loja Shopee conectada pode publicar —
-// ver o comentário em shopee-connection.server.ts).
+// Protegido por `requireSupabaseAuth` (precisa estar logado); a partir daí
+// cada usuário só opera na PRÓPRIA loja Shopee conectada (context.userId é
+// repassado pra getValidShopeeAccessToken em shopee-connection.server.ts).
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 export const getShopeeCategories = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { assertShopeeOwner, getValidShopeeAccessToken } =
-      await import("@/lib/shopee-connection.server");
+    const { getValidShopeeAccessToken } = await import("@/lib/shopee-connection.server");
     const { getCategoryList } = await import("@/lib/shopee-api.server");
 
-    await assertShopeeOwner(context.userId);
-    const { accessToken, shopId } = await getValidShopeeAccessToken();
+    const { accessToken, shopId } = await getValidShopeeAccessToken(context.userId);
     const categories = await getCategoryList(accessToken, shopId);
     // 04/09/2026: a loja sandbox (Singapura) devolve algumas categorias-folha
     // sem category_name (string vazia/undefined) — o .sort() com
@@ -36,12 +34,10 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
 export const getShopeeLogisticsChannels = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { assertShopeeOwner, getValidShopeeAccessToken } =
-      await import("@/lib/shopee-connection.server");
+    const { getValidShopeeAccessToken } = await import("@/lib/shopee-connection.server");
     const { getLogisticsChannelList } = await import("@/lib/shopee-api.server");
 
-    await assertShopeeOwner(context.userId);
-    const { accessToken, shopId } = await getValidShopeeAccessToken();
+    const { accessToken, shopId } = await getValidShopeeAccessToken(context.userId);
     const channels = await getLogisticsChannelList(accessToken, shopId);
     return channels.map((c) => ({ id: c.logistics_channel_id, name: c.logistics_channel_name }));
   });
@@ -53,12 +49,10 @@ export const getShopeeItemPreview = createServerFn({ method: "GET" })
   .validator((data: { itemId: number }) => data)
   .middleware([requireSupabaseAuth])
   .handler(async ({ context, data }) => {
-    const { assertShopeeOwner, getValidShopeeAccessToken } =
-      await import("@/lib/shopee-connection.server");
+    const { getValidShopeeAccessToken } = await import("@/lib/shopee-connection.server");
     const { getItemBaseInfo } = await import("@/lib/shopee-api.server");
 
-    await assertShopeeOwner(context.userId);
-    const { accessToken, shopId } = await getValidShopeeAccessToken();
+    const { accessToken, shopId } = await getValidShopeeAccessToken(context.userId);
     const item = await getItemBaseInfo(accessToken, shopId, data.itemId);
     if (!item) return null;
 
@@ -99,8 +93,7 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .validator((data: PublishInput) => data)
   .handler(async ({ context, data }) => {
-    const { assertShopeeOwner, getValidShopeeAccessToken } =
-      await import("@/lib/shopee-connection.server");
+    const { getValidShopeeAccessToken } = await import("@/lib/shopee-connection.server");
     const {
       uploadProductImage,
       uploadProductImageFromDataUrl,
@@ -111,8 +104,7 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
       publishProduct,
     } = await import("@/lib/shopee-api.server");
 
-    await assertShopeeOwner(context.userId);
-    const { accessToken, shopId } = await getValidShopeeAccessToken();
+    const { accessToken, shopId } = await getValidShopeeAccessToken(context.userId);
 
     // Confere logística ANTES de subir a imagem — sem canal habilitado o
     // add_item ia falhar de qualquer jeito, sem sentido gastar o upload.
