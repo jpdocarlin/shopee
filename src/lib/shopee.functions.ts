@@ -6,9 +6,9 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 export const getShopeeStatus = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .handler(async () => {
+  .handler(async ({ context }) => {
     const { getShopeeConnection } = await import("@/lib/shopee-connection.server");
-    const conn = await getShopeeConnection();
+    const conn = await getShopeeConnection(context.userId);
     if (!conn) return { connected: false as const };
     return {
       connected: true as const,
