@@ -971,6 +971,12 @@ export function CriarAnuncio() {
                 )}
               </div>
             )}
+
+            {!isOwner && selected.marketplace === "shopee" && (
+              <p className="mb-5 text-[12.5px] text-muted-foreground">
+                Publicação direta pela API da Shopee disponível só na conta principal, conectada à loja.
+              </p>
+            )}
           </Reveal>
         </>
       )}
