@@ -489,6 +489,16 @@ export type PublishProductInput = {
 // testado contra uma chamada real (sandbox down no momento em que foi
 // escrito) — antes de plugar no botão "Publicar" do Criar Anúncio, testar
 // esse fluxo ponta a ponta com um produto de teste e conferir o retorno.
+// Corta um texto sem quebrar no meio de uma palavra — corta no último
+// espaço antes do limite (ou no limite mesmo, se não achar espaço nenhum
+// antes de chegar lá).
+function truncateAtWordBoundary(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  const cut = text.slice(0, maxLength);
+  const lastSpace = cut.lastIndexOf(" ");
+  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trimEnd();
+}
+
 export async function publishProduct(input: PublishProductInput) {
   const {
     accessToken,
@@ -505,46 +515,71 @@ export async function publishProduct(input: PublishProductInput) {
     attributeList,
   } = input;
 
-  return callShopeeApi("/api/v2/product/add_item", {
-    method: "POST",
-    accessToken,
-    shopId,
-    body: {
-      original_price: originalPrice,
-      // 04/09/2026: descoberto ao vivo — pelo menos duas categorias
-      // sandbox rejeitaram a descrição gerada pela IA (~1000+ caracteres)
-      // com "description length must be between 1 and 200 characters".
-      // Corta em 200 por segurança — mesmo limite visto nas duas
-      // categorias testadas até agora.
-      description: description.slice(0, 200),
-      weight: weightKg,
-      item_name: itemName.slice(0, 120),
-      category_id: categoryId,
-      normal_stock: stock,
-      // 04/09/2026: descoberto ao vivo — além de normal_stock (formato
-      // antigo), a Shopee agora exige seller_stock (array, formato novo
-      // multi-armazém) preenchido, senão add_item quebra com
-      // "seller_stock, value must Not Null". Manda os dois pra cobrir as
-      // duas validações.
-      seller_stock: [{ stock }],
-      // 08/09/2026: descoberto ao vivo (produção) - add_item exige condition. Shoppfy só vende produto novo, entao usa sempre NEW.
-      condition: "NEW",
-      // 04/09/2026: descoberto ao vivo — algumas categorias exigem as
-      // dimensões do pacote ("Parcel size is required" / dimension is
-      // mandatory). O formulário do Criar Anúncio ainda não coleta isso,
-      // então manda um valor padrão conservador (pacote pequeno/médio) só
-      // pra satisfazer a validação — não reflete a caixa real do produto.
-      dimension: { package_length: 20, package_width: 20, package_height: 10 },
-      image: { image_id_list: imageIds },
-      logistic_info: logisticIds.map((logistic_id) => ({ logistic_id, enabled: true })),
-      ...(brand
-        ? { brand: { brand_id: brand.brandId, original_brand_name: brand.originalBrandName } }
-        : {}),
-      // 04/09/2026: descoberto ao vivo — toda categoria da loja sandbox
-      // exige atributos obrigatórios diferentes (get_attribute_tree). Ver
-      // buildMandatoryAttributeList() — quem chama publishProduct() já
-      // resolve isso e manda pronto aqui.
-      ...(attributeList && attributeList.length > 0 ? { attribute_list: attributeList } : {}),
-    },
+  const buildBody = (desc: string) => ({
+    original_price: originalPrice,
+    description: desc,
+    weight: weightKg,
+    item_name: itemName.slice(0, 120),
+    category_id: categoryId,
+    normal_stock: stock,
+    // 04/09/2026: descoberto ao vivo — além de normal_stock (formato
+    // antigo), a Shopee agora exige seller_stock (array, formato novo
+    // multi-armazém) preenchido, senão add_item quebra com
+    // "seller_stock, value must Not Null". Manda os dois pra cobrir as
+    // duas validações.
+    seller_stock: [{ stock }],
+    // 08/09/2026: descoberto ao vivo (produção) - add_item exige condition. Shoppfy só vende produto novo, entao usa sempre NEW.
+    condition: "NEW",
+    // 04/09/2026: descoberto ao vivo — algumas categorias exigem as
+    // dimensões do pacote ("Parcel size is required" / dimension is
+    // mandatory). O formulário do Criar Anúncio ainda não coleta isso,
+    // então manda um valor padrão conservador (pacote pequeno/médio) só
+    // pra satisfazer a validação — não reflete a caixa real do produto.
+    dimension: { package_length: 20, package_width: 20, package_height: 10 },
+    image: { image_id_list: imageIds },
+    logistic_info: logisticIds.map((logistic_id) => ({ logistic_id, enabled: true })),
+    ...(brand
+      ? { brand: { brand_id: brand.brandId, original_brand_name: brand.originalBrandName } }
+      : {}),
+    // 04/09/2026: descoberto ao vivo — toda categoria da loja sandbox
+    // exige atributos obrigatórios diferentes (get_attribute_tree). Ver
+    // buildMandatoryAttributeList() — quem chama publishProduct() já
+    // resolve isso e manda pronto aqui.
+    ...(attributeList && attributeList.length > 0 ? { attribute_list: attributeList } : {}),
   });
+
+  // 09/09/2026: descoberto ao vivo — o limite de 200 caracteres visto em
+  // 04/09 foi medido testando só 2 categorias da SANDBOX (ambiente de
+  // teste, com categorias fictícias e limites artificiais). Aplicar esse
+  // corte sempre, mesmo em produção, estava truncando a descrição de
+  // anúncios reais no meio da frase (achado pelo Jp comparando o anúncio
+  // publicado com o texto completo gerado na ferramenta). Em vez de
+  // chutar um número fixo pra sempre, manda a descrição inteira (até um
+  // teto generoso de 3000 caracteres — o maior limite documentado pela
+  // Shopee) e só corta de verdade se a API reclamar do tamanho, lendo o
+  // limite real direto da mensagem de erro dela.
+  const GENEROUS_CAP = 3000;
+  const firstAttempt = truncateAtWordBoundary(description, GENEROUS_CAP);
+
+  try {
+    return await callShopeeApi("/api/v2/product/add_item", {
+      method: "POST",
+      accessToken,
+      shopId,
+      body: buildBody(firstAttempt),
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    const match = message.match(/description length must be between \d+ and (\d+) characters/i);
+    if (!match) throw err;
+
+    const maxAllowed = Number(match[1]);
+    const retryDescription = truncateAtWordBoundary(description, maxAllowed);
+    return callShopeeApi("/api/v2/product/add_item", {
+      method: "POST",
+      accessToken,
+      shopId,
+      body: buildBody(retryDescription),
+    });
+  }
 }
