@@ -1,7 +1,8 @@
-// Server-only: guarda/lê a conexão da loja Shopee (tokens da API oficial) do
-// único usuário admin do Shoppfy (ver src/lib/owner.ts — o produto é de uso
-// pessoal do Jp, não multi-tenant, então não precisamos identificar "qual
-// usuário" no callback do OAuth: é sempre o dono).
+// Server-only: guarda/lê a conexão da loja Shopee (tokens da API oficial) por
+// usuário — cada conta do Shoppfy pode conectar a própria loja e publicar nela
+// (marketplace_accounts é escopado por user_id). O `userId` usado aqui sempre
+// vem do lado do servidor (context.userId de requireSupabaseAuth, ou do state
+// de OAuth de uso único no callback) — nunca de um valor enviado pelo cliente.
 import { createClient } from "@supabase/supabase-js";
 
 import type { Database } from "@/integrations/supabase/types";
@@ -98,9 +99,9 @@ async function findExistingAccountRow(
   return data?.[0] ?? null;
 }
 
-export async function saveShopeeConnection(tokens: ShopeeTokenSet): Promise<void> {
+export async function saveShopeeConnection(tokens: ShopeeTokenSet, userId: string): Promise<void> {
   const admin = getAdminClient();
-  const [userId, marketplaceId] = await Promise.all([getOwnerUserId(), getShopeeMarketplaceId()]);
+  const marketplaceId = await getShopeeMarketplaceId();
 
   const metadata: ShopeeConnectionMetadata = {
     shopee_api: {
@@ -136,11 +137,11 @@ export async function saveShopeeConnection(tokens: ShopeeTokenSet): Promise<void
   }
 }
 
-export async function getShopeeConnection(): Promise<
+export async function getShopeeConnection(userId: string): Promise<
   ShopeeConnectionMetadata["shopee_api"] | null
 > {
   const admin = getAdminClient();
-  const [userId, marketplaceId] = await Promise.all([getOwnerUserId(), getShopeeMarketplaceId()]);
+  const marketplaceId = await getShopeeMarketplaceId();
 
   const { data, error } = await admin
     .from("marketplace_accounts")
@@ -160,11 +161,11 @@ export async function getShopeeConnection(): Promise<
 // Chama antes de qualquer publishProduct/callShopeeApi — renova o
 // access_token se estiver perto de expirar (margem de 5 min) e já salva o
 // novo par de tokens.
-export async function getValidShopeeAccessToken(): Promise<{
+export async function getValidShopeeAccessToken(userId: string): Promise<{
   accessToken: string;
   shopId: number;
 }> {
-  const conn = await getShopeeConnection();
+  const conn = await getShopeeConnection(userId);
   if (!conn) {
     throw new Error("Loja Shopee não conectada — conecte em Integrações antes de publicar.");
   }
@@ -176,6 +177,42 @@ export async function getValidShopeeAccessToken(): Promise<{
 
   const { refreshAccessToken } = await import("@/lib/shopee-api.server");
   const refreshed = await refreshAccessToken(conn.refresh_token, conn.shop_id);
-  await saveShopeeConnection(refreshed);
+  await saveShopeeConnection(refreshed, userId);
   return { accessToken: refreshed.accessToken, shopId: refreshed.shopId };
+}
+
+// Token de uso único pra saber "qual usuário" iniciou o fluxo OAuth da
+// Shopee. O callback da Shopee (/api/shopee/callback) é um redirect puro do
+// navegador, sem Authorization header, então não dá pra usar
+// requireSupabaseAuth ali pra descobrir quem está conectando. Em vez disso,
+// /api/shopee/connect (que roda depois de um clique autenticado na tela de
+// Integrações) cria esse token aqui, embute na URL de redirect que manda pra
+// Shopee, e o callback consome (uso único, expira em 10 min) pra saber em
+// qual usuário salvar os tokens.
+export async function createShopeeOAuthState(userId: string): Promise<string> {
+  const admin = getAdminClient();
+  const { data, error } = await (admin as any)
+    .from("shopee_oauth_state")
+    .insert({ user_id: userId })
+    .select("token")
+    .single();
+  if (error) throw error;
+  return data.token as string;
+}
+
+export async function consumeShopeeOAuthState(token: string): Promise<string> {
+  const admin = getAdminClient();
+  const { data, error } = await (admin as any)
+    .from("shopee_oauth_state")
+    .select("user_id, created_at")
+    .eq("token", token)
+    .maybeSingle();
+  if (error) throw error;
+  if (!data) throw new Error("Link de conexão da Shopee inválido ou expirado. Tente conectar de novo.");
+  await (admin as any).from("shopee_oauth_state").delete().eq("token", token);
+  const ageMs = Date.now() - new Date(data.created_at as string).getTime();
+  if (ageMs > 10 * 60 * 1000) {
+    throw new Error("Link de conexão da Shopee expirado — tente conectar de novo.");
+  }
+  return data.user_id as string;
 }
