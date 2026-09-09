@@ -444,6 +444,7 @@ export function CriarAnuncio() {
           weightKg: weight,
           imageDataUrl: photo,
           imageUrl: selected.image,
+          productUrl: selected.url,
         },
       });
       setPublishApiItemId(result.itemId);
