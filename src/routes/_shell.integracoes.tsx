@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { CheckCircle2, Chrome, Download, Loader2, Plug, Sparkles, Zap } from "lucide-react";
+import { CheckCircle2, Chrome, Copy, Download, Loader2, MapPin, Plug, Sparkles, Zap } from "lucide-react";
 import { toast } from "sonner";
 
 import { PageHeader } from "@/components/shared/page-header";
@@ -27,6 +27,11 @@ export const Route = createFileRoute("/_shell/integracoes")({
   }),
   component: IntegracoesPage,
 });
+
+// Endereço público da C7Drop (fornecedora de dropshipping) — usado como
+// origem/expedição ao configurar a loja na Shopee, já que os produtos saem
+// direto do estoque dela. Fonte: rodapé/página de contato de c7drop.com.br.
+const C7DROP_ADDRESS = "Parque Dom Pedro II, 268 — Apto 22, Centro, São Paulo - SP, 01022-050";
 
 const INSTALL_STEPS = [
   {
@@ -93,6 +98,15 @@ function IntegracoesPage() {
       .catch(() => setShopeeStatus({ loading: false, connected: false }));
   }, []);
 
+  async function handleCopyC7DropAddress() {
+    try {
+      await navigator.clipboard.writeText(C7DROP_ADDRESS);
+      toast.success("Endereço copiado");
+    } catch {
+      toast.error("Não deu pra copiar o endereço");
+    }
+  }
+
   return (
     <div className="space-y-7">
       <PageHeader
@@ -145,6 +159,33 @@ function IntegracoesPage() {
               Conectar loja Shopee
             </Button>
           )}
+        </div>
+      </Reveal>
+
+      <Reveal className="surface-card overflow-hidden">
+        <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-4">
+            <div className="grid size-11 shrink-0 place-items-center rounded-lg border border-border bg-surface-hover text-foreground">
+              <MapPin className="size-5" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-[14px] font-semibold text-foreground">Endereço de origem (C7Drop)</h3>
+              <p className="max-w-lg text-[13px] text-muted-foreground">
+                Os produtos saem direto do estoque da C7Drop, nossa fornecedora de dropshipping.
+                Use esse endereço como origem/expedição ao configurar sua loja na Shopee.
+              </p>
+            </div>
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            <div className="rounded-lg border border-border bg-surface-hover px-3.5 py-2.5 text-[12.5px] leading-snug text-foreground">
+              <p className="font-medium">Parque Dom Pedro II, 268 — Apto 22</p>
+              <p className="text-muted-foreground">Centro, São Paulo - SP, 01022-050</p>
+            </div>
+            <Button size="sm" variant="outline" className="gap-1.5" onClick={handleCopyC7DropAddress}>
+              <Copy className="size-3.5" />
+              Copiar
+            </Button>
+          </div>
         </div>
       </Reveal>
 
