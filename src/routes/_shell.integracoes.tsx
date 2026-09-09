@@ -8,7 +8,7 @@ import { ModulePlaceholder } from "@/components/shared/module-placeholder";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { useT } from "@/i18n/translations";
-import { getShopeeStatus } from "@/lib/shopee.functions";
+import { createShopeeConnectState, getShopeeStatus } from "@/lib/shopee.functions";
 
 export const Route = createFileRoute("/_shell/integracoes")({
   head: () => ({
@@ -59,6 +59,20 @@ type ShopeeStatus =
 function IntegracoesPage() {
   const t = useT();
   const [shopeeStatus, setShopeeStatus] = useState<ShopeeStatus>({ loading: true });
+  const [connectingShopee, setConnectingShopee] = useState(false);
+
+  async function handleConnectShopee() {
+    setConnectingShopee(true);
+    try {
+      const { token } = await createShopeeConnectState();
+      window.location.href = `/api/shopee/connect?state=${encodeURIComponent(token)}`;
+    } catch {
+      setConnectingShopee(false);
+      toast.error("Não deu pra iniciar a conexão com a Shopee", {
+        description: "Tente de novo em instantes.",
+      });
+    }
+  }
 
   useEffect(() => {
     // Feedback do redirect de volta do OAuth da Shopee (?shopee=connected|error).
@@ -117,11 +131,18 @@ function IntegracoesPage() {
               Loja {shopeeStatus.shopId} conectada
             </span>
           ) : (
-            <Button asChild size="sm" className="shrink-0">
-              <a href="/api/shopee/connect">
+            <Button
+              size="sm"
+              className="shrink-0 gap-1.5"
+              disabled={connectingShopee}
+              onClick={handleConnectShopee}
+            >
+              {connectingShopee ? (
+                <Loader2 className="size-3.5 animate-spin" />
+              ) : (
                 <Zap className="size-3.5" />
-                Conectar loja Shopee
-              </a>
+              )}
+              Conectar loja Shopee
             </Button>
           )}
         </div>
