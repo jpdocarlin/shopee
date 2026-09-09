@@ -34,7 +34,6 @@ import {
   getShopeeItemPreview,
   publishShopeeProduct,
 } from "@/lib/shopee-product.functions";
-import { useIsOwner } from "@/lib/owner";
 import { cn } from "@/lib/utils";
 
 type Listing = { title: string; description: string; keywords: string[] };
@@ -174,7 +173,6 @@ function QuickCopyRow({ label, value }: { label: string; value: string }) {
 }
 
 export function CriarAnuncio() {
-  const isOwner = useIsOwner();
   const [selected, setSelected] = useState<DemoProduct | null>(null);
 
   // Preço
@@ -192,8 +190,8 @@ export function CriarAnuncio() {
   const [photo, setPhoto] = useState<string | null>(null);
   const [photoLoading, setPhotoLoading] = useState(false);
 
-  // Publicar via API oficial da Shopee (só o dono, só enquanto a loja
-  // conectada estiver em sandbox — ver Integrações).
+  // Publicar via API oficial da Shopee — cada usuário conecta e publica na
+  // própria loja (ver Integrações).
   const [shopeeConnected, setShopeeConnected] = useState<boolean | null>(null);
   const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
   const [categoriesLoading, setCategoriesLoading] = useState(false);
@@ -227,18 +225,14 @@ export function CriarAnuncio() {
   const runPublishApi = useServerFn(publishShopeeProduct);
   const runItemPreview = useServerFn(getShopeeItemPreview);
 
-  // Só busca status/categoria pra quem é dono — pra qualquer outro usuário
-  // do Shoppfy nem faz sentido chamar (a loja conectada é sempre a do Jp).
   useEffect(() => {
-    if (!isOwner) return;
     runShopeeStatus()
       .then((res) => setShopeeConnected(res.connected))
       .catch(() => setShopeeConnected(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOwner]);
+  }, []);
 
   useEffect(() => {
-    if (!isOwner || shopeeConnected !== true || !selected || selected.marketplace !== "shopee")
+    if (shopeeConnected !== true || !selected || selected.marketplace !== "shopee")
       return;
     if (categories.length > 0 || categoriesLoading) return;
     setCategoriesLoading(true);
@@ -266,7 +260,7 @@ export function CriarAnuncio() {
       )
       .finally(() => setCategoriesLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOwner, shopeeConnected, selected]);
+  }, [shopeeConnected, selected]);
 
   const selectProduct = (product: DemoProduct) => {
     setSelected(product);
@@ -762,7 +756,7 @@ export function CriarAnuncio() {
           <Reveal className="surface-card p-5">
             <Step n={5}>Publique na {marketplaceLabel}</Step>
 
-            {isOwner && selected.marketplace === "shopee" && (
+            {selected.marketplace === "shopee" && (
               <div className="mb-5 rounded-lg border border-brand/30 bg-brand/5 p-4">
                 <div className="mb-3 flex items-center gap-2">
                   <UploadCloud className="size-4 text-brand" />
@@ -972,11 +966,6 @@ export function CriarAnuncio() {
               </div>
             )}
 
-            {!isOwner && selected.marketplace === "shopee" && (
-              <p className="mb-5 text-[12.5px] text-muted-foreground">
-                Publicação direta pela API da Shopee disponível só na conta principal, conectada à loja.
-              </p>
-            )}
           </Reveal>
         </>
       )}
