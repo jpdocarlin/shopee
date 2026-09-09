@@ -16,3 +16,16 @@ export const getShopeeStatus = createServerFn({ method: "GET" })
       environment: conn.environment,
     };
   });
+
+// Chamado pela tela de Integrações quando o usuário clica em "Conectar loja
+// Shopee". Gera um token de uso único (state) vinculado ao usuário logado e
+// devolve pro front, que navega pra /api/shopee/connect?state=<token>. Isso é
+// o que permite ao callback (um redirect puro do navegador, sem
+// Authorization header) saber em qual conta salvar a conexão.
+export const createShopeeConnectState = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { createShopeeOAuthState } = await import("@/lib/shopee-connection.server");
+    const token = await createShopeeOAuthState(context.userId);
+    return { token };
+  });
