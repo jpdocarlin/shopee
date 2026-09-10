@@ -49,5 +49,11 @@ export function watchForNewDeploy() {
 
   document.addEventListener("visibilitychange", check);
   window.addEventListener("online", check);
-  window.setInterval(check, 5 * 60_000);
+  // Primeira checagem logo depois de montar — não espera 5 min nem depender
+  // de trocar de aba/voltar o foco. Pega o caso de quem já estava com o
+  // Shoppfy aberto numa aba única e sem trocar de foco quando saiu um deploy
+  // novo (foi exatamente isso que causou o catálogo C7Drop mostrando custo
+  // desatualizado pra quem tinha aberto antes do último deploy).
+  window.setTimeout(check, 15_000);
+  window.setInterval(check, 2 * 60_000);
 }
