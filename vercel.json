@@ -37,7 +37,7 @@
       "has": [
         {
           "type": "host",
-          "value": "atendimento.shoppfy.online"
+          "value": "atendimento-shoppfy.vercel.app"
         }
       ],
       "destination": "/atendimento"
