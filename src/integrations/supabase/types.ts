@@ -1108,6 +1108,173 @@ export type Database = {
         };
         Relationships: [];
       };
+      support_conversations: {
+        Row: {
+          id: string;
+          user_id: string;
+          channel: string;
+          status: string;
+          title: string | null;
+          created_at: string;
+          updated_at: string;
+          last_message_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          channel?: string;
+          status?: string;
+          title?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          last_message_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          channel?: string;
+          status?: string;
+          title?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          last_message_at?: string;
+        };
+        Relationships: [];
+      };
+      support_messages: {
+        Row: {
+          id: string;
+          conversation_id: string;
+          user_id: string;
+          role: string;
+          kind: string;
+          content: string;
+          media_path: string | null;
+          intent: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          conversation_id: string;
+          user_id: string;
+          role: string;
+          kind?: string;
+          content?: string;
+          media_path?: string | null;
+          intent?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          conversation_id?: string;
+          user_id?: string;
+          role?: string;
+          kind?: string;
+          content?: string;
+          media_path?: string | null;
+          intent?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      support_knowledge_base: {
+        Row: {
+          id: string;
+          category: string;
+          question: string;
+          answer: string;
+          keywords: string[];
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          category: string;
+          question: string;
+          answer: string;
+          keywords?: string[];
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          category?: string;
+          question?: string;
+          answer?: string;
+          keywords?: string[];
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      support_escalations: {
+        Row: {
+          id: string;
+          conversation_id: string;
+          user_id: string;
+          reason: string;
+          summary: string;
+          status: string;
+          created_at: string;
+          resolved_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          conversation_id: string;
+          user_id: string;
+          reason: string;
+          summary: string;
+          status?: string;
+          created_at?: string;
+          resolved_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          conversation_id?: string;
+          user_id?: string;
+          reason?: string;
+          summary?: string;
+          status?: string;
+          created_at?: string;
+          resolved_at?: string | null;
+        };
+        Relationships: [];
+      };
+      support_unanswered_questions: {
+        Row: {
+          id: string;
+          conversation_id: string | null;
+          user_id: string;
+          question: string;
+          context: string | null;
+          category: string | null;
+          reviewed: boolean;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          conversation_id?: string | null;
+          user_id: string;
+          question: string;
+          context?: string | null;
+          category?: string | null;
+          reviewed?: boolean;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          conversation_id?: string | null;
+          user_id?: string;
+          question?: string;
+          context?: string | null;
+          category?: string | null;
+          reviewed?: boolean;
+          created_at?: string;
+        };
+        Relationships: [];
     };
     Views: {
       [_ in never]: never;
@@ -1129,6 +1296,13 @@ export type Database = {
           amount_cents: number;
         };
         Returns: undefined;
+      };
+      search_support_kb: {
+        Args: {
+          query: string;
+          match_count?: number;
+        };
+        Returns: Database["public"]["Tables"]["support_knowledge_base"]["Row"][];
       };
     };
     Enums: {
