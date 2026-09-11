@@ -161,10 +161,13 @@ export const navigation: NavGroup[] = [
 
 export const flatNavigation: NavItem[] = navigation.flatMap((g) => g.items);
 
-// Conta com role pedidos_admin só enxerga itens `pedidosAdminOnly` (nem
-// Dashboard, nem Ranking, nem o resto do menu). Fora esse caso, remove itens
-// `ownerOnly` pra quem não é o dono, e descarta grupos que ficarem vazios
-// depois do filtro (ex: o grupo "Admin").
+// Conta com role pedidos_admin (e SEM ser dono) só enxerga itens
+// `pedidosAdminOnly` (nem Dashboard, nem Ranking, nem o resto do menu) — uma
+// conta isolada de operação. O dono, porém, sempre vê tudo: se além de dono
+// ele também acumular a role pedidos_admin (contas podem ter várias roles),
+// os itens `pedidosAdminOnly` aparecem JUNTO com o resto, em vez de
+// substituir o menu inteiro — checar isOwner primeiro evita esse conflito.
+// Descarta grupos que ficarem vazios depois do filtro (ex: o grupo "Admin").
 export function getNavigationForUser({
   isOwner,
   isPedidosAdmin,
@@ -172,14 +175,17 @@ export function getNavigationForUser({
   isOwner: boolean;
   isPedidosAdmin: boolean;
 }): NavGroup[] {
+  if (isOwner) {
+    return navigation
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((item) => !item.pedidosAdminOnly || isPedidosAdmin),
+      }))
+      .filter((group) => group.items.length > 0);
+  }
   if (isPedidosAdmin) {
     return navigation
       .map((group) => ({ ...group, items: group.items.filter((item) => item.pedidosAdminOnly) }))
-      .filter((group) => group.items.length > 0);
-  }
-  if (isOwner) {
-    return navigation
-      .map((group) => ({ ...group, items: group.items.filter((item) => !item.pedidosAdminOnly) }))
       .filter((group) => group.items.length > 0);
   }
   return navigation
