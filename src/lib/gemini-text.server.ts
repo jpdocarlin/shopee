@@ -129,6 +129,59 @@ function cleanStory(raw: string): string {
 // Chamada base do modelo, compartilhada pelos geradores de texto.
 // `minLines` = quantas linhas não vazias a resposta precisa ter pra ser
 // considerada completa (proteção contra corte no meio).
+const RETRYABLE_STATUS = new Set([429, 503]);
+const MAX_ATTEMPTS = 3;
+
+// 429 (limite de requisições por minuto) e 503 (modelo sobrecarregado) da
+// API do Gemini costumam ser picos passageiros, não falha de verdade —
+// principalmente porque várias features (história, anúncio, roteiro de
+// vídeo, foto) dividem a mesma chave/cota. Em vez de estourar erro na cara
+// do usuário no primeiro 429, tenta mais 2 vezes com um respiro curto antes
+// de desistir.
+async function fetchGeminiWithRetry(apiKey: string, prompt: string): Promise<Response> {
+  const body = JSON.stringify({
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: {
+      // 04/09/2026: migrado de gemini-2.5-flash pra gemini-3.6-flash (o
+      // 2.5 parou de aceitar chamadas — ver comentário no MODEL acima).
+      // Nos modelos Gemini 3, `temperature` solto e `thinkingConfig.
+      // thinkingBudget` (número) não são mais aceitos e a API devolve 400 —
+      // confirmado ao vivo. O equivalente novo é `thinkingConfig.
+      // thinkingLevel` (string: "low"/"medium"/"high"). Usa "low" porque a
+      // tarefa é simples e rígida em formato — não precisa de raciocínio.
+      thinkingConfig: { thinkingLevel: "low" },
+      // 04/09/2026: nos modelos Gemini 3 não dá pra desligar o "thinking"
+      // de vez (thinkingBudget: 0 não existe mais, só thinkingLevel low/
+      // medium/high) — mesmo em "low" ele gasta uma parte do orçamento de
+      // saída antes de responder. Com 1200 (valor herdado do 2.5-flash,
+      // que conseguia zerar o thinking) a resposta vinha cortada no meio
+      // ("A IA devolveu um texto incompleto", confirmado ao vivo). Subiu
+      // pra sobrar espaço pro raciocínio + o texto de verdade.
+      maxOutputTokens: 3000,
+    },
+  });
+
+  let res: Response;
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    res = await fetch(ENDPOINT, {
+      method: "POST",
+      headers: {
+        "x-goog-api-key": apiKey,
+        "Content-Type": "application/json",
+      },
+      body,
+    });
+    if (res.ok || !RETRYABLE_STATUS.has(res.status) || attempt === MAX_ATTEMPTS) {
+      return res;
+    }
+    console.error(
+      `[Gemini texto] ${res.status} na tentativa ${attempt}/${MAX_ATTEMPTS}, tentando de novo...`,
+    );
+    await new Promise((r) => setTimeout(r, attempt * 1200));
+  }
+  return res!;
+}
+
 async function callGemini(
   prompt: string,
   minLines: number,
@@ -136,39 +189,16 @@ async function callGemini(
 ): Promise<string> {
   const apiKey = requireApiKey();
 
-  const res = await fetch(ENDPOINT, {
-    method: "POST",
-    headers: {
-      "x-goog-api-key": apiKey,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        // 04/09/2026: migrado de gemini-2.5-flash pra gemini-3.6-flash (o
-        // 2.5 parou de aceitar chamadas — ver comentário no MODEL acima).
-        // Nos modelos Gemini 3, `temperature` solto e `thinkingConfig.
-        // thinkingBudget` (número) não são mais aceitos e a API devolve 400 —
-        // confirmado ao vivo. O equivalente novo é `thinkingConfig.
-        // thinkingLevel` (string: "low"/"medium"/"high"). Usa "low" porque a
-        // tarefa é simples e rígida em formato — não precisa de raciocínio.
-        thinkingConfig: { thinkingLevel: "low" },
-        // 04/09/2026: nos modelos Gemini 3 não dá pra desligar o "thinking"
-        // de vez (thinkingBudget: 0 não existe mais, só thinkingLevel low/
-        // medium/high) — mesmo em "low" ele gasta uma parte do orçamento de
-        // saída antes de responder. Com 1200 (valor herdado do 2.5-flash,
-        // que conseguia zerar o thinking) a resposta vinha cortada no meio
-        // ("A IA devolveu um texto incompleto", confirmado ao vivo). Subiu
-        // pra sobrar espaço pro raciocínio + o texto de verdade.
-        maxOutputTokens: 3000,
-      },
-    }),
-  });
+  const res = await fetchGeminiWithRetry(apiKey, prompt);
 
   if (!res.ok) {
     const errText = await res.text();
     console.error(`[Gemini texto] ${res.status} ${errText.slice(0, 500)}`);
-    throw new Error(`Não foi possível gerar o texto agora (erro ${res.status}).`);
+    const message =
+      res.status === 429
+        ? "O gerador de texto está sobrecarregado agora (limite de uso da IA). Espere um instante e tente de novo."
+        : `Não foi possível gerar o texto agora (erro ${res.status}).`;
+    throw new Error(message);
   }
 
   const json = (await res.json()) as GenerateContentResponse;
