@@ -30,7 +30,7 @@ export function AppHeader() {
           Plano Pro
         </Badge>
         <a
-          href="https://atendimento.shoppfy.online"
+          href="https://atendimento-shoppfy.vercel.app"
           target="_blank"
           rel="noopener noreferrer"
           title="Atendimento"
