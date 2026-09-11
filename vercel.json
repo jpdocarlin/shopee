@@ -31,7 +31,7 @@
       ]
     }
   ],
-  "rewrites": [
+  "redirects": [
     {
       "source": "/",
       "has": [
@@ -40,7 +40,8 @@
           "value": "atendimento-shoppfy.vercel.app"
         }
       ],
-      "destination": "/atendimento"
+      "destination": "/atendimento",
+      "permanent": false
     }
   ]
 }
