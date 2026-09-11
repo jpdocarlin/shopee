@@ -1306,7 +1306,7 @@ export type Database = {
       };
     };
     Enums: {
-      app_role: "admin" | "staff" | "affiliate";
+      app_role: "admin" | "staff" | "affiliate" | "pedidos_admin";
       billing_plan: "mensal" | "vitalicio";
       commission_status: "pending" | "approved" | "paid" | "canceled";
       fulfillment_status: "pending" | "confirmed" | "shipped" | "canceled";
@@ -1436,7 +1436,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "staff", "affiliate"],
+      app_role: ["admin", "staff", "affiliate", "pedidos_admin"],
       billing_plan: ["mensal", "vitalicio"],
       commission_status: ["pending", "approved", "paid", "canceled"],
       fulfillment_status: ["pending", "confirmed", "shipped", "canceled"],
