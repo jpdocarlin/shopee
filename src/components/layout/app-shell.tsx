@@ -4,6 +4,7 @@ import { AppHeader } from "./app-header";
 import { AppSidebar } from "./app-sidebar";
 import { CommandPalette } from "./command-palette";
 import { MarketplaceLockGate } from "@/components/auth/marketplace-lock-gate";
+import { SupportChatWidget } from "@/components/support/support-chat-widget";
 import { useExtensionBridge } from "@/lib/extension-bridge";
 import { useTrackingNotifications } from "@/lib/tracking-notifications";
 
@@ -25,6 +26,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <AppSidebar />
       <CommandPalette />
+      <SupportChatWidget />
     </div>
   );
 }
