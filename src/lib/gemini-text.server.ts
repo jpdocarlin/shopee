@@ -161,9 +161,8 @@ async function fetchGeminiWithRetry(apiKey: string, prompt: string): Promise<Res
     },
   });
 
-  let res: Response;
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    res = await fetch(ENDPOINT, {
+    const res = await fetch(ENDPOINT, {
       method: "POST",
       headers: {
         "x-goog-api-key": apiKey,
@@ -179,7 +178,8 @@ async function fetchGeminiWithRetry(apiKey: string, prompt: string): Promise<Res
     );
     await new Promise((r) => setTimeout(r, attempt * 1200));
   }
-  return res!;
+  // Inalcançável: a última iteração (attempt === MAX_ATTEMPTS) sempre retorna.
+  throw new Error("Falha inesperada ao chamar a API do Gemini.");
 }
 
 async function callGemini(
