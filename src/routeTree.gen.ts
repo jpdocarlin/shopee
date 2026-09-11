@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ShellIndexRouteImport } from './routes/_shell.index'
+import { Route as ShellAtendimentoAdminRouteImport } from './routes/_shell.atendimento-admin'
 import { Route as ShellCatalogoRouteImport } from './routes/_shell.catalogo'
 import { Route as ShellComissoesRouteImport } from './routes/_shell.comissoes'
 import { Route as ShellConfiguracoesRouteImport } from './routes/_shell.configuracoes'
@@ -44,6 +45,11 @@ const LoginRoute = LoginRouteImport.update({
 const ShellIndexRoute = ShellIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellAtendimentoAdminRoute = ShellAtendimentoAdminRouteImport.update({
+  id: '/atendimento-admin',
+  path: '/atendimento-admin',
   getParentRoute: () => ShellRoute,
 } as any)
 const ShellCatalogoRoute = ShellCatalogoRouteImport.update({
@@ -143,6 +149,7 @@ const ApiWebhooksApplyfyRoute = ApiWebhooksApplyfyRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/atendimento-admin': typeof ShellAtendimentoAdminRoute
   '/': typeof ShellIndexRoute
   '/login': typeof LoginRoute
   '/catalogo': typeof ShellCatalogoRoute
@@ -165,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/api/shopee/connect': typeof ApiShopeeConnectRoute
   '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
 }
+  '/atendimento-admin': typeof ShellAtendimentoAdminRoute
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/catalogo': typeof ShellCatalogoRoute
@@ -190,6 +198,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/_shell/atendimento-admin': typeof ShellAtendimentoAdminRoute
   '/_shell': typeof ShellRouteWithChildren
   '/login': typeof LoginRoute
   '/_shell/catalogo': typeof ShellCatalogoRoute
@@ -215,6 +224,7 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
+    | '/atendimento-admin'
   fullPaths:
     | '/'
     | '/login'
@@ -238,6 +248,7 @@ export interface FileRouteTypes {
     | '/api/shopee/connect'
     | '/api/webhooks/applyfy'
   fileRoutesByTo: FileRoutesByTo
+    | '/atendimento-admin'
   to:
     | '/login'
     | '/catalogo'
@@ -262,6 +273,7 @@ export interface FileRouteTypes {
     | '/api/webhooks/applyfy'
   id:
     | '__root__'
+    | '/_shell/atendimento-admin'
     | '/_shell'
     | '/login'
     | '/_shell/catalogo'
@@ -314,6 +326,13 @@ declare module '@tanstack/react-router' {
       id: '/_shell/'
       path: '/'
       fullPath: '/'
+    '/_shell/atendimento-admin': {
+      id: '/_shell/atendimento-admin'
+      path: '/atendimento-admin'
+      fullPath: '/atendimento-admin'
+      preLoaderRoute: typeof ShellAtendimentoAdminRouteImport
+      parentRoute: typeof ShellRoute
+    }
       preLoaderRoute: typeof ShellIndexRouteImport
       parentRoute: typeof ShellRoute
     }
@@ -453,6 +472,7 @@ declare module '@tanstack/react-router' {
   }
 }
 
+  ShellAtendimentoAdminRoute: typeof ShellAtendimentoAdminRoute
 interface ShellRouteChildren {
   ShellCatalogoRoute: typeof ShellCatalogoRoute
   ShellComissoesRoute: typeof ShellComissoesRoute
@@ -473,6 +493,7 @@ interface ShellRouteChildren {
   ShellAnuncioItemIdRoute: typeof ShellAnuncioItemIdRoute
 }
 
+  ShellAtendimentoAdminRoute: ShellAtendimentoAdminRoute,
 const ShellRouteChildren: ShellRouteChildren = {
   ShellCatalogoRoute: ShellCatalogoRoute,
   ShellComissoesRoute: ShellComissoesRoute,
