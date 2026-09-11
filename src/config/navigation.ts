@@ -12,6 +12,7 @@ import {
   Store,
   Receipt,
   ShieldCheck,
+  Headset,
   type LucideIcon,
 } from "lucide-react";
 
@@ -115,6 +116,13 @@ export const navigation: NavGroup[] = [
         icon: ShieldCheck,
         description: "Todos os pedidos enviados pelos revendedores, com dados de contato",
         pedidosAdminOnly: true,
+      },
+      {
+        label: "Atendimento (Admin)",
+        to: "/atendimento-admin",
+        icon: Headset,
+        description: "Conversas, escalonamentos, perguntas sem resposta e base de conhecimento",
+        ownerOnly: true,
       },
     ],
   },
