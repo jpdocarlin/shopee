@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { Headset } from "lucide-react";
 
 import { BrandMark } from "./brand-mark";
 import { GlobalSearchTrigger } from "./global-search-trigger";
@@ -28,6 +29,15 @@ export function AppHeader() {
           <span className="size-1.5 rounded-full bg-brand" />
           Plano Pro
         </Badge>
+        <a
+          href="https://atendimento.shoppfy.online"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Atendimento"
+          className="grid size-8 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-surface-hover hover:text-foreground"
+        >
+          <Headset className="size-4" />
+        </a>
         <SaleDemoButton />
         <NotificationsMenu />
         <UserMenu />
