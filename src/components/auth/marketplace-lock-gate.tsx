@@ -13,13 +13,20 @@ import { ConnectMarketplaceModal } from "./connect-marketplace-modal";
 // Fica de fora em /configuracoes: o primeiro passo obrigatório é editar o
 // perfil (nome + e-mail) e isso não pode ficar bloqueado esperando a conexão
 // do marketplace — a ordem certa é perfil primeiro, Shopee/ML depois.
+//
+// Também fica de fora pra contas admin (dono ou pedidos_admin): são contas
+// internas de operação do Shoppfy, não afiliados de verdade — não faz
+// sentido exigir conexão de loja Shopee/ML delas pra liberar o resto do app.
 export function MarketplaceLockGate() {
   const marketplaceConnected = useAuthStore((s) => s.marketplaceConnected);
+  const isAdmin = useAuthStore((s) => s.isAdmin);
+  const isPedidosAdmin = useAuthStore((s) => s.isPedidosAdmin);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [modalOpen, setModalOpen] = useState(false);
 
   if (marketplaceConnected !== false) return null;
   if (pathname === "/configuracoes") return null;
+  if (isAdmin || isPedidosAdmin) return null;
 
   return (
     <>
