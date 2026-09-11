@@ -44,6 +44,12 @@ const en: Record<string, string> = {
   Pedidos: "Orders",
   "Catálogo atualizado": "Catalog updated",
 
+  // Atendimento (widget de chat)
+  "Atendimento Shoppfy": "Shoppfy Support",
+  "Encaminhado pro time — alguém vai continuar por aqui": "Forwarded to the team — someone will continue here",
+  "Resposta automática, em poucos segundos": "Automatic reply, in a few seconds",
+  "Digite sua mensagem…": "Type your message…",
+
   // Mobile nav / command palette
   Navegação: "Navigation",
   "Abrir menu": "Open menu",
