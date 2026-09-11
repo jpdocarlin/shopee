@@ -107,13 +107,23 @@ async function callGemini(
     });
     if (res.ok) {
       const json = (await res.json()) as {
-        candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+        candidates?: Array<{
+          content?: { parts?: Array<{ text?: string }> };
+          finishReason?: string;
+        }>;
       };
+      const candidate = json.candidates?.[0];
       const text =
-        json.candidates?.[0]?.content?.parts
+        candidate?.content?.parts
           ?.map((p) => p.text ?? "")
           .join("")
           .trim() ?? "";
+      if (candidate?.finishReason === "MAX_TOKENS") {
+        console.error(
+          `[Support bot] resposta cortada por MAX_TOKENS (budget=${opts.maxOutputTokens}). ` +
+            "Aumente maxOutputTokens nessa chamada se isso acontecer com frequência.",
+        );
+      }
       return text;
     }
     lastStatus = res.status;
@@ -185,7 +195,7 @@ async function classifyIntent(text: string): Promise<SupportIntent> {
         ].join("\n"),
       },
     ],
-    { maxOutputTokens: 20, thinkingLevel: "low" },
+    { maxOutputTokens: 60, thinkingLevel: "low" },
   );
   const normalized = raw
     .trim()
@@ -379,7 +389,7 @@ export async function runSupportTurn(params: {
 
   const rawReply = await callGemini(
     buildAnswerPrompt({ history, kbFacts, userContext, currentMessage: effectiveText }),
-    { maxOutputTokens: 500, thinkingLevel: "low" },
+    { maxOutputTokens: 2048, thinkingLevel: "low" },
   );
 
   const match = rawReply.match(ESCALATE_MARKER);
