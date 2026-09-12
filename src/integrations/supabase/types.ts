@@ -747,31 +747,6 @@ export type Database = {
           id?: string;
           image_url?: string | null;
           is_active?: boolean;
-          marketplace_id: string;
-          opportunity_score?: number;
-          original_price_cents?: number | null;
-          price_cents?: number;
-          product_url?: string | null;
-          rating?: number | null;
-          raw?: Json;
-          reviews_count?: number;
-          sales_count?: number;
-          seller_name?: string | null;
-          stock?: number | null;
-          title: string;
-          updated_at?: string;
-          user_id: string;
-        };
-        Update: {
-          affiliate_url?: string | null;
-          category?: string | null;
-          commission_cents?: number;
-          commission_rate?: number;
-          created_at?: string;
-          external_id?: string;
-          id?: string;
-          image_url?: string | null;
-          is_active?: boolean;
           marketplace_id?: string;
           opportunity_score?: number;
           original_price_cents?: number | null;
@@ -1108,6 +1083,127 @@ export type Database = {
         };
         Relationships: [];
       };
+      course_modules: {
+        Row: {
+          id: string;
+          slug: string;
+          title: string;
+          description: string;
+          order_index: number;
+          is_published: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          title: string;
+          description?: string;
+          order_index?: number;
+          is_published?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          title?: string;
+          description?: string;
+          order_index?: number;
+          is_published?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      course_lessons: {
+        Row: {
+          id: string;
+          module_id: string;
+          slug: string;
+          title: string;
+          description: string;
+          order_index: number;
+          video_url: string | null;
+          thumbnail_url: string | null;
+          duration_seconds: number;
+          is_published: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          module_id: string;
+          slug: string;
+          title: string;
+          description?: string;
+          order_index?: number;
+          video_url?: string | null;
+          thumbnail_url?: string | null;
+          duration_seconds?: number;
+          is_published?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          module_id?: string;
+          slug?: string;
+          title?: string;
+          description?: string;
+          order_index?: number;
+          video_url?: string | null;
+          thumbnail_url?: string | null;
+          duration_seconds?: number;
+          is_published?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "course_lessons_module_id_fkey";
+            columns: ["module_id"];
+            isOneToOne: false;
+            referencedRelation: "course_modules";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      user_lesson_progress: {
+        Row: {
+          user_id: string;
+          lesson_id: string;
+          progress_seconds: number;
+          completed: boolean;
+          completed_at: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          lesson_id: string;
+          progress_seconds?: number;
+          completed?: boolean;
+          completed_at?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          lesson_id?: string;
+          progress_seconds?: number;
+          completed?: boolean;
+          completed_at?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_lesson_progress_lesson_id_fkey";
+            columns: ["lesson_id"];
+            isOneToOne: false;
+            referencedRelation: "course_lessons";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       support_conversations: {
         Row: {
           id: string;
@@ -1275,6 +1371,7 @@ export type Database = {
           created_at?: string;
         };
         Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
