@@ -1,0 +1,406 @@
+/*
+ * Área de Membros — design system isolado (Shoppfy).
+ *
+ * Intencionalmente separado do styles.css global: essa área tem identidade
+ * própria (dark absoluto + laranja de assinatura), diferente do resto do
+ * dashboard. Tudo aqui vive sob .membros-scope pra nunca vazar nem ser
+ * afetado pelo tema do resto do app.
+ */
+
+.membros-scope {
+  --mb-bg: #050505;
+  --mb-bg-elevated: #0b0b0b;
+  --mb-bg-card: #0d0d0d;
+  --mb-bg-card-hover: #131313;
+  --mb-bg-overlay: rgba(5, 5, 5, 0.86);
+
+  --mb-border: rgba(255, 255, 255, 0.07);
+  --mb-border-hover: rgba(255, 255, 255, 0.14);
+  --mb-border-active: rgba(255, 106, 0, 0.4);
+
+  --mb-text: #f2f2f0;
+  --mb-text-muted: #8c8c8f;
+  --mb-text-faint: #55555a;
+
+  --mb-orange: #ff6a00;
+  --mb-orange-soft: #ff8a3d;
+  --mb-orange-dim: rgba(255, 106, 0, 0.14);
+  --mb-orange-ring: rgba(255, 106, 0, 0.35);
+  --mb-orange-glow: rgba(255, 106, 0, 0.22);
+
+  --mb-success: #34d399;
+
+  --mb-font-display: "Space Grotesk", "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --mb-font-sans: "Manrope", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --mb-radius-sm: 10px;
+  --mb-radius-md: 14px;
+  --mb-radius-lg: 20px;
+  --mb-radius-xl: 28px;
+
+  --mb-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --mb-shadow-card: 0 1px 0 0 rgba(255, 255, 255, 0.03) inset, 0 12px 32px -16px rgba(0, 0, 0, 0.7);
+  --mb-shadow-elevated: 0 24px 64px -20px rgba(0, 0, 0, 0.85);
+
+  background: var(--mb-bg);
+  color: var(--mb-text);
+  font-family: var(--mb-font-sans);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.membros-scope * {
+  border-color: var(--mb-border);
+}
+
+.membros-scope ::selection {
+  background: var(--mb-orange-ring);
+  color: #fff;
+}
+
+.membros-scope ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.membros-scope ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.membros-scope ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- tipografia ---------- */
+
+.mb-heading {
+  font-family: var(--mb-font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--mb-text);
+}
+
+.mb-eyebrow {
+  font-family: var(--mb-font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mb-text-muted);
+}
+
+.mb-body-muted {
+  color: var(--mb-text-muted);
+}
+
+/* ---------- superfícies ---------- */
+
+.mb-card {
+  position: relative;
+  background: var(--mb-bg-card);
+  border: 1px solid var(--mb-border);
+  border-radius: var(--mb-radius-lg);
+  box-shadow: var(--mb-shadow-card);
+  overflow: hidden;
+  transition:
+    border-color 220ms var(--mb-ease),
+    transform 220ms var(--mb-ease),
+    box-shadow 220ms var(--mb-ease);
+}
+
+.mb-card:hover {
+  border-color: var(--mb-border-hover);
+}
+
+/* Halo radial que acompanha o cursor — setado via --mb-x/--mb-y (JS on
+   mousemove). Extremamente sutil, opacidade some por padrão. */
+.mb-card-glow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(
+    280px circle at var(--mb-x, 50%) var(--mb-y, 50%),
+    var(--mb-orange-glow),
+    transparent 70%
+  );
+  transition: opacity 300ms var(--mb-ease);
+}
+.mb-card:hover .mb-card-glow {
+  opacity: 1;
+}
+
+/* Número gigante em background — "01" enorme e quase transparente atrás do
+   conteúdo, conforme spec. */
+.mb-card-number {
+  position: absolute;
+  right: -0.1em;
+  top: -0.28em;
+  font-family: var(--mb-font-display);
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.035);
+  pointer-events: none;
+  user-select: none;
+  transition: color 260ms var(--mb-ease);
+}
+.mb-card:hover .mb-card-number,
+.mb-card.is-active .mb-card-number {
+  color: rgba(255, 106, 0, 0.09);
+}
+
+/* ---------- progresso ---------- */
+
+.mb-progress-track {
+  position: relative;
+  width: 100%;
+  height: 5px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.mb-progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--mb-orange-soft), var(--mb-orange));
+  transition: width 500ms var(--mb-ease);
+}
+
+/* ---------- badges de estado ---------- */
+
+.mb-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  border: 1px solid var(--mb-border);
+  color: var(--mb-text-muted);
+  background: rgba(255, 255, 255, 0.03);
+}
+.mb-badge.is-active {
+  color: var(--mb-orange-soft);
+  border-color: var(--mb-orange-ring);
+  background: var(--mb-orange-dim);
+}
+.mb-badge.is-done {
+  color: var(--mb-success);
+  border-color: rgba(52, 211, 153, 0.3);
+  background: rgba(52, 211, 153, 0.08);
+}
+
+/* ---------- botão principal ---------- */
+
+.mb-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--mb-font-sans);
+  font-weight: 600;
+  font-size: 13.5px;
+  color: #100600;
+  background: linear-gradient(180deg, var(--mb-orange-soft), var(--mb-orange));
+  border-radius: var(--mb-radius-sm);
+  padding: 10px 18px;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 160ms var(--mb-ease),
+    box-shadow 160ms var(--mb-ease),
+    filter 160ms var(--mb-ease);
+  box-shadow: 0 8px 24px -8px var(--mb-orange-glow);
+}
+.mb-btn-primary:hover {
+  filter: brightness(1.06);
+}
+.mb-btn-primary:active {
+  transform: scale(0.97);
+}
+.mb-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: none;
+  transform: none;
+}
+
+.mb-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--mb-font-sans);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--mb-text-muted);
+  background: transparent;
+  border: 1px solid var(--mb-border);
+  border-radius: var(--mb-radius-sm);
+  padding: 9px 16px;
+  cursor: pointer;
+  transition:
+    border-color 160ms var(--mb-ease),
+    color 160ms var(--mb-ease),
+    background 160ms var(--mb-ease),
+    transform 160ms var(--mb-ease);
+}
+.mb-btn-ghost:hover:not(:disabled) {
+  color: var(--mb-text);
+  border-color: var(--mb-border-hover);
+  background: rgba(255, 255, 255, 0.03);
+}
+.mb-btn-ghost:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.mb-btn-ghost:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ---------- thumbnail ---------- */
+
+.mb-thumb {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--mb-radius-md);
+  background: linear-gradient(155deg, #141414, #070707 65%);
+  border: 1px solid var(--mb-border);
+}
+.mb-thumb-number {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mb-font-display);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.08);
+  transition: transform 400ms var(--mb-ease);
+}
+.mb-thumb:hover .mb-thumb-number {
+  transform: scale(1.06);
+}
+.mb-thumb-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 220ms var(--mb-ease);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.45), transparent 55%);
+}
+.mb-thumb:hover .mb-thumb-play {
+  opacity: 1;
+}
+.mb-thumb-play-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  background: rgba(255, 106, 0, 0.92);
+  color: #100600;
+  transform: scale(0.9);
+  transition: transform 220ms var(--mb-ease);
+}
+.mb-thumb:hover .mb-thumb-play-circle {
+  transform: scale(1);
+}
+
+/* ---------- skeleton ---------- */
+
+.mb-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--mb-radius-md);
+}
+.mb-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  background-size: 200% 100%;
+  animation: mb-shimmer 1.6s linear infinite;
+}
+
+@keyframes mb-shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+/* ---------- player ---------- */
+
+.mb-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--mb-radius-lg);
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--mb-border);
+  box-shadow: var(--mb-shadow-elevated);
+}
+
+.mb-player video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #000;
+}
+
+/* Barra de progresso do player — sobrescreve a aparência nativa do range
+   pra usar a identidade Shoppfy (laranja), mantendo semântica de <input>. */
+.mb-player-scrubber {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  outline: none;
+}
+.mb-player-scrubber::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: var(--mb-orange);
+  box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.25);
+  transition: transform 160ms var(--mb-ease);
+}
+.mb-player-scrubber:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+.mb-player-scrubber::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 9999px;
+  background: var(--mb-orange);
+}
+
+/* ---------- respeito a prefers-reduced-motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .membros-scope,
+  .membros-scope * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
