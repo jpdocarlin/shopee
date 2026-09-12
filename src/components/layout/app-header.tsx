@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Headset } from "lucide-react";
+import { GraduationCap, Headset } from "lucide-react";
 
 import { BrandMark } from "./brand-mark";
 import { GlobalSearchTrigger } from "./global-search-trigger";
@@ -29,6 +29,13 @@ export function AppHeader() {
           <span className="size-1.5 rounded-full bg-brand" />
           Plano Pro
         </Badge>
+        <Link
+          to="/membros"
+          title="Área de Membros"
+          className="grid size-8 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-surface-hover hover:text-foreground"
+        >
+          <GraduationCap className="size-4" />
+        </Link>
         <a
           href="https://atendimento-shoppfy.vercel.app"
           target="_blank"
