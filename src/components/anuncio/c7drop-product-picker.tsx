@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Check, Loader2, Search, SlidersHorizontal } from "lucide-react";
+import { Check, Loader2, Search, SlidersHorizontal, Tag } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -19,6 +19,21 @@ import { cn } from "@/lib/utils";
 const EXCLUDED_CATEGORIES = new Set(["Fora de Estoque", "Anúncios em Massa"]);
 
 const AVAILABLE_PRODUCTS = C7DROP_PRODUCTS.filter((p) => !EXCLUDED_CATEGORIES.has(p.category));
+
+// Nichos disponíveis + quantos produtos cada um tem, pra alimentar o filtro
+// por nicho abaixo. Calculado uma única vez a partir do catálogo real (não é
+// uma lista hardcoded), então acompanha o catálogo se ele crescer.
+const CATEGORY_COUNTS: Array<{ category: string; count: number }> = (() => {
+  const counts = new Map<string, number>();
+  for (const p of AVAILABLE_PRODUCTS) {
+    counts.set(p.category, (counts.get(p.category) ?? 0) + 1);
+  }
+  return Array.from(counts, ([category, count]) => ({ category, count })).sort(
+    (a, b) => b.count - a.count,
+  );
+})();
+
+const ALL_CATEGORIES = "todos";
 
 // Mostra os primeiros 12 produtos, e carrega mais 12 por vez conforme
 // rola dentro da caixa de produtos (não a página inteira).
@@ -59,6 +74,7 @@ type Props = {
 
 export function C7DropProductPicker({ selected, onSelect }: Props) {
   const [query, setQuery] = useState("");
+  const [category, setCategory] = useState<string>(ALL_CATEGORIES);
   const [sort, setSort] = useState<SortKey>("relevancia");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -66,18 +82,22 @@ export function C7DropProductPicker({ selected, onSelect }: Props) {
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const base = q
-      ? AVAILABLE_PRODUCTS.filter(
-          (p) => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q),
-        )
-      : AVAILABLE_PRODUCTS;
+    let base =
+      category === ALL_CATEGORIES
+        ? AVAILABLE_PRODUCTS
+        : AVAILABLE_PRODUCTS.filter((p) => p.category === category);
+    if (q) {
+      base = base.filter(
+        (p) => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q),
+      );
+    }
     return sortProducts(base, sort);
-  }, [query, sort]);
+  }, [query, category, sort]);
 
-  // Sempre que a busca ou a ordenação muda, volta a mostrar só a primeira leva.
+  // Sempre que a busca, o nicho ou a ordenação muda, volta a mostrar só a primeira leva.
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
-  }, [query, sort]);
+  }, [query, category, sort]);
 
   const products = filtered.slice(0, visibleCount);
   const hasMore = visibleCount < filtered.length;
@@ -114,6 +134,21 @@ export function C7DropProductPicker({ selected, onSelect }: Props) {
             className="h-9 pl-9 text-[13px]"
           />
         </div>
+
+        <Select value={category} onValueChange={setCategory}>
+          <SelectTrigger className="h-9 w-full bg-background text-[13px] sm:w-[220px]">
+            <Tag className="size-3.5 text-muted-foreground" />
+            <SelectValue placeholder="Nicho" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ALL_CATEGORIES}>Todos os nichos ({AVAILABLE_PRODUCTS.length})</SelectItem>
+            {CATEGORY_COUNTS.map((c) => (
+              <SelectItem key={c.category} value={c.category}>
+                {c.category} ({c.count})
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
         <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
           <SelectTrigger className="h-9 w-full bg-background text-[13px] sm:w-[180px]">
