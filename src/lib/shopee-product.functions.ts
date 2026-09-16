@@ -30,13 +30,13 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
       const seen = new Set<number>();
       while (current && !seen.has(current.category_id)) {
         seen.add(current.category_id);
-        parts.unshift(current.category_name || `Categoria ${current.category_id}`);
+        parts.unshift(current.display_category_name || `Categoria ${current.category_id}`);
         current = current.parent_category_id ? byId.get(current.parent_category_id) : undefined;
       }
       return parts.join(" / ");
     }
 
-    // 04/09/2026: algumas categorias-folha vêm sem category_name (string
+    // 04/09/2026: algumas categorias-folha vêm sem nome (string
     // vazia/undefined) — o .sort() com localeCompare quebrava a função
     // inteira nesse caso (erro só apareceu testando ao vivo). Em vez de
     // filtrar fora (o que pode zerar a lista inteira se NENHUMA vier com
@@ -49,7 +49,7 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
       .filter((c) => !c.has_children)
       .map((c) => ({
         id: c.category_id,
-        name: c.category_name || `Categoria ${c.category_id}`,
+        name: c.display_category_name || `Categoria ${c.category_id}`,
         path: buildPath(c),
       }))
       .sort((a, b) => a.name.localeCompare(b.name));
