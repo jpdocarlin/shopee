@@ -5,7 +5,6 @@ import {
   Check,
   CheckCircle2,
   Copy,
-  Download,
   ExternalLink,
   Loader2,
   RefreshCw,
@@ -27,13 +26,13 @@ import { formatBRL } from "@/lib/format";
 import { requestExtensionPublish } from "@/lib/extension-bridge";
 import { calcPricing, suggestPrice } from "@/lib/marketplace-fees";
 import { generateListing } from "@/lib/gemini-text.functions";
-import { generateEnhancedProductPhoto } from "@/lib/gemini-image.functions";
 import { getShopeeStatus } from "@/lib/shopee.functions";
 import {
   getShopeeCategories,
   getShopeeItemPreview,
   publishShopeeProduct,
 } from "@/lib/shopee-product.functions";
+import { pickBestCategory, type ShopeeCategoryOption } from "@/lib/shopee-category-match";
 import { cn } from "@/lib/utils";
 
 type Listing = { title: string; description: string; keywords: string[] };
@@ -186,23 +185,19 @@ export function CriarAnuncio() {
   const [listingError, setListingError] = useState<string | null>(null);
   const [listingVariant, setListingVariant] = useState(0);
 
-  // Foto
-  const [photo, setPhoto] = useState<string | null>(null);
-  const [photoLoading, setPhotoLoading] = useState(false);
-
   // Publicar via API oficial da Shopee — cada usuário conecta e publica na
   // própria loja (ver Integrações).
   const [shopeeConnected, setShopeeConnected] = useState<boolean | null>(null);
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
+  const [categories, setCategories] = useState<ShopeeCategoryOption[]>([]);
   const [categoriesLoading, setCategoriesLoading] = useState(false);
   const [categoriesError, setCategoriesError] = useState<string | null>(null);
-  const [categorySearch, setCategorySearch] = useState("");
+  // 16/09/2026: a categoria não é mais escolhida pelo usuário — muita gente
+  // estava tomando violação de anúncio na Shopee por marcar a categoria
+  // errada. Agora ela é detectada automaticamente (pickBestCategory, casando
+  // o título do produto contra o catálogo real de categorias da Shopee) e
+  // fica travada: sem campo de busca, sem "trocar". Ver os dois useEffect
+  // abaixo (carregar categorias / recalcular o melhor match).
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
-  // 04/09/2026: categoria é pré-selecionada automaticamente (ver
-  // runShopeeCategories abaixo) — esse toggle só abre a busca manual pra
-  // quem quiser testar outra categoria de propósito. Por padrão fica
-  // escondido: publicar não deve exigir nenhum clique extra do usuário.
-  const [showCategoryPicker, setShowCategoryPicker] = useState(false);
   const [stockInput, setStockInput] = useState("10");
   const [weightInput, setWeightInput] = useState("0,3");
   const [publishApiLoading, setPublishApiLoading] = useState(false);
@@ -219,7 +214,6 @@ export function CriarAnuncio() {
   const [itemPreviewLoading, setItemPreviewLoading] = useState(false);
 
   const runListing = useServerFn(generateListing);
-  const runPhoto = useServerFn(generateEnhancedProductPhoto);
   const runShopeeStatus = useServerFn(getShopeeStatus);
   const runShopeeCategories = useServerFn(getShopeeCategories);
   const runPublishApi = useServerFn(publishShopeeProduct);
@@ -238,21 +232,7 @@ export function CriarAnuncio() {
     setCategoriesLoading(true);
     setCategoriesError(null);
     runShopeeCategories()
-      .then((result) => {
-        setCategories(result);
-        // 04/09/2026: a Shopee EXIGE category_id em todo produto — não dá
-        // pra publicar sem categoria (regra da própria plataforma, não
-        // nossa). Mas no sandbox a lista vem sem nomes reais (só
-        // "Categoria 123456"), então escolher manualmente é praticamente
-        // um chute. Pra tirar esse atrito enquanto testamos, pré-seleciona
-        // automaticamente a 100021 — já confirmada funcionando ponta a
-        // ponta (marca + atributos + publish OK). O usuário ainda pode
-        // trocar se quiser testar outra categoria.
-        const KNOWN_WORKING_CATEGORY_ID = 100021;
-        if (result.some((c) => c.id === KNOWN_WORKING_CATEGORY_ID)) {
-          setSelectedCategoryId((prev) => prev ?? KNOWN_WORKING_CATEGORY_ID);
-        }
-      })
+      .then((result) => setCategories(result))
       .catch((err) =>
         setCategoriesError(
           err instanceof Error ? err.message : "Não consegui carregar as categorias.",
@@ -262,6 +242,26 @@ export function CriarAnuncio() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shopeeConnected, selected]);
 
+  // A Shopee EXIGE category_id em todo produto (regra da própria plataforma)
+  // — e escolher errado é exatamente o que estava gerando violação de
+  // anúncio pra muita gente. Em vez de deixar o usuário escolher (ou fixar
+  // uma categoria só pra todo mundo), recalcula automaticamente a categoria
+  // que melhor casa com o título do produto sempre que o produto muda ou a
+  // lista de categorias termina de carregar. Sem match confiável, fica sem
+  // categoria (null) — o botão de publicar já trava nesse caso, é melhor
+  // não publicar do que publicar na categoria errada.
+  useEffect(() => {
+    if (!selected || categories.length === 0) {
+      setSelectedCategoryId(null);
+      return;
+    }
+    const match = pickBestCategory(
+      { title: selected.title, category: selected.category },
+      categories,
+    );
+    setSelectedCategoryId(match ? match.id : null);
+  }, [selected, categories]);
+
   const selectProduct = (product: DemoProduct) => {
     setSelected(product);
     // O preço do catálogo é o que você paga no fornecedor — vira o custo.
@@ -270,7 +270,6 @@ export function CriarAnuncio() {
     setListing(null);
     setListingError(null);
     setListingVariant(0);
-    setPhoto(null);
     setSelectedCategoryId(null);
     setPublishApiError(null);
     setPublishApiItemId(null);
@@ -332,26 +331,6 @@ export function CriarAnuncio() {
     }
   };
 
-  const handleGeneratePhoto = async () => {
-    if (!selected) return;
-    setPhotoLoading(true);
-    try {
-      const result = await runPhoto({
-        data: {
-          title: selected.title,
-          category: selected.category,
-          productImageUrl: selected.image,
-        },
-      });
-      setPhoto(result.dataUrl);
-    } catch (err) {
-      console.error("[CriarAnuncio] falha ao gerar foto:", err);
-      toast.error("Não deu pra gerar a foto agora", { description: "Tente de novo em instantes." });
-    } finally {
-      setPhotoLoading(false);
-    }
-  };
-
   const marketplaceLabel = selected ? MARKETPLACE_META[selected.marketplace].label : "";
 
   const handlePublish = async () => {
@@ -397,7 +376,7 @@ export function CriarAnuncio() {
       description: listing.description,
       keywords: listing.keywords,
       priceLabel: priceCents > 0 ? formatBRL(priceCents) : "",
-      photoDataUrl: photo,
+      photoDataUrl: null,
     });
 
     const publishUrl = MARKETPLACE_PUBLISH_URL[selected.marketplace];
@@ -408,12 +387,6 @@ export function CriarAnuncio() {
       window.open(publishUrl, "_blank", "noopener,noreferrer");
     }
   };
-
-  const filteredCategories = useMemo(() => {
-    const term = categorySearch.trim().toLowerCase();
-    const list = term ? categories.filter((c) => c.name.toLowerCase().includes(term)) : categories;
-    return list.slice(0, 200);
-  }, [categories, categorySearch]);
 
   const handlePublishViaApi = async () => {
     if (!selected || !listing || !selectedCategoryId || priceCents <= 0) return;
@@ -442,7 +415,7 @@ export function CriarAnuncio() {
           priceReais: priceCents / 100,
           stock,
           weightKg: weight,
-          imageDataUrl: photo,
+          imageDataUrl: null,
           imageUrl: selected.image,
           productUrl: selected.url,
         },
@@ -707,49 +680,22 @@ export function CriarAnuncio() {
 
           {/* Passo 4 — foto */}
           <Reveal className="surface-card p-5">
-            <Step n={4}>Gere a foto de capa</Step>
+            <Step n={4}>Foto do anúncio</Step>
             <p className="mb-3 text-[12.5px] text-muted-foreground">
-              A IA refaz a foto do fornecedor em qualidade de catálogo, mantendo o produto igual —
-              fundo limpo, sem marca d&apos;água e sem texto de outra loja.
+              Publicamos com a foto real do fornecedor (mais a galeria completa do produto) — sem
+              recriar por IA, pra evitar violação por foto que não bate com o que chega pro cliente.
             </p>
 
-            <div className="flex items-start gap-4">
+            <div className="flex items-center gap-4">
               <img
-                src={photo ?? selected.image}
+                src={selected.image}
                 alt={selected.title}
                 className="size-28 shrink-0 rounded-lg border border-border object-cover"
               />
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Button
-                    size="sm"
-                    className="gap-1.5"
-                    onClick={handleGeneratePhoto}
-                    disabled={photoLoading}
-                  >
-                    {photoLoading ? (
-                      <Loader2 className="size-3.5 animate-spin" />
-                    ) : (
-                      <Sparkles className="size-3.5" />
-                    )}
-                    {photoLoading ? "Gerando…" : photo ? "Gerar outra foto" : "Gerar foto de capa"}
-                  </Button>
-                  {photo && (
-                    <Button variant="outline" size="sm" className="gap-1.5" asChild>
-                      <a href={photo} download={`${selected.id}-anuncio.jpg`}>
-                        <Download className="size-3.5" />
-                        Baixar foto
-                      </a>
-                    </Button>
-                  )}
-                </div>
-                {photo && (
-                  <p className="mt-2 inline-flex items-center gap-1 text-[11.5px] text-muted-foreground">
-                    <Sparkles className="size-3 text-brand" />
-                    Foto refeita pela IA
-                  </p>
-                )}
-              </div>
+              <p className="min-w-0 flex-1 text-[12.5px] text-muted-foreground">
+                Essa é a foto de capa que vai pro anúncio. As demais fotos da galeria do produto
+                são enviadas junto automaticamente na publicação.
+              </p>
             </div>
           </Reveal>
 
@@ -788,54 +734,20 @@ export function CriarAnuncio() {
                         <label className="mb-1.5 block text-[12px] text-muted-foreground">
                           Categoria na Shopee
                         </label>
-
-                        {!showCategoryPicker ? (
-                          <div className="flex h-9 items-center justify-between rounded-md border border-border bg-card px-2.5 text-[13px]">
-                            <span className="truncate text-foreground">
-                              {categoriesLoading
-                                ? "Carregando…"
-                                : selectedCategoryId
-                                  ? (categories.find((c) => c.id === selectedCategoryId)?.name ??
-                                    `Categoria ${selectedCategoryId}`)
-                                  : "Nenhuma categoria disponível"}
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => setShowCategoryPicker(true)}
-                              className="ml-2 shrink-0 text-[12px] text-brand underline underline-offset-2"
-                            >
-                              trocar
-                            </button>
-                          </div>
-                        ) : (
-                          <>
-                            <Input
-                              id="categoria-shopee"
-                              value={categorySearch}
-                              onChange={(e) => setCategorySearch(e.target.value)}
-                              placeholder="Buscar categoria…"
-                              className="mb-1.5 h-9 text-[13px]"
-                              disabled={categoriesLoading || categories.length === 0}
-                            />
-                            <select
-                              value={selectedCategoryId ?? ""}
-                              onChange={(e) =>
-                                setSelectedCategoryId(e.target.value ? Number(e.target.value) : null)
-                              }
-                              disabled={categoriesLoading || categories.length === 0}
-                              className="h-9 w-full rounded-md border border-border bg-card px-2.5 text-[13px] text-foreground disabled:opacity-50"
-                            >
-                              <option value="">
-                                {categoriesLoading ? "Carregando categorias…" : "Selecione…"}
-                              </option>
-                              {filteredCategories.map((c) => (
-                                <option key={c.id} value={c.id}>
-                                  {c.name}
-                                </option>
-                              ))}
-                            </select>
-                          </>
-                        )}
+                        <div className="flex h-9 items-center rounded-md border border-border bg-card px-2.5 text-[13px]">
+                          <span className="truncate text-foreground">
+                            {categoriesLoading
+                              ? "Carregando…"
+                              : selectedCategoryId
+                                ? (categories.find((c) => c.id === selectedCategoryId)?.path ??
+                                  `Categoria ${selectedCategoryId}`)
+                                : "Não identificamos a categoria certa pra esse produto"}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-[11px] text-muted-foreground">
+                          Detectada automaticamente pelo produto — não dá pra trocar, é assim que
+                          evitamos anúncio marcado com categoria errada.
+                        </p>
                       </div>
                       <div className="grid grid-cols-2 gap-3">
                         <div>
@@ -959,7 +871,8 @@ export function CriarAnuncio() {
                     </Button>
                     {!selectedCategoryId && categories.length > 0 && (
                       <p className="text-[11.5px] text-muted-foreground">
-                        Escolha uma categoria acima antes de publicar.
+                        Não conseguimos identificar a categoria certa desse produto pra publicar
+                        com segurança — tente outro produto do catálogo.
                       </p>
                     )}
                   </div>
