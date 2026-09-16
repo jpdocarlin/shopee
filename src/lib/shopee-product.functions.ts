@@ -16,16 +16,42 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
     const { getCategoryList } = await import("@/lib/shopee-api.server");
 
     const { accessToken, shopId } = await getValidShopeeAccessToken(context.userId);
-    const categories = await getCategoryList(accessToken, shopId);
-    // 04/09/2026: a loja sandbox (Singapura) devolve algumas categorias-folha
-    // sem category_name (string vazia/undefined) — o .sort() com
-    // localeCompare quebrava a função inteira nesse caso (erro só apareceu
-    // testando ao vivo). Em vez de filtrar fora (o que pode zerar a lista
-    // inteira se NENHUMA vier com nome — já vimos isso acontecer), usa um
-    // nome de fallback com o próprio id: a categoria continua selecionável e
-    // válida pro product/add_item, só perde o nome bonito na UI.
-    const result = categories
-      .map((c) => ({ id: c.category_id, name: c.category_name || `Categoria ${c.category_id}` }))
+    const all = await getCategoryList(accessToken, shopId);
+    const byId = new Map(all.map((c) => [c.category_id, c]));
+
+    // Monta o caminho completo (raiz > ... > folha) subindo por
+    // parent_category_id — o auto-match de categoria (pickBestCategory, em
+    // shopee-category-match.ts) usa esse caminho inteiro pra achar
+    // palavras-chave do nicho, porque o nome da folha sozinha (ex.:
+    // "Furadeiras") raramente contém a palavra do nicho (ex.: "ferramentas").
+    function buildPath(category: (typeof all)[number]): string {
+      const parts: string[] = [];
+      let current: (typeof all)[number] | undefined = category;
+      const seen = new Set<number>();
+      while (current && !seen.has(current.category_id)) {
+        seen.add(current.category_id);
+        parts.unshift(current.category_name || `Categoria ${current.category_id}`);
+        current = current.parent_category_id ? byId.get(current.parent_category_id) : undefined;
+      }
+      return parts.join(" / ");
+    }
+
+    // 04/09/2026: algumas categorias-folha vêm sem category_name (string
+    // vazia/undefined) — o .sort() com localeCompare quebrava a função
+    // inteira nesse caso (erro só apareceu testando ao vivo). Em vez de
+    // filtrar fora (o que pode zerar a lista inteira se NENHUMA vier com
+    // nome — já vimos isso acontecer), usa um nome de fallback com o
+    // próprio id: a categoria continua selecionável e válida pro
+    // product/add_item, só perde o nome bonito na UI.
+    // Só as categorias-folha (has_children: false) são aceitas no
+    // product/add_item — os ramos só existem aqui pra compor o `path`.
+    const result = all
+      .filter((c) => !c.has_children)
+      .map((c) => ({
+        id: c.category_id,
+        name: c.category_name || `Categoria ${c.category_id}`,
+        path: buildPath(c),
+      }))
       .sort((a, b) => a.name.localeCompare(b.name));
 
     return result;
