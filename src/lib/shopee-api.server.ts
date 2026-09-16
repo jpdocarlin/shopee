@@ -238,7 +238,16 @@ export async function getItemBaseInfo(
 
 export type ShopeeCategory = {
   category_id: number;
-  category_name: string;
+  // 16/09/2026: corrigido -- o get_category v2 da Shopee NÃO devolve um campo
+  // "category_name" (esse nome nunca existiu na resposta real da API). O nome
+  // localizado vem em "display_category_name" (tem também "original_category_name"
+  // em inglês). Esse campo errado era a causa raiz do auto-match de categoria
+  // nunca achar nada: como `category_name` sempre vinha undefined, TODO path
+  // caía no fallback "Categoria {id}" (só números), então nenhuma palavra do
+  // título/nicho batia com nada -- confirmado ao vivo com 3 produtos de nichos
+  // bem diferentes (luminária, fone de ouvido, smartphone), os 3 bloqueados
+  // por "não identificamos a categoria certa".
+  display_category_name: string;
   parent_category_id: number;
   has_children: boolean;
 };
