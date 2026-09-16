@@ -243,22 +243,26 @@ export type ShopeeCategory = {
   has_children: boolean;
 };
 
-// Lista as categorias da loja conectada — passo obrigatório antes de
-// publicar, já que category_id é exigido e precisa ser um id válido da
-// árvore deles (a árvore muda por região: a loja de teste sandbox usada
-// hoje é de Singapura, então os nomes vêm em inglês — o mapeamento pra
-// categorias em português só faz sentido depois do Go-Live com a loja BR
-// real). Só devolve as categorias-folha (has_children: false), que são as
-// únicas aceitas em product/add_item.
+// Lista TODAS as categorias da loja conectada (folhas e ramos) — passo
+// obrigatório antes de publicar, já que category_id é exigido e precisa ser
+// um id válido da árvore deles. Devolve a árvore inteira (não só as folhas)
+// porque o auto-match de categoria em criar-anuncio.tsx precisa dos nomes
+// dos ramos pra montar o caminho completo (ex.: "Casa e Decoração >
+// Ferramentas > Furadeiras") — o nome da folha sozinho raramente contém a
+// palavra-chave do nicho. Quem só precisa das folhas (as únicas aceitas em
+// product/add_item) filtra com `!c.has_children` depois de montar o caminho.
+// 09/09/2026: trocado de language "en" pra "pt-br" — agora que a loja é a
+// BR real (pós Go-Live), pedir em inglês só atrapalhava o casamento por
+// palavra-chave com os nichos do catálogo (que estão em português).
 export async function getCategoryList(
   accessToken: string,
   shopId: number,
 ): Promise<ShopeeCategory[]> {
   const json = await callShopeeApi<{ response: { category_list: ShopeeCategory[] } }>(
     "/api/v2/product/get_category",
-    { accessToken, shopId, query: { language: "en" } },
+    { accessToken, shopId, query: { language: "pt-br" } },
   );
-  return json.response.category_list.filter((c) => !c.has_children);
+  return json.response.category_list;
 }
 
 // Formato de ENVIO (product/add_item) — confirmado contra a doc da Shopee:
@@ -333,9 +337,12 @@ export async function getAttributeTree(
 // obrigatório um atributo cujo valor válido não é descobrível por nenhuma
 // API pública. É um bug/limitação do sandbox de teste deles, não do nosso
 // código. Categorias fora dessa faixa (ex: 100021, já confirmada publicando
-// de ponta a ponta) funcionam normalmente — é por isso que o Criar Anúncio
-// pré-seleciona 100021 por padrão em vez de deixar o usuário escolher uma
-// categoria quebrada por acidente.
+// de ponta a ponta) funcionam normalmente.
+// 16/09/2026: essa limitação era só do sandbox de teste (Singapura) — em
+// produção (loja BR real) o Criar Anúncio não fixa mais nenhuma categoria:
+// detecta automaticamente a certa por produto (ver pickBestCategory em
+// shopee-category-match.ts), porque deixar uma categoria fixa pra todo
+// mundo era exatamente o que causava violação de anúncio na Shopee.
 export function buildMandatoryAttributeList(
   attributes: ShopeeAttribute[],
 ): Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }> {
