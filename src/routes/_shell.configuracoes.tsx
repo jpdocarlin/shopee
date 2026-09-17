@@ -529,9 +529,14 @@ const REFUND_REASONS = [
   { value: "outro", label: "Outro motivo" },
 ];
 
+// 17/09/2026: corrigido — esses dois valores estavam com preços genéricos de
+// placeholder ("Pro — Mensal R$ 49,00/mês", "Pro — Anual R$ 470,00/ano") que
+// nunca bateram com os planos reais vendidos (ver PLAN_OPTIONS acima, na aba
+// "Plano e cobrança", que já tinha os valores certos). Alinhado aqui com os
+// mesmos dois planos e preços reais.
 const BILLING_PLANS = [
-  { value: "pro-mensal", label: "Pro — Mensal (R$ 49,00/mês)" },
-  { value: "pro-anual", label: "Pro — Anual (R$ 470,00/ano)" },
+  { value: "mensal", label: "Plano Mensal (R$ 149,00/mês)" },
+  { value: "vitalicio", label: "Plano Vitalício (R$ 249,00)" },
 ];
 
 type RefundForm = {
