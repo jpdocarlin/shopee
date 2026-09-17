@@ -33,6 +33,11 @@ import {
   publishShopeeProduct,
 } from "@/lib/shopee-product.functions";
 import { pickBestCategory, type ShopeeCategoryOption } from "@/lib/shopee-category-match";
+import { getMercadoLivreStatus } from "@/lib/mercadolivre.functions";
+import {
+  predictMercadoLivreCategory,
+  publishMercadoLivreProduct,
+} from "@/lib/mercadolivre-product.functions";
 import { cn } from "@/lib/utils";
 
 type Listing = { title: string; description: string; keywords: string[] };
@@ -59,12 +64,17 @@ const MARKETPLACE_PUBLISH_URL: Record<DemoProduct["marketplace"], string> = {
 
 // Produto da C7Drop (fornecedor de revenda) entra no mesmo fluxo de sempre —
 // converte pro formato DemoProduct só com o que os passos 2-5 precisam.
-// Sempre Shopee porque é o marketplace que a conta do Jp usa hoje.
-function c7dropToDemoProduct(product: C7DropProduct): DemoProduct {
+// 16/09/2026: agora aceita o marketplace escolhido (Shopee ou Mercado
+// Livre) em vez de fixar sempre Shopee — o Jp pediu pra publicar direto na
+// própria loja do Mercado Livre também, igual já funciona pra Shopee.
+function c7dropToDemoProduct(
+  product: C7DropProduct,
+  marketplace: DemoProduct["marketplace"],
+): DemoProduct {
   return {
     id: `c7drop-${product.id}`,
     title: product.name,
-    marketplace: "shopee",
+    marketplace,
     category: product.category,
     seller: "C7Drop (fornecedor)",
     priceCents: product.priceCents,
@@ -173,6 +183,11 @@ function QuickCopyRow({ label, value }: { label: string; value: string }) {
 
 export function CriarAnuncio() {
   const [selected, setSelected] = useState<DemoProduct | null>(null);
+  // Marketplace escolhido pra publicar o produto do fornecedor — Shopee ou
+  // Mercado Livre. Guardado separado de `selected.marketplace` porque
+  // precisa existir mesmo antes de escolher um produto (pro clique no
+  // C7DropProductPicker já converter pro marketplace certo).
+  const [marketplaceChoice, setMarketplaceChoice] = useState<DemoProduct["marketplace"]>("shopee");
 
   // Preço
   const [costInput, setCostInput] = useState("");
@@ -213,16 +228,41 @@ export function CriarAnuncio() {
   } | null>(null);
   const [itemPreviewLoading, setItemPreviewLoading] = useState(false);
 
+  // Publicar via API oficial do Mercado Livre — mesmo esquema da Shopee
+  // acima, só que a categoria vem do preditor oficial do próprio ML
+  // (predictMercadoLivreCategory) em vez de um matcher por palavra-chave
+  // escrito à mão, e não tem conceito de "peso" nem de canal de logística
+  // pra configurar antes de publicar.
+  const [mlConnected, setMlConnected] = useState<boolean | null>(null);
+  const [mlCategory, setMlCategory] = useState<{ categoryId: string; categoryName: string } | null>(
+    null,
+  );
+  const [mlCategoryLoading, setMlCategoryLoading] = useState(false);
+  const [mlCategoryError, setMlCategoryError] = useState<string | null>(null);
+  const [mlPublishLoading, setMlPublishLoading] = useState(false);
+  const [mlPublishError, setMlPublishError] = useState<string | null>(null);
+  const [mlPublishItemId, setMlPublishItemId] = useState<string | null>(null);
+  const [mlPublishPermalink, setMlPublishPermalink] = useState<string | null>(null);
+
   const runListing = useServerFn(generateListing);
   const runShopeeStatus = useServerFn(getShopeeStatus);
   const runShopeeCategories = useServerFn(getShopeeCategories);
   const runPublishApi = useServerFn(publishShopeeProduct);
   const runItemPreview = useServerFn(getShopeeItemPreview);
+  const runMlStatus = useServerFn(getMercadoLivreStatus);
+  const runMlPredictCategory = useServerFn(predictMercadoLivreCategory);
+  const runMlPublish = useServerFn(publishMercadoLivreProduct);
 
   useEffect(() => {
     runShopeeStatus()
       .then((res) => setShopeeConnected(res.connected))
       .catch(() => setShopeeConnected(false));
+  }, []);
+
+  useEffect(() => {
+    runMlStatus()
+      .then((res) => setMlConnected(res.connected))
+      .catch(() => setMlConnected(false));
   }, []);
 
   useEffect(() => {
@@ -262,6 +302,31 @@ export function CriarAnuncio() {
     setSelectedCategoryId(match ? match.id : null);
   }, [selected, categories]);
 
+  // Mesma lógica acima, só que pro Mercado Livre — em vez de casar contra
+  // uma lista de categorias baixada inteira, chama o preditor oficial do ML
+  // (domain_discovery) direto com o título do produto. Sem resultado
+  // confiável, fica sem categoria (null) — publicar trava, mesma filosofia
+  // da Shopee.
+  useEffect(() => {
+    if (mlConnected !== true || !selected || selected.marketplace !== "mercado-livre") return;
+    setMlCategoryLoading(true);
+    setMlCategoryError(null);
+    setMlCategory(null);
+    runMlPredictCategory({ data: { title: selected.title } })
+      .then((result) =>
+        setMlCategory(
+          result ? { categoryId: result.categoryId, categoryName: result.categoryName } : null,
+        ),
+      )
+      .catch((err) =>
+        setMlCategoryError(
+          err instanceof Error ? err.message : "Não consegui identificar a categoria certa.",
+        ),
+      )
+      .finally(() => setMlCategoryLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mlConnected, selected]);
+
   const selectProduct = (product: DemoProduct) => {
     setSelected(product);
     // O preço do catálogo é o que você paga no fornecedor — vira o custo.
@@ -273,6 +338,26 @@ export function CriarAnuncio() {
     setSelectedCategoryId(null);
     setPublishApiError(null);
     setPublishApiItemId(null);
+    setMlCategory(null);
+    setMlPublishError(null);
+    setMlPublishItemId(null);
+    setMlPublishPermalink(null);
+  };
+
+  // Troca de marketplace (Shopee ↔ Mercado Livre) — vale tanto pra próxima
+  // escolha no C7DropProductPicker quanto pro produto já selecionado (a
+  // categoria detectada é específica de cada marketplace, então zera os dois
+  // lados ao trocar).
+  const handleMarketplaceChange = (marketplace: DemoProduct["marketplace"]) => {
+    setMarketplaceChoice(marketplace);
+    setSelected((prev) => (prev ? { ...prev, marketplace } : prev));
+    setSelectedCategoryId(null);
+    setPublishApiError(null);
+    setPublishApiItemId(null);
+    setMlCategory(null);
+    setMlPublishError(null);
+    setMlPublishItemId(null);
+    setMlPublishPermalink(null);
   };
 
   const parseMoney = (value: string): number => {
@@ -450,6 +535,46 @@ export function CriarAnuncio() {
     }
   };
 
+  const handlePublishViaMercadoLivre = async () => {
+    if (!selected || !listing || !mlCategory || priceCents <= 0) return;
+
+    const stock = Number.parseInt(stockInput, 10);
+    if (!Number.isFinite(stock) || stock <= 0) {
+      setMlPublishError("Informe um estoque válido (número inteiro maior que 0).");
+      return;
+    }
+
+    setMlPublishLoading(true);
+    setMlPublishError(null);
+    setMlPublishItemId(null);
+    setMlPublishPermalink(null);
+    try {
+      const result = await runMlPublish({
+        data: {
+          categoryId: mlCategory.categoryId,
+          itemName: listing.title,
+          description: listing.description,
+          priceReais: priceCents / 100,
+          stock,
+          imageUrl: selected.image,
+          productUrl: selected.url,
+        },
+      });
+      setMlPublishItemId(result.itemId);
+      setMlPublishPermalink(result.permalink);
+      toast.success("Produto publicado no Mercado Livre", {
+        description: result.itemId ? `item ${result.itemId}` : undefined,
+      });
+    } catch (err) {
+      console.error("[CriarAnuncio] falha ao publicar no Mercado Livre:", err);
+      setMlPublishError(
+        err instanceof Error ? err.message : "Não foi possível publicar pela API agora.",
+      );
+    } finally {
+      setMlPublishLoading(false);
+    }
+  };
+
   return (
     <div className="space-y-7">
       <Reveal className="surface-card p-5">
@@ -459,11 +584,30 @@ export function CriarAnuncio() {
           que você paga no fornecedor. Você define por quanto vai revender no passo 2.
         </p>
 
+        <div className="mb-4 flex items-center gap-2">
+          <span className="text-[12px] text-muted-foreground">Publicar em:</span>
+          {(["shopee", "mercado-livre"] as const).map((mp) => (
+            <button
+              key={mp}
+              type="button"
+              onClick={() => handleMarketplaceChange(mp)}
+              className={cn(
+                "rounded-full border px-3 py-1 text-[12px] transition-colors",
+                marketplaceChoice === mp
+                  ? "border-brand/40 bg-brand/10 text-brand"
+                  : "border-border text-muted-foreground hover:border-white/20 hover:text-foreground",
+              )}
+            >
+              {MARKETPLACE_META[mp].label}
+            </button>
+          ))}
+        </div>
+
         <C7DropProductPicker
           selected={
             selected?.id.startsWith("c7drop-") ? { id: selected.id.replace("c7drop-", "") } : null
           }
-          onSelect={(product) => selectProduct(c7dropToDemoProduct(product))}
+          onSelect={(product) => selectProduct(c7dropToDemoProduct(product, marketplaceChoice))}
         />
       </Reveal>
 
@@ -870,6 +1014,130 @@ export function CriarAnuncio() {
                       {publishApiLoading ? "Publicando…" : "Publicar via API"}
                     </Button>
                     {!selectedCategoryId && categories.length > 0 && (
+                      <p className="text-[11.5px] text-muted-foreground">
+                        Não conseguimos identificar a categoria certa desse produto pra publicar
+                        com segurança — tente outro produto do catálogo.
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {selected.marketplace === "mercado-livre" && (
+              <div className="mb-5 rounded-lg border border-brand/30 bg-brand/5 p-4">
+                <div className="mb-3 flex items-center gap-2">
+                  <UploadCloud className="size-4 text-brand" />
+                  <p className="text-[13px] font-semibold text-foreground">
+                    Publicar direto pela API oficial
+                  </p>
+                </div>
+
+                {mlConnected === null && (
+                  <p className="text-[12.5px] text-muted-foreground">Verificando conexão…</p>
+                )}
+
+                {mlConnected === false && (
+                  <p className="text-[12.5px] text-muted-foreground">
+                    Conecte sua loja Mercado Livre em{" "}
+                    <a href="/integracoes" className="text-brand underline underline-offset-2">
+                      Integrações
+                    </a>{" "}
+                    pra publicar direto por aqui, sem copiar nada.
+                  </p>
+                )}
+
+                {mlConnected === true && (
+                  <div className="space-y-3">
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <div>
+                        <label className="mb-1.5 block text-[12px] text-muted-foreground">
+                          Categoria no Mercado Livre
+                        </label>
+                        <div className="flex h-9 items-center rounded-md border border-border bg-card px-2.5 text-[13px]">
+                          <span className="truncate text-foreground">
+                            {mlCategoryLoading
+                              ? "Carregando…"
+                              : mlCategory
+                                ? mlCategory.categoryName
+                                : "Não identificamos a categoria certa pra esse produto"}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-[11px] text-muted-foreground">
+                          Detectada automaticamente pelo preditor oficial do Mercado Livre a
+                          partir do título — não dá pra trocar, mesmo motivo da Shopee.
+                        </p>
+                      </div>
+                      <div>
+                        <label
+                          className="mb-1.5 block text-[12px] text-muted-foreground"
+                          htmlFor="estoque-ml"
+                        >
+                          Estoque
+                        </label>
+                        <Input
+                          id="estoque-ml"
+                          inputMode="numeric"
+                          value={stockInput}
+                          onChange={(e) => setStockInput(e.target.value)}
+                          className="h-9 text-[13px]"
+                        />
+                      </div>
+                    </div>
+
+                    {mlCategoryError && (
+                      <div className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-[12px] text-destructive">
+                        <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
+                        <p>{mlCategoryError}</p>
+                      </div>
+                    )}
+
+                    {mlPublishError && (
+                      <div className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-[12px] text-destructive">
+                        <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
+                        <p>{mlPublishError}</p>
+                      </div>
+                    )}
+
+                    {mlPublishItemId !== null && (
+                      <div className="flex items-start gap-2 rounded-lg border border-success/30 bg-success/10 px-3 py-2.5 text-[12px] text-success">
+                        <CheckCircle2 className="mt-0.5 size-3.5 shrink-0" />
+                        <p className="flex flex-wrap items-center gap-1.5">
+                          <span>Publicado no Mercado Livre — item {mlPublishItemId}.</span>
+                          {mlPublishPermalink && (
+                            <a
+                              href={mlPublishPermalink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 underline underline-offset-2"
+                            >
+                              Ver anúncio
+                              <ExternalLink className="size-3" />
+                            </a>
+                          )}
+                        </p>
+                      </div>
+                    )}
+
+                    <Button
+                      className="gap-2"
+                      onClick={handlePublishViaMercadoLivre}
+                      disabled={
+                        mlPublishLoading ||
+                        !listing ||
+                        !priceInput ||
+                        !mlCategory ||
+                        mlCategoryLoading
+                      }
+                    >
+                      {mlPublishLoading ? (
+                        <Loader2 className="size-4 animate-spin" />
+                      ) : (
+                        <UploadCloud className="size-4" />
+                      )}
+                      {mlPublishLoading ? "Publicando…" : "Publicar via API"}
+                    </Button>
+                    {!mlCategory && !mlCategoryLoading && (
                       <p className="text-[11.5px] text-muted-foreground">
                         Não conseguimos identificar a categoria certa desse produto pra publicar
                         com segurança — tente outro produto do catálogo.
