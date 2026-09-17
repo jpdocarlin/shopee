@@ -75,9 +75,9 @@ export const Route = createFileRoute("/_shell/")({
 const ONBOARDING_STEPS = [
   {
     id: "connect",
-    title: "Conectar sua conta Shopee ou Mercado Livre",
-    description: "Gratuito, aprova em poucos dias",
-    to: "/marketplace",
+    title: "Conectar sua loja Shopee ou Mercado Livre",
+    description: "Leva menos de 1 minuto",
+    to: "/integracoes",
   },
   {
     id: "product",
