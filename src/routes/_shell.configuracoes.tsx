@@ -117,12 +117,19 @@ function PerfilTab() {
   const setName = useProfileStore((s) => s.setName);
   const userId = useAuthStore((s) => s.session?.user.id);
   const email = useAuthStore((s) => s.profile?.email ?? s.session?.user.email ?? "");
+  const onboardingDone = useAuthStore((s) => s.profile?.onboarding_done ?? false);
   const setProfile = useAuthStore((s) => s.setProfile);
   const [draft, setDraft] = useState(name);
   const [saving, setSaving] = useState(false);
 
   const handleSave = async () => {
     if (!userId) return;
+    // Se esse ainda não tinha completado o onboarding, esse save É o passo
+    // que libera o resto do app (updateProfileFullName marca onboarding_done).
+    // Não existe mais gate de "cadastrar como afiliado" travando o app —
+    // manda o usuário novo direto pra Integrações conectar a loja Shopee de
+    // verdade (OAuth), em vez de deixar ele perdido no dashboard vazio.
+    const isFirstOnboarding = !onboardingDone;
     setSaving(true);
     const { data, error } = await updateProfileFullName(userId, draft);
     setSaving(false);
@@ -132,6 +139,11 @@ function PerfilTab() {
     }
     setName(draft);
     if (data) setProfile(data);
+    if (isFirstOnboarding) {
+      toast.success("Perfil criado! Agora conecte sua loja Shopee pra começar a publicar.");
+      void navigate({ to: "/integracoes" });
+      return;
+    }
     toast.success(t("Perfil atualizado"));
   };
 
