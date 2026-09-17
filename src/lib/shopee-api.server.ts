@@ -200,6 +200,23 @@ export async function callShopeeApi<T = unknown>(
 
   const json = await res.json();
   if (!res.ok || json.error) {
+    // 17/09/2026: descoberto ao vivo — "error_kyc_auth" é uma trava da
+    // própria Shopee, não um bug do nosso código: a loja acabou de conectar
+    // via OAuth, mas o vendedor ainda não terminou o cadastro completo
+    // (KYC — verificação de identidade + dados bancários) no Seller Center
+    // deles. Enquanto isso não for feito do lado da Shopee, QUALQUER
+    // chamada de API de produto (get_category, get_attribute_tree,
+    // add_item, ...) devolve esse mesmo erro pra ESSA loja específica —
+    // reconectar, trocar de produto ou qualquer coisa do nosso lado não
+    // resolve. callShopeeApi é o único ponto por onde toda chamada passa,
+    // então intercepta aqui uma vez só e já cobre os 5+ endpoints
+    // diferentes que podiam devolver isso, em vez de repetir a checagem em
+    // cada função que chama a API.
+    if (json.error === "error_kyc_auth") {
+      throw new Error(
+        "Sua loja Shopee ainda não completou o cadastro de vendedor exigido pela própria Shopee (verificação de identidade + dados bancários). Acesse o Seller Center (seller.shopee.com.br), finalize o cadastro em Minha Loja > Informações da Loja, e tente publicar de novo — isso não é algo que dá pra pular por aqui.",
+      );
+    }
     throw new Error(`[Shopee] ${path} falhou: ${JSON.stringify(json)}`);
   }
   return json as T;
