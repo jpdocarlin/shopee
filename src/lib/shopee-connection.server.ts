@@ -1,4 +1,4 @@
-// Server-only: guarda/lê a conexão da loja Shopee (tokens da API oficial) por
+undefined// Server-only: guarda/lê a conexão da loja Shopee (tokens da API oficial) por
 // usuário — cada conta do Shoppfy pode conectar a própria loja e publicar nela
 // (marketplace_accounts é escopado por user_id). O `userId` usado aqui sempre
 // vem do lado do servidor (context.userId de requireSupabaseAuth, ou do state
@@ -158,6 +158,29 @@ export async function getShopeeConnection(userId: string): Promise<
       if (conn && conn.environment !== currentEnv) return null;
       return conn;
 }
+// 17/09/2026: descoberto ao vivo (myralaoviedo@gmail.com) — quando a loja
+// desautoriza o app pelo lado da Shopee (ou o vínculo se perde por qualquer
+// outro motivo) sem passar pelo nosso fluxo de desconectar, a Shopee passa a
+// recusar QUALQUER renovação de token com "shop_no_linked" / "Partner and
+// shop has no linked" — o access_token antigo nunca mais renova. Até essa
+// correção, a tela de Integrações continuava mostrando "Loja conectada" pra
+// sempre (getShopeeConnection só confere se existe metadata salva, nunca
+// valida contra a Shopee), então quem tentava publicar só recebia o erro cru
+// da API, sem entender que precisava reconectar. Limpa a conexão salva
+// quando isso acontece — não apaga a linha (mantém histórico), só zera o
+// metadata, pra getShopeeStatus voltar a mostrar "desconectado" e a pessoa
+// saber que precisa clicar em "Conectar loja Shopee" de novo.
+async function invalidateShopeeConnection(userId: string): Promise<void> {
+  const admin = getAdminClient();
+  const marketplaceId = await getShopeeMarketplaceId();
+  const { error } = await admin
+    .from("marketplace_accounts")
+    .update({ status: "disconnected", metadata: {} as unknown as never })
+    .eq("user_id", userId)
+    .eq("marketplace_id", marketplaceId);
+  if (error) throw error;
+}
+
 // Chama antes de qualquer publishProduct/callShopeeApi — renova o
 // access_token se estiver perto de expirar (margem de 5 min) e já salva o
 // novo par de tokens.
@@ -176,9 +199,20 @@ export async function getValidShopeeAccessToken(userId: string): Promise<{
   }
 
   const { refreshAccessToken } = await import("@/lib/shopee-api.server");
-  const refreshed = await refreshAccessToken(conn.refresh_token, conn.shop_id);
-  await saveShopeeConnection(refreshed, userId);
-  return { accessToken: refreshed.accessToken, shopId: refreshed.shopId };
+  try {
+    const refreshed = await refreshAccessToken(conn.refresh_token, conn.shop_id);
+    await saveShopeeConnection(refreshed, userId);
+    return { accessToken: refreshed.accessToken, shopId: refreshed.shopId };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    if (/shop_no_linked|invalid_refresh_token|invalid_access_token/i.test(message)) {
+      await invalidateShopeeConnection(userId);
+      throw new Error(
+        "Sua conexão com a Shopee expirou ou foi desfeita do lado da Shopee — reconecte a loja em Integrações antes de publicar.",
+      );
+    }
+    throw err;
+  }
 }
 
 // Token de uso único pra saber "qual usuário" iniciou o fluxo OAuth da
