@@ -90,6 +90,14 @@ function c7dropToDemoProduct(
   };
 }
 
+// 17/09/2026: identifica a mensagem amigável de "cadastro de vendedor (KYC)
+// incompleto na Shopee" (ver comentário em callShopeeApi, shopee-api.server.ts)
+// pra mostrar um link direto pro Seller Center — sem isso a pessoa via só o
+// texto e precisava lembrar/pesquisar o site sozinha.
+function isShopeeKycError(message: string): boolean {
+  return /cadastro de vendedor/i.test(message);
+}
+
 // Passo numerado, igual ao padrão das outras telas do app.
 function Step({ n, children }: { n: number; children: React.ReactNode }) {
   return (
@@ -930,14 +938,40 @@ export function CriarAnuncio() {
                     {categoriesError && (
                       <div className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-[12px] text-destructive">
                         <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
-                        <p>{categoriesError}</p>
+                        <div className="space-y-1.5">
+                          <p>{categoriesError}</p>
+                          {isShopeeKycError(categoriesError) && (
+                            <a
+                              href="https://seller.shopee.com.br"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 font-medium underline underline-offset-2"
+                            >
+                              Abrir Seller Center da Shopee
+                              <ExternalLink className="size-3" />
+                            </a>
+                          )}
+                        </div>
                       </div>
                     )}
 
                     {publishApiError && (
                       <div className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-[12px] text-destructive">
                         <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
-                        <p>{publishApiError}</p>
+                        <div className="space-y-1.5">
+                          <p>{publishApiError}</p>
+                          {isShopeeKycError(publishApiError) && (
+                            <a
+                              href="https://seller.shopee.com.br"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 font-medium underline underline-offset-2"
+                            >
+                              Abrir Seller Center da Shopee
+                              <ExternalLink className="size-3" />
+                            </a>
+                          )}
+                        </div>
                       </div>
                     )}
 
