@@ -9,6 +9,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { useT } from "@/i18n/translations";
 import { createShopeeConnectState, getShopeeStatus } from "@/lib/shopee.functions";
+import { createMercadoLivreConnectState, getMercadoLivreStatus } from "@/lib/mercadolivre.functions";
 
 export const Route = createFileRoute("/_shell/integracoes")({
   head: () => ({
@@ -61,10 +62,17 @@ type ShopeeStatus =
   | { loading: false; connected: false }
   | { loading: false; connected: true; shopId: number; environment: "sandbox" | "live" };
 
+type MercadoLivreStatus =
+  | { loading: true }
+  | { loading: false; connected: false }
+  | { loading: false; connected: true; sellerId: number };
+
 function IntegracoesPage() {
   const t = useT();
   const [shopeeStatus, setShopeeStatus] = useState<ShopeeStatus>({ loading: true });
   const [connectingShopee, setConnectingShopee] = useState(false);
+  const [mlStatus, setMlStatus] = useState<MercadoLivreStatus>({ loading: true });
+  const [connectingMl, setConnectingMl] = useState(false);
 
   async function handleConnectShopee() {
     setConnectingShopee(true);
@@ -79,15 +87,42 @@ function IntegracoesPage() {
     }
   }
 
+  async function handleConnectMercadoLivre() {
+    setConnectingMl(true);
+    try {
+      const { token } = await createMercadoLivreConnectState();
+      window.location.href = `/api/mercado-livre/connect?state=${encodeURIComponent(token)}`;
+    } catch {
+      setConnectingMl(false);
+      toast.error("Não deu pra iniciar a conexão com o Mercado Livre", {
+        description: "Tente de novo em instantes.",
+      });
+    }
+  }
+
   useEffect(() => {
-    // Feedback do redirect de volta do OAuth da Shopee (?shopee=connected|error).
+    // Feedback do redirect de volta do OAuth da Shopee (?shopee=connected|error)
+    // e do Mercado Livre (?ml=connected|error).
     const params = new URLSearchParams(window.location.search);
-    const result = params.get("shopee");
-    if (result === "connected") {
+    const shopeeResult = params.get("shopee");
+    if (shopeeResult === "connected") {
       toast.success("Loja Shopee conectada", { description: "A API oficial já pode ser usada." });
       window.history.replaceState({}, "", window.location.pathname);
-    } else if (result === "error") {
+    } else if (shopeeResult === "error") {
       toast.error("Não deu pra conectar a loja Shopee agora", {
+        description: "Tente de novo em instantes.",
+      });
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+
+    const mlResult = params.get("ml");
+    if (mlResult === "connected") {
+      toast.success("Loja Mercado Livre conectada", {
+        description: "A API oficial já pode ser usada.",
+      });
+      window.history.replaceState({}, "", window.location.pathname);
+    } else if (mlResult === "error") {
+      toast.error("Não deu pra conectar a loja Mercado Livre agora", {
         description: "Tente de novo em instantes.",
       });
       window.history.replaceState({}, "", window.location.pathname);
@@ -96,6 +131,10 @@ function IntegracoesPage() {
     getShopeeStatus()
       .then((res) => setShopeeStatus({ loading: false, ...res }))
       .catch(() => setShopeeStatus({ loading: false, connected: false }));
+
+    getMercadoLivreStatus()
+      .then((res) => setMlStatus({ loading: false, ...res }))
+      .catch(() => setMlStatus({ loading: false, connected: false }));
   }, []);
 
   async function handleCopyC7DropAddress() {
@@ -157,6 +196,48 @@ function IntegracoesPage() {
                 <Zap className="size-3.5" />
               )}
               Conectar loja Shopee
+            </Button>
+          )}
+        </div>
+      </Reveal>
+
+      <Reveal className="surface-card overflow-hidden">
+        <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-4">
+            <div className="grid size-11 shrink-0 place-items-center rounded-lg border border-border bg-surface-hover text-foreground">
+              <Zap className="size-5" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-[14px] font-semibold text-foreground">Mercado Livre — API oficial</h3>
+              <p className="max-w-lg text-[13px] text-muted-foreground">
+                Conecta sua loja direto pela API do Mercado Livre, no mesmo esquema da Shopee. A
+                categoria certa também é detectada automaticamente por produto.
+              </p>
+            </div>
+          </div>
+          {mlStatus.loading ? (
+            <Button size="sm" variant="outline" disabled className="shrink-0 gap-1.5">
+              <Loader2 className="size-3.5 animate-spin" />
+              Verificando…
+            </Button>
+          ) : mlStatus.connected ? (
+            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-[12.5px] font-medium text-emerald-500">
+              <CheckCircle2 className="size-3.5" />
+              Loja conectada
+            </span>
+          ) : (
+            <Button
+              size="sm"
+              className="shrink-0 gap-1.5"
+              disabled={connectingMl}
+              onClick={handleConnectMercadoLivre}
+            >
+              {connectingMl ? (
+                <Loader2 className="size-3.5 animate-spin" />
+              ) : (
+                <Zap className="size-3.5" />
+              )}
+              Conectar loja Mercado Livre
             </Button>
           )}
         </div>
