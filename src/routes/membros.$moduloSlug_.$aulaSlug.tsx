@@ -78,11 +78,13 @@ function LessonPage() {
   }
 
   if (isLoading || !currentModule || !lesson) {
-    return <div className="mx-auto max-w-3xl px-5 pt-10 sm:px-8 sm:pt-14" />;
+    return <div className="mx-auto max-w-5xl px-5 pt-10 sm:px-8 sm:pt-14" />;
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-5 pb-28 pt-10 sm:px-8 sm:pt-14">
+    // max-w-5xl (antes 3xl) — vídeo maior por padrão, sem depender só do
+    // botão de tela cheia.
+    <div className="mx-auto max-w-5xl px-5 pb-28 pt-10 sm:px-8 sm:pt-14">
       <Link
         to="/membros/$moduloSlug"
         params={{ moduloSlug }}
