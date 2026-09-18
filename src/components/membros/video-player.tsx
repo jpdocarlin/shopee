@@ -205,7 +205,11 @@ function NativeVideoPlayer({
         </button>
       )}
 
-      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 bg-gradient-to-t from-black/85 via-black/35 to-transparent px-4 pb-3 pt-10 opacity-0 transition-opacity duration-200 group-hover/player:opacity-100 [.group\\/player:has(video:not(:hover))_&]:opacity-0">
+      {/* Barra de controles sempre visível — antes só aparecia no :hover, o
+          que deixava o player sem nenhum jeito de pausar/buscar/ampliar em
+          touch (celular/tablet não tem hover) e exigia mirar o mouse bem em
+          cima do vídeo no desktop. */}
+      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 bg-gradient-to-t from-black/85 via-black/35 to-transparent px-4 pb-3 pt-10">
         <input
           type="range"
           className="mb-player-scrubber"
@@ -449,7 +453,11 @@ function YouTubeVideoPlayer({
         </button>
       )}
 
-      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 bg-gradient-to-t from-black/85 via-black/35 to-transparent px-4 pb-3 pt-10 opacity-0 transition-opacity duration-200 group-hover/player:opacity-100">
+      {/* Barra de controles sempre visível — mesmo motivo do player nativo
+          acima: hover-only deixava sem jeito de pausar/buscar/ampliar em
+          touch, e escondia os controles assim que o mouse saía de cima do
+          vídeo mesmo pausado. */}
+      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 bg-gradient-to-t from-black/85 via-black/35 to-transparent px-4 pb-3 pt-10">
         <input
           type="range"
           className="mb-player-scrubber"
@@ -495,6 +503,3 @@ function YouTubeVideoPlayer({
     </div>
   );
 }
-// touch redeploy
-
-// touch: force Vercel redeploy (o push do commit anterior nao disparou build)
