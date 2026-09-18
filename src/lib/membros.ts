@@ -5,9 +5,11 @@
 // Estado de aula/módulo é calculado no cliente a partir de 3 leituras
 // simples (módulos, aulas, progresso do próprio usuário) — nada disso
 // precisa de SQL fancy porque o catálogo inteiro é pequeno (poucas dezenas
-// de aulas, no máximo). Desbloqueio é sequencial: a aula N só libera depois
-// da aula N-1 (em todo o curso, atravessando módulos) ser concluída — a
-// primeiríssima aula do curso é sempre livre.
+// de aulas, no máximo). Todas as aulas ficam liberadas desde o início (sem
+// desbloqueio sequencial) — decisão do Jp em 18/09/2026. O tipo "locked"
+// continua existindo em LessonState/ModuleState só por segurança de tipos e
+// compatibilidade com o resto do código (StateBadge, redirect na página da
+// aula etc.), mas `buildCourseTree` nunca mais atribui esse estado.
 import { useQuery } from "@tanstack/react-query";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -77,9 +79,6 @@ export function buildCourseTree(
   }
 
   let position = 0;
-  // A primeira aula do curso inteiro é sempre livre — daí começar como se a
-  // "aula anterior" já tivesse sido concluída.
-  let previousCompleted = true;
 
   return sortedModules.map((module) => {
     const rawLessons = lessonsByModule.get(module.id) ?? [];
@@ -88,15 +87,12 @@ export function buildCourseTree(
       const p = progressByLesson.get(lesson.id);
       const completed = p?.completed ?? false;
       const progressSeconds = p?.progress_seconds ?? 0;
-      const unlocked = previousCompleted;
-      const state: LessonState = !unlocked
-        ? "locked"
-        : completed
-          ? "completed"
-          : progressSeconds > 0
-            ? "in_progress"
-            : "not_started";
-      previousCompleted = completed;
+      // Todas as aulas liberadas desde o início — sem gate sequencial.
+      const state: LessonState = completed
+        ? "completed"
+        : progressSeconds > 0
+          ? "in_progress"
+          : "not_started";
 
       return {
         ...lesson,
@@ -114,11 +110,10 @@ export function buildCourseTree(
     const completedCount = enrichedLessons.filter((l) => l.state === "completed").length;
     const totalDurationSeconds = enrichedLessons.reduce((sum, l) => sum + l.duration_seconds, 0);
     const hasInProgress = enrichedLessons.some((l) => l.state === "in_progress");
-    const firstLocked = lessonCount > 0 && enrichedLessons[0].state === "locked";
 
-    const moduleState: ModuleState = firstLocked
-      ? "locked"
-      : lessonCount > 0 && completedCount === lessonCount
+    // Sem gate sequencial: módulo nunca fica "locked", só reflete progresso.
+    const moduleState: ModuleState =
+      lessonCount > 0 && completedCount === lessonCount
         ? "completed"
         : completedCount > 0 || hasInProgress
           ? "in_progress"
