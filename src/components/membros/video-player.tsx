@@ -495,3 +495,6 @@ function YouTubeVideoPlayer({
     </div>
   );
 }
+// touch redeploy
+
+// touch: force Vercel redeploy (o push do commit anterior nao disparou build)
