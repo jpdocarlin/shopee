@@ -49,8 +49,8 @@ function MembrosHome() {
         <p className="mb-eyebrow">Área de Membros</p>
         <h1 className="mb-heading mt-3 text-[30px] sm:text-[38px]">Seus módulos</h1>
         <p className="mt-2 max-w-lg text-[14px] mb-body-muted">
-          Escolha um módulo pra continuar. Cada aula libera a próxima assim que você termina — é só
-          ir seguindo em ordem.
+          Escolha um módulo pra continuar. Todas as aulas já estão liberadas — assista na ordem que
+                        preferir.
         </p>
       </Reveal>
 
