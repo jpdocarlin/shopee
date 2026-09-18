@@ -342,6 +342,28 @@ function YouTubeVideoPlayer({
             if (initialSeconds > 1 && initialSeconds < (total || Infinity) - 2) {
               player.seekTo(initialSeconds, true);
             }
+            // Só começa a sondar getCurrentTime/getDuration depois que o
+            // player sinaliza que está pronto — chamar esses métodos antes
+            // do onReady (ex.: logo após \`new YT.Player(...)\`, enquanto o
+            // iframe interno ainda está carregando) lança
+            // "getCurrentTime is not a function", porque o objeto do player
+            // só ganha os métodos reais quando a comunicação com o iframe é
+            // estabelecida.
+            if (pollId) window.clearInterval(pollId);
+            pollId = window.setInterval(() => {
+              const active = playerRef.current;
+              if (!active) return;
+              const time = active.getCurrentTime();
+              const totalNow = active.getDuration() || 0;
+              setCurrent(time);
+              currentTimeRef.current = time;
+              if (totalNow) setDuration(totalNow);
+              const now = Date.now();
+              if (now - lastReportRef.current > 4000) {
+                lastReportRef.current = now;
+                onProgressRef.current(time, totalNow);
+              }
+            }, 500);
           },
           onStateChange: (event: { data: number }) => {
             if (cancelled) return;
@@ -358,21 +380,6 @@ function YouTubeVideoPlayer({
         },
       });
       playerRef.current = player;
-
-      pollId = window.setInterval(() => {
-        const active = playerRef.current;
-        if (!active) return;
-        const time = active.getCurrentTime();
-        const total = active.getDuration() || 0;
-        setCurrent(time);
-        currentTimeRef.current = time;
-        if (total) setDuration(total);
-        const now = Date.now();
-        if (now - lastReportRef.current > 4000) {
-          lastReportRef.current = now;
-          onProgressRef.current(time, total);
-        }
-      }, 500);
     });
 
     return () => {
