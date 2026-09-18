@@ -13,6 +13,7 @@ import {
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 
 import { PageHeader } from "@/components/shared/page-header";
+import { LessonReminderBanner } from "@/components/layout/lesson-reminder-banner";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import {
@@ -221,6 +222,8 @@ function IndexPage() {
           </div>
         }
       />
+
+      <LessonReminderBanner />
 
       {/* Onboarding */}
       <Reveal>
