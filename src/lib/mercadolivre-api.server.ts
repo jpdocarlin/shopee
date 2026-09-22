@@ -297,6 +297,13 @@ export async function publishProduct(
 
   const body = {
     title: itemName.slice(0, 60),
+    // Contas já migradas pro modelo "User Products" (Preço por Variação —
+    // ver developers.mercadolivre.com.br/pt_br/user-products) exigem
+    // family_name no corpo do POST /items, senão a API rejeita com
+    // "body.required_fields" / "[family_name]". Reaproveita o título: é o
+    // "nome de família" que agrupa este produto e suas variações — como
+    // publicamos sem variações, usar o mesmo texto do título é suficiente.
+    family_name: itemName.slice(0, 60),
     category_id: categoryId,
     price: priceReais,
     currency_id: "BRL",
