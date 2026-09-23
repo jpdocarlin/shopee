@@ -8,10 +8,42 @@
 // quando a aba está visível/em foco (nunca no meio do uso, pra não
 // interromper nada) e só recarrega se realmente detectou uma versão nova.
 
+// 23/09/2026: descoberto ao vivo — a causa real do vídeo da aula "travando e
+// reiniciando toda hora" NÃO era o player em si, era este arquivo. Ele
+// comparava TODO `<script src>` presente no documento (`querySelectorAll`
+// sem filtro nenhum) contra o HTML puro de uma nova busca da mesma URL. Só
+// que o player de aula do YouTube injeta os próprios scripts dele
+// (`youtube.com/iframe_api` + o widget interno que a própria API do YouTube
+// carrega em seguida) direto no `<head>` via `document.createElement` — e
+// esses dois scripts, sendo de outra origem, nunca aparecem numa busca fresca
+// do HTML da página (esse HTML só lista os scripts do PRÓPRIO app). Resultado:
+// assim que uma aula com vídeo do YouTube carregava, a comparação ficava
+// permanentemente "diferente" — nem que fosse por causa de um script que a
+// gente nunca serviu — e a primeira checagem (15s depois de abrir a página)
+// já forçava um `location.reload()`; a aula recarregava, o player do YouTube
+// injetava os scripts de novo, e o ciclo se repetia a cada nova checagem
+// (2 em 2 min, mais toda vez que a aba voltava a ficar visível ou a internet
+// reconectava) — dá exatamente "trava no meio e reinicia toda hora assistindo".
+// Confirmado ao vivo comparando os dois lados manualmente numa aula real: a
+// única diferença entre o DOM atual e o HTML fresco eram os dois scripts do
+// YouTube.
+// Fix: só considerar scripts da MESMA origem do próprio app (isso é o que de
+// fato indica um deploy novo) — qualquer script de terceiro injetado depois
+// do carregamento inicial (YouTube hoje; fontes, analytics, outro widget
+// amanhã) fica de fora da comparação.
+function isSameOriginScript(src: string): boolean {
+  try {
+    return new URL(src, window.location.origin).origin === window.location.origin;
+  } catch {
+    return false;
+  }
+}
+
 function currentScriptSrcs(): string[] {
   return Array.from(document.querySelectorAll("script[src]"))
     .map((el) => el.getAttribute("src") ?? "")
     .filter(Boolean)
+    .filter(isSameOriginScript)
     .sort();
 }
 
