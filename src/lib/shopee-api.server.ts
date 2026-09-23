@@ -34,8 +34,8 @@ const shopeeProxyAgent = process.env.QUOTAGUARDSTATIC_URL
   : undefined;
 
 function shopeeFetch(url: string, init: RequestInit = {}): Promise<Response> {
-    if (!shopeeProxyAgent) return fetch(url, init);
-    return fetch(url, { ...init, dispatcher: shopeeProxyAgent } as RequestInit);
+  if (!shopeeProxyAgent) return fetch(url, init);
+  return fetch(url, { ...init, dispatcher: shopeeProxyAgent } as RequestInit);
 }
 
 // Host de sandbox confirmado direto na "API Test Tool" do console da Shopee
@@ -624,7 +624,11 @@ export async function publishProduct(input: PublishProductInput) {
     attributeList,
   } = input;
 
-  const buildBody = (desc: string) => ({
+  const buildBody = (
+    desc: string,
+    attrs:
+      Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }> | undefined,
+  ) => ({
     original_price: originalPrice,
     description: desc,
     weight: weightKg,
@@ -654,7 +658,7 @@ export async function publishProduct(input: PublishProductInput) {
     // exige atributos obrigatórios diferentes (get_attribute_tree). Ver
     // buildMandatoryAttributeList() — quem chama publishProduct() já
     // resolve isso e manda pronto aqui.
-    ...(attributeList && attributeList.length > 0 ? { attribute_list: attributeList } : {}),
+    ...(attrs && attrs.length > 0 ? { attribute_list: attrs } : {}),
   });
 
   // 09/09/2026: descoberto ao vivo — o limite de 200 caracteres visto em
@@ -668,27 +672,71 @@ export async function publishProduct(input: PublishProductInput) {
   // Shopee) e só corta de verdade se a API reclamar do tamanho, lendo o
   // limite real direto da mensagem de erro dela.
   const GENEROUS_CAP = 3000;
-  const firstAttempt = truncateAtWordBoundary(description, GENEROUS_CAP);
 
-  try {
-    return await callShopeeApi("/api/v2/product/add_item", {
-      method: "POST",
-      accessToken,
-      shopId,
-      body: buildBody(firstAttempt),
-    });
-  } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    const match = message.match(/description length must be between \d+ and (\d+) characters/i);
-    if (!match) throw err;
-
-    const maxAllowed = Number(match[1]);
-    const retryDescription = truncateAtWordBoundary(description, maxAllowed);
-    return callShopeeApi("/api/v2/product/add_item", {
-      method: "POST",
-      accessToken,
-      shopId,
-      body: buildBody(retryDescription),
-    });
+  // 23/09/2026: descoberto ao vivo — get_attribute_tree nem sempre marca
+  // `mandatory: true` pra todo atributo que a Shopee exige na validação
+  // real do add_item. Categorias com atributos de compliance (ex.:
+  // "Registration ID", "Model Name", "Manufacturer" numa categoria de
+  // fechaduras) vêm reportadas como opcionais na árvore, mas o add_item
+  // rejeita com "Attribute \"X\" is mandatory required" apontando IDs que
+  // buildMandatoryAttributeList() nunca tentou preencher (porque não
+  // sabia que eram obrigatórios). Em vez de tentar prever esse tipo de
+  // regra condicional de antemão, detecta esse erro específico na
+  // resposta (Rule Type: classification.attribute.mandatory), extrai os
+  // IDs que faltaram e tenta de novo com um valor de texto livre padrão
+  // pra cada um — cobre a maioria dos casos sem precisar de formulário
+  // dinâmico por categoria.
+  function parseMissingMandatoryAttributeIds(message: string): number[] {
+    const ids = new Set<number>();
+    const re = /Attribute is mandatory:\s*id:\s*(\d+)/g;
+    let match: RegExpExecArray | null;
+    while ((match = re.exec(message))) ids.add(Number(match[1]));
+    return [...ids];
   }
+
+  let desc = truncateAtWordBoundary(description, GENEROUS_CAP);
+  let attrs = attributeList;
+
+  // Máximo 4 tentativas: cobre o caso de precisar corrigir tamanho de
+  // descrição E atributos faltantes na mesma publicação (situações
+  // independentes, cada uma consome uma tentativa).
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      return await callShopeeApi("/api/v2/product/add_item", {
+        method: "POST",
+        accessToken,
+        shopId,
+        body: buildBody(desc, attrs),
+      });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+
+      const descMatch = message.match(
+        /description length must be between \d+ and (\d+) characters/i,
+      );
+      if (descMatch) {
+        desc = truncateAtWordBoundary(description, Number(descMatch[1]));
+        continue;
+      }
+
+      const missingIds = parseMissingMandatoryAttributeIds(message);
+      if (missingIds.length > 0) {
+        const already = new Set((attrs ?? []).map((a) => a.attribute_id));
+        const newOnes = missingIds.filter((id) => !already.has(id));
+        if (newOnes.length === 0) throw err; // já tentamos preencher esses — não repete em loop
+        attrs = [
+          ...(attrs ?? []),
+          ...newOnes.map((attribute_id) => ({
+            attribute_id,
+            attribute_value_list: [{ value_id: 0, original_value_name: "Padrão" }],
+          })),
+        ];
+        continue;
+      }
+
+      throw err;
+    }
+  }
+
+  throw new Error("[Shopee] add_item falhou depois de tentativas automáticas de correção.");
 }
