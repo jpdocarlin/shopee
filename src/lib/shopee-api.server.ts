@@ -683,16 +683,36 @@ export async function publishProduct(input: PublishProductInput) {
   // sabia que eram obrigatórios). Em vez de tentar prever esse tipo de
   // regra condicional de antemão, detecta esse erro específico na
   // resposta (Rule Type: classification.attribute.mandatory), extrai os
-  // IDs que faltaram e tenta de novo com um valor de texto livre padrão
-  // pra cada um — cobre a maioria dos casos sem precisar de formulário
-  // dinâmico por categoria.
-  function parseMissingMandatoryAttributeIds(message: string): number[] {
-    const ids = new Set<number>();
-    const re = /Attribute is mandatory:\s*id:\s*(\d+)/g;
+  // IDs (e nomes) que faltaram e tenta de novo com um valor de texto
+  // livre padrão pra cada um — cobre a maioria dos casos sem precisar de
+  // formulário dinâmico por categoria.
+  function parseMissingMandatoryAttributes(message: string): Array<{ id: number; name: string }> {
+    const result: Array<{ id: number; name: string }> = [];
+    const re = /Attribute is mandatory:\s*id:\s*(\d+),\s*name:\s*([^\\"]+)/g;
     let match: RegExpExecArray | null;
-    while ((match = re.exec(message))) ids.add(Number(match[1]));
-    return [...ids];
+    while ((match = re.exec(message))) {
+      result.push({ id: Number(match[1]), name: match[2].trim() });
+    }
+    return result;
   }
+
+  // 23/09/2026: descoberto ao vivo (testando com um microfone de verdade,
+  // categoria de eletrônico legítima — não um mau-match de categoria) — o
+  // atributo "Registration ID" nem sempre é um texto livre qualquer: em
+  // categorias de eletrônicos regulados no Brasil, é o número de
+  // homologação ANATEL, e a Shopee valida contra o cadastro real dela.
+  // Preencher com "Padrão" só troca "mandatory required" por "Invalid
+  // Registration ID... ERROR_ANATEL_ID_INCORRECT" — não existe valor
+  // genérico que passe. Detecta esse caso pelo NOME do atributo (evita
+  // até gastar uma tentativa) e, como rede de segurança, também pelo erro
+  // de validação em si (caso o nome não bata, ou já tenhamos tentado
+  // preencher antes de saber que era ANATEL) — falha rápido com uma
+  // mensagem clara em vez de ficar tentando de novo às cegas.
+  const UNFILLABLE_ATTRIBUTE_NAME = /registration\s*id/i;
+  const anatelError = () =>
+    new Error(
+      "Essa categoria da Shopee exige um número de homologação ANATEL válido pra esse produto (obrigatório pra vários eletrônicos regulados no Brasil, como microfones, carregadores e adaptadores sem fio) — não é um dado que o catálogo tem ou que dá pra preencher automaticamente. Publique manualmente informando o registro ANATEL real no Seller Center, se o produto tiver um, ou escolha um produto/categoria que não exija homologação.",
+    );
 
   let desc = truncateAtWordBoundary(description, GENEROUS_CAP);
   let attrs = attributeList;
@@ -711,6 +731,11 @@ export async function publishProduct(input: PublishProductInput) {
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
 
+      // Rede de segurança: cobre o caso em que já tentamos preencher um
+      // atributo sem saber que era ANATEL (nome não bateu no regex acima,
+      // ou o erro vem só na validação, não no aviso de "mandatory").
+      if (/anatel/i.test(message)) throw anatelError();
+
       const descMatch = message.match(
         /description length must be between \d+ and (\d+) characters/i,
       );
@@ -719,15 +744,17 @@ export async function publishProduct(input: PublishProductInput) {
         continue;
       }
 
-      const missingIds = parseMissingMandatoryAttributeIds(message);
-      if (missingIds.length > 0) {
+      const missing = parseMissingMandatoryAttributes(message);
+      if (missing.length > 0) {
+        if (missing.some((m) => UNFILLABLE_ATTRIBUTE_NAME.test(m.name))) throw anatelError();
+
         const already = new Set((attrs ?? []).map((a) => a.attribute_id));
-        const newOnes = missingIds.filter((id) => !already.has(id));
+        const newOnes = missing.filter((m) => !already.has(m.id));
         if (newOnes.length === 0) throw err; // já tentamos preencher esses — não repete em loop
         attrs = [
           ...(attrs ?? []),
-          ...newOnes.map((attribute_id) => ({
-            attribute_id,
+          ...newOnes.map(({ id }) => ({
+            attribute_id: id,
             attribute_value_list: [{ value_id: 0, original_value_name: "Padrão" }],
           })),
         ];
