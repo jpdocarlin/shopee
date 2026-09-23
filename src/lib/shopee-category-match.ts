@@ -31,11 +31,37 @@ function normalize(text: string): string {
     .trim();
 }
 
+// 23/09/2026: descoberto ao vivo — o casamento por palavra exata (sem
+// singular/plural) estava escolhendo categoria errada pra produtos comuns.
+// Dois casos reais confirmados: um "Adaptador Divisor..." caiu em "Ferragens
+// e Fechaduras para Portas" (a categoria certa teria "Adaptadores" no
+// caminho, mas "adaptador" ≠ "adaptadores" como string), e um "Microfone
+// Lapela Sem Fio..." caiu em "Adaptadores sem Fio e Placas de Rede" só pela
+// palavra genérica "fio", porque "microfone" ≠ "microfones" (a categoria
+// certa de áudio). Sem essa normalização, o score da categoria certa fica
+// zerado e uma categoria errada com overlap coincidental vence — pior ainda
+// quando a categoria errada exige atributo que a certa não pede (o caso do
+// adaptador caiu numa categoria que pede atributos de fechadura; o do
+// microfone, numa que puxa validação de ANATEL de placa de rede).
+// stem() reduz plurais comuns em português (não é um stemmer linguístico
+// completo, só cobre os padrões mais frequentes em nome de produto) — é
+// aplicado nos dois lados da comparação (título/nicho e caminho da
+// categoria), então só ajuda a casar pares que hoje ficam sem crédito
+// nenhum; não quebra nada que já casava certo.
+function stem(word: string): string {
+  if (word.length <= 4) return word;
+  if (word.endsWith("res")) return word.slice(0, -2); // adaptadores -> adaptador
+  if (word.endsWith("zes")) return word.slice(0, -2); // luzes -> luz
+  if (word.endsWith("s")) return word.slice(0, -1); // microfones -> microfone, capas -> capa
+  return word;
+}
+
 function wordSet(text: string): Set<string> {
   return new Set(
     normalize(text)
       .split(" ")
-      .filter((w) => w.length > 2 && !STOPWORDS.has(w)),
+      .filter((w) => w.length > 2 && !STOPWORDS.has(w))
+      .map(stem),
   );
 }
 
