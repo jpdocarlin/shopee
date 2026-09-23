@@ -13,6 +13,7 @@ import { createFulfillmentRequest, PERSON_TYPE_LABEL, type PersonType } from "@/
 import { formatBRL } from "@/lib/format";
 import { convertImageToPdf } from "@/lib/image-to-pdf";
 import { PixPayment } from "@/components/pedidos/pix-payment";
+import { ProductAutocomplete } from "@/components/pedidos/product-autocomplete";
 
 // Toda vez que fecha uma venda, o revendedor tem que mandar R$ 2,00 a mais
 // no PIX referente à embalagem (regra do fornecedor C7 Drop).
@@ -25,6 +26,14 @@ function parseMoney(value: string): number {
     .replace(/[^\d.]/g, "");
   const parsed = Number.parseFloat(normalized);
   return Number.isFinite(parsed) ? Math.round(parsed * 100) : 0;
+}
+
+// 23/09/2026: usado quando o revendedor escolhe um produto do catálogo no
+// autocomplete — preenche o campo "custo" automaticamente com o custo do
+// fornecedor (a embalagem já é somada em cima disso automaticamente mais
+// abaixo, no aviso e no valor do PIX — não soma aqui pra não contar 2x).
+function centsToDecimalInput(cents: number): string {
+  return (cents / 100).toFixed(2).replace(".", ",");
 }
 
 function FileField({
@@ -278,13 +287,20 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
             <label className="mb-1.5 block text-[12px] text-muted-foreground" htmlFor="produto">
               Produto
             </label>
-            <Input
+            <ProductAutocomplete
               id="produto"
               value={productName}
-              onChange={(e) => setProductName(e.target.value)}
-              placeholder="Ex: Fone Bluetooth TWS"
+              onChange={setProductName}
+              onSelectProduct={(product) => {
+                setProductName(product.name);
+                setCostInput(centsToDecimalInput(product.priceCents));
+              }}
+              placeholder="Digite pra buscar no catálogo…"
               className="h-9 text-[13px]"
             />
+            <p className="mt-1 text-[11px] text-muted-foreground">
+              Escolha um produto do catálogo e o custo é preenchido sozinho.
+            </p>
           </div>
           <div>
             <label className="mb-1.5 block text-[12px] text-muted-foreground" htmlFor="custo">
