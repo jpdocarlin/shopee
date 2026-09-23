@@ -203,10 +203,10 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
     // (ou o shape da resposta não bater — getAttributeTree já degrada pra
     // lista vazia nesse caso), segue sem atributos em vez de travar a
     // publicação inteira.
-    let attributeList: ReturnType<typeof buildMandatoryAttributeList> = [];
+    let attributeList: Awaited<ReturnType<typeof buildMandatoryAttributeList>> = [];
     try {
       const attributes = await getAttributeTree(accessToken, shopId, data.categoryId);
-      attributeList = buildMandatoryAttributeList(attributes);
+      attributeList = await buildMandatoryAttributeList(accessToken, shopId, attributes);
     } catch {
       // categoria pode não ter atributos obrigatórios — segue sem eles.
     }

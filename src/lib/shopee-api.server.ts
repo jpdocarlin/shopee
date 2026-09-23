@@ -291,11 +291,14 @@ export async function getCategoryList(
   return json.response.category_list;
 }
 
-// Formato de ENVIO (product/add_item) — confirmado contra a doc da Shopee:
-// ou `value_id` (valor de uma lista pré-definida) ou `original_value_name`
-// (texto livre).
+// Formato de ENVIO (product/add_item) — confirmado contra o schema oficial
+// da Shopee (23/09/2026, depois de um erro real em produção): `value_id` é
+// OBRIGATÓRIO sempre, mesmo em texto livre — nesse caso manda `0`.
+// Omitir o campo (em vez de mandar 0) é o que causava
+// "AttributeValue.ValueId: ValueId is required" mesmo em atributos que
+// aceitam original_value_name.
 export type ShopeeAttributeValue = {
-  value_id?: number;
+  value_id: number;
   original_value_name?: string;
 };
 
@@ -309,12 +312,38 @@ export type ShopeeAttributeResponseValue = {
   name?: string;
 };
 
+// input_type (confirmado contra o schema oficial da Shopee, 23/09/2026):
+// 1 = dropdown seleção única, 2 = combo box seleção única (aceita valor
+// customizado), 3 = texto livre, 4 = dropdown seleção múltipla, 5 = combo
+// box seleção múltipla (aceita customizado). Os dois tipos de dropdown
+// puro (1 e 4) NUNCA aceitam original_value_name — sempre exigem um
+// value_id real, mesmo que a lista inline pareça vazia.
+//
+// support_search_value: quando true, a attribute_value_list que vem junto
+// no get_attribute_tree é só uma AMOSTRA — a lista completa (com o
+// value_id certo pro produto) precisa ser buscada em
+// product/search_attribute_value_list. Alguns SDKs de terceiros documentam
+// input_type/support_search_value aninhados dentro de um objeto
+// `attribute_info`; como já confirmamos ao vivo que outros campos desse
+// mesmo endpoint vêm PLANOS (não aninhados), a leitura abaixo aceita os
+// dois formatos por segurança (ver getInputType/getSupportSearchValue).
 export type ShopeeAttribute = {
   attribute_id: number;
   name: string;
   mandatory: boolean;
+  input_type?: number;
+  support_search_value?: boolean;
+  attribute_info?: { input_type?: number; support_search_value?: boolean };
   attribute_value_list?: ShopeeAttributeResponseValue[];
 };
+
+function getInputType(attr: ShopeeAttribute): number | undefined {
+  return attr.input_type ?? attr.attribute_info?.input_type;
+}
+
+function getSupportSearchValue(attr: ShopeeAttribute): boolean {
+  return attr.support_search_value ?? attr.attribute_info?.support_search_value ?? false;
+}
 
 // Atributos obrigatórios/opcionais de uma categoria específica — cada
 // categoria da Shopee exige um conjunto diferente e, na loja sandbox, os
@@ -344,43 +373,90 @@ export async function getAttributeTree(
   return list.flatMap((entry) => entry.attribute_tree ?? []);
 }
 
-// 04/09/2026: descoberto ao vivo — toda categoria da loja sandbox exige N
-// atributos obrigatórios com nomes/valores de teste sem sentido nenhum
-// ("hello world", "malaysiaku"...). Pra destravar a publicação em QUALQUER
+// Busca a lista completa de valores válidos de um atributo — necessário
+// quando support_search_value é true, porque nesse caso a
+// attribute_value_list que vem junto no get_attribute_tree é só uma
+// amostra (às vezes vazia), não a lista real. Sem isso, atributos desse
+// tipo ficam sem um value_id válido pra mandar no add_item.
+// 23/09/2026: um comentário antigo aqui dizia que esse endpoint "nem
+// existe" (404) — isso foi medido só contra o sandbox de teste (Singapura),
+// que costuma ter metadado incompleto pras categorias fictícias dele. Em
+// produção (loja BR real) o endpoint existe e funciona normalmente.
+export async function searchAttributeValueList(
+  accessToken: string,
+  shopId: number,
+  attributeId: number,
+): Promise<ShopeeAttributeResponseValue[]> {
+  const json = await callShopeeApi<{
+    response?: { value_list?: Array<{ value_id: number; value_name: string }> };
+  }>("/api/v2/product/search_attribute_value_list", {
+    accessToken,
+    shopId,
+    query: { attribute_id: attributeId, cursor: 0, limit: 20 },
+  });
+  return (json.response?.value_list ?? []).map((v) => ({
+    value_id: v.value_id,
+    name: v.value_name,
+  }));
+}
+
+// 04/09/2026: descoberto ao vivo — toda categoria exige um conjunto de
+// atributos obrigatórios diferente. Pra destravar a publicação em QUALQUER
 // categoria sem montar uma tela de formulário dinâmico, resolve cada
-// atributo obrigatório automaticamente: se tiver lista de valores válidos
-// (combo box), usa o primeiro; se for campo livre (sem lista), preenche com
-// um texto genérico. Isso não faz sentido pra um catálogo real (o valor é
-// arbitrário), mas é o suficiente pra passar na validação da Shopee.
+// atributo obrigatório automaticamente. Isso não faz sentido pra um
+// catálogo real (o valor é arbitrário), mas é o suficiente pra passar na
+// validação da Shopee.
 //
-// LIMITAÇÃO CONHECIDA (não corrigível do nosso lado): categorias 104325 a
-// 104331 do sandbox têm um atributo obrigatório com attribute_id 100578
-// ("malaysiaku", input_type 5) que NÃO tem attribute_value_list nenhuma —
-// nem no get_attribute_tree, nem em busca separada (o endpoint
-// product/search_attribute_value_list nem existe: 404 confirmado ao vivo).
-// Mesmo assim, product/add_item recusa com "AttributeValue.ValueId: ValueId
-// is required" pra esse atributo específico — ou seja, a Shopee marcou como
-// obrigatório um atributo cujo valor válido não é descobrível por nenhuma
-// API pública. É um bug/limitação do sandbox de teste deles, não do nosso
-// código. Categorias fora dessa faixa (ex: 100021, já confirmada publicando
-// de ponta a ponta) funcionam normalmente.
-// 16/09/2026: essa limitação era só do sandbox de teste (Singapura) — em
-// produção (loja BR real) o Criar Anúncio não fixa mais nenhuma categoria:
-// detecta automaticamente a certa por produto (ver pickBestCategory em
-// shopee-category-match.ts), porque deixar uma categoria fixa pra todo
-// mundo era exatamente o que causava violação de anúncio na Shopee.
-export function buildMandatoryAttributeList(
+// 23/09/2026: reescrito depois de um erro real em produção
+// ("AttributeValue.ValueId: ValueId is required") em categorias fora do
+// sandbox. Duas causas raiz, confirmadas contra o schema oficial da
+// Shopee:
+// 1. `value_id` é um campo OBRIGATÓRIO no envio — omitir ele (em vez de
+//    mandar 0 em texto livre) já derrubava a validação sozinho.
+// 2. Atributos com `support_search_value: true` só devolvem uma AMOSTRA em
+//    get_attribute_tree — a lista completa (com o value_id certo) precisa
+//    ser buscada em search_attribute_value_list antes de decidir se cai em
+//    texto livre.
+// Também passou a respeitar input_type: dropdown puro (1 e 4) nunca aceita
+// original_value_name, então nesse caso nunca inventa texto livre — só
+// tenta achar um value_id real (inline ou via busca).
+export async function buildMandatoryAttributeList(
+  accessToken: string,
+  shopId: number,
   attributes: ShopeeAttribute[],
-): Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }> {
-  return attributes
-    .filter((attr) => attr.mandatory)
-    .map((attr) => {
-      const firstValue = attr.attribute_value_list?.[0];
-      const value: ShopeeAttributeValue = firstValue?.value_id
+): Promise<Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }>> {
+  const mandatory = attributes.filter((attr) => attr.mandatory);
+  const result: Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }> = [];
+
+  for (const attr of mandatory) {
+    let candidates = attr.attribute_value_list ?? [];
+
+    if (getSupportSearchValue(attr) && candidates.length === 0) {
+      try {
+        candidates = await searchAttributeValueList(accessToken, shopId, attr.attribute_id);
+      } catch {
+        // segue com a amostra (vazia) — melhor tentar publicar do que travar tudo.
+      }
+    }
+
+    const firstValue = candidates[0];
+    const isPureDropdown = getInputType(attr) === 1 || getInputType(attr) === 4;
+
+    const value: ShopeeAttributeValue =
+      firstValue?.value_id !== undefined
         ? { value_id: firstValue.value_id }
-        : { original_value_name: firstValue?.name ?? "Padrão" };
-      return { attribute_id: attr.attribute_id, attribute_value_list: [value] };
-    });
+        : isPureDropdown
+          ? // Dropdown puro sem nenhum valor descoberto — não existe texto
+            // livre "seguro" pra inventar aqui (diferente de combo
+            // box/texto livre). Manda 0 mesmo assim: se a Shopee recusar,
+            // ao menos aponta esse atributo específico em vez de mascarar.
+            { value_id: 0 }
+          : { value_id: 0, original_value_name: firstValue?.name ?? "Padrão" };
+
+    result.push({ attribute_id: attr.attribute_id, attribute_value_list: [value] });
+  }
+
+  return result;
 }
 
 export type ShopeeBrand = {
