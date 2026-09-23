@@ -336,7 +336,24 @@ function YouTubeVideoPlayer({
         videoId,
         height: "100%",
         width: "100%",
-        playerVars: { controls: 0, rel: 0, modestbranding: 1, playsinline: 1 },
+        // 23/09/2026: descoberto ao vivo (Jp reportou aula travando no meio
+        // e "reiniciando toda hora" durante a reprodução) — a posição
+        // retomada só era aplicada via `seekTo()` DEPOIS do player ficar
+        // pronto, nunca no embed em si. Em conexão instável ou celular (o
+        // navegador pode descartar/recarregar o iframe do YouTube por
+        // pressão de memória — comum em mobile ao trocar de app ou apagar a
+        // tela com um vídeo longo tocando), o iframe volta do zero porque o
+        // embed original nunca sabia que devia começar em outro ponto.
+        // Passar `start` direto no embed cobre esse caso: mesmo que o
+        // iframe seja recriado por fora do nosso controle, ele nasce já
+        // perto de onde a pessoa parou.
+        playerVars: {
+          controls: 0,
+          rel: 0,
+          modestbranding: 1,
+          playsinline: 1,
+          ...(initialSeconds > 1 ? { start: Math.floor(initialSeconds) } : {}),
+        },
         events: {
           onReady: () => {
             if (cancelled) return;
@@ -348,7 +365,7 @@ function YouTubeVideoPlayer({
             }
             // Só começa a sondar getCurrentTime/getDuration depois que o
             // player sinaliza que está pronto — chamar esses métodos antes
-            // do onReady (ex.: logo após \`new YT.Player(...)\`, enquanto o
+            // do onReady (ex.: logo após `new YT.Player(...)`, enquanto o
             // iframe interno ainda está carregando) lança
             // "getCurrentTime is not a function", porque o objeto do player
             // só ganha os métodos reais quando a comunicação com o iframe é
@@ -357,15 +374,28 @@ function YouTubeVideoPlayer({
             pollId = window.setInterval(() => {
               const active = playerRef.current;
               if (!active) return;
-              const time = active.getCurrentTime();
-              const totalNow = active.getDuration() || 0;
-              setCurrent(time);
-              currentTimeRef.current = time;
-              if (totalNow) setDuration(totalNow);
-              const now = Date.now();
-              if (now - lastReportRef.current > 4000) {
-                lastReportRef.current = now;
-                onProgressRef.current(time, totalNow);
+              // 23/09/2026: se o canal postMessage com o iframe quebrar (ex.:
+              // iframe recarregado/descartado pelo navegador por fora do
+              // nosso controle), getCurrentTime/getDuration podem lançar em
+              // vez de só devolver 0 — sem o try/catch isso derrubava o
+              // intervalo inteiro (erro não tratado dentro de setInterval
+              // simplesmente para de rodar silenciosamente), então nem o
+              // progresso nem a UI eram atualizados de novo até trocar de
+              // aula. Com o catch, ignora esse ciclo e tenta de novo no
+              // próximo tick.
+              try {
+                const time = active.getCurrentTime();
+                const totalNow = active.getDuration() || 0;
+                setCurrent(time);
+                currentTimeRef.current = time;
+                if (totalNow) setDuration(totalNow);
+                const now = Date.now();
+                if (now - lastReportRef.current > 4000) {
+                  lastReportRef.current = now;
+                  onProgressRef.current(time, totalNow);
+                }
+              } catch {
+                // Ignora este ciclo — próximo tick tenta de novo.
               }
             }, 500);
           },
@@ -380,6 +410,16 @@ function YouTubeVideoPlayer({
               setPlaying(false);
               onEndedRef.current();
             }
+          },
+          // 23/09/2026: antes não existia — um erro real do player (rede,
+          // restrição de embed, etc.) deixava a tela "congelada" (nosso
+          // estado `playing` continuava true porque só mudamos ele em
+          // PLAYING/PAUSED/ENDED) sem nenhum sinal do que aconteceu. Loga
+          // pra investigar casos futuros; não tenta adivinhar uma recuperação
+          // automática pra não mascarar erro real de rede.
+          onError: (event: { data: number }) => {
+            if (cancelled) return;
+            console.warn("[VideoPlayer] erro do YouTube IFrame API:", event.data);
           },
         },
       });
