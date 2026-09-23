@@ -15,10 +15,49 @@
 export type ShopeeCategoryOption = { id: number; name: string; path: string };
 
 const STOPWORDS = new Set([
-  "de", "da", "do", "das", "dos", "e", "com", "para", "pra", "em", "no", "na",
-  "nos", "nas", "um", "uma", "uns", "umas", "o", "a", "os", "as", "por", "sem",
-  "mais", "menos", "ate", "ou", "que", "se", "ao", "aos", "the", "and", "for",
-  "com", "novo", "nova", "kit", "unidade", "unidades", "cor", "cores",
+  "de",
+  "da",
+  "do",
+  "das",
+  "dos",
+  "e",
+  "com",
+  "para",
+  "pra",
+  "em",
+  "no",
+  "na",
+  "nos",
+  "nas",
+  "um",
+  "uma",
+  "uns",
+  "umas",
+  "o",
+  "a",
+  "os",
+  "as",
+  "por",
+  "sem",
+  "mais",
+  "menos",
+  "ate",
+  "ou",
+  "que",
+  "se",
+  "ao",
+  "aos",
+  "the",
+  "and",
+  "for",
+  "com",
+  "novo",
+  "nova",
+  "kit",
+  "unidade",
+  "unidades",
+  "cor",
+  "cores",
 ]);
 
 function normalize(text: string): string {
@@ -65,6 +104,42 @@ function wordSet(text: string): Set<string> {
   );
 }
 
+// 23/09/2026: descoberto ao vivo, DEPOIS do stem() acima já estar no ar —
+// mesmo com singular/plural normalizado, o microfone continuava caindo em
+// "Adaptadores sem Fio e Placas de Rede". Causa: toda palavra do título
+// valia os mesmos +2 pontos, então uma palavra genérica que aparece em
+// dezenas de categorias (ex.: "fio", que casa com Fio Dental, Telefones com
+// Fio, Telefones sem Fio, Adaptadores sem Fio...) empatava com a palavra
+// realmente específica do produto (ex.: "microfone", que só existe em
+// "Áudio / Microfones"). No empate, `pickBestCategory` mantém a primeira
+// categoria encontrada — ou seja, quem decidia era a ORDEM da lista da
+// Shopee, não a relevância. buildDocFreq + idfWeight pesa cada palavra pela
+// raridade dela no conjunto de categorias (igual TF-IDF): "microfone"
+// aparece numa categoria só (peso alto), "fio" aparece em ~5 (peso baixo).
+// Isso faz a palavra específica do produto valer muito mais que uma palavra
+// genérica coincidente, sem precisar de dicionário manual por produto.
+function buildDocFreq(categories: ShopeeCategoryOption[]): {
+  docFreq: Map<string, number>;
+  pathWordsById: Map<number, Set<string>>;
+} {
+  const docFreq = new Map<string, number>();
+  const pathWordsById = new Map<number, Set<string>>();
+  for (const candidate of categories) {
+    const words = wordSet(candidate.path);
+    pathWordsById.set(candidate.id, words);
+    for (const w of words) docFreq.set(w, (docFreq.get(w) ?? 0) + 1);
+  }
+  return { docFreq, pathWordsById };
+}
+
+function idfWeight(word: string, docFreq: Map<string, number>, totalCategories: number): number {
+  const freq = docFreq.get(word) ?? 0;
+  // +1 em cima e embaixo evita log(0)/divisão por zero; o "+1" final garante
+  // peso mínimo 1 mesmo pra palavra presente em toda categoria (nunca chega
+  // a zerar o placar de uma palavra que efetivamente bateu).
+  return Math.log((totalCategories + 1) / (freq + 1)) + 1;
+}
+
 // Termos extras por nicho do catálogo C7Drop pra reforçar o casamento — só
 // entram nichos onde vale a pena (nichos que já são "curadoria" tipo
 // "Produtos diversos", "Mais vendidos", "Promoções do Mês", "Outros" e
@@ -72,9 +147,11 @@ function wordSet(text: string): Set<string> {
 // então usar só o título do produto dá resultado mais confiável do que
 // forçar um sinônimo genérico.
 const NICHE_HINTS: Record<string, string> = {
-  "Casa e Utensílios Domésticos": "casa utensilios domesticos cozinha organizador organizacao limpeza utilidades lar decoracao",
+  "Casa e Utensílios Domésticos":
+    "casa utensilios domesticos cozinha organizador organizacao limpeza utilidades lar decoracao",
   Brinquedos: "brinquedo brinquedos infantil crianca boneca pelucia bebe",
-  Informática: "informatica computador notebook pc periferico teclado mouse acessorios de informatica",
+  Informática:
+    "informatica computador notebook pc periferico teclado mouse acessorios de informatica",
   Ferramentas: "ferramenta ferramentas furadeira parafusadeira chave bricolagem oficina construcao",
   "Beleza e Cuidado Pessoal": "beleza cuidado pessoal cosmetico skincare cabelo pele higiene",
   Câmeras: "camera cameras fotografia filmadora seguranca vigilancia",
@@ -123,14 +200,18 @@ export function pickBestCategory(
     : (NICHE_HINTS[product.category] ?? product.category);
   const hintWords = wordSet(nicheHint);
 
+  const { docFreq, pathWordsById } = buildDocFreq(categories);
+
   let best: ShopeeCategoryOption | null = null;
   let bestScore = 0;
 
   for (const candidate of categories) {
-    const pathWords = wordSet(candidate.path);
+    const pathWords = pathWordsById.get(candidate.id) ?? wordSet(candidate.path);
     let score = 0;
-    for (const w of titleWords) if (pathWords.has(w)) score += 2;
-    for (const w of hintWords) if (pathWords.has(w)) score += 1;
+    for (const w of titleWords)
+      if (pathWords.has(w)) score += 2 * idfWeight(w, docFreq, categories.length);
+    for (const w of hintWords)
+      if (pathWords.has(w)) score += 1 * idfWeight(w, docFreq, categories.length);
 
     if (score > bestScore) {
       bestScore = score;
