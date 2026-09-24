@@ -104,6 +104,43 @@ function wordSet(text: string): Set<string> {
   );
 }
 
+// 23/09/2026: descoberto ao vivo — "Luminária Mesa Abajur Articulável
+// Escritório Com Ventilador" (uma luminária de mesa com um ventilador
+// integrado, nicho "Iluminação" no catálogo) caiu em "Eletrodomésticos
+// Grandes / Resfriamento / Ventiladores" (categoria de ventilador de
+// verdade). Causa: TODA palavra do título valia o mesmo peso (2x), então a
+// palavra secundária "ventilador" (uma feature do produto, não o produto em
+// si) pesou igual à palavra que de fato descreve o produto ("luminária"),
+// e por acaso ainda casou com "mesa" também presente no nome da categoria de
+// ventilador ("Ventilador de Mesa"). Isso é grave além de ser só categoria
+// errada: essa categoria de eletrodoméstico regulado exige homologação
+// ANATEL, que o produto não tem e não pode ser preenchida automaticamente —
+// então a publicação trava sem necessidade nenhuma.
+// Fix: dar peso cheio só pras primeiras palavras significativas do título
+// (onde normalmente mora a IDENTIDADE do produto: "Luminária Mesa Abajur"),
+// e peso reduzido pra palavras que aparecem depois (geralmente describem
+// uma feature secundária: "...Com Ventilador"). Não muda em nada os casos
+// já corrigidos antes (adaptador/microfone), onde a palavra certa já vinha
+// logo no início do título.
+const FULL_WEIGHT_TITLE_WORDS = 3;
+const SECONDARY_WORD_WEIGHT_FACTOR = 0.5;
+
+function titleWordWeights(title: string): Map<string, number> {
+  const words = normalize(title)
+    .split(" ")
+    .filter((w) => w.length > 2 && !STOPWORDS.has(w))
+    .map(stem);
+  const weights = new Map<string, number>();
+  let significantIndex = 0;
+  for (const w of words) {
+    const weight = significantIndex < FULL_WEIGHT_TITLE_WORDS ? 1 : SECONDARY_WORD_WEIGHT_FACTOR;
+    // Se a palavra repete mais adiante, mantém o maior peso já visto.
+    weights.set(w, Math.max(weights.get(w) ?? 0, weight));
+    significantIndex += 1;
+  }
+  return weights;
+}
+
 // 23/09/2026: descoberto ao vivo, DEPOIS do stem() acima já estar no ar —
 // mesmo com singular/plural normalizado, o microfone continuava caindo em
 // "Adaptadores sem Fio e Placas de Rede". Causa: toda palavra do título
@@ -185,16 +222,18 @@ const CURATION_NICHES = new Set([
 
 // Escolhe a categoria-folha da Shopee com mais palavras em comum com o
 // produto. Palavras vindas do TÍTULO valem o dobro de palavras vindas do
-// nicho (o título descreve o produto de verdade; o nicho é só uma pista).
-// Se nada bater (score 0 em toda a lista), devolve null — quem chama decide
-// o fallback.
+// nicho (o título descreve o produto de verdade; o nicho é só uma pista) —
+// e dentro do título, as primeiras palavras (a identidade do produto) valem
+// mais que as últimas (geralmente uma feature secundária, ver
+// titleWordWeights()). Se nada bater (score 0 em toda a lista), devolve
+// null — quem chama decide o fallback.
 export function pickBestCategory(
   product: { title: string; category: string },
   categories: ShopeeCategoryOption[],
 ): ShopeeCategoryOption | null {
   if (categories.length === 0) return null;
 
-  const titleWords = wordSet(product.title);
+  const titleWeights = titleWordWeights(product.title);
   const nicheHint = CURATION_NICHES.has(product.category)
     ? ""
     : (NICHE_HINTS[product.category] ?? product.category);
@@ -208,8 +247,8 @@ export function pickBestCategory(
   for (const candidate of categories) {
     const pathWords = pathWordsById.get(candidate.id) ?? wordSet(candidate.path);
     let score = 0;
-    for (const w of titleWords)
-      if (pathWords.has(w)) score += 2 * idfWeight(w, docFreq, categories.length);
+    for (const [w, weight] of titleWeights)
+      if (pathWords.has(w)) score += 2 * weight * idfWeight(w, docFreq, categories.length);
     for (const w of hintWords)
       if (pathWords.has(w)) score += 1 * idfWeight(w, docFreq, categories.length);
 
