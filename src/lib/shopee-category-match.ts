@@ -220,13 +220,39 @@ const CURATION_NICHES = new Set([
   "Copa do Mundo",
 ]);
 
+// 23/09/2026: descoberto ao vivo, DEPOIS do fix de peso posicional acima já
+// estar no ar — a "Luminária Mesa Abajur Articulável Escritório Com
+// Ventilador" parou de cair na categoria perigosa de eletrodoméstico
+// (Ventiladores), mas passou a cair em "Peças e Acessórios para Veículos /
+// Peças de Reposição para Automóveis / Iluminação / Lâmpadas" — categoria de
+// lâmpada automotiva, não de luminária de casa/escritório. Causa: nem
+// "iluminação" nem "lâmpada" aparecem literalmente no título (só no HINT do
+// nicho "Iluminação"), então tanto essa categoria automotiva quanto uma
+// eventual categoria de iluminação doméstica batem exatamente as MESMAS 2
+// palavras de hint — empate. No empate, a função ficava com a primeira
+// categoria encontrada na lista da própria Shopee: quem decidia era a ORDEM
+// da API, não a relevância pro produto.
+// Fix: além de somar pontos pelas palavras que BATEM, agora também SUBTRAI
+// pontos pelas palavras do CAMINHO que sobram sem explicação nenhuma (nem no
+// título, nem no hint do nicho) — ponderado pela mesma raridade (idf) já
+// usada acima. "Veículos" e "Automóveis" são palavras específicas (aparecem
+// numa fatia pequena da árvore de categorias) que não têm nenhuma relação
+// com uma luminária de mesa, então custam caro; "Casa" ou "Decoração", por
+// exemplo, são genéricas (aparecem em muitas categorias) e quase não pesam.
+// Isso desempata a favor da categoria cujo caminho INTEIRO é mais bem
+// explicado pelo produto, sem precisar de lista manual de categorias
+// proibidas por nicho.
+const UNEXPLAINED_PATH_WORD_PENALTY = 0.5;
+
 // Escolhe a categoria-folha da Shopee com mais palavras em comum com o
 // produto. Palavras vindas do TÍTULO valem o dobro de palavras vindas do
 // nicho (o título descreve o produto de verdade; o nicho é só uma pista) —
 // e dentro do título, as primeiras palavras (a identidade do produto) valem
 // mais que as últimas (geralmente uma feature secundária, ver
-// titleWordWeights()). Se nada bater (score 0 em toda a lista), devolve
-// null — quem chama decide o fallback.
+// titleWordWeights()). Palavras do caminho da categoria que não batem com
+// nada do produto pesam contra (ver UNEXPLAINED_PATH_WORD_PENALTY acima). Se
+// nada bater (score 0 em toda a lista), devolve null — quem chama decide o
+// fallback.
 export function pickBestCategory(
   product: { title: string; category: string },
   categories: ShopeeCategoryOption[],
@@ -251,6 +277,9 @@ export function pickBestCategory(
       if (pathWords.has(w)) score += 2 * weight * idfWeight(w, docFreq, categories.length);
     for (const w of hintWords)
       if (pathWords.has(w)) score += 1 * idfWeight(w, docFreq, categories.length);
+    for (const w of pathWords)
+      if (!titleWeights.has(w) && !hintWords.has(w))
+        score -= UNEXPLAINED_PATH_WORD_PENALTY * idfWeight(w, docFreq, categories.length);
 
     if (score > bestScore) {
       bestScore = score;
