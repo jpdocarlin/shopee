@@ -192,7 +192,15 @@ const NICHE_HINTS: Record<string, string> = {
   Ferramentas: "ferramenta ferramentas furadeira parafusadeira chave bricolagem oficina construcao",
   "Beleza e Cuidado Pessoal": "beleza cuidado pessoal cosmetico skincare cabelo pele higiene",
   Câmeras: "camera cameras fotografia filmadora seguranca vigilancia",
-  Iluminação: "iluminacao luminaria lampada luz led",
+  // 23/09/2026: só "iluminacao luminaria lampada luz led" empatava produto de
+  // luminária de casa/escritório com categoria de LÂMPADA AUTOMOTIVA (as duas
+  // têm "iluminação"/"lâmpada" no caminho) — ver UNEXPLAINED_PATH_WORD_PENALTY
+  // abaixo. Reforçado com os tipos de luminária doméstica mais comuns na
+  // Shopee (abajur, arandela, plafon, pendente, spot, trilho) + palavras de
+  // cômodo (quarto, sala, teto, parede) pra puxar o placar pra categoria de
+  // casa/decoração quando ela existir, sem tirar nada do que já funcionava.
+  Iluminação:
+    "iluminacao luminaria lampada luz led abajur arandela plafon pendente spot trilho teto parede quarto sala decoracao",
   "Caixas de Som": "caixa de som alto falante speaker audio bluetooth",
   "Relogios e Smartwatchs": "relogio relogios smartwatch pulseira inteligente",
   Papelaria: "papelaria caderno caneta escolar escritorio",
@@ -242,7 +250,14 @@ const CURATION_NICHES = new Set([
 // Isso desempata a favor da categoria cujo caminho INTEIRO é mais bem
 // explicado pelo produto, sem precisar de lista manual de categorias
 // proibidas por nicho.
-const UNEXPLAINED_PATH_WORD_PENALTY = 0.5;
+// 23/09/2026: 0.5 não bastou pro caso real (automotivo ainda venceu, porque
+// "peças"/"acessórios" são palavras usadas em MUITAS seções da Shopee além de
+// veículos — carro, celular, informática etc. — então o idf delas é baixo e a
+// penalidade saiu fraca). Subido pra 1.2: ainda deixa passar palavras de
+// caminho realmente genéricas (idf baixo => penalidade baixa mesmo com fator
+// maior), mas penaliza de verdade uma palavra específica sem nenhuma relação
+// com o produto quando ela aparece.
+const UNEXPLAINED_PATH_WORD_PENALTY = 1.2;
 
 // Escolhe a categoria-folha da Shopee com mais palavras em comum com o
 // produto. Palavras vindas do TÍTULO valem o dobro de palavras vindas do
