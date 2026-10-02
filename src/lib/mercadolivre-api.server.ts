@@ -210,23 +210,119 @@ export type MercadoLivreCategoryPrediction = {
 // real deles. Pega só o primeiro resultado (o de maior confiança); sem
 // nenhum resultado, devolve null (mesma filosofia da Shopee: sem categoria
 // confiável identificada, não publica, não deixa a pessoa escolher na mão).
+//
+// 02/10/2026 — auditoria em 236 produtos do catálogo mostrou que pegar só o
+// 1º palpite do preditor com o título cru dava ~17% SEM categoria (títulos
+// cheios de código de modelo/medidas, ex. "KA-9973 49mm") e ~5% em
+// categoria errada (ex. "adaptador isqueiro carro" → Isqueiros de Cozinha,
+// "pilha auditiva" → Aparelhos Auditivos). Agora:
+//   1. consulta o preditor com variações do título (cru, limpo de códigos e
+//      números, e só as primeiras palavras) e junta os candidatos;
+//   2. com mais de um candidato, a IA escolhe qual descreve o produto — só
+//      entre as opções que o próprio ML sugeriu, nunca inventa categoria;
+//   3. se a IA falhar, cai no 1º palpite (comportamento antigo).
+
+type DomainDiscoveryHit = {
+  category_id: string;
+  category_name: string;
+  domain_id?: string;
+  domain_name?: string;
+};
+
+/** Tira códigos de modelo, números/medidas e símbolos — o que confunde o preditor. */
+export function cleanTitleForPrediction(title: string): string {
+  return title
+    .replace(/\b[A-Za-z]{1,4}-?\d[\w-]*\b/g, " ")
+    .replace(/\b\d+[\w.,/]*\b/g, " ")
+    .replace(/[^\p{L}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+const categoryPathCache = new Map<string, string>();
+
+async function getCategoryPath(accessToken: string, categoryId: string): Promise<string> {
+  const cached = categoryPathCache.get(categoryId);
+  if (cached) return cached;
+  try {
+    const json = await callMercadoLivreApi<{ path_from_root?: Array<{ name: string }> }>(
+      `/categories/${categoryId}`,
+      { accessToken },
+    );
+    const path = (json.path_from_root ?? []).map((p) => p.name).join(" > ");
+    if (path) categoryPathCache.set(categoryId, path);
+    return path;
+  } catch {
+    return "";
+  }
+}
+
 export async function predictCategory(
   accessToken: string,
   title: string,
 ): Promise<MercadoLivreCategoryPrediction | null> {
-  const json = await callMercadoLivreApi<
-    Array<{ category_id: string; category_name: string; domain_id?: string; domain_name?: string }>
-  >(`/sites/${SITE_ID}/domain_discovery/search`, {
-    accessToken,
-    query: { q: title, limit: 1 },
-  });
-  const top = json[0];
-  if (!top) return null;
+  const cleaned = cleanTitleForPrediction(title);
+  const words = cleaned.split(" ").filter(Boolean);
+  const queries = [
+    ...new Set([title.trim(), cleaned, words.slice(0, 5).join(" "), words.slice(0, 3).join(" ")]),
+  ].filter((q) => q.length >= 3);
+
+  const candidates: DomainDiscoveryHit[] = [];
+  const seen = new Set<string>();
+  for (const q of queries) {
+    let hits: DomainDiscoveryHit[] = [];
+    try {
+      hits = await callMercadoLivreApi<DomainDiscoveryHit[]>(
+        `/sites/${SITE_ID}/domain_discovery/search`,
+        { accessToken, query: { q, limit: 4 } },
+      );
+    } catch {
+      continue;
+    }
+    for (const h of hits) {
+      if (!seen.has(h.category_id)) {
+        seen.add(h.category_id);
+        candidates.push(h);
+      }
+    }
+    // As variações curtas só servem pra quando as completas não acharam nada
+    // — não precisa poluir a lista se já tem candidato bom.
+    if (candidates.length >= 4 && q === cleaned) break;
+  }
+
+  if (candidates.length === 0) return null;
+
+  // A IA valida até quando só tem 1 candidato: o preditor às vezes devolve
+  // uma única opção absurda (ex. "pilha auditiva" → só "Aparelhos
+  // Auditivos"). Nesse caso é melhor não publicar do que publicar errado.
+  const paths = await Promise.all(
+    candidates.map((c) => getCategoryPath(accessToken, c.category_id)),
+  );
+  let chosenIdx = 0;
+  try {
+    const { chooseCategoryWithAI } = await import("@/lib/gemini-text.server");
+    const idx = await chooseCategoryWithAI(
+      title,
+      candidates.map((c, i) => paths[i] || c.category_name),
+    );
+    if (idx === -1) {
+      console.warn("[ML categoria] nenhuma candidata serve pra:", title);
+      return null;
+    }
+    chosenIdx = idx;
+  } catch (err) {
+    // IA fora do ar / cota estourada: mantém o comportamento antigo (1º palpite).
+    console.error("[ML categoria] escolha por IA falhou, usando 1º palpite:", err);
+  }
+  const chosen = candidates[chosenIdx];
+  // Mostra o caminho (2 últimos níveis) pra pessoa conferir a categoria na tela.
+  const shortPath = (paths[chosenIdx] || "").split(" > ").slice(-2).join(" › ");
+
   return {
-    categoryId: top.category_id,
-    categoryName: top.category_name,
-    domainId: top.domain_id ?? null,
-    domainName: top.domain_name ?? null,
+    categoryId: chosen.category_id,
+    categoryName: shortPath || chosen.category_name,
+    domainId: chosen.domain_id ?? null,
+    domainName: chosen.domain_name ?? null,
   };
 }
 
@@ -292,8 +388,16 @@ export type PublishMercadoLivreProductInput = {
 export async function publishProduct(
   input: PublishMercadoLivreProductInput,
 ): Promise<{ itemId: string; permalink: string | null }> {
-  const { accessToken, categoryId, itemName, description, priceReais, stock, imageUrls, attributeList } =
-    input;
+  const {
+    accessToken,
+    categoryId,
+    itemName,
+    description,
+    priceReais,
+    stock,
+    imageUrls,
+    attributeList,
+  } = input;
 
   const body = {
     // Contas já migradas pro modelo "User Products" (Preço por Variação —

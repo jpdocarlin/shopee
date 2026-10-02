@@ -224,6 +224,41 @@ async function callGemini(
   return text;
 }
 
+// ---------------------------------------------------------------------------
+// Escolha de categoria (Mercado Livre)
+// ---------------------------------------------------------------------------
+
+/**
+ * Escolhe, entre categorias candidatas que o PRÓPRIO Mercado Livre sugeriu,
+ * a que realmente descreve o produto. A IA não inventa categoria: só aponta
+ * o número de uma opção da lista (ou 0 se nenhuma serve). Devolve o índice
+ * (0-based) escolhido, ou -1 quando a IA diz que nenhuma serve. Lança erro
+ * se a resposta vier ilegível (quem chama decide o fallback).
+ */
+export async function chooseCategoryWithAI(
+  productTitle: string,
+  options: string[],
+): Promise<number> {
+  const prompt = [
+    "Você classifica produtos no Mercado Livre Brasil.",
+    `PRODUTO: "${productTitle}"`,
+    "",
+    "Categorias possíveis (caminho completo):",
+    ...options.map((o, i) => `${i + 1}. ${o}`),
+    "",
+    "Qual categoria descreve O QUE O PRODUTO É (não onde ele é usado nem um acessório dele)?",
+    "Ex.: 'carregador veicular' é carregador, não carro; 'pilha para aparelho auditivo' é pilha,",
+    "não aparelho auditivo; 'enfeite de natal em forma de quebra-nozes' é enfeite, não utensílio.",
+    "Responda SOMENTE com o número da opção. Se nenhuma servir, responda 0.",
+  ].join("\n");
+  const text = await callGemini(prompt, 1, (raw) => raw.trim());
+  const n = Number.parseInt(text.match(/\d+/)?.[0] ?? "", 10);
+  if (!Number.isFinite(n) || n > options.length) {
+    throw new Error(`Resposta da IA fora do esperado: ${text.slice(0, 80)}`);
+  }
+  return n - 1; // 0 ("nenhuma") vira -1
+}
+
 export async function generateProductStory(input: ProductStoryInput): Promise<{ story: string }> {
   return { story: await callGemini(buildPrompt(input), 3) };
 }
