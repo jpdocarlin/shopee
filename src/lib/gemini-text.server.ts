@@ -309,7 +309,56 @@ const TITLE_LIMIT: Record<ListingInput["marketplace"], number> = {
   "mercado-livre": 60,
 };
 
-function buildListingPrompt(input: ListingInput): string {
+// Ângulos de título sorteados a cada geração. Vários lojistas revendem o
+// MESMO produto do catálogo do fornecedor — se todos publicarem o título de
+// origem (ou um título quase igual), a Shopee trata como anúncio duplicado.
+// Sortear um ângulo diferente por chamada espalha os títulos entre usuários.
+const TITLE_ANGLES = [
+  "comece pelo nome do produto e destaque o principal USO do dia a dia",
+  "comece pelo nome do produto e destaque MATERIAL e ACABAMENTO",
+  "comece pelo nome do produto e destaque TAMANHO, MEDIDAS ou QUANTIDADE",
+  "comece pelo nome do produto e destaque PARA QUEM é ou ONDE usar (casa, cozinha, escritório, carro...)",
+  "comece pelo nome do produto usando um SINÔNIMO comum de busca e destaque a principal vantagem",
+  "comece pelo nome do produto e destaque COR, MODELO ou ESTILO",
+  "comece pelo nome do produto e destaque PRATICIDADE e FACILIDADE de uso",
+  "comece pelo nome do produto e destaque o KIT ou CONJUNTO (o que vem junto)",
+];
+
+/** Normaliza pra comparar títulos: minúsculo, sem acento, só letras/números. */
+function normalizeTitle(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+/**
+ * Quão parecido o título gerado está do título de origem (0 a 1), pela ordem
+ * das palavras: 1 = mesma sequência de palavras. Usa a maior subsequência
+ * comum de palavras, então trocar só uma palavra no fim ainda dá nota alta.
+ */
+export function titleSimilarity(a: string, b: string): number {
+  const wa = normalizeTitle(a).split(" ").filter(Boolean);
+  const wb = normalizeTitle(b).split(" ").filter(Boolean);
+  if (!wa.length || !wb.length) return 0;
+  const dp: number[][] = Array.from({ length: wa.length + 1 }, () =>
+    new Array<number>(wb.length + 1).fill(0),
+  );
+  for (let i = 1; i <= wa.length; i++) {
+    for (let j = 1; j <= wb.length; j++) {
+      dp[i][j] =
+        wa[i - 1] === wb[j - 1] ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);
+    }
+  }
+  return dp[wa.length][wb.length] / Math.max(wa.length, wb.length);
+}
+
+/** Acima disso o título é considerado "cópia" do título do fornecedor. */
+const MAX_TITLE_SIMILARITY = 0.6;
+
+function buildListingPrompt(input: ListingInput, angle: string, strict: boolean): string {
   const { productTitle, category, marketplace, variant } = input;
   const limit = TITLE_LIMIT[marketplace];
   const marketplaceLabel = marketplace === "shopee" ? "Shopee" : "Mercado Livre";
@@ -335,6 +384,13 @@ function buildListingPrompt(input: ListingInput): string {
     "- Sem CAPS LOCK, sem emoji, sem “frete grátis”, sem “promoção”, sem “imperdível”, sem preço,",
     "  sem nome de loja, sem caractere especial tipo estrela ou check.",
     "- Não repita a mesma palavra várias vezes só pra encher.",
+    "- OBRIGATÓRIO: o título tem que ser DIFERENTE do título de origem. Outros vendedores já",
+    "  publicaram esse produto com o título de origem e a plataforma bloqueia anúncio duplicado.",
+    "  Reescreva com outras palavras e outra ordem — não copie a sequência de palavras da origem.",
+    `- Ângulo deste título: ${angle}.`,
+    strict
+      ? "- ATENÇÃO: a tentativa anterior ficou parecida demais com a origem. Troque a ordem, use sinônimos e outros atributos."
+      : "",
     "",
     "REGRAS DA DESCRIÇÃO:",
     "- Em português do Brasil, fácil de escanear, entre 120 e 220 palavras.",
@@ -376,14 +432,11 @@ function cleanListing(raw: string): string {
     .trim();
 }
 
-export async function generateListing(input: ListingInput): Promise<ListingResult> {
-  const text = await callGemini(buildListingPrompt(input), 4, cleanListing);
-
+function parseListing(text: string, limit: number): ListingResult {
   const titleMatch = text.match(/TITULO:\s*(.+)/i);
   const keywordsMatch = text.match(/PALAVRAS-CHAVE:\s*(.+)/i);
   const descriptionMatch = text.match(/DESCRICAO:\s*([\s\S]*?)(?=\nPALAVRAS-CHAVE:|$)/i);
 
-  const limit = TITLE_LIMIT[input.marketplace];
   const title = (titleMatch?.[1] ?? "").trim().slice(0, limit);
   const description = (descriptionMatch?.[1] ?? "").trim();
   const keywords = (keywordsMatch?.[1] ?? "")
@@ -395,6 +448,36 @@ export async function generateListing(input: ListingInput): Promise<ListingResul
     console.error("[Gemini anúncio] resposta fora do formato:", text.slice(0, 600));
     throw new Error("A IA não devolveu o anúncio no formato esperado.");
   }
-
   return { title, description, keywords };
+}
+
+export async function generateListing(input: ListingInput): Promise<ListingResult> {
+  const limit = TITLE_LIMIT[input.marketplace];
+  const pickAngle = () => TITLE_ANGLES[Math.floor(Math.random() * TITLE_ANGLES.length)];
+
+  // 1ª tentativa normal; se o título sair parecido demais com o do
+  // fornecedor, tenta de novo com instrução mais dura e outro ângulo.
+  let result = parseListing(
+    await callGemini(buildListingPrompt(input, pickAngle(), false), 4, cleanListing),
+    limit,
+  );
+  for (let retry = 0; retry < 2; retry++) {
+    if (titleSimilarity(result.title, input.productTitle) <= MAX_TITLE_SIMILARITY) break;
+    console.warn(
+      `[Gemini anúncio] título parecido demais com a origem (tentativa ${retry + 1}), gerando de novo`,
+    );
+    result = parseListing(
+      await callGemini(buildListingPrompt(input, pickAngle(), true), 4, cleanListing),
+      limit,
+    );
+  }
+
+  // Última garantia: nunca devolve o título idêntico ao do fornecedor.
+  if (normalizeTitle(result.title) === normalizeTitle(input.productTitle)) {
+    throw new Error(
+      "A IA repetiu o título do fornecedor. Clique em gerar de novo ou edite o título manualmente.",
+    );
+  }
+
+  return result;
 }

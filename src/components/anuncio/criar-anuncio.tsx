@@ -115,11 +115,18 @@ function CopyField({
   value,
   rows,
   hint,
+  onChange,
+  maxLength,
+  error,
 }: {
   label: string;
   value: string;
   rows: number;
   hint?: string;
+  /** Quando passado, o campo vira editável (o usuário pode apagar e reescrever). */
+  onChange?: (value: string) => void;
+  maxLength?: number;
+  error?: string | null;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -152,14 +159,39 @@ function CopyField({
         </div>
       </div>
       <Textarea
-        readOnly
+        readOnly={!onChange}
         value={value}
         rows={rows}
-        className="text-[12.5px] leading-relaxed"
-        onFocus={(e) => e.currentTarget.select()}
+        maxLength={maxLength}
+        onChange={onChange ? (e) => onChange(e.target.value) : undefined}
+        className={`text-[12.5px] leading-relaxed ${error ? "border-destructive focus-visible:ring-destructive/40" : ""}`}
+        onFocus={onChange ? undefined : (e) => e.currentTarget.select()}
       />
+      {error && <p className="mt-1.5 text-[11.5px] text-destructive">{error}</p>}
     </div>
   );
+}
+
+/** Minúsculo, sem acento, só letras/números — pra comparar títulos. */
+function normalizeTitle(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+/**
+ * Título igual ao do fornecedor = anúncio duplicado na Shopee (vários
+ * lojistas revendem o mesmo produto). Bloqueia a publicação nesse caso.
+ */
+function duplicateTitleError(title: string, supplierTitle: string): string | null {
+  if (!title.trim()) return "O título não pode ficar vazio.";
+  if (normalizeTitle(title) === normalizeTitle(supplierTitle)) {
+    return "Esse é o título do fornecedor — a Shopee bloqueia como anúncio duplicado. Mude o título.";
+  }
+  return null;
 }
 
 // Linha compacta de campo pra copiar de uma vez, usada no passo de publicar.
@@ -428,6 +460,11 @@ export function CriarAnuncio() {
 
   const handlePublish = async () => {
     if (!selected || !listing) return;
+    const titleErr = duplicateTitleError(listing.title, selected.title);
+    if (titleErr) {
+      toast.error(titleErr);
+      return;
+    }
 
     // Abre a aba em branco JÁ, de forma síncrona, ainda dentro do clique do
     // usuário — navegadores só permitem `window.open` sem bloqueio de popup
@@ -483,6 +520,11 @@ export function CriarAnuncio() {
 
   const handlePublishViaApi = async () => {
     if (!selected || !listing || !selectedCategoryId || priceCents <= 0) return;
+    const titleErr = duplicateTitleError(listing.title, selected.title);
+    if (titleErr || !listing.description.trim()) {
+      setPublishApiError(titleErr ?? "A descrição não pode ficar vazia.");
+      return;
+    }
 
     const stock = Number.parseInt(stockInput, 10);
     const weight = Number.parseFloat(weightInput.replace(",", "."));
@@ -545,6 +587,11 @@ export function CriarAnuncio() {
 
   const handlePublishViaMercadoLivre = async () => {
     if (!selected || !listing || !mlCategory || priceCents <= 0) return;
+    const titleErr = duplicateTitleError(listing.title, selected.title);
+    if (titleErr || !listing.description.trim()) {
+      setMlPublishError(titleErr ?? "A descrição não pode ficar vazia.");
+      return;
+    }
 
     const stock = Number.parseInt(stockInput, 10);
     if (!Number.isFinite(stock) || stock <= 0) {
@@ -795,13 +842,25 @@ export function CriarAnuncio() {
 
             {listing && (
               <div className="mt-4 space-y-4">
+                <p className="text-[11.5px] text-muted-foreground">
+                  Você pode editar o título e a descrição à vontade — apague e escreva o que quiser.
+                </p>
                 <CopyField
                   label="Título do anúncio"
                   value={listing.title}
                   rows={2}
+                  maxLength={selected.marketplace === "shopee" ? 120 : 60}
                   hint={`${listing.title.length}/${selected.marketplace === "shopee" ? 120 : 60} caracteres`}
+                  onChange={(title) => setListing((l) => (l ? { ...l, title } : l))}
+                  error={duplicateTitleError(listing.title, selected.title)}
                 />
-                <CopyField label="Descrição" value={listing.description} rows={12} />
+                <CopyField
+                  label="Descrição"
+                  value={listing.description}
+                  rows={12}
+                  onChange={(description) => setListing((l) => (l ? { ...l, description } : l))}
+                  error={listing.description.trim() ? null : "A descrição não pode ficar vazia."}
+                />
                 {listing.keywords.length > 0 && (
                   <div>
                     <div className="mb-1.5 flex items-center gap-1.5">
