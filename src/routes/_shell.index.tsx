@@ -82,15 +82,15 @@ const ONBOARDING_STEPS = [
   },
   {
     id: "product",
-    title: "Buscar seu primeiro produto",
-    description: "A gente já mostra os que vendem mais",
-    to: "/produtos",
+    title: "Criar seu primeiro anúncio",
+    description: "Escolha um produto do fornecedor e publique",
+    to: "/criar-anuncio",
   },
   {
     id: "content",
-    title: "Criar seu primeiro conteúdo com IA",
-    description: "Gerado pra você, sem precisar editar",
-    to: "/ia",
+    title: "Acompanhar seus pedidos",
+    description: "Quando vender, peça pro fornecedor por aqui",
+    to: "/pedidos",
   },
 ] as const;
 
@@ -292,7 +292,7 @@ function IndexPage() {
             </div>
 
             <Button asChild size="sm" className="shrink-0">
-              <Link to="/produtos">
+              <Link to="/criar-anuncio">
                 Continuar
                 <ArrowUpRight className="size-3.5" />
               </Link>
@@ -434,7 +434,7 @@ function IndexPage() {
               <p className="text-[14px] font-medium text-foreground">Top produtos por comissão</p>
             </div>
             <Button asChild size="sm" variant="ghost" className="h-7 gap-1 text-[12px]">
-              <Link to="/produtos">
+              <Link to="/criar-anuncio">
                 Ver todos
                 <ArrowUpRight className="size-3.5" />
               </Link>

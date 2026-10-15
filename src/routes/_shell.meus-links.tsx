@@ -254,11 +254,11 @@ function MeusLinksPage() {
         <EmptyState
           icon={Package2}
           title="Nenhum link de afiliado salvo ainda"
-          description='Vá em "Produtos", clique em "Afiliar" e cole o link gerado na Shopee — ele aparece aqui. Ou instale a extensão do Shoppfy pra isso acontecer sozinho.'
+          description="Os links que você salvar aparecem aqui. Você também pode adicionar um link manualmente."
           action={
             <div className="flex flex-wrap items-center justify-center gap-2">
               <Button asChild size="sm" variant="outline">
-                <Link to="/produtos">Ir pra Produtos</Link>
+                <Link to="/criar-anuncio">Ir pra Criar Anúncio</Link>
               </Button>
               <Button size="sm" className="gap-1.5" onClick={() => setAddModalOpen(true)}>
                 <Plus className="size-3.5" />

@@ -1,14 +1,8 @@
 import {
   LayoutDashboard,
-  Package,
-  Heart,
-  Sparkles,
   Plug,
   Settings,
-  Facebook,
   Link2,
-  Trophy,
-  Clapperboard,
   Store,
   Receipt,
   ShieldCheck,
@@ -48,30 +42,12 @@ export const navigation: NavGroup[] = [
         description: "Resumo de performance e ganhos",
         shortcut: "G D",
       },
-      {
-        label: "Ranking",
-        to: "/ranking",
-        icon: Trophy,
-        description: "Quem mais vende dentro do Shoppfy",
-      },
     ],
   },
   {
     id: "produtos",
     label: "Produtos",
     items: [
-      {
-        label: "Produtos",
-        to: "/produtos",
-        icon: Package,
-        description: "Base de produtos monitorados",
-      },
-      {
-        label: "Favoritos",
-        to: "/favoritos",
-        icon: Heart,
-        description: "Produtos salvos por você",
-      },
       {
         label: "Criar Anúncio",
         to: "/criar-anuncio",
@@ -92,12 +68,6 @@ export const navigation: NavGroup[] = [
     id: "divulgacao",
     label: "Divulgação",
     items: [
-      {
-        label: "Grupos de Divulgação",
-        to: "/grupos-divulgacao",
-        icon: Facebook,
-        description: "WhatsApp e Facebook por nicho + post pronto pra colar",
-      },
       {
         label: "Meus Links",
         to: "/meus-links",
@@ -130,19 +100,6 @@ export const navigation: NavGroup[] = [
     id: "sistema",
     label: "Sistema",
     items: [
-      {
-        label: "IA",
-        to: "/ia",
-        icon: Sparkles,
-        description: "Geração de conteúdo e insights",
-        badge: "Beta",
-      },
-      {
-        label: "Editor de Vídeo",
-        to: "/editor-video",
-        icon: Clapperboard,
-        description: "Corte e legende seu vídeo direto no navegador",
-      },
       {
         label: "Integrações",
         to: "/integracoes",
