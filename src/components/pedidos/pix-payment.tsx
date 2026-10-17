@@ -56,6 +56,12 @@ export function PixPayment({ amountCents }: { amountCents: number }) {
             Copiar código Pix
           </Button>
 
+          {activeKeyId === "principal" && !reservaKey && activeKey.note && (
+            <p className="flex items-start gap-1.5 text-[11px] text-muted-foreground">
+              <AlertTriangle className="mt-0.5 size-3 shrink-0 text-amber-500" />
+              {activeKey.note}
+            </p>
+          )}
           {activeKeyId === "principal" && reservaKey && (
             <button
               type="button"

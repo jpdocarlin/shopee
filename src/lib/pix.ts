@@ -24,18 +24,18 @@ export type PixKeyConfig = {
 const MERCHANT_NAME = "SHOPPFY";
 const MERCHANT_CITY = "SAO PAULO";
 
-// A chave reserva (CPF) tende a disparar o alerta de "possível golpe" em
-// alguns bancos — é um comportamento comum desse tipo de chave em apps
-// bancários, não indica problema real. Por isso só aparece se a pessoa
-// avisar que não conseguiu pagar com a principal.
+// 17/10/2026: a pedido do Jp, a chave principal passou a ser o CPF (conta
+// Inter) e a chave celular (Santander) saiu. Fica só uma chave — sem
+// "reserva". Alguns bancos mostram aviso de "possível golpe" pra chave CPF;
+// é comportamento do app do banco, não problema real, por isso o aviso
+// aparece logo abaixo do QR code.
 export const PIX_KEYS: PixKeyConfig[] = [
-  { id: "principal", label: "Chave Pix principal", type: "celular", key: "11994271574" },
   {
-    id: "reserva",
-    label: "Chave Pix reserva",
+    id: "principal",
+    label: "Chave Pix principal",
     type: "cpf",
     key: "52140528808",
-    note: "Alguns bancos mostram um aviso de possível fraude com essa chave — é normal, pode confirmar o pagamento.",
+    note: "Alguns bancos mostram um aviso de possível fraude com chave CPF — é normal, pode confirmar o pagamento.",
   },
 ];
 
