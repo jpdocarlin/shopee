@@ -29,3 +29,14 @@ export const createShopeeConnectState = createServerFn({ method: "POST" })
     const token = await createShopeeOAuthState(context.userId);
     return { token };
   });
+
+// Botão "Desconectar" em Integrações. Só apaga os tokens salvos da loja da
+// PRÓPRIA conta (userId vem do servidor) — não mexe em nada na Shopee nem
+// nos anúncios já publicados. Pra voltar a publicar, é só conectar de novo.
+export const disconnectShopee = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { invalidateShopeeConnection } = await import("@/lib/shopee-connection.server");
+    await invalidateShopeeConnection(context.userId);
+    return { ok: true as const };
+  });

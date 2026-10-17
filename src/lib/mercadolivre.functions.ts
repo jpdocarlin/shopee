@@ -25,3 +25,15 @@ export const createMercadoLivreConnectState = createServerFn({ method: "POST" })
     const token = await createMercadoLivreOAuthState(context.userId);
     return { token };
   });
+
+// Botão "Desconectar" em Integrações — mesmo comportamento do disconnectShopee:
+// apaga só os tokens salvos da própria conta, não mexe nos anúncios já
+// publicados no Mercado Livre.
+export const disconnectMercadoLivre = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { invalidateMercadoLivreConnection } =
+      await import("@/lib/mercadolivre-connection.server");
+    await invalidateMercadoLivreConnection(context.userId);
+    return { ok: true as const };
+  });

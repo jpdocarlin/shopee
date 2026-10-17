@@ -136,7 +136,7 @@ export async function getMercadoLivreConnection(
 // qualquer motivo, o refresh nunca mais funciona e a pessoa fica presa vendo
 // "conectada" sem conseguir publicar. Aplica a mesma correção preventiva
 // aqui, antes mesmo dessa integração ir ao ar, pra não repetir o mesmo bug.
-async function invalidateMercadoLivreConnection(userId: string): Promise<void> {
+export async function invalidateMercadoLivreConnection(userId: string): Promise<void> {
   const admin = getAdminClient();
   const marketplaceId = await getMercadoLivreMarketplaceId();
   const { error } = await admin
@@ -156,9 +156,7 @@ export async function getValidMercadoLivreAccessToken(userId: string): Promise<{
 }> {
   const conn = await getMercadoLivreConnection(userId);
   if (!conn) {
-    throw new Error(
-      "Loja Mercado Livre não conectada — conecte em Integrações antes de publicar.",
-    );
+    throw new Error("Loja Mercado Livre não conectada — conecte em Integrações antes de publicar.");
   }
 
   const now = Math.floor(Date.now() / 1000);
@@ -213,7 +211,9 @@ export async function consumeMercadoLivreOAuthState(token: string): Promise<stri
     .maybeSingle();
   if (error) throw error;
   if (!data) {
-    throw new Error("Link de conexão do Mercado Livre inválido ou expirado. Tente conectar de novo.");
+    throw new Error(
+      "Link de conexão do Mercado Livre inválido ou expirado. Tente conectar de novo.",
+    );
   }
   await (admin as any).from("mercadolivre_oauth_state").delete().eq("token", token);
   const ageMs = Date.now() - new Date(data.created_at as string).getTime();

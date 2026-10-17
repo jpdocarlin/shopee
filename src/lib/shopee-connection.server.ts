@@ -1,4 +1,4 @@
-undefined// Server-only: guarda/lê a conexão da loja Shopee (tokens da API oficial) por
+// Server-only: guarda/lê a conexão da loja Shopee (tokens da API oficial) por
 // usuário — cada conta do Shoppfy pode conectar a própria loja e publicar nela
 // (marketplace_accounts é escopado por user_id). O `userId` usado aqui sempre
 // vem do lado do servidor (context.userId de requireSupabaseAuth, ou do state
@@ -137,9 +137,9 @@ export async function saveShopeeConnection(tokens: ShopeeTokenSet, userId: strin
   }
 }
 
-export async function getShopeeConnection(userId: string): Promise<
-  ShopeeConnectionMetadata["shopee_api"] | null
-> {
+export async function getShopeeConnection(
+  userId: string,
+): Promise<ShopeeConnectionMetadata["shopee_api"] | null> {
   const admin = getAdminClient();
   const marketplaceId = await getShopeeMarketplaceId();
 
@@ -153,10 +153,10 @@ export async function getShopeeConnection(userId: string): Promise<
   if (error) throw error;
 
   const metadata = data?.[0]?.metadata as ShopeeConnectionMetadata | undefined;
-      const conn = metadata?.shopee_api ?? null;
-      const currentEnv = process.env.SHOPEE_ENV === "live" ? "live" : "sandbox";
-      if (conn && conn.environment !== currentEnv) return null;
-      return conn;
+  const conn = metadata?.shopee_api ?? null;
+  const currentEnv = process.env.SHOPEE_ENV === "live" ? "live" : "sandbox";
+  if (conn && conn.environment !== currentEnv) return null;
+  return conn;
 }
 // 17/09/2026: descoberto ao vivo (myralaoviedo@gmail.com) — quando a loja
 // desautoriza o app pelo lado da Shopee (ou o vínculo se perde por qualquer
@@ -170,7 +170,7 @@ export async function getShopeeConnection(userId: string): Promise<
 // quando isso acontece — não apaga a linha (mantém histórico), só zera o
 // metadata, pra getShopeeStatus voltar a mostrar "desconectado" e a pessoa
 // saber que precisa clicar em "Conectar loja Shopee" de novo.
-async function invalidateShopeeConnection(userId: string): Promise<void> {
+export async function invalidateShopeeConnection(userId: string): Promise<void> {
   const admin = getAdminClient();
   const marketplaceId = await getShopeeMarketplaceId();
   const { error } = await admin
@@ -242,7 +242,8 @@ export async function consumeShopeeOAuthState(token: string): Promise<string> {
     .eq("token", token)
     .maybeSingle();
   if (error) throw error;
-  if (!data) throw new Error("Link de conexão da Shopee inválido ou expirado. Tente conectar de novo.");
+  if (!data)
+    throw new Error("Link de conexão da Shopee inválido ou expirado. Tente conectar de novo.");
   await (admin as any).from("shopee_oauth_state").delete().eq("token", token);
   const ageMs = Date.now() - new Date(data.created_at as string).getTime();
   if (ageMs > 10 * 60 * 1000) {
