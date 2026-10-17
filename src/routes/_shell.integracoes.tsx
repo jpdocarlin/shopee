@@ -211,8 +211,8 @@ function IntegracoesPage() {
       <Reveal className="surface-card overflow-hidden">
         <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-4">
-            <div className="grid size-11 shrink-0 place-items-center rounded-lg border border-border bg-surface-hover text-foreground">
-              <Zap className="size-5" />
+            <div className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-lg border border-border bg-white">
+              <img src="/logo-shopee.png" alt="Shopee" className="size-8 object-contain" />
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2">
@@ -275,8 +275,12 @@ function IntegracoesPage() {
       <Reveal className="surface-card overflow-hidden">
         <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-4">
-            <div className="grid size-11 shrink-0 place-items-center rounded-lg border border-border bg-surface-hover text-foreground">
-              <Zap className="size-5" />
+            <div className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-lg border border-border bg-[#ffe600]">
+              <img
+                src="/logo-mercadolivre.png"
+                alt="Mercado Livre"
+                className="size-11 object-cover"
+              />
             </div>
             <div className="space-y-1">
               <h3 className="text-[14px] font-semibold text-foreground">
