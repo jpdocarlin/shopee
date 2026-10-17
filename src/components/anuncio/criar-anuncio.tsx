@@ -34,6 +34,7 @@ import {
   publishShopeeProduct,
 } from "@/lib/shopee-product.functions";
 import { pickBestCategory, type ShopeeCategoryOption } from "@/lib/shopee-category-match";
+import { explainPublishError, type Marketplace } from "@/lib/publish-error-explain";
 import { getMercadoLivreStatus } from "@/lib/mercadolivre.functions";
 import {
   predictMercadoLivreCategory,
@@ -97,6 +98,71 @@ function c7dropToDemoProduct(
 // texto e precisava lembrar/pesquisar o site sozinha.
 function isShopeeKycError(message: string): boolean {
   return /cadastro de vendedor/i.test(message);
+}
+
+// Explica por que o botão "Publicar" está travado (antes ele só ficava
+// cinza, sem dizer o motivo).
+function publishBlockReason({
+  hasListing,
+  priceCents,
+  hasCategory,
+  categoryLoading,
+  label,
+}: {
+  hasListing: boolean;
+  priceCents: number;
+  hasCategory: boolean;
+  categoryLoading: boolean;
+  label: string;
+}): string | null {
+  if (!hasListing) return "falta gerar o título e a descrição do anúncio (passo 3).";
+  if (!(priceCents > 0))
+    return "falta definir o preço de venda (passo 2 — escolha uma margem e clique em Aplicar).";
+  if (categoryLoading) return null;
+  if (!hasCategory)
+    return `o sistema não achou uma categoria da ${label} que combine com esse produto com segurança. Publicar na categoria errada faz o anúncio ser bloqueado ou denunciado, por isso travamos. Escolha outro produto do catálogo.`;
+  return null;
+}
+
+// Caixa de erro da publicação: em vez do JSON cru da API, mostra POR QUE não
+// publicou e O QUE FAZER, em português simples. O erro técnico original fica
+// escondido num "ver detalhe técnico" (útil pra mandar print pro suporte).
+function PublishErrorBox({ marketplace, error }: { marketplace: Marketplace; error: string }) {
+  const { reason, fix, technical } = explainPublishError(marketplace, error);
+  return (
+    <div className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-[12.5px] text-destructive">
+      <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
+      <div className="min-w-0 space-y-1.5">
+        <p>
+          <span className="font-semibold">Não deu pra publicar: </span>
+          {reason}
+        </p>
+        {fix && (
+          <p className="text-foreground/85">
+            <span className="font-semibold">O que fazer: </span>
+            {fix}
+          </p>
+        )}
+        {marketplace === "shopee" && isShopeeKycError(error) && (
+          <a
+            href="https://seller.shopee.com.br"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 font-medium underline underline-offset-2"
+          >
+            Abrir Seller Center da Shopee
+            <ExternalLink className="size-3" />
+          </a>
+        )}
+        {technical && (
+          <details className="text-[11px] text-muted-foreground">
+            <summary className="cursor-pointer select-none">Ver detalhe técnico</summary>
+            <p className="mt-1 break-all font-mono">{technical}</p>
+          </details>
+        )}
+      </div>
+    </div>
+  );
 }
 
 // Passo numerado, igual ao padrão das outras telas do app.
@@ -1034,23 +1100,7 @@ export function CriarAnuncio() {
                     )}
 
                     {publishApiError && (
-                      <div className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-[12px] text-destructive">
-                        <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
-                        <div className="space-y-1.5">
-                          <p>{publishApiError}</p>
-                          {isShopeeKycError(publishApiError) && (
-                            <a
-                              href="https://seller.shopee.com.br"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 font-medium underline underline-offset-2"
-                            >
-                              Abrir Seller Center da Shopee
-                              <ExternalLink className="size-3" />
-                            </a>
-                          )}
-                        </div>
-                      </div>
+                      <PublishErrorBox marketplace="shopee" error={publishApiError} />
                     )}
 
                     {publishApiItemId !== null && (
@@ -1113,7 +1163,7 @@ export function CriarAnuncio() {
                       disabled={
                         publishApiLoading ||
                         !listing ||
-                        !priceInput ||
+                        !(priceCents > 0) ||
                         !selectedCategoryId ||
                         categoriesLoading
                       }
@@ -1125,12 +1175,23 @@ export function CriarAnuncio() {
                       )}
                       {publishApiLoading ? "Publicando…" : "Publicar via API"}
                     </Button>
-                    {!selectedCategoryId && categories.length > 0 && (
-                      <p className="text-[11.5px] text-muted-foreground">
-                        Não conseguimos identificar a categoria certa desse produto pra publicar com
-                        segurança — tente outro produto do catálogo.
-                      </p>
-                    )}
+                    {(() => {
+                      const why = publishBlockReason({
+                        hasListing: !!listing,
+                        priceCents,
+                        hasCategory: !!selectedCategoryId,
+                        categoryLoading: categoriesLoading || categories.length === 0,
+                        label: "Shopee",
+                      });
+                      return why ? (
+                        <p className="text-[12px] text-muted-foreground">
+                          <span className="font-medium text-foreground">
+                            Por que não dá pra publicar ainda:{" "}
+                          </span>
+                          {why}
+                        </p>
+                      ) : null;
+                    })()}
                   </div>
                 )}
               </div>
@@ -1205,10 +1266,7 @@ export function CriarAnuncio() {
                     )}
 
                     {mlPublishError && (
-                      <div className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-[12px] text-destructive">
-                        <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
-                        <p>{mlPublishError}</p>
-                      </div>
+                      <PublishErrorBox marketplace="mercado-livre" error={mlPublishError} />
                     )}
 
                     {mlPublishItemId !== null && (
@@ -1237,7 +1295,7 @@ export function CriarAnuncio() {
                       disabled={
                         mlPublishLoading ||
                         !listing ||
-                        !priceInput ||
+                        !(priceCents > 0) ||
                         !mlCategory ||
                         mlCategoryLoading
                       }
@@ -1249,12 +1307,23 @@ export function CriarAnuncio() {
                       )}
                       {mlPublishLoading ? "Publicando…" : "Publicar via API"}
                     </Button>
-                    {!mlCategory && !mlCategoryLoading && (
-                      <p className="text-[11.5px] text-muted-foreground">
-                        Não conseguimos identificar a categoria certa desse produto pra publicar com
-                        segurança — tente outro produto do catálogo.
-                      </p>
-                    )}
+                    {(() => {
+                      const why = publishBlockReason({
+                        hasListing: !!listing,
+                        priceCents,
+                        hasCategory: !!mlCategory,
+                        categoryLoading: mlCategoryLoading,
+                        label: "Mercado Livre",
+                      });
+                      return why ? (
+                        <p className="text-[12px] text-muted-foreground">
+                          <span className="font-medium text-foreground">
+                            Por que não dá pra publicar ainda:{" "}
+                          </span>
+                          {why}
+                        </p>
+                      ) : null;
+                    })()}
                   </div>
                 )}
               </div>
