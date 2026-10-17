@@ -291,6 +291,23 @@ export async function getCategoryList(
   return json.response.category_list;
 }
 
+// Sugestão de categoria da PRÓPRIA Shopee a partir do nome do produto
+// (v2.product.category_recommend). Usada como reforço quando o nosso
+// matcher por palavra-chave (shopee-category-match.ts) não encontra nada
+// confiável — 17/10/2026: produtos ficavam travados em "Não identificamos a
+// categoria certa" mesmo com a Shopee sabendo onde encaixar.
+export async function recommendCategory(
+  accessToken: string,
+  shopId: number,
+  itemName: string,
+): Promise<number[]> {
+  const json = await callShopeeApi<{ response?: { category_id?: number[] } }>(
+    "/api/v2/product/category_recommend",
+    { accessToken, shopId, query: { item_name: itemName.slice(0, 120) } },
+  );
+  return json.response?.category_id ?? [];
+}
+
 // Formato de ENVIO (product/add_item) — confirmado contra o schema oficial
 // da Shopee (23/09/2026, depois de um erro real em produção): `value_id` é
 // OBRIGATÓRIO sempre, mesmo em texto livre — nesse caso manda `0`.

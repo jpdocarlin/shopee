@@ -57,6 +57,24 @@ export const getShopeeCategories = createServerFn({ method: "GET" })
     return result;
   });
 
+// Reforço do auto-match de categoria: pergunta pra própria Shopee qual
+// categoria ela sugere pro nome do produto. O front só aceita a sugestão se
+// for uma categoria-folha da lista (as únicas que o add_item aceita).
+export const recommendShopeeCategory = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: { itemName: string }) => data)
+  .handler(async ({ context, data }) => {
+    const { getValidShopeeAccessToken } = await import("@/lib/shopee-connection.server");
+    const { recommendCategory } = await import("@/lib/shopee-api.server");
+    const { accessToken, shopId } = await getValidShopeeAccessToken(context.userId);
+    try {
+      return await recommendCategory(accessToken, shopId, data.itemName);
+    } catch (err) {
+      console.error("[Shopee] category_recommend falhou:", err);
+      return [] as number[];
+    }
+  });
+
 export const getShopeeLogisticsChannels = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {

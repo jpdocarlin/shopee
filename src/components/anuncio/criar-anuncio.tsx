@@ -29,6 +29,7 @@ import { generateListing } from "@/lib/gemini-text.functions";
 import { getShopeeStatus } from "@/lib/shopee.functions";
 import {
   getShopeeCategories,
+  recommendShopeeCategory,
   getShopeeItemPreview,
   publishShopeeProduct,
 } from "@/lib/shopee-product.functions";
@@ -287,6 +288,7 @@ export function CriarAnuncio() {
   const runListing = useServerFn(generateListing);
   const runShopeeStatus = useServerFn(getShopeeStatus);
   const runShopeeCategories = useServerFn(getShopeeCategories);
+  const runRecommendShopeeCategory = useServerFn(recommendShopeeCategory);
   const runPublishApi = useServerFn(publishShopeeProduct);
   const runItemPreview = useServerFn(getShopeeItemPreview);
   const runMlStatus = useServerFn(getMercadoLivreStatus);
@@ -306,8 +308,7 @@ export function CriarAnuncio() {
   }, []);
 
   useEffect(() => {
-    if (shopeeConnected !== true || !selected || selected.marketplace !== "shopee")
-      return;
+    if (shopeeConnected !== true || !selected || selected.marketplace !== "shopee") return;
     if (categories.length > 0 || categoriesLoading) return;
     setCategoriesLoading(true);
     setCategoriesError(null);
@@ -339,7 +340,26 @@ export function CriarAnuncio() {
       { title: selected.title, category: selected.category },
       categories,
     );
-    setSelectedCategoryId(match ? match.id : null);
+    if (match) {
+      setSelectedCategoryId(match.id);
+      return;
+    }
+    // Sem match confiável no nosso matcher: pergunta a sugestão oficial da
+    // Shopee pro nome do produto e só aceita se for categoria-folha válida.
+    setSelectedCategoryId(null);
+    let cancelled = false;
+    const leafIds = new Set(categories.map((c) => c.id));
+    runRecommendShopeeCategory({ data: { itemName: selected.title } })
+      .then((ids) => {
+        if (cancelled) return;
+        const first = ids.find((id) => leafIds.has(id));
+        if (first) setSelectedCategoryId(first);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected, categories]);
 
   // Mesma lógica acima, só que pro Mercado Livre — em vez de casar contra
@@ -904,8 +924,8 @@ export function CriarAnuncio() {
                 className="size-28 shrink-0 rounded-lg border border-border object-cover"
               />
               <p className="min-w-0 flex-1 text-[12.5px] text-muted-foreground">
-                Essa é a foto de capa que vai pro anúncio. As demais fotos da galeria do produto
-                são enviadas junto automaticamente na publicação.
+                Essa é a foto de capa que vai pro anúncio. As demais fotos da galeria do produto são
+                enviadas junto automaticamente na publicação.
               </p>
             </div>
           </Reveal>
@@ -921,7 +941,6 @@ export function CriarAnuncio() {
                   <p className="text-[13px] font-semibold text-foreground">
                     Publicar direto pela API oficial
                   </p>
-
                 </div>
 
                 {shopeeConnected === null && (
@@ -1108,8 +1127,8 @@ export function CriarAnuncio() {
                     </Button>
                     {!selectedCategoryId && categories.length > 0 && (
                       <p className="text-[11.5px] text-muted-foreground">
-                        Não conseguimos identificar a categoria certa desse produto pra publicar
-                        com segurança — tente outro produto do catálogo.
+                        Não conseguimos identificar a categoria certa desse produto pra publicar com
+                        segurança — tente outro produto do catálogo.
                       </p>
                     )}
                   </div>
@@ -1157,8 +1176,8 @@ export function CriarAnuncio() {
                           </span>
                         </div>
                         <p className="mt-1 text-[11px] text-muted-foreground">
-                          Detectada automaticamente pelo preditor oficial do Mercado Livre a
-                          partir do título — não dá pra trocar, mesmo motivo da Shopee.
+                          Detectada automaticamente pelo preditor oficial do Mercado Livre a partir
+                          do título — não dá pra trocar, mesmo motivo da Shopee.
                         </p>
                       </div>
                       <div>
@@ -1232,15 +1251,14 @@ export function CriarAnuncio() {
                     </Button>
                     {!mlCategory && !mlCategoryLoading && (
                       <p className="text-[11.5px] text-muted-foreground">
-                        Não conseguimos identificar a categoria certa desse produto pra publicar
-                        com segurança — tente outro produto do catálogo.
+                        Não conseguimos identificar a categoria certa desse produto pra publicar com
+                        segurança — tente outro produto do catálogo.
                       </p>
                     )}
                   </div>
                 )}
               </div>
             )}
-
           </Reveal>
         </>
       )}

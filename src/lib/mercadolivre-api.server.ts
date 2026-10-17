@@ -385,6 +385,33 @@ export type PublishMercadoLivreProductInput = {
 // (que precisou de vários ajustes ao vivo: seller_stock, condition,
 // dimension, brand, attribute_list — o ML provavelmente vai exigir ajustes
 // parecidos assim que testado contra uma categoria real).
+// Traduz os bloqueios de CONTA do Mercado Livre (não são bug do Shoppfy) pra
+// uma mensagem que o vendedor entende e sabe resolver.
+function friendlyMercadoLivreError(err: unknown): Error {
+  const msg = err instanceof Error ? err.message : String(err);
+  if (/seller\.unable_to_list|restrictions_coliving/i.test(msg)) {
+    return new Error(
+      "Sua conta do Mercado Livre está com restrição pra anunciar (o próprio Mercado Livre bloqueou novos anúncios nela). Entre no app do Mercado Livre, veja os avisos da conta e finalize o que ele pedir (verificação de identidade/dados). Depois disso, publique de novo por aqui.",
+    );
+  }
+  return err instanceof Error ? err : new Error(msg);
+}
+
+async function postItem(
+  accessToken: string,
+  body: Record<string, unknown>,
+): Promise<{ id: string; permalink?: string }> {
+  try {
+    return await callMercadoLivreApi<{ id: string; permalink?: string }>("/items", {
+      method: "POST",
+      accessToken,
+      body,
+    });
+  } catch (err) {
+    throw friendlyMercadoLivreError(err);
+  }
+}
+
 export async function publishProduct(
   input: PublishMercadoLivreProductInput,
 ): Promise<{ itemId: string; permalink: string | null }> {
@@ -399,7 +426,7 @@ export async function publishProduct(
     attributeList,
   } = input;
 
-  const body = {
+  const baseBody = {
     // Contas já migradas pro modelo "User Products" (Preço por Variação —
     // ver developers.mercadolivre.com.br/pt_br/user-products) exigem
     // family_name no corpo do POST /items, senão a API rejeita com
@@ -408,7 +435,6 @@ export async function publishProduct(
     // rejeita com "body.invalid_fields" / "The fields [title] are invalid
     // for requested call", confirmado testando ao vivo). Reaproveita o
     // título: como publicamos sem variações, usar o mesmo texto é suficiente.
-    family_name: itemName.slice(0, 60),
     category_id: categoryId,
     price: priceReais,
     currency_id: "BRL",
@@ -424,11 +450,25 @@ export async function publishProduct(
     ...(attributeList && attributeList.length > 0 ? { attributes: attributeList } : {}),
   };
 
-  const created = await callMercadoLivreApi<{ id: string; permalink?: string }>("/items", {
-    method: "POST",
-    accessToken,
-    body,
-  });
+  // 17/10/2026: confirmado ao vivo que depende da CONTA do vendedor — conta
+  // no modelo "User Products" exige family_name (e recusa title); conta no
+  // modelo antigo recusa family_name ("The field family name is invalid") e
+  // exige title. Não dá pra saber antes, então tenta family_name e, se a API
+  // reclamar disso, tenta de novo com title (e vice-versa).
+  const withFamilyName = { ...baseBody, family_name: itemName.slice(0, 60) };
+  const withTitle = { ...baseBody, title: itemName.slice(0, 60) };
+
+  let created: { id: string; permalink?: string };
+  try {
+    created = await postItem(accessToken, withFamilyName);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (/family[ _]name|\[title\]/i.test(msg)) {
+      created = await postItem(accessToken, withTitle);
+    } else {
+      throw err;
+    }
+  }
 
   // Descrição é um endpoint separado no ML (POST /items/{id}/description),
   // diferente da Shopee (description vai dentro do add_item principal).
