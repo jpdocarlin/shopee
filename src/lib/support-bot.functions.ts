@@ -3,12 +3,12 @@
 // Implementação pesada fica lá, carregada dinamicamente dentro do handler —
 // nunca importada no topo (mesma regra de segurança dos outros *.server.ts).
 //
-// SECURITY: exige sessão válida (requireSupabaseAuth) e passa pelo mesmo
+// SECURITY: exige sessão válida (requireSupabaseSession) e passa pelo mesmo
 // limite anti-abuso das outras features de IA (ai-usage.server.ts) antes de
 // chamar o Gemini — sem isso, um script sem login conseguiria gastar a cota
 // paga da API direto, sem passar pela UI.
 import { createServerFn } from "@tanstack/react-start";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { requireSupabaseSession } from "@/integrations/supabase/auth-middleware";
 
 export type SendSupportMessageInput = {
   conversationId: string | null;
@@ -23,7 +23,7 @@ export type SendSupportMessageInput = {
 const BUCKET = "support-media";
 
 export const sendSupportMessage = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireSupabaseSession])
   .validator((data: SendSupportMessageInput) => data)
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;

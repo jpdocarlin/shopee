@@ -8,6 +8,9 @@ import { Loader2 } from "lucide-react";
 
 import membrosCss from "@/styles/membros.css?url";
 import { useAuthStore } from "@/stores/auth-store";
+import { AccessBlockedScreen } from "@/components/auth/access-blocked-screen";
+import { isAccessBlocked } from "@/lib/access";
+import { useIsOwner } from "@/lib/owner";
 import { useCourseTree } from "@/lib/membros";
 import { CommandPalette } from "@/components/membros/command-palette";
 
@@ -39,6 +42,8 @@ function MembrosLayout() {
   const navigate = useNavigate();
   const initialized = useAuthStore((s) => s.initialized);
   const session = useAuthStore((s) => s.session);
+  const profile = useAuthStore((s) => s.profile);
+  const isOwner = useIsOwner();
 
   useEffect(() => {
     if (initialized && !session) {
@@ -48,6 +53,11 @@ function MembrosLayout() {
 
   if (!initialized || !session) {
     return <FullScreenLoader />;
+  }
+
+  // Aulas fazem parte do plano pago — mesma regra do app principal (_shell.tsx).
+  if (!isOwner && isAccessBlocked(profile)) {
+    return <AccessBlockedScreen reason={profile?.access_block_reason ?? null} />;
   }
 
   return <MembrosShell />;

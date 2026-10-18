@@ -9,6 +9,9 @@ export type Profile = {
   // Plano autodeclarado em Configurações — não temos gateway de pagamento
   // integrado, então a pessoa escolhe manualmente qual plano está usando.
   plan: "mensal" | "vitalicio" | null;
+  // Escrito só pelo webhook da Applyfy (ver src/lib/access.ts).
+  access_blocked_at: string | null;
+  access_block_reason: string | null;
 };
 
 type AuthState = {

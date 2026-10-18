@@ -40,6 +40,11 @@ export type ApplyfyPayload = {
     commissionAmount?: number | null;
     status?: string | null;
   } | null;
+  // Só vem nos eventos SUBSCRIPTION_* (docs Applyfy: Webhooks → Assinaturas).
+  subscription?: {
+    status?: string | null;
+    nextChargeAt?: string | null;
+  } | null;
 };
 
 // Compara o token que veio DENTRO do corpo do JSON (não é header) contra o
@@ -52,12 +57,18 @@ export function verifyApplyfyToken(payload: ApplyfyPayload): boolean {
   return payload.token === expected;
 }
 
-function detectPlan(payload: ApplyfyPayload): "mensal" | "vitalicio" {
+type Plan = "mensal" | "vitalicio";
+
+function detectPlan(payload: ApplyfyPayload): Plan {
   const raw = payload.transaction?.originalAmount ?? payload.transaction?.commissionAmount ?? 0;
   // A Applyfy pode mandar o valor em centavos ou em reais dependendo do
   // campo/integração; se vier "grande demais" pra ser reais, assume centavos.
   const amountInReais = raw > 1000 ? raw / 100 : raw;
   return amountInReais >= VITALICIO_THRESHOLD_REAIS ? "vitalicio" : "mensal";
+}
+
+function payloadEmail(payload: ApplyfyPayload): string | null {
+  return payload.client?.email?.trim().toLowerCase() || null;
 }
 
 // Não existe "get user by email" no admin API do Supabase — precisa listar
@@ -76,18 +87,27 @@ async function findUserByEmail(email: string) {
   return null;
 }
 
+async function getProfilePlan(userId: string): Promise<Plan | null> {
+  const { data } = await getAdminClient()
+    .from("profiles")
+    .select("plan")
+    .eq("id", userId)
+    .maybeSingle();
+  return (data?.plan as Plan | null) ?? null;
+}
+
 export type WebhookResult =
-  | { ok: true; userId: string; plan?: "mensal" | "vitalicio" }
+  | { ok: true; userId?: string; plan?: Plan; ignored?: string; blockedAt?: string | null }
   | { ok: false; reason: string; error?: string };
 
-// Evento "Transação paga": cria o login da Shoppfy com o email do pagamento
-// e senha fixa, já confirmado (sem etapa de confirmação por email), e marca
-// o plano de acordo com o valor pago.
+// Evento "Transação paga" (compra nova OU renovação do mensal): cria o login
+// da Shoppfy se ainda não existir, marca o plano e LIBERA o acesso — é isso
+// que reativa quem estava bloqueado e voltou a pagar.
 export async function handleTransactionPaid(payload: ApplyfyPayload): Promise<WebhookResult> {
-  const email = payload.client?.email?.trim().toLowerCase();
+  const email = payloadEmail(payload);
   if (!email) return { ok: false, reason: "missing_email" };
 
-  const plan = detectPlan(payload);
+  const detected = detectPlan(payload);
   const admin = getAdminClient();
 
   const { data, error } = await admin.auth.admin.createUser({
@@ -98,10 +118,8 @@ export async function handleTransactionPaid(payload: ApplyfyPayload): Promise<We
 
   let userId: string;
   if (error || !data.user) {
-    // A Applyfy pode reenviar o mesmo evento (retry de webhook é comum em
-    // gateways de pagamento) — se o login já existe pra esse email, não é
-    // falha de verdade: só acha o usuário já criado e segue pra atualizar o
-    // plano, em vez de devolver erro e deixar a pessoa sem plano marcado.
+    // A Applyfy reenvia eventos e manda TRANSACTION_PAID em toda renovação do
+    // mensal — se o login já existe, só acha o usuário e segue.
     const existing = await findUserByEmail(email);
     if (!existing) {
       return { ok: false, reason: "create_user_failed", error: error?.message };
@@ -111,27 +129,80 @@ export async function handleTransactionPaid(payload: ApplyfyPayload): Promise<We
     userId = data.user.id;
   }
 
-  const { error: profileError } = await admin.from("profiles").update({ plan }).eq("id", userId);
+  // Nunca rebaixa: quem já é vitalício e paga uma mensalidade continua vitalício.
+  const current = await getProfilePlan(userId);
+  const plan: Plan = current === "vitalicio" ? "vitalicio" : detected;
+
+  const { error: profileError } = await admin
+    .from("profiles")
+    .update({ plan, access_blocked_at: null, access_block_reason: null })
+    .eq("id", userId);
   if (profileError) {
-    // Usuário já foi criado (login funciona); só o plano não foi salvo.
+    // Usuário já foi criado (login funciona); só o plano/liberação não foi salvo.
     return { ok: false, reason: "plan_update_failed", error: profileError.message };
   }
 
   return { ok: true, userId, plan };
 }
 
-// Evento "Transação estornada": apaga a conta que tinha sido criada para
-// esse email — não existe fluxo de "reembolso parcial", é tudo ou nada.
-export async function handleTransactionRefunded(payload: ApplyfyPayload): Promise<WebhookResult> {
-  const email = payload.client?.email?.trim().toLowerCase();
+// SUBSCRIPTION_STARTED / SUBSCRIPTION_RENEWED: só garante que o acesso está
+// liberado. Quem cria o login é o TRANSACTION_PAID (chega junto).
+export async function handleSubscriptionActive(payload: ApplyfyPayload): Promise<WebhookResult> {
+  const email = payloadEmail(payload);
   if (!email) return { ok: false, reason: "missing_email" };
 
-  const admin = getAdminClient();
   const user = await findUserByEmail(email);
-  if (!user) return { ok: false, reason: "user_not_found" };
+  if (!user) return { ok: true, ignored: "user_not_found" };
 
-  const { error } = await admin.auth.admin.deleteUser(user.id);
-  if (error) return { ok: false, reason: "delete_user_failed", error: error.message };
+  const { error } = await getAdminClient()
+    .from("profiles")
+    .update({ access_blocked_at: null, access_block_reason: null })
+    .eq("id", user.id);
+  if (error) return { ok: false, reason: "unblock_failed", error: error.message };
+  return { ok: true, userId: user.id, blockedAt: null };
+}
 
-  return { ok: true, userId: user.id };
+export type BlockReason =
+  "subscription_canceled" | "subscription_expired" | "refunded" | "chargeback";
+
+// Bloqueia o acesso (sem apagar a conta — pedidos e histórico continuam lá).
+// `at` no futuro = continua liberado até essa data (ex.: cancelou o mensal,
+// mas o mês já pago vai até a próxima cobrança).
+export async function handleAccessBlock(
+  payload: ApplyfyPayload,
+  reason: BlockReason,
+): Promise<WebhookResult> {
+  const email = payloadEmail(payload);
+  if (!email) return { ok: false, reason: "missing_email" };
+
+  const user = await findUserByEmail(email);
+  // 200 em vez de erro: sem conta não há o que bloquear, e um 4xx faria a
+  // Applyfy reenviar o mesmo evento várias vezes à toa.
+  if (!user) return { ok: true, ignored: "user_not_found" };
+
+  const isSubscriptionEvent =
+    reason === "subscription_canceled" || reason === "subscription_expired";
+  if (isSubscriptionEvent && (await getProfilePlan(user.id)) === "vitalicio") {
+    // Fim de uma assinatura mensal antiga não tira o acesso de quem já é vitalício.
+    return { ok: true, userId: user.id, ignored: "lifetime_plan" };
+  }
+
+  const now = new Date();
+  let blockAt = now;
+  if (reason === "subscription_canceled") {
+    const nextCharge = payload.subscription?.nextChargeAt
+      ? new Date(payload.subscription.nextChargeAt)
+      : null;
+    if (nextCharge && !Number.isNaN(nextCharge.getTime()) && nextCharge > now) {
+      blockAt = nextCharge;
+    }
+  }
+
+  const { error } = await getAdminClient()
+    .from("profiles")
+    .update({ access_blocked_at: blockAt.toISOString(), access_block_reason: reason })
+    .eq("id", user.id);
+  if (error) return { ok: false, reason: "block_failed", error: error.message };
+
+  return { ok: true, userId: user.id, blockedAt: blockAt.toISOString() };
 }

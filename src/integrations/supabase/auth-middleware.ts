@@ -31,7 +31,9 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
   };
 }
 
-export const requireSupabaseAuth = createMiddleware({ type: "function" }).server(
+// Só confere a sessão (JWT válido). Use direto apenas onde a conta bloqueada
+// ainda precisa entrar — hoje, o atendimento (pra poder pedir ajuda).
+export const requireSupabaseSession = createMiddleware({ type: "function" }).server(
   async ({ next }) => {
     const SUPABASE_URL = process.env.SUPABASE_URL;
     const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
@@ -103,3 +105,24 @@ export const requireSupabaseAuth = createMiddleware({ type: "function" }).server
     });
   },
 );
+
+// Sessão válida + acesso em dia. Conta sem pagamento (mensal não pago,
+// reembolso, chargeback — ver src/lib/access.ts) não usa as funções do
+// servidor (publicar, IA...), mesmo chamando direto sem passar pela tela.
+export const requireSupabaseAuth = createMiddleware({ type: "function" })
+  .middleware([requireSupabaseSession])
+  .server(async ({ next, context }) => {
+    // RLS de profiles: cada usuário lê só a própria linha.
+    const { data: access } = await context.supabase
+      .from("profiles")
+      .select("access_blocked_at")
+      .eq("id", context.userId)
+      .maybeSingle();
+    const blockedAt = access?.access_blocked_at
+      ? new Date(access.access_blocked_at).getTime()
+      : NaN;
+    if (!Number.isNaN(blockedAt) && blockedAt <= Date.now()) {
+      throw new Error("Seu acesso ao Shoppfy está suspenso. Renove o plano pra continuar.");
+    }
+    return next();
+  });

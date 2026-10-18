@@ -2,10 +2,12 @@ import { useEffect } from "react";
 import { Outlet, createFileRoute, useNavigate, useRouterState } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
 
+import { AccessBlockedScreen } from "@/components/auth/access-blocked-screen";
 import { AppShell } from "@/components/layout/app-shell";
 import { PageTransition } from "@/components/motion/page-transition";
 import { useAuthStore } from "@/stores/auth-store";
 import { useIsOwner, useIsPedidosAdmin } from "@/lib/owner";
+import { isAccessBlocked } from "@/lib/access";
 
 export const Route = createFileRoute("/_shell")({
   component: ShellLayout,
@@ -50,6 +52,12 @@ function ShellLayout() {
 
   if (!initialized || !session) {
     return <FullScreenLoader />;
+  }
+
+  // Sem pagamento em dia (mensal não pago, reembolso, chargeback): no lugar do
+  // app, mostra a tela pra renovar. Contas de operação (dono/pedidos) nunca caem aqui.
+  if (!isOwner && !isPedidosAdmin && isAccessBlocked(profile)) {
+    return <AccessBlockedScreen reason={profile?.access_block_reason ?? null} />;
   }
 
   return (

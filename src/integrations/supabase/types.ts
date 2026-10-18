@@ -774,6 +774,8 @@ export type Database = {
       };
       profiles: {
         Row: {
+          access_block_reason: string | null;
+          access_blocked_at: string | null;
           avatar_url: string | null;
           company_name: string | null;
           created_at: string;
@@ -787,6 +789,8 @@ export type Database = {
           updated_at: string;
         };
         Insert: {
+          access_block_reason?: string | null;
+          access_blocked_at?: string | null;
           avatar_url?: string | null;
           company_name?: string | null;
           created_at?: string;
@@ -800,6 +804,8 @@ export type Database = {
           updated_at?: string;
         };
         Update: {
+          access_block_reason?: string | null;
+          access_blocked_at?: string | null;
           avatar_url?: string | null;
           company_name?: string | null;
           created_at?: string;

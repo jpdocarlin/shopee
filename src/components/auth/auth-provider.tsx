@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
+import { PROFILE_COLUMNS } from "@/lib/access";
 import { useAuthStore } from "@/stores/auth-store";
 import { useProfileStore } from "@/stores/profile-store";
 import {
@@ -67,11 +68,7 @@ export function AuthProvider() {
 
     async function loadUserData(userId: string) {
       const [{ data: profile }, { data: accounts }, { data: roles }] = await Promise.all([
-        supabase
-          .from("profiles")
-          .select("id, email, full_name, onboarding_done, plan")
-          .eq("id", userId)
-          .maybeSingle(),
+        supabase.from("profiles").select(PROFILE_COLUMNS).eq("id", userId).maybeSingle(),
         supabase.from("marketplace_accounts").select("id").limit(1),
         // user_roles_select_own: cada usuário só enxerga as próprias roles —
         // é assim que a gente sabe se é admin sem comparar e-mail no cliente.

@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { PROFILE_COLUMNS } from "@/lib/access";
 
 // Salva o nome no Supabase (profiles.full_name) e marca onboarding_done — editar
 // o perfil é a primeira etapa obrigatória depois do login, então qualquer save
@@ -8,7 +9,7 @@ export async function updateProfileFullName(userId: string, fullName: string) {
     .from("profiles")
     .update({ full_name: fullName.trim(), onboarding_done: true })
     .eq("id", userId)
-    .select("id, email, full_name, onboarding_done, plan")
+    .select(PROFILE_COLUMNS)
     .single();
 }
 
@@ -20,6 +21,6 @@ export async function updateProfilePlan(userId: string, plan: "mensal" | "vitali
     .from("profiles")
     .update({ plan })
     .eq("id", userId)
-    .select("id, email, full_name, onboarding_done, plan")
+    .select(PROFILE_COLUMNS)
     .single();
 }

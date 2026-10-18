@@ -1,15 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import {
+  handleAccessBlock,
+  handleSubscriptionActive,
   handleTransactionPaid,
-  handleTransactionRefunded,
   verifyApplyfyToken,
   type ApplyfyPayload,
+  type WebhookResult,
 } from "@/lib/applyfy-webhook.server";
 
 // Webhook da Applyfy (plataforma de vendas da Shoppfy). Configurado em
-// Applyfy → Integrações → Webhooks → "Shoppfy - login automático", eventos
-// "Transação paga" e "Transação estornada", apontando pra
+// Applyfy → Integrações → Webhooks → "Shoppfy - login automático", apontando pra
 // https://www.shoppfy.online/api/webhooks/applyfy
 // IMPORTANTE: precisa ser o domínio COM "www" — o certificado SSL de
 // shoppfy.online (sem www) não cobre o domínio puro, o que faz a Applyfy
@@ -49,24 +50,39 @@ export const Route = createFileRoute("/api/webhooks/applyfy")({
         console.log("[applyfy-webhook] received event:", payload.event ?? "(sem event)");
 
         try {
+          let result: WebhookResult;
           switch (payload.event) {
-            case "TRANSACTION_PAID": {
-              const result = await handleTransactionPaid(payload);
-              if (!result.ok) console.error("[applyfy-webhook] TRANSACTION_PAID failed:", result);
-              else
-                console.log("[applyfy-webhook] TRANSACTION_PAID ok:", result.userId, result.plan);
-              return Response.json(result, { status: result.ok ? 200 : 400 });
-            }
-            case "TRANSACTION_REFUNDED": {
-              const result = await handleTransactionRefunded(payload);
-              if (!result.ok)
-                console.error("[applyfy-webhook] TRANSACTION_REFUNDED failed:", result);
-              return Response.json(result, { status: result.ok ? 200 : 400 });
-            }
+            // Compra nova ou renovação do mensal: cria o login (se preciso) e libera.
+            case "TRANSACTION_PAID":
+              result = await handleTransactionPaid(payload);
+              break;
+            case "SUBSCRIPTION_STARTED":
+            case "SUBSCRIPTION_RENEWED":
+              result = await handleSubscriptionActive(payload);
+              break;
+            // Cancelou o mensal: continua com acesso até a próxima cobrança.
+            case "SUBSCRIPTION_CANCELED":
+              result = await handleAccessBlock(payload, "subscription_canceled");
+              break;
+            // Não renovou (ex.: PIX da renovação expirou): bloqueia na hora.
+            case "SUBSCRIPTION_EXPIRED":
+              result = await handleAccessBlock(payload, "subscription_expired");
+              break;
+            // Reembolso e chargeback: bloqueia (não apaga mais a conta nem os pedidos).
+            case "TRANSACTION_REFUNDED":
+              result = await handleAccessBlock(payload, "refunded");
+              break;
+            case "TRANSACTION_CHARGED_BACK":
+              result = await handleAccessBlock(payload, "chargeback");
+              break;
             default:
-              // Outros eventos (ex: chargeback) não foram pedidos — ignora sem erro.
+              // Outros eventos (ex.: transação criada, disputa aberta) não mexem no acesso.
               return Response.json({ ok: true, ignored: payload.event ?? null });
           }
+
+          if (!result.ok) console.error(`[applyfy-webhook] ${payload.event} failed:`, result);
+          else console.log(`[applyfy-webhook] ${payload.event} ok:`, result);
+          return Response.json(result, { status: result.ok ? 200 : 400 });
         } catch (err) {
           // Pega qualquer erro inesperado (ex: env var de service role faltando
           // em produção) que antes derrubava a função sem log nenhum — agora
