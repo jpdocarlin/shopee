@@ -309,12 +309,10 @@ function IntegracoesPage() {
               <MapPin className="size-5" />
             </div>
             <div className="space-y-1">
-              <h3 className="text-[14px] font-semibold text-foreground">
-                Endereço de origem (C7Drop)
-              </h3>
+              <h3 className="text-[14px] font-semibold text-foreground">Endereço de origem</h3>
               <p className="max-w-lg text-[13px] text-muted-foreground">
-                Os produtos saem direto do estoque da C7Drop, nossa fornecedora de dropshipping. Use
-                esse endereço como origem/expedição ao configurar sua loja na Shopee.
+                Os produtos saem direto do estoque do nosso fornecedor. Use esse endereço como
+                origem/expedição ao configurar sua loja na Shopee.
               </p>
             </div>
           </div>
