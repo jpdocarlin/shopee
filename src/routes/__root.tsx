@@ -133,6 +133,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Mineração de produtos, comissões, pedidos e analytics para afiliados de marketplace.",
       },
       { property: "og:type", content: "website" },
+      // App na tela inicial (PWA) — iPhone precisa disso pra abrir em tela
+      // cheia e pra receber notificação push (iOS 16.4+).
+      { name: "theme-color", content: "#0e0e10" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black" },
+      { name: "apple-mobile-web-app-title", content: "Shoppfy" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
@@ -151,6 +158,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -181,13 +190,13 @@ function RootComponent() {
     // A página renderizou de verdade — libera a trava de retry de chunk
     // (ver ErrorComponent) pra próxima vez que um chunk falhar, em vez de
     // deixar "gasta" pra sempre na mesma aba depois do primeiro reload.
-  try {
-    window.sessionStorage?.removeItem("shoppfy:chunk-error-reload-attempted");
-  } catch {
-    // Mesmo motivo do ErrorComponent acima: acessar sessionStorage pode
-    // lançar erro em alguns navegadores/webviews — ignora e segue.
-  }
-    }, []);
+    try {
+      window.sessionStorage?.removeItem("shoppfy:chunk-error-reload-attempted");
+    } catch {
+      // Mesmo motivo do ErrorComponent acima: acessar sessionStorage pode
+      // lançar erro em alguns navegadores/webviews — ignora e segue.
+    }
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

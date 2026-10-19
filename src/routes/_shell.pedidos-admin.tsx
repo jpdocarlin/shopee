@@ -4,6 +4,7 @@ import { Loader2 } from "lucide-react";
 
 import { PageHeader } from "@/components/shared/page-header";
 import { AdminPedidosList } from "@/components/pedidos/admin-pedidos-list";
+import { PushNotificationsCard } from "@/components/pedidos/push-notifications-card";
 import { useIsPedidosAdmin } from "@/lib/owner";
 import { useAuthStore } from "@/stores/auth-store";
 
@@ -44,6 +45,7 @@ function PedidosAdminPage() {
         title="Pedidos (Admin)"
         description="Todos os pedidos enviados pelos revendedores do Shoppfy: produto, valores, quem fez e os anexos de etiqueta e comprovante do PIX."
       />
+      <PushNotificationsCard />
       <AdminPedidosList />
     </div>
   );

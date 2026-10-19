@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useAuthStore } from "@/stores/auth-store";
 import { createFulfillmentRequest, PERSON_TYPE_LABEL, type PersonType } from "@/lib/fulfillment";
+import { notifyNewFulfillmentRequest } from "@/lib/push.functions";
 import { formatBRL } from "@/lib/format";
 import { convertImageToPdf } from "@/lib/image-to-pdf";
 import { PixPayment } from "@/components/pedidos/pix-payment";
@@ -142,7 +143,7 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
     setSubmitting(true);
     setError(null);
     try {
-      await createFulfillmentRequest({
+      const created = await createFulfillmentRequest({
         userId,
         submitterName: `${firstName.trim()} ${lastName.trim()}`.trim(),
         submitterEmail: email.trim(),
@@ -155,6 +156,10 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
         proofFile,
         notes,
       });
+      // Avisa a conta de pedidos no celular (push). Não trava o envio se falhar.
+      void notifyNewFulfillmentRequest({ data: { requestId: created.id } }).catch((err) =>
+        console.error("[PedidoForm] falha ao notificar pedido novo:", err),
+      );
       toast.success("Pedido enviado", {
         description: "Assim que confirmarmos o PIX, seguimos com o envio.",
       });
