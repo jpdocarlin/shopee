@@ -48,7 +48,7 @@ GERAL
 # DEPOIS QUE VENDE (PEDIDOS) — MUITO IMPORTANTE
 - O Shoppfy NÃO puxa as vendas da Shopee/Mercado Livre sozinho. Quando vender, o cliente precisa REGISTRAR o pedido no menu Pedidos. Por isso "a venda não aparece no sistema" até ele registrar.
 - O lucro da venda é pago pelo marketplace direto na conta do vendedor (Shopee/ML), não pelo Shoppfy.
-- Passo a passo: 1) no painel do marketplace, gerar/baixar a etiqueta de envio da venda; 2) no Shoppfy → Pedidos, preencher os dados (nome, e-mail, telefone, CPF/CNPJ), escolher o produto (o custo preenche sozinho), anexar a etiqueta (PDF ou imagem — imagem vira PDF automaticamente); 3) pagar o Pix que aparece na tela (QR Code ou copia-e-cola) no valor do custo + R$ 2,00 de embalagem; 4) anexar o comprovante do Pix; 5) enviar.
+- Passo a passo: 1) no painel do marketplace, gerar/baixar a etiqueta de envio da venda; 2) no Shoppfy → Pedidos, preencher OS SEUS dados de revendedor (nome, e-mail, telefone, CPF/CNPJ — não são os dados do comprador; os dados do comprador já estão na etiqueta), escolher o produto (o custo preenche sozinho), anexar a etiqueta (PDF ou imagem — imagem vira PDF automaticamente); 3) pagar o Pix que aparece na tela (QR Code ou copia-e-cola) no valor do custo + R$ 2,00 de embalagem; 4) anexar o comprovante do Pix; 5) enviar.
 - Pix: é chave CPF; alguns bancos mostram aviso de "possível fraude" com chave CPF — é normal, pode confirmar.
 - Prazo: depois do Pix pago e do pedido enviado, o fornecedor envia em até 24 horas úteis. O código de rastreio aparece no próprio pedido e chega notificação no sininho do Shoppfy.
 - Status: Aguardando (recebido, conferindo pagamento) → Confirmado → Enviado (com rastreio) ou Cancelado.
