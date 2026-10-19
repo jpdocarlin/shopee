@@ -147,9 +147,17 @@ export const sendSupportMessage = createServerFn({ method: "POST" })
     if (userMsgError || !userMessage) throw new Error("Não foi possível registrar sua mensagem.");
 
     // ---------- 5. motor de atendimento ----------
-    const result = await runSupportTurn({ supabase, userId, history, effectiveText });
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const result = await runSupportTurn({
+      admin: supabaseAdmin,
+      userId,
+      history,
+      effectiveText,
+    });
 
-    await supabase
+    // RLS não deixa o cliente dar UPDATE nas próprias mensagens — grava a
+    // categoria pelo servidor (antes ficava sempre vazia).
+    await supabaseAdmin
       .from("support_messages")
       .update({ intent: result.intent })
       .eq("id", userMessage.id);
@@ -170,24 +178,60 @@ export const sendSupportMessage = createServerFn({ method: "POST" })
       })
       .eq("id", conversationId);
 
+    // Guarda telefone/nome que o cliente informou no chat (só preenche vazio).
+    const patch: { phone?: string; full_name?: string } = {};
+    if (result.extracted.phone && !result.customer.phone) patch.phone = result.extracted.phone;
+    if (result.extracted.name && !result.customer.name) patch.full_name = result.extracted.name;
+    if (Object.keys(patch).length > 0) {
+      await supabaseAdmin.from("profiles").update(patch).eq("id", userId);
+    }
+
     if (result.escalated) {
+      const contact = {
+        name: patch.full_name ?? result.customer.name,
+        email: result.customer.email,
+        phone: patch.phone ?? result.customer.phone,
+      };
       const summary = [
-        `Cliente perguntou: "${effectiveText.slice(0, 220)}".`,
-        `Categoria: ${result.intent}.`,
-        `${result.kbMatchCount} fato(s) da base de conhecimento encontrados.`,
-        `Motivo do encaminhamento: ${result.escalationReason ?? "não informado"}.`,
+        `Cliente: ${contact.name ?? "sem nome"} · ${contact.email ?? "sem e-mail"} · ${contact.phone ?? "sem telefone"}.`,
+        `Pediu: "${effectiveText.slice(0, 220)}".`,
+        `Motivo: ${result.escalationReason ?? "não informado"}.`,
       ].join(" ");
+
+      // Uma notificação por conversa a cada 30 min (cliente que manda "oi?"
+      // várias vezes não vira 10 notificações).
+      const since = new Date(Date.now() - 30 * 60 * 1000).toISOString();
+      const { data: recent } = await supabaseAdmin
+        .from("support_escalations")
+        .select("id")
+        .eq("conversation_id", conversationId)
+        .gte("created_at", since)
+        .limit(1);
+
       await supabase.from("support_escalations").insert({
         conversation_id: conversationId,
         user_id: userId,
         reason: result.escalationReason ?? "não informado",
         summary,
       });
+
+      if (!recent || recent.length === 0) {
+        try {
+          const { sendToPedidosAdmins } = await import("@/lib/push.server");
+          await sendToPedidosAdmins({
+            title: `Atendimento: ${contact.name ?? contact.email ?? "cliente"}`,
+            body: `${result.escalationReason ?? "Precisa de você"}${contact.phone ? ` · ${contact.phone}` : ""}`,
+            url: "/atendimento-admin",
+            tag: `atendimento-${conversationId}`,
+          });
+        } catch (err) {
+          console.error("[Support bot] falha ao notificar o dono:", err);
+        }
+      }
     }
 
-    // Nenhum fato da base ajudou — vira fila de "perguntas sem resposta" pra
-    // eu (dono) revisar e transformar em conhecimento novo depois.
-    if (result.kbMatchCount === 0) {
+    // Pergunta que o manual não cobre — fila pra eu (dono) completar o manual.
+    if (!result.covered) {
       await supabase.from("support_unanswered_questions").insert({
         conversation_id: conversationId,
         user_id: userId,

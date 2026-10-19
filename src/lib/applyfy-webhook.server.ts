@@ -34,8 +34,10 @@ function getAdminClient() {
 export type ApplyfyPayload = {
   event?: string;
   token?: string;
-  client?: { email?: string | null } | null;
+  client?: { email?: string | null; name?: string | null } | null;
   transaction?: {
+    id?: string | null;
+    payedAt?: string | null;
     originalAmount?: number | null;
     commissionAmount?: number | null;
     status?: string | null;
@@ -140,6 +142,29 @@ export async function handleTransactionPaid(payload: ApplyfyPayload): Promise<We
   if (profileError) {
     // Usuário já foi criado (login funciona); só o plano/liberação não foi salvo.
     return { ok: false, reason: "plan_update_failed", error: profileError.message };
+  }
+
+  // Guarda a compra (o "código da compra" que o cliente precisa no
+  // formulário de reembolso é o id da transação). Falha aqui não derruba o
+  // webhook — o login e o plano já foram liberados acima.
+  const transactionId = payload.transaction?.id?.trim();
+  if (transactionId) {
+    const raw =
+      payload.transaction?.originalAmount ?? payload.transaction?.commissionAmount ?? null;
+    const { error: purchaseError } = await admin.from("purchases").upsert(
+      {
+        transaction_id: transactionId,
+        user_id: userId,
+        email,
+        client_name: payload.client?.name?.trim() || null,
+        plan: detected,
+        amount: raw === null ? null : raw > 1000 ? raw / 100 : raw,
+        paid_at: payload.transaction?.payedAt ?? new Date().toISOString(),
+      },
+      { onConflict: "transaction_id" },
+    );
+    if (purchaseError)
+      console.error("[applyfy-webhook] falha ao salvar compra:", purchaseError.message);
   }
 
   return { ok: true, userId, plan };

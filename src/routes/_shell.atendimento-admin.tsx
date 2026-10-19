@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getSupportCustomers, type SupportCustomer } from "@/lib/support-admin.functions";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   AlertTriangle,
@@ -197,10 +198,17 @@ function ConversationsPanel() {
   const [mediaUrls, setMediaUrls] = useState<Record<string, string | null>>({});
   const [loading, setLoading] = useState(true);
   const [loadingThread, setLoadingThread] = useState(false);
+  const [customers, setCustomers] = useState<Record<string, SupportCustomer>>({});
 
   useEffect(() => {
     listAllConversations()
-      .then(setConversations)
+      .then((rows) => {
+        setConversations(rows);
+        const ids = [...new Set(rows.map((r) => r.user_id))];
+        getSupportCustomers({ data: { userIds: ids } })
+          .then(setCustomers)
+          .catch((err) => console.error("[atendimento-admin] falha ao buscar contatos:", err));
+      })
       .catch((err) => console.error("[atendimento-admin] falha ao listar conversas:", err))
       .finally(() => setLoading(false));
   }, []);
@@ -259,10 +267,13 @@ function ConversationsPanel() {
           >
             <div className="flex items-center justify-between gap-2">
               <p className="truncate text-[12.5px] font-medium text-foreground">
-                {c.title || "Conversa sem título"}
+                {customers[c.user_id]?.name || customers[c.user_id]?.email || "Cliente"}
               </p>
               <StatusBadge status={c.status} />
             </div>
+            <p className="truncate text-[11.5px] text-muted-foreground">
+              {c.title || "Conversa sem título"}
+            </p>
             <p className="mt-0.5 text-[11px] text-muted-foreground">
               {formatDateTime(c.last_message_at)}
             </p>
@@ -281,6 +292,39 @@ function ConversationsPanel() {
           </div>
         ) : (
           <div className="space-y-3">
+            {(() => {
+              const conv = conversations.find((c) => c.id === selectedId);
+              const info = conv ? customers[conv.user_id] : undefined;
+              const digits = info?.phone?.replace(/\D/g, "") ?? "";
+              return (
+                <div className="sticky top-0 z-10 -mx-4 -mt-4 mb-2 border-b border-border bg-surface px-4 py-3">
+                  <p className="text-[13px] font-semibold text-foreground">
+                    {info?.name || "Cliente sem nome"}
+                    {info?.plan && (
+                      <span className="ml-2 text-[11px] font-normal text-muted-foreground">
+                        {info.plan === "vitalicio" ? "Vitalício" : "Mensal"}
+                      </span>
+                    )}
+                  </p>
+                  <p className="mt-0.5 text-[12px] text-muted-foreground">
+                    {info?.email || "sem e-mail"}
+                    {" · "}
+                    {info?.phone ? (
+                      <a
+                        href={`https://wa.me/${digits.length <= 11 ? `55${digits}` : digits}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-brand underline underline-offset-2"
+                      >
+                        {info.phone}
+                      </a>
+                    ) : (
+                      "sem telefone"
+                    )}
+                  </p>
+                </div>
+              );
+            })()}
             {messages.map((m) => (
               <div key={m.id} className={m.role === "user" ? "" : "opacity-90"}>
                 <div className="flex items-center gap-2">

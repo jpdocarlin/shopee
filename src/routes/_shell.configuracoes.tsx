@@ -39,6 +39,7 @@ import { useT } from "@/i18n/translations";
 import { useLocaleStore } from "@/stores/locale-store";
 import { useAuthStore } from "@/stores/auth-store";
 import { updateProfileFullName, updateProfilePlan } from "@/lib/profile";
+import { createRefundRequest } from "@/lib/refund.functions";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_shell/configuracoes")({
@@ -593,10 +594,30 @@ function ReembolsoTab() {
     diasValidos &&
     form.motivo !== "";
 
-  const handleSubmit = () => {
-    if (!isValid) return;
-    setStatus("sent");
-    toast.success(t("Pedido de reembolso enviado"));
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!isValid || sending) return;
+    setSending(true);
+    try {
+      await createRefundRequest({
+        data: {
+          fullName: form.nome,
+          cpf: form.cpf,
+          email: form.email,
+          purchaseCode: form.codigoCompra,
+          plan: form.plano === "vitalicio" ? "vitalicio" : "mensal",
+          daysSincePayment: dias,
+          reason: form.motivo,
+        },
+      });
+      setStatus("sent");
+      toast.success(t("Pedido de reembolso enviado"));
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Não deu pra enviar agora. Tente de novo.");
+    } finally {
+      setSending(false);
+    }
   };
 
   if (status === "sent") {
@@ -708,6 +729,9 @@ function ReembolsoTab() {
               onChange={(e) => update("codigoCompra")(e.target.value)}
               placeholder={t("Ex: PED-48213")}
             />
+            <p className="text-[11.5px] text-muted-foreground">
+              Não sabe o código? Peça no Atendimento (ícone de fone no topo) que ele te envia.
+            </p>
           </div>
           <div className="space-y-2">
             <Label>{t("Plano da cobrança")}</Label>
@@ -753,7 +777,11 @@ function ReembolsoTab() {
           </Select>
         </div>
 
-        <Button onClick={handleSubmit} disabled={!isValid} className="gap-2">
+        <Button
+          onClick={() => void handleSubmit()}
+          disabled={!isValid || sending}
+          className="gap-2"
+        >
           <Send className="size-4" />
           {t("Solicitar reembolso")}
         </Button>

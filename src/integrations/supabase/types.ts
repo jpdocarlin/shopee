@@ -1213,6 +1213,81 @@ export type Database = {
           },
         ];
       };
+      purchases: {
+        Row: {
+          amount: number | null;
+          client_name: string | null;
+          created_at: string;
+          email: string;
+          paid_at: string;
+          plan: string | null;
+          transaction_id: string;
+          user_id: string | null;
+        };
+        Insert: {
+          amount?: number | null;
+          client_name?: string | null;
+          created_at?: string;
+          email: string;
+          paid_at?: string;
+          plan?: string | null;
+          transaction_id: string;
+          user_id?: string | null;
+        };
+        Update: {
+          amount?: number | null;
+          client_name?: string | null;
+          created_at?: string;
+          email?: string;
+          paid_at?: string;
+          plan?: string | null;
+          transaction_id?: string;
+          user_id?: string | null;
+        };
+        Relationships: [];
+      };
+      refund_requests: {
+        Row: {
+          created_at: string;
+          cpf: string;
+          days_since_payment: number;
+          email: string;
+          full_name: string;
+          id: string;
+          plan: string;
+          purchase_code: string;
+          reason: string;
+          status: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          cpf: string;
+          days_since_payment: number;
+          email: string;
+          full_name: string;
+          id?: string;
+          plan: string;
+          purchase_code: string;
+          reason: string;
+          status?: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          cpf?: string;
+          days_since_payment?: number;
+          email?: string;
+          full_name?: string;
+          id?: string;
+          plan?: string;
+          purchase_code?: string;
+          reason?: string;
+          status?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       push_config: {
         Row: {
           created_at: string;
