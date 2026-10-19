@@ -26,20 +26,14 @@
 //   Shopee exige (media_space/upload_image).
 // - Descrição do anúncio é um endpoint SEPARADO (POST /items/{id}/description
 //   com { plain_text }) — não vai dentro do POST /items principal.
-import { ProxyAgent } from "undici";
-
-// Mesmo proxy de IP fixo (QuotaGuard) já usado pra Shopee — reaproveita a
-// mesma env var (QUOTAGUARDSTATIC_URL). O Mercado Livre não exige IP fixo
-// declarado como a Shopee faz no Go-Live, mas não custa sair pelo mesmo IP
-// estável já configurado, evitando qualquer bloqueio por IP variável da
-// Vercel.
-const mlProxyAgent = process.env.QUOTAGUARDSTATIC_URL
-  ? new ProxyAgent(process.env.QUOTAGUARDSTATIC_URL)
-  : undefined;
-
+// O Mercado Livre NÃO exige IP fixo (o app "Melify JP Nogueira 2026x" não tem
+// restrição de faixa de IP no DevCenter), então as chamadas saem direto da
+// Vercel — sem passar pelo proxy do QuotaGuard. O QuotaGuard fica reservado
+// só pra Shopee (shopee-api.server.ts), que exige IP declarado no Go-Live.
+// Antes passava pelo proxy "por garantia", o que gastava a cota do plano e
+// derrubava o Mercado Livre junto quando a conta do QuotaGuard era suspensa.
 function mlFetch(url: string, init: RequestInit = {}): Promise<Response> {
-  if (!mlProxyAgent) return fetch(url, init);
-  return fetch(url, { ...init, dispatcher: mlProxyAgent } as RequestInit);
+  return fetch(url, init);
 }
 
 const AUTH_HOST = "https://auth.mercadolivre.com.br";
