@@ -59,9 +59,13 @@ export const CATEGORY_LABEL: Record<string, string> = {
 // ---------- conversas do próprio usuário (widget de chat) ----------
 
 export async function listMyConversations(): Promise<SupportConversation[]> {
+  // Filtra pelo próprio usuário: a conta admin enxerga todas pela RLS, mas no
+  // chat de cliente cada um só deve ver as próprias conversas.
+  const { data: auth } = await supabase.auth.getUser();
   const { data, error } = await supabase
     .from("support_conversations")
     .select("*")
+    .eq("user_id", auth.user?.id ?? "")
     .order("last_message_at", { ascending: false })
     .limit(20);
   if (error) throw error;

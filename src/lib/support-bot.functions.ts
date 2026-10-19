@@ -61,6 +61,18 @@ export const sendSupportMessage = createServerFn({ method: "POST" })
       conversationId = created.id;
     }
 
+    // ---------- 1b. atendimento ao vivo: fecha se passou do tempo e lê o status ----------
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { closeStaleConversations, getCustomerName, pushOwner } =
+      await import("@/lib/support-live.server");
+    await closeStaleConversations(conversationId);
+    const { data: convState } = await supabaseAdmin
+      .from("support_conversations")
+      .select("status")
+      .eq("id", conversationId)
+      .single();
+    const humanMode = convState?.status === "human";
+
     // ---------- 2. histórico (antes de inserir a mensagem atual) ----------
     const { data: historyRows } = await supabase
       .from("support_messages")
@@ -146,8 +158,30 @@ export const sendSupportMessage = createServerFn({ method: "POST" })
       .single();
     if (userMsgError || !userMessage) throw new Error("Não foi possível registrar sua mensagem.");
 
+    const nowIso = new Date().toISOString();
+    await supabaseAdmin
+      .from("support_conversations")
+      .update({ last_user_message_at: nowIso, last_message_at: nowIso })
+      .eq("id", conversationId);
+
+    // ---------- 4b. dono já está atendendo: bot fica quieto, só avisa o dono ----------
+    if (humanMode) {
+      const name = await getCustomerName(userId);
+      await pushOwner({
+        conversationId,
+        title: `${name} respondeu`,
+        body: effectiveText,
+      });
+      return {
+        conversationId,
+        reply: null as string | null,
+        intent: null,
+        escalated: true,
+        human: true,
+      };
+    }
+
     // ---------- 5. motor de atendimento ----------
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const result = await runSupportTurn({
       admin: supabaseAdmin,
       userId,
@@ -174,7 +208,7 @@ export const sendSupportMessage = createServerFn({ method: "POST" })
       .from("support_conversations")
       .update({
         last_message_at: new Date().toISOString(),
-        status: result.escalated ? "escalated" : "open",
+        status: "open",
       })
       .eq("id", conversationId);
 
@@ -198,16 +232,6 @@ export const sendSupportMessage = createServerFn({ method: "POST" })
         `Motivo: ${result.escalationReason ?? "não informado"}.`,
       ].join(" ");
 
-      // Uma notificação por conversa a cada 30 min (cliente que manda "oi?"
-      // várias vezes não vira 10 notificações).
-      const since = new Date(Date.now() - 30 * 60 * 1000).toISOString();
-      const { data: recent } = await supabaseAdmin
-        .from("support_escalations")
-        .select("id")
-        .eq("conversation_id", conversationId)
-        .gte("created_at", since)
-        .limit(1);
-
       await supabase.from("support_escalations").insert({
         conversation_id: conversationId,
         user_id: userId,
@@ -215,19 +239,22 @@ export const sendSupportMessage = createServerFn({ method: "POST" })
         summary,
       });
 
-      if (!recent || recent.length === 0) {
-        try {
-          const { sendToPedidosAdmins } = await import("@/lib/push.server");
-          await sendToPedidosAdmins({
-            title: `Atendimento: ${contact.name ?? contact.email ?? "cliente"}`,
-            body: `${result.escalationReason ?? "Precisa de você"}${contact.phone ? ` · ${contact.phone}` : ""}`,
-            url: "/atendimento-admin",
-            tag: `atendimento-${conversationId}`,
-          });
-        } catch (err) {
-          console.error("[Support bot] falha ao notificar o dono:", err);
-        }
-      }
+      // Dono assume a conversa: a partir daqui o bot fica em silêncio e as
+      // mensagens do cliente chegam como notificação pra ele responder no painel.
+      await supabaseAdmin
+        .from("support_conversations")
+        .update({
+          status: "human",
+          human_since: new Date().toISOString(),
+          agent_last_reply_at: null,
+        })
+        .eq("id", conversationId);
+      await pushOwner({
+        conversationId,
+        title: `${contact.name ?? contact.email ?? "Cliente"} está esperando resposta`,
+        body: effectiveText,
+        minIntervalMs: 0,
+      });
     }
 
     // Pergunta que o manual não cobre — fila pra eu (dono) completar o manual.
@@ -254,6 +281,7 @@ export const sendSupportMessage = createServerFn({ method: "POST" })
       reply: result.reply,
       intent: result.intent,
       escalated: result.escalated,
+      human: result.escalated,
     };
   });
 

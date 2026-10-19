@@ -1341,6 +1341,10 @@ export type Database = {
       };
       support_conversations: {
         Row: {
+          agent_last_reply_at: string | null;
+          closed_at: string | null;
+          human_since: string | null;
+          last_user_message_at: string | null;
           id: string;
           user_id: string;
           channel: string;
@@ -1351,6 +1355,10 @@ export type Database = {
           last_message_at: string;
         };
         Insert: {
+          agent_last_reply_at?: string | null;
+          closed_at?: string | null;
+          human_since?: string | null;
+          last_user_message_at?: string | null;
           id?: string;
           user_id: string;
           channel?: string;
@@ -1361,6 +1369,10 @@ export type Database = {
           last_message_at?: string;
         };
         Update: {
+          agent_last_reply_at?: string | null;
+          closed_at?: string | null;
+          human_since?: string | null;
+          last_user_message_at?: string | null;
           id?: string;
           user_id?: string;
           channel?: string;

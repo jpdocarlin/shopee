@@ -44,6 +44,7 @@ import {
   type SupportMessage,
 } from "@/lib/support";
 import { sendSupportMessage } from "@/lib/support-bot.functions";
+import { customerSyncConversation } from "@/lib/support-live.functions";
 
 export const Route = createFileRoute("/atendimento")({
   head: () => ({
@@ -190,7 +191,7 @@ function AtendimentoLogin() {
 
 type LocalMessage = {
   id: string;
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "agent" | "system";
   kind: "text" | "image" | "audio";
   content: string;
   mediaUrl?: string | null;
@@ -237,10 +238,13 @@ function AtendimentoChatApp() {
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [messages, setMessages] = useState<LocalMessage[]>([WELCOME]);
   const [loadingThread, setLoadingThread] = useState(false);
-  const [escalated, setEscalated] = useState(false);
+  // open | human (responsável atendendo) | closed (finalizada)
+  const [convStatus, setConvStatus] = useState<string>("open");
 
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
+  const sendingRef = useRef(false);
+  sendingRef.current = sending;
   const [recording, setRecording] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -278,6 +282,39 @@ function AtendimentoChatApp() {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, sending]);
 
+  // Enquanto o responsável está atendendo, busca as mensagens novas a cada
+  // 4s — a resposta dele aparece sozinha, sem precisar recarregar.
+  useEffect(() => {
+    if (!conversationId || convStatus !== "human") return;
+    let cancelled = false;
+    const tick = async () => {
+      if (sendingRef.current) return;
+      try {
+        const res = await customerSyncConversation({ data: { conversationId } });
+        if (cancelled) return;
+        setConvStatus(res.status);
+        setMessages((prev) => {
+          const known = new Map(prev.map((m) => [m.id, m]));
+          const next: LocalMessage[] = res.messages.map((m) => ({
+            id: m.id,
+            role: m.role as LocalMessage["role"],
+            kind: m.kind as LocalMessage["kind"],
+            content: m.content,
+            mediaUrl: known.get(m.id)?.mediaUrl ?? null,
+          }));
+          return next.length > 0 ? next : prev;
+        });
+      } catch (err) {
+        console.error("[atendimento] falha ao atualizar conversa:", err);
+      }
+    };
+    const id = setInterval(() => void tick(), 4000);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
+  }, [conversationId, convStatus]);
+
   async function openConversation(id: string) {
     setConversationId(id);
     setSidebarOpen(false);
@@ -295,7 +332,7 @@ function AtendimentoChatApp() {
       );
       setMessages(withMedia.length > 0 ? withMedia : [WELCOME]);
       const conv = conversations.find((c) => c.id === id);
-      setEscalated(conv?.status === "escalated");
+      setConvStatus(conv?.status ?? "open");
     } catch (err) {
       console.error("[atendimento] falha ao carregar conversa:", err);
     } finally {
@@ -306,7 +343,7 @@ function AtendimentoChatApp() {
   function startNewConversation() {
     setConversationId(null);
     setMessages([WELCOME]);
-    setEscalated(false);
+    setConvStatus("open");
     setSidebarOpen(false);
   }
 
@@ -341,11 +378,14 @@ function AtendimentoChatApp() {
       });
       const isNewConversation = !conversationId;
       setConversationId(result.conversationId);
-      setEscalated(result.escalated);
-      setMessages((prev) => [
-        ...prev,
-        { id: `assistant-${Date.now()}`, role: "assistant", kind: "text", content: result.reply },
-      ]);
+      setConvStatus(result.human ? "human" : "open");
+      const reply = result.reply;
+      if (reply) {
+        setMessages((prev) => [
+          ...prev,
+          { id: `assistant-${Date.now()}`, role: "assistant", kind: "text", content: reply },
+        ]);
+      }
       if (isNewConversation) void refreshConversations();
     } catch (err) {
       console.error("[atendimento] falha ao enviar mensagem:", err);
@@ -486,7 +526,7 @@ function AtendimentoChatApp() {
                     {c.title || "Conversa sem título"}
                   </p>
                   <p className="mt-0.5 flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                    {c.status === "escalated" && (
+                    {c.status === "human" && (
                       <span className="size-1.5 shrink-0 rounded-full bg-destructive" />
                     )}
                     {formatRelativeTime(c.last_message_at)}
@@ -531,9 +571,11 @@ function AtendimentoChatApp() {
               {activeConversation?.title || "Atendimento Shoppfy"}
             </p>
             <p className="text-[11.5px] text-muted-foreground">
-              {escalated
-                ? "Encaminhado pro time — alguém vai continuar por aqui"
-                : "Resposta automática, em poucos segundos"}
+              {convStatus === "human"
+                ? "Você está falando com o responsável do Shoppfy"
+                : convStatus === "closed"
+                  ? "Atendimento finalizado — mande uma mensagem pra começar de novo"
+                  : "Resposta automática, em poucos segundos"}
             </p>
           </div>
         </header>
@@ -545,39 +587,50 @@ function AtendimentoChatApp() {
                 <Loader2 className="size-5 animate-spin" />
               </div>
             ) : (
-              messages.map((m) => (
-                <div
-                  key={m.id}
-                  className={`flex gap-2.5 ${m.role === "user" ? "flex-row-reverse" : ""}`}
-                >
-                  <div className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-surface-hover text-muted-foreground">
-                    {m.role === "user" ? (
-                      <UserRound className="size-4" />
-                    ) : (
-                      <MessageCircle className="size-4" />
-                    )}
-                  </div>
+              messages.map((m) =>
+                m.role === "system" ? (
+                  <p key={m.id} className="py-1 text-center text-[11.5px] text-muted-foreground">
+                    {m.content}
+                  </p>
+                ) : (
                   <div
-                    className={`max-w-[80%] rounded-xl px-3.5 py-2.5 text-[13px] leading-relaxed ${
-                      m.role === "user"
-                        ? "bg-brand text-brand-foreground"
-                        : "bg-surface-hover text-foreground"
-                    }`}
+                    key={m.id}
+                    className={`flex gap-2.5 ${m.role === "user" ? "flex-row-reverse" : ""}`}
                   >
-                    {m.kind === "image" && m.mediaUrl && (
-                      <img
-                        src={m.mediaUrl}
-                        alt="Imagem enviada"
-                        className="mb-1.5 max-h-64 rounded-md object-cover"
-                      />
-                    )}
-                    {m.kind === "audio" && m.mediaUrl && (
-                      <audio controls src={m.mediaUrl} className="mb-1.5 h-8 w-full max-w-xs" />
-                    )}
-                    <p className="whitespace-pre-wrap">{m.content}</p>
+                    <div className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-surface-hover text-muted-foreground">
+                      {m.role === "user" ? (
+                        <UserRound className="size-4" />
+                      ) : (
+                        <MessageCircle className="size-4" />
+                      )}
+                    </div>
+                    <div
+                      className={`max-w-[80%] rounded-xl px-3.5 py-2.5 text-[13px] leading-relaxed ${
+                        m.role === "user"
+                          ? "bg-brand text-brand-foreground"
+                          : "bg-surface-hover text-foreground"
+                      }`}
+                    >
+                      {m.kind === "image" && m.mediaUrl && (
+                        <img
+                          src={m.mediaUrl}
+                          alt="Imagem enviada"
+                          className="mb-1.5 max-h-64 rounded-md object-cover"
+                        />
+                      )}
+                      {m.kind === "audio" && m.mediaUrl && (
+                        <audio controls src={m.mediaUrl} className="mb-1.5 h-8 w-full max-w-xs" />
+                      )}
+                      {m.role === "agent" && (
+                        <p className="mb-1 text-[10.5px] font-semibold uppercase tracking-wide text-brand">
+                          Responsável Shoppfy
+                        </p>
+                      )}
+                      <p className="whitespace-pre-wrap">{m.content}</p>
+                    </div>
                   </div>
-                </div>
-              ))
+                ),
+              )
             )}
             {sending && (
               <div className="flex items-center gap-2 pl-9 text-[11.5px] text-muted-foreground">

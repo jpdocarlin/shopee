@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
-import { getSupportCustomers, type SupportCustomer } from "@/lib/support-admin.functions";
+import { useEffect, useRef, useState } from "react";
+import {
+  adminCloseConversation,
+  adminListConversations,
+  adminReply,
+  type AdminConversation,
+} from "@/lib/support-live.functions";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
-  AlertTriangle,
   BookOpen,
   CheckCircle2,
   Inbox,
@@ -39,16 +43,11 @@ import {
   deleteKnowledgeEntry,
   getMediaSignedUrl,
   getSupportStats,
-  listAllConversations,
   listConversationMessages,
-  listEscalations,
   listKnowledgeBase,
   listUnansweredQuestions,
   markUnansweredReviewed,
-  updateEscalationStatus,
   updateKnowledgeEntry,
-  type SupportConversation,
-  type SupportEscalation,
   type SupportKnowledgeEntry,
   type SupportMessage,
   type SupportStats,
@@ -56,7 +55,7 @@ import {
 } from "@/lib/support";
 
 const DESCRIPTION =
-  "Conversas, escalonamentos, perguntas sem resposta e a base de conhecimento do atendimento automático.";
+  "Responda os clientes que o bot passou pra você, finalize conversas e acompanhe as perguntas sem resposta.";
 
 export const Route = createFileRoute("/_shell/atendimento-admin")({
   head: () => ({
@@ -130,14 +129,6 @@ function AtendimentoAdminContent() {
       <Tabs defaultValue="conversas">
         <TabsList>
           <TabsTrigger value="conversas">Conversas</TabsTrigger>
-          <TabsTrigger value="escalonamentos">
-            Escalonamentos
-            {stats && stats.pendingEscalations > 0 && (
-              <Badge variant="destructive" className="ml-1.5 px-1.5 py-0 text-[10px]">
-                {stats.pendingEscalations}
-              </Badge>
-            )}
-          </TabsTrigger>
           <TabsTrigger value="perguntas">
             Perguntas sem resposta
             {stats && stats.unreviewedUnanswered > 0 && (
@@ -151,9 +142,6 @@ function AtendimentoAdminContent() {
 
         <TabsContent value="conversas" className="mt-5">
           <ConversationsPanel />
-        </TabsContent>
-        <TabsContent value="escalonamentos" className="mt-5">
-          <EscalationsPanel onChanged={refreshStats} />
         </TabsContent>
         <TabsContent value="perguntas" className="mt-5">
           <UnansweredPanel onChanged={refreshStats} />
@@ -192,46 +180,99 @@ function StatsRow({ stats }: { stats: SupportStats }) {
 // --------------------------------------------------------------------------
 
 function ConversationsPanel() {
-  const [conversations, setConversations] = useState<SupportConversation[]>([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [conversations, setConversations] = useState<AdminConversation[]>([]);
+  const [selectedId, setSelectedId] = useState<string | null>(() =>
+    typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("c") : null,
+  );
   const [messages, setMessages] = useState<SupportMessage[]>([]);
   const [mediaUrls, setMediaUrls] = useState<Record<string, string | null>>({});
   const [loading, setLoading] = useState(true);
   const [loadingThread, setLoadingThread] = useState(false);
-  const [customers, setCustomers] = useState<Record<string, SupportCustomer>>({});
+  const [reply, setReply] = useState("");
+  const [sendingReply, setSendingReply] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const threadRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    listAllConversations()
-      .then((rows) => {
-        setConversations(rows);
-        const ids = [...new Set(rows.map((r) => r.user_id))];
-        getSupportCustomers({ data: { userIds: ids } })
-          .then(setCustomers)
-          .catch((err) => console.error("[atendimento-admin] falha ao buscar contatos:", err));
-      })
-      .catch((err) => console.error("[atendimento-admin] falha ao listar conversas:", err))
-      .finally(() => setLoading(false));
-  }, []);
+  async function refreshList() {
+    try {
+      setConversations(await adminListConversations());
+    } catch (err) {
+      console.error("[atendimento-admin] falha ao listar conversas:", err);
+    } finally {
+      setLoading(false);
+    }
+  }
 
-  async function openConversation(id: string) {
-    setSelectedId(id);
-    setLoadingThread(true);
+  async function loadThread(id: string, showSpinner: boolean) {
+    if (showSpinner) setLoadingThread(true);
     try {
       const rows = await listConversationMessages(id);
       setMessages(rows);
-      const urls: Record<string, string | null> = {};
-      await Promise.all(
-        rows
-          .filter((m) => m.media_path)
-          .map(async (m) => {
+      const missing = rows.filter((m) => m.media_path && !(m.id in mediaUrls));
+      if (missing.length > 0) {
+        const urls: Record<string, string | null> = {};
+        await Promise.all(
+          missing.map(async (m) => {
             urls[m.id] = await getMediaSignedUrl(m.media_path as string);
           }),
-      );
-      setMediaUrls(urls);
+        );
+        setMediaUrls((prev) => ({ ...prev, ...urls }));
+      }
     } catch (err) {
       console.error("[atendimento-admin] falha ao carregar mensagens:", err);
     } finally {
-      setLoadingThread(false);
+      if (showSpinner) setLoadingThread(false);
+    }
+  }
+
+  // Lista atualiza a cada 10s; conversa aberta a cada 4s (mensagem nova do
+  // cliente aparece sozinha).
+  useEffect(() => {
+    void refreshList();
+    const id = setInterval(() => void refreshList(), 10_000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedId) return;
+    void loadThread(selectedId, true);
+    const id = setInterval(() => void loadThread(selectedId, false), 4000);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedId]);
+
+  useEffect(() => {
+    threadRef.current?.scrollTo({ top: threadRef.current.scrollHeight });
+  }, [messages.length]);
+
+  const selected = conversations.find((c) => c.id === selectedId);
+
+  async function handleSend() {
+    const text = reply.trim();
+    if (!text || !selectedId || sendingReply) return;
+    setSendingReply(true);
+    try {
+      await adminReply({ data: { conversationId: selectedId, text } });
+      setReply("");
+      await Promise.all([loadThread(selectedId, false), refreshList()]);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Não deu pra enviar.");
+    } finally {
+      setSendingReply(false);
+    }
+  }
+
+  async function handleClose() {
+    if (!selectedId || closing) return;
+    setClosing(true);
+    try {
+      await adminCloseConversation({ data: { conversationId: selectedId } });
+      toast.success("Conversa finalizada");
+      await Promise.all([loadThread(selectedId, false), refreshList()]);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Não deu pra finalizar.");
+    } finally {
+      setClosing(false);
     }
   }
 
@@ -253,113 +294,178 @@ function ConversationsPanel() {
     );
   }
 
+  const digits = selected?.customer.phone?.replace(/\D/g, "") ?? "";
+
   return (
-    <div className="grid gap-4 lg:grid-cols-[280px_1fr]">
-      <div className="surface-card max-h-[560px] divide-y divide-border overflow-y-auto">
+    <div className="grid gap-4 lg:grid-cols-[300px_1fr]">
+      <div className="surface-card max-h-[640px] divide-y divide-border overflow-y-auto">
         {conversations.map((c) => (
           <button
             key={c.id}
             type="button"
-            onClick={() => void openConversation(c.id)}
+            onClick={() => setSelectedId(c.id)}
             className={`block w-full px-3.5 py-3 text-left transition-colors hover:bg-surface-hover ${
               selectedId === c.id ? "bg-surface-hover" : ""
             }`}
           >
             <div className="flex items-center justify-between gap-2">
               <p className="truncate text-[12.5px] font-medium text-foreground">
-                {customers[c.user_id]?.name || customers[c.user_id]?.email || "Cliente"}
+                {c.customer.name || c.customer.email || "Cliente"}
               </p>
-              <StatusBadge status={c.status} />
+              {c.waiting ? (
+                <Badge variant="destructive" className="shrink-0 px-1.5 py-0 text-[10px]">
+                  Esperando você
+                </Badge>
+              ) : (
+                <StatusBadge status={c.status} />
+              )}
             </div>
             <p className="truncate text-[11.5px] text-muted-foreground">
               {c.title || "Conversa sem título"}
             </p>
             <p className="mt-0.5 text-[11px] text-muted-foreground">
-              {formatDateTime(c.last_message_at)}
+              {formatDateTime(c.lastMessageAt)}
             </p>
           </button>
         ))}
       </div>
 
-      <div className="surface-card min-h-[300px] max-h-[560px] overflow-y-auto p-4">
-        {!selectedId ? (
+      <div className="surface-card flex max-h-[640px] min-h-[360px] flex-col overflow-hidden">
+        {!selectedId || !selected ? (
           <p className="py-10 text-center text-[12.5px] text-muted-foreground">
-            Selecione uma conversa pra ver as mensagens.
+            Selecione uma conversa pra ver e responder.
           </p>
-        ) : loadingThread ? (
-          <div className="flex justify-center py-10 text-muted-foreground">
-            <Loader2 className="size-5 animate-spin" />
-          </div>
         ) : (
-          <div className="space-y-3">
-            {(() => {
-              const conv = conversations.find((c) => c.id === selectedId);
-              const info = conv ? customers[conv.user_id] : undefined;
-              const digits = info?.phone?.replace(/\D/g, "") ?? "";
-              return (
-                <div className="sticky top-0 z-10 -mx-4 -mt-4 mb-2 border-b border-border bg-surface px-4 py-3">
-                  <p className="text-[13px] font-semibold text-foreground">
-                    {info?.name || "Cliente sem nome"}
-                    {info?.plan && (
-                      <span className="ml-2 text-[11px] font-normal text-muted-foreground">
-                        {info.plan === "vitalicio" ? "Vitalício" : "Mensal"}
-                      </span>
-                    )}
-                  </p>
-                  <p className="mt-0.5 text-[12px] text-muted-foreground">
-                    {info?.email || "sem e-mail"}
-                    {" · "}
-                    {info?.phone ? (
-                      <a
-                        href={`https://wa.me/${digits.length <= 11 ? `55${digits}` : digits}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-brand underline underline-offset-2"
-                      >
-                        {info.phone}
-                      </a>
-                    ) : (
-                      "sem telefone"
-                    )}
-                  </p>
-                </div>
-              );
-            })()}
-            {messages.map((m) => (
-              <div key={m.id} className={m.role === "user" ? "" : "opacity-90"}>
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-medium text-muted-foreground">
-                    {m.role === "user" ? "Cliente" : "Atendimento"}
-                  </span>
-                  {m.intent && (
-                    <Badge variant="outline" className="px-1.5 py-0 text-[10px]">
-                      {CATEGORY_LABEL[m.intent] ?? m.intent}
-                    </Badge>
+          <>
+            <div className="flex items-start justify-between gap-3 border-b border-border px-4 py-3">
+              <div className="min-w-0">
+                <p className="truncate text-[13px] font-semibold text-foreground">
+                  {selected.customer.name || "Cliente sem nome"}
+                  {selected.customer.plan && (
+                    <span className="ml-2 text-[11px] font-normal text-muted-foreground">
+                      {selected.customer.plan === "vitalicio" ? "Vitalício" : "Mensal"}
+                    </span>
                   )}
-                  <span className="text-[10.5px] text-muted-foreground">
-                    {formatDateTime(m.created_at)}
-                  </span>
-                </div>
-                <div className="mt-1 rounded-lg border border-border bg-surface-hover px-3 py-2 text-[12.5px] text-foreground">
-                  {m.kind === "image" && mediaUrls[m.id] && (
-                    <img
-                      src={mediaUrls[m.id] as string}
-                      alt="Imagem enviada"
-                      className="mb-1.5 max-h-48 rounded-md object-cover"
-                    />
+                </p>
+                <p className="mt-0.5 truncate text-[12px] text-muted-foreground">
+                  {selected.customer.email || "sem e-mail"}
+                  {" · "}
+                  {selected.customer.phone ? (
+                    <a
+                      href={`https://wa.me/${digits.length <= 11 ? `55${digits}` : digits}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-brand underline underline-offset-2"
+                    >
+                      {selected.customer.phone}
+                    </a>
+                  ) : (
+                    "sem telefone"
                   )}
-                  {m.kind === "audio" && mediaUrls[m.id] && (
-                    <audio
-                      controls
-                      src={mediaUrls[m.id] as string}
-                      className="mb-1.5 h-8 w-full max-w-[260px]"
-                    />
-                  )}
-                  <p className="whitespace-pre-wrap">{m.content}</p>
-                </div>
+                </p>
               </div>
-            ))}
-          </div>
+              {selected.status !== "closed" && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="shrink-0 gap-1.5"
+                  disabled={closing}
+                  onClick={() => void handleClose()}
+                >
+                  {closing ? (
+                    <Loader2 className="size-3.5 animate-spin" />
+                  ) : (
+                    <CheckCircle2 className="size-3.5" />
+                  )}
+                  Finalizar conversa
+                </Button>
+              )}
+            </div>
+
+            <div ref={threadRef} className="flex-1 space-y-3 overflow-y-auto p-4">
+              {loadingThread ? (
+                <div className="flex justify-center py-10 text-muted-foreground">
+                  <Loader2 className="size-5 animate-spin" />
+                </div>
+              ) : (
+                messages.map((m) =>
+                  m.role === "system" ? (
+                    <p key={m.id} className="text-center text-[11.5px] text-muted-foreground">
+                      {m.content}
+                    </p>
+                  ) : (
+                    <div key={m.id} className={m.role === "user" ? "" : "pl-6"}>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`text-[11px] font-medium ${
+                            m.role === "agent" ? "text-brand" : "text-muted-foreground"
+                          }`}
+                        >
+                          {m.role === "user" ? "Cliente" : m.role === "agent" ? "Você" : "Bot"}
+                        </span>
+                        <span className="text-[10.5px] text-muted-foreground">
+                          {formatDateTime(m.created_at)}
+                        </span>
+                      </div>
+                      <div
+                        className={`mt-1 rounded-lg border px-3 py-2 text-[12.5px] text-foreground ${
+                          m.role === "agent"
+                            ? "border-brand/30 bg-brand/10"
+                            : "border-border bg-surface-hover"
+                        }`}
+                      >
+                        {m.kind === "image" && mediaUrls[m.id] && (
+                          <img
+                            src={mediaUrls[m.id] as string}
+                            alt="Imagem enviada"
+                            className="mb-1.5 max-h-48 rounded-md object-cover"
+                          />
+                        )}
+                        {m.kind === "audio" && mediaUrls[m.id] && (
+                          <audio
+                            controls
+                            src={mediaUrls[m.id] as string}
+                            className="mb-1.5 h-8 w-full max-w-[260px]"
+                          />
+                        )}
+                        <p className="whitespace-pre-wrap">{m.content}</p>
+                      </div>
+                    </div>
+                  ),
+                )
+              )}
+            </div>
+
+            <div className="border-t border-border p-3">
+              <div className="flex items-end gap-2">
+                <Textarea
+                  value={reply}
+                  onChange={(e) => setReply(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      void handleSend();
+                    }
+                  }}
+                  placeholder={`Responder ${selected.customer.name?.split(" ")[0] ?? "o cliente"}…`}
+                  className="max-h-32 min-h-10 flex-1 resize-none text-[13px]"
+                  disabled={sendingReply}
+                />
+                <Button
+                  onClick={() => void handleSend()}
+                  disabled={sendingReply || !reply.trim()}
+                  className="shrink-0 gap-1.5"
+                >
+                  {sendingReply ? <Loader2 className="size-4 animate-spin" /> : null}
+                  Enviar
+                </Button>
+              </div>
+              <p className="mt-1.5 text-[11px] text-muted-foreground">
+                Depois da sua resposta, se o cliente não responder em 10 minutos a conversa é
+                finalizada automaticamente.
+              </p>
+            </div>
+          </>
         )}
       </div>
     </div>
@@ -370,7 +476,9 @@ function StatusBadge({ status }: { status: string }) {
   const map: Record<string, { label: string; variant: "default" | "secondary" | "destructive" }> = {
     open: { label: "Aberta", variant: "secondary" },
     resolved: { label: "Resolvida", variant: "default" },
-    escalated: { label: "Escalada", variant: "destructive" },
+    escalated: { label: "Antiga", variant: "secondary" },
+    human: { label: "Com você", variant: "default" },
+    closed: { label: "Finalizada", variant: "secondary" },
   };
   const cfg = map[status] ?? { label: status, variant: "secondary" as const };
   return (
@@ -382,105 +490,6 @@ function StatusBadge({ status }: { status: string }) {
 
 // --------------------------------------------------------------------------
 // Escalonamentos
-// --------------------------------------------------------------------------
-
-function EscalationsPanel({ onChanged }: { onChanged: () => void }) {
-  const [items, setItems] = useState<SupportEscalation[]>([]);
-  const [filter, setFilter] = useState<"pending" | "in_review" | "resolved">("pending");
-  const [loading, setLoading] = useState(true);
-
-  async function load() {
-    setLoading(true);
-    try {
-      setItems(await listEscalations(filter));
-    } catch (err) {
-      console.error("[atendimento-admin] falha ao listar escalonamentos:", err);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    void load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter]);
-
-  async function updateStatus(id: string, status: SupportEscalation["status"]) {
-    try {
-      await updateEscalationStatus(id, status);
-      toast.success("Atualizado");
-      void load();
-      onChanged();
-    } catch {
-      toast.error("Não foi possível atualizar");
-    }
-  }
-
-  return (
-    <div className="space-y-4">
-      <div className="flex gap-2">
-        {(["pending", "in_review", "resolved"] as const).map((s) => (
-          <Button
-            key={s}
-            size="sm"
-            variant={filter === s ? "default" : "outline"}
-            onClick={() => setFilter(s)}
-          >
-            {s === "pending" ? "Pendentes" : s === "in_review" ? "Em análise" : "Resolvidos"}
-          </Button>
-        ))}
-      </div>
-
-      {loading ? (
-        <div className="flex justify-center py-10 text-muted-foreground">
-          <Loader2 className="size-5 animate-spin" />
-        </div>
-      ) : items.length === 0 ? (
-        <EmptyState
-          icon={AlertTriangle}
-          title="Nada por aqui"
-          description="Quando o atendimento encaminhar um caso pra humano, ele aparece nesta lista."
-        />
-      ) : (
-        <div className="space-y-3">
-          {items.map((e) => (
-            <div key={e.id} className="surface-card p-4">
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="text-[12.5px] font-medium text-foreground">{e.reason}</p>
-                  <p className="mt-1 text-[12px] text-muted-foreground">{e.summary}</p>
-                  <p className="mt-1.5 text-[11px] text-muted-foreground">
-                    {formatDateTime(e.created_at)}
-                  </p>
-                </div>
-                <div className="flex shrink-0 gap-1.5">
-                  {e.status !== "in_review" && (
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => void updateStatus(e.id, "in_review")}
-                    >
-                      Analisar
-                    </Button>
-                  )}
-                  {e.status !== "resolved" && (
-                    <Button size="sm" onClick={() => void updateStatus(e.id, "resolved")}>
-                      <CheckCircle2 className="size-3.5" />
-                      Resolver
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// --------------------------------------------------------------------------
-// Perguntas sem resposta
 // --------------------------------------------------------------------------
 
 function UnansweredPanel({ onChanged }: { onChanged: () => void }) {
