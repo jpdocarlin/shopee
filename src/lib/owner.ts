@@ -30,3 +30,13 @@ export function useIsPedidosAdmin(): boolean {
   const isPedidosAdmin = useAuthStore((s) => s.isPedidosAdmin);
   return initialized && isPedidosAdmin;
 }
+
+// Roles já carregadas? Páginas restritas (Atendimento/Pedidos Admin) só
+// redirecionam depois disso — antes, abrir o link direto (ex.: tocando na
+// notificação) mandava pro Dashboard porque as roles ainda não tinham chegado.
+export function useRolesReady(): boolean {
+  const initialized = useAuthStore((s) => s.initialized);
+  const session = useAuthStore((s) => s.session);
+  const rolesLoaded = useAuthStore((s) => s.rolesLoaded);
+  return initialized && (!session || rolesLoaded);
+}

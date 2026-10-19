@@ -34,8 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useIsOwner } from "@/lib/owner";
-import { useAuthStore } from "@/stores/auth-store";
+import { useIsOwner, useRolesReady } from "@/lib/owner";
 import {
   CATEGORY_LABEL,
   KNOWLEDGE_CATEGORIES,
@@ -79,15 +78,15 @@ function formatDateTime(iso: string) {
 }
 
 function AtendimentoAdminPage() {
-  const initialized = useAuthStore((s) => s.initialized);
+  const ready = useRolesReady();
   const isOwner = useIsOwner();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (initialized && !isOwner) void navigate({ to: "/" });
-  }, [initialized, isOwner, navigate]);
+    if (ready && !isOwner) void navigate({ to: "/" });
+  }, [ready, isOwner, navigate]);
 
-  if (!initialized || !isOwner) {
+  if (!ready || !isOwner) {
     return (
       <div className="flex items-center justify-center py-24 text-muted-foreground">
         <Loader2 className="size-5 animate-spin" />

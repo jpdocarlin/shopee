@@ -80,6 +80,7 @@ export function AuthProvider() {
       setMarketplaceConnected((accounts?.length ?? 0) > 0);
       setIsAdmin((roles ?? []).some((r) => r.role === "admin"));
       setIsPedidosAdmin((roles ?? []).some((r) => r.role === "pedidos_admin"));
+      useAuthStore.getState().setRolesLoaded(true);
       if (profile?.full_name) useProfileStore.getState().setName(profile.full_name);
 
       // Substitui o cache local de "Meus Links" pelos links reais do

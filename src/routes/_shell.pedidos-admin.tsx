@@ -5,8 +5,7 @@ import { Loader2 } from "lucide-react";
 import { PageHeader } from "@/components/shared/page-header";
 import { AdminPedidosList } from "@/components/pedidos/admin-pedidos-list";
 import { PushNotificationsCard } from "@/components/pedidos/push-notifications-card";
-import { useIsPedidosAdmin } from "@/lib/owner";
-import { useAuthStore } from "@/stores/auth-store";
+import { useIsPedidosAdmin, useRolesReady } from "@/lib/owner";
 
 const DESCRIPTION = "Todos os pedidos enviados pelos revendedores, com dados de contato.";
 
@@ -18,7 +17,7 @@ export const Route = createFileRoute("/_shell/pedidos-admin")({
 });
 
 function PedidosAdminPage() {
-  const initialized = useAuthStore((s) => s.initialized);
+  const ready = useRolesReady();
   const isPedidosAdmin = useIsPedidosAdmin();
   const navigate = useNavigate();
 
@@ -26,12 +25,12 @@ function PedidosAdminPage() {
   // cair aqui (link direto, etc.), manda pro Dashboard — a RLS já bloquearia
   // os dados de qualquer forma, mas nem a tela deve aparecer.
   useEffect(() => {
-    if (initialized && !isPedidosAdmin) {
+    if (ready && !isPedidosAdmin) {
       void navigate({ to: "/" });
     }
-  }, [initialized, isPedidosAdmin, navigate]);
+  }, [ready, isPedidosAdmin, navigate]);
 
-  if (!initialized || !isPedidosAdmin) {
+  if (!ready || !isPedidosAdmin) {
     return (
       <div className="flex items-center justify-center py-24 text-muted-foreground">
         <Loader2 className="size-5 animate-spin" />

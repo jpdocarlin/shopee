@@ -29,6 +29,10 @@ type AuthState = {
   // Role restrita "pedidos_admin" (user_roles) — só enxerga a aba Pedidos
   // (Admin); não é o mesmo que isAdmin (dono, vê tudo menos Pedidos Admin).
   isPedidosAdmin: boolean;
+  // true depois que as roles (user_roles) do usuário logado foram carregadas —
+  // as páginas restritas esperam isso antes de decidir redirecionar.
+  rolesLoaded: boolean;
+  setRolesLoaded: (value: boolean) => void;
   setInitialized: (value: boolean) => void;
   setSession: (session: Session | null) => void;
   setProfile: (profile: Profile | null) => void;
@@ -45,6 +49,8 @@ export const useAuthStore = create<AuthState>()((set) => ({
   marketplaceConnected: null,
   isAdmin: false,
   isPedidosAdmin: false,
+  rolesLoaded: false,
+  setRolesLoaded: (value) => set({ rolesLoaded: value }),
   setInitialized: (value) => set({ initialized: value }),
   setSession: (session) => set({ session }),
   setProfile: (profile) => set({ profile }),
@@ -58,5 +64,6 @@ export const useAuthStore = create<AuthState>()((set) => ({
       marketplaceConnected: null,
       isAdmin: false,
       isPedidosAdmin: false,
+      rolesLoaded: false,
     }),
 }));
