@@ -167,14 +167,27 @@ export const sendSupportMessage = createServerFn({ method: "POST" })
     // ---------- 4b. dono já está atendendo: bot fica quieto, só avisa o dono ----------
     if (humanMode) {
       const name = await getCustomerName(userId);
+      // Código da compra não precisa esperar o dono: se o cliente mandou o
+      // e-mail ou pediu o código, o sistema responde na hora.
+      const { autoPurchaseCodeReply } = await import("@/lib/support-bot.server");
+      const codeReply = await autoPurchaseCodeReply(supabaseAdmin, userId, effectiveText);
+      if (codeReply) {
+        await supabaseAdmin.from("support_messages").insert({
+          conversation_id: conversationId,
+          user_id: userId,
+          role: "assistant",
+          kind: "text",
+          content: codeReply,
+        });
+      }
       await pushOwner({
         conversationId,
         title: `${name} respondeu`,
-        body: effectiveText,
+        body: codeReply ? `${effectiveText} (código da compra já enviado pelo bot)` : effectiveText,
       });
       return {
         conversationId,
-        reply: null as string | null,
+        reply: codeReply,
         intent: null,
         escalated: true,
         human: true,
