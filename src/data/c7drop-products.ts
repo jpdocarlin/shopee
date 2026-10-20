@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-10-20 — 1346 produtos, na ordem retornada pela API
+// Snapshot de 2026-10-20 — 1353 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -20,6 +20,83 @@ export type C7DropProduct = {
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
+  {
+    id: "cmvh6m5nt0012evclcuaa7ft9",
+    name: "Fone de Ouvido Sem Fio Bluetooth 5.4 Agold pro Fn BT5 Hifi",
+    slug: "fone-de-ouvido-sem-fio-bluetooth-5-4-agold-pro-fn-bt5-hifi",
+    priceCents: 5400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792530596443-b3d30273.webp",
+    category: "Fones de Ouvido",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmvh6202q000uukgy70td2dt3",
+    name: "Adaptador Ethernet Starlink Gen 3 Multiportas com Cabo",
+    slug: "adaptador-ethernet-starlink-gen-3-multiportas-com-cabo",
+    priceCents: 20000,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792529667551-986d5780.webp",
+    category: "Informática",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmvh4lc4i000gjousiceo2smq",
+    name: "Inversor 30v Starlink Mini + Cabo Tomada 3 Metros",
+    slug: "inversor-30v-starlink-mini-cabo-tomada-3-metros",
+    priceCents: 7400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792526994178-39afe420.webp",
+    category: "Informática",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmvh3t2cn0002uml0896zw9z0",
+    name: "Impressora Etiqueta Adesiva Marketplace Ecommerce",
+    slug: "impressora-etiqueta-adesiva-marketplace-ecommerce",
+    priceCents: 31000,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792525811757-06c982b7.webp",
+    category: "Informática",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmvh3b73y004sm3fri5g77wav",
+    name: "Microfone Condensador Lotus P3 Preto Portátil P2 Celular Tablet",
+    slug: "microfone-condensador-lotus-p3-preto-portatil-p2-celular-tablet",
+    priceCents: 900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792525009791-693a44c0.webp",
+    category: "Produtos diversos",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmvh2beg40001108t9x5m333p",
+    name: "Kit 03 Amassador De Batata Batedor De Ovos Espatula De Bolo",
+    slug: "kit-03-amassador-de-batata-batedor-de-ovos-espatula-de-bolo",
+    priceCents: 3100,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792523330286-6763e121.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmvh17jc30006ugu6488a82dn",
+    name: "Bola Bomba De Banho Bicho Surpresa Bath Bomb Gift Oceanos",
+    slug: "12-bola-bomba-de-banho-bicho-surpresa-bath-bomb-gift-oceanos",
+    priceCents: 1200,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792521412287-a8ca0842.webp",
+    category: "Brinquedos",
+    stock: 50,
+    manageStock: true,
+  },
   {
     id: "cmvejwwkz000m1zhyqj57ozt7",
     name: "Pista De Carrinhos Construção Brinquedo Infantil 125 Peças Amarelo",
@@ -391,7 +468,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789650495771-e170773f.webp",
     category: "Brinquedos",
-    stock: 42,
+    stock: 41,
     manageStock: true,
   },
   {
@@ -875,7 +952,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787844432689-b34b4f23.webp",
     category: "Informática",
-    stock: 47,
+    stock: 45,
     manageStock: true,
   },
   {
@@ -2734,7 +2811,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/385f982fa1-1-10.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -4945,7 +5022,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/28ac579502-1-1.webp",
     category: "Informática",
-    stock: -31,
+    stock: -32,
     manageStock: false,
   },
   {
@@ -5231,7 +5308,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e96a8d71f5-2-19.jpg",
     category: "Celulares e Smartphones",
-    stock: -8,
+    stock: -9,
     manageStock: false,
   },
   {
@@ -5968,7 +6045,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/59c3629e09-1-19.jpg",
     category: "Fora de Estoque",
-    stock: 1,
+    stock: 0,
     manageStock: true,
   },
   {
@@ -8300,7 +8377,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2d4fc0576c-6-37.jpg",
     category: "Mais vendidos",
-    stock: -16,
+    stock: -17,
     manageStock: false,
   },
   {
@@ -11446,7 +11523,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4f2b20216-Prancheta-2-5.png",
     category: "Brinquedos",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -11754,7 +11831,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31a8c07673-1-8.jpg",
     category: "Brinquedos",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
