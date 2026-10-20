@@ -18,7 +18,16 @@ import { cn } from "@/lib/utils";
 // tem curso/mentoria da própria C7Drop misturado (não é produto físico).
 const EXCLUDED_CATEGORIES = new Set(["Fora de Estoque", "Anúncios em Massa"]);
 
-const AVAILABLE_PRODUCTS = C7DROP_PRODUCTS.filter((p) => !EXCLUDED_CATEGORIES.has(p.category));
+// Esgotado de verdade = a C7Drop controla o estoque (manageStock) e ele zerou.
+// Com manageStock false a C7Drop vende sempre, mesmo com stock 0 — o site
+// deles mostra "Em estoque" nesses —, então esses continuam aparecendo.
+function isSoldOut(p: C7DropProduct): boolean {
+  return p.manageStock && p.stock <= 0;
+}
+
+const AVAILABLE_PRODUCTS = C7DROP_PRODUCTS.filter(
+  (p) => !EXCLUDED_CATEGORIES.has(p.category) && !isSoldOut(p),
+);
 
 // Nichos disponíveis + quantos produtos cada um tem, pra alimentar o filtro
 // por nicho abaixo. Calculado uma única vez a partir do catálogo real (não é

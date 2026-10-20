@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-10-19 — 1346 produtos, na ordem retornada pela API
+// Snapshot de 2026-10-20 — 1346 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -14,6 +14,9 @@ export type C7DropProduct = {
   image: string;
   category: string; // nome da primeira categoria, ou "Outros" se não tiver
   stock: number;
+  // false = a C7Drop não controla estoque desse produto (vende sempre, mesmo
+  // com stock 0). Só conta como esgotado quando manageStock é true e stock <= 0.
+  manageStock: boolean;
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
@@ -26,6 +29,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792371501750-d5887c72.webp",
     category: "Brinquedos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmvej6xs8002st436nhfpdwqm",
@@ -33,9 +37,10 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "transmissor-bluetooth-para-tv-fone-e-caixa-de-som-rca-usb",
     priceCents: 3400,
     compareAtPriceCents: null,
-    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792369827753-38c06b52.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792417465754-e7e68ecd.webp",
     category: "Produtos diversos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmveicezi001gjdugk5ar0vq6",
@@ -46,6 +51,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792368666634-b272fdb1.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmv7ex4dr001zwznwehl8tgua",
@@ -56,6 +62,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791939763407-de77ada2.webp",
     category: "Outros",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmv7e54sk0009wznw58eml1i1",
@@ -66,6 +73,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791938538903-dac442e9.webp",
     category: "Produtos diversos",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmv7cyrb9000910fqehu1khhw",
@@ -76,16 +84,18 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791936296914-0863119b.webp",
     category: "Ring Light & Suportes",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmv5wvz7w001bp3khdxtufvgq",
-    name: "Suporte Magnético Plegável Tripé Para Celular E Tablet",
+    name: "Novo Suporte Magnético Plegável Tripé Para Celular E Tablet",
     slug: "suporte-magnetico-plegavel-tripe-para-celular-e-tablet",
     priceCents: 4900,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791848946226-3c404c7f.webp",
     category: "Ring Light & Suportes",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmv5v9u8w002b6qihsysst4bo",
@@ -95,7 +105,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791846298299-1e692f8b.webp",
     category: "Informática",
-    stock: 49,
+    stock: 45,
+    manageStock: true,
   },
   {
     id: "cmv5ugqsh000w12nhwh3mru0y",
@@ -106,6 +117,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791844966313-803456c8.webp",
     category: "Produtos diversos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmv1mppz90002d4o823n8vym5",
@@ -116,6 +128,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791589905409-6b761281.webp",
     category: "Câmeras",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmv1kw4c2000a137h8t5kj78j",
@@ -126,6 +139,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791586866746-3db0c082.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmv1k1fy0000j7clirmgaqeta",
@@ -136,6 +150,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791585383599-b52be79a.webp",
     category: "Produto de Natal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmuzmphm30013qn85pee0uvjj",
@@ -146,6 +161,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791469239453-7e4f17ff.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmuzlmjvw0002nffk1u743b40",
@@ -156,6 +172,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791467064425-794aa16c.webp",
     category: "Brinquedos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmuyuluu60001p47xrnhbnl65",
@@ -165,7 +182,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791421689025-6ad0efd4.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 45,
+    stock: 44,
+    manageStock: true,
   },
   {
     id: "cmuytorz40006l5x1na3wmv0k",
@@ -176,6 +194,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791420237802-fe1b3145.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmuwwb7iw00039b52ugzioynb",
@@ -186,6 +205,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791303763449-df1c1b16.webp",
     category: "Ferramentas",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmuwuei0q0016xz5ksuh8f40x",
@@ -196,6 +216,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791300428356-f10600c2.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmuwsqq5u0006qukxdsnv1a7q",
@@ -206,6 +227,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791297827062-014b0873.webp",
     category: "Produtos diversos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmuwrtxtq00068rrpmhi46bv7",
@@ -216,6 +238,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791296142987-8ff573ab.webp",
     category: "Papelaria",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmuwqafgr00062pl4jyqgp3no",
@@ -226,6 +249,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791293615833-1ab1b8b6.webp",
     category: "Produtos diversos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmuwoek1z0002gda8d746en4f",
@@ -235,7 +259,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791290442082-4bb76c43.webp",
     category: "Brinquedos",
-    stock: 15,
+    stock: 10,
+    manageStock: true,
   },
   {
     id: "cmurdmogm000bv239vtngmohw",
@@ -246,6 +271,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790970044460-0a0b7608.webp",
     category: "Câmeras",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmuq6it3b000mwu6t13r71uua",
@@ -256,6 +282,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790897741615-9668cc80.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 46,
+    manageStock: true,
   },
   {
     id: "cmuq4zbzk000pmmq45dh4ghuq",
@@ -265,7 +292,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790894562975-dcc3b713.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 50,
+    stock: 49,
+    manageStock: true,
   },
   {
     id: "cmueom0ed000a58dqsqifffyt",
@@ -276,6 +304,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790202596018-3ab8d4fa.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmuenpejy0004mxh8pl3vqz5i",
@@ -286,6 +315,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790200812352-97f997d8.webp",
     category: "Fones de Ouvido",
     stock: 44,
+    manageStock: true,
   },
   {
     id: "cmuemlbzj000nrr9rn7nnotgi",
@@ -296,6 +326,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790203499265-dfddc765.webp",
     category: "Informática",
     stock: 46,
+    manageStock: true,
   },
   {
     id: "cmucofn8a000mhp3hcronlort",
@@ -306,6 +337,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790081017911-ecb1f2c3.webp",
     category: "Produtos diversos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmuaeg8av000413nl8rs3lskj",
@@ -316,6 +348,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789943953938-7a0bba37.webp",
     category: "Ferramentas",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmuad1t9k000bsy2mqayqek43",
@@ -325,7 +358,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789941225766-35ee5c40.webp",
     category: "Brinquedos",
-    stock: 49,
+    stock: 48,
+    manageStock: true,
   },
   {
     id: "cmuaaxlrs000jio79kw8pozbi",
@@ -336,6 +370,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789937673949-6d1dabfd.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmu5kst4g00028n8g21ytdx6u",
@@ -346,6 +381,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789651853148-aef0682f.webp",
     category: "Brinquedos",
     stock: 28,
+    manageStock: true,
   },
   {
     id: "cmu5jxhk9000nxekh84ljxsm6",
@@ -356,6 +392,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789650495771-e170773f.webp",
     category: "Brinquedos",
     stock: 42,
+    manageStock: true,
   },
   {
     id: "cmu5j96f700073r1fz83eqvjz",
@@ -366,6 +403,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789649363959-e9aeaf1a.webp",
     category: "Brinquedos",
     stock: 48,
+    manageStock: true,
   },
   {
     id: "cmu5imyyt0009jxry00xxplrc",
@@ -376,6 +414,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789648184982-24deca1e.webp",
     category: "Iluminação",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmu2quv7y0002kyiv0lb84lxa",
@@ -386,6 +425,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789479725632-c61fb423.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmu2pjwva0001oy9f20uy6gns",
@@ -396,6 +436,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789478394855-519cfe23.webp",
     category: "Ring Light & Suportes",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmttb9rhq000410lazuam6s93",
@@ -406,6 +447,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788910347180-b107cc0b.webp",
     category: "Produtos diversos",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmtsp4oe8000122tdt8cxe5ti",
@@ -416,6 +458,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788873267079-55b90c9d.webp",
     category: "Carregadores & Power Banks",
     stock: 48,
+    manageStock: true,
   },
   {
     id: "cmtn0nkf9000l36gvyw1ybyzy",
@@ -426,6 +469,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788529877398-126183c7.webp",
     category: "Produtos diversos",
     stock: 38,
+    manageStock: true,
   },
   {
     id: "cmtn00ckh000m9cr4a9u455i9",
@@ -436,6 +480,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788528572683-905cc912.webp",
     category: "Relogios e Smartwatchs",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmtmzaz0p001pdysp8prmpdw6",
@@ -446,6 +491,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788527500056-e70175e1.webp",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmtlipmp1000313zmtiisvqwf",
@@ -456,6 +502,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788439269871-c7fd64e0.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 39,
+    manageStock: true,
   },
   {
     id: "cmtli3rfm0009a8gcq917hbsf",
@@ -466,6 +513,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788438226763-f0e2e8cb.webp",
     category: "Ring Light & Suportes",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmtlhcp5u0004p83gvvoo9b82",
@@ -476,6 +524,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788436609543-c7812cc5.webp",
     category: "Ferramentas",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmtlgeit7000fw4hbq79g0fzb",
@@ -486,6 +535,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788435279735-a9afa59f.webp",
     category: "Fones de Ouvido",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmtk771ft0019j9x2zpclt4se",
@@ -496,6 +546,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788359467788-1354b25c.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmtk6iq9r0015h53qhr5zpoio",
@@ -506,6 +557,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788358483015-6f3afae7.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 46,
+    manageStock: true,
   },
   {
     id: "cmtk5qy9k000bhqefbow8gfel",
@@ -516,6 +568,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788356901045-cfbf08bf.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 44,
+    manageStock: true,
   },
   {
     id: "cmtk51wcg0005zqgs1tcazimk",
@@ -526,6 +579,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788355737322-fa2d2bc6.webp",
     category: "Relogios e Smartwatchs",
     stock: 45,
+    manageStock: true,
   },
   {
     id: "cmtipskc2000jx51wui25ujsy",
@@ -536,6 +590,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788269619485-877021ce.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 48,
+    manageStock: true,
   },
   {
     id: "cmtip6u6v000egoqygchfvj1q",
@@ -546,6 +601,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788268540502-23a3d6cd.webp",
     category: "Fones de Ouvido",
     stock: 36,
+    manageStock: true,
   },
   {
     id: "cmtioih70000113vbwy9gutyd",
@@ -556,6 +612,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788267481433-4c84684f.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmthxfy53000nloncrc1lkdc7",
@@ -566,6 +623,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788222145957-022a9a77.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmthw413a000e2yrgr9lha0f0",
@@ -575,7 +633,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788219969302-d38bea34.webp",
     category: "Produtos diversos",
-    stock: 47,
+    stock: 46,
+    manageStock: true,
   },
   {
     id: "cmthv2wu9001ttfistuzr72uz",
@@ -586,6 +645,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788218174783-d36fc2bf.webp",
     category: "Produto de Natal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmthcakjg001l109ag0de1sdf",
@@ -596,6 +656,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788186490741-a67913a7.webp",
     category: "Produto de Natal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmthbpl5l000myjam7cmb3omp",
@@ -606,6 +667,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788185182132-f611d94e.webp",
     category: "Produto de Natal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmthakuz5000m12isr2r0r3c4",
@@ -616,6 +678,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788183530652-e9b95277.webp",
     category: "Produto de Natal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmth9i6uv000i95tun0vzldt5",
@@ -626,6 +689,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788181902025-b76d6d36.webp",
     category: "Produto de Natal",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmth8twx2000keykab5h4kjn1",
@@ -636,6 +700,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788180820749-cc5abbc3.webp",
     category: "Produto de Natal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmtezvp38001764kdilu83re6",
@@ -646,6 +711,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788043707501-49e0cc25.webp",
     category: "Produto de Natal",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmtex3ogx00033swohg8rs9uv",
@@ -656,6 +722,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788040167580-4794356a.webp",
     category: "Produto de Natal",
     stock: 45,
+    manageStock: true,
   },
   {
     id: "cmteve0ta0001b7t6idpbdw37",
@@ -666,6 +733,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788037006831-49ca79ed.webp",
     category: "Produto de Natal",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmtetsh2k000kcss6wyzqzorw",
@@ -676,6 +744,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788034476902-adc78d33.webp",
     category: "Produto de Natal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmteswnk8000ikjq1d4md5xpx",
@@ -686,6 +755,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788032858526-e12c084d.webp",
     category: "Produto de Natal",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmtd1mm0z0001k7m1o7hudbs4",
@@ -696,6 +766,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787926551700-85f03288.webp",
     category: "Produto de Natal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmtd0vz6b002f6hdbaut066d3",
@@ -706,6 +777,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787925294891-5876dcde.webp",
     category: "Produto de Natal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmtczpzr0001cou6rv4vb2hku",
@@ -716,6 +788,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787923885871-3b4b9b2b.webp",
     category: "Ferramentas",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmtcz81if001xy3g1qnmohrvv",
@@ -726,6 +799,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787922615916-5dbbd6ea.webp",
     category: "Ferramentas",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmtcyfwe4000r6hdbtlh7bprx",
@@ -736,6 +810,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787921191547-1e29114d.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmtcxff5z000flh7a3qlb3hxw",
@@ -745,7 +820,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787919712713-f82b549c.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 49,
+    stock: 47,
+    manageStock: true,
   },
   {
     id: "cmtbyfshz0009m4jomytuufks",
@@ -756,6 +832,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787860861291-c0a4e6ab.webp",
     category: "Produtos diversos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmtbxhwjl0001cf6muw3k1945",
@@ -766,6 +843,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787859270772-2aa6d0cd.webp",
     category: "Produtos diversos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmtbwqhn2001113dcxjaasazk",
@@ -776,6 +854,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787857879084-2b4c2d59.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 43,
+    manageStock: true,
   },
   {
     id: "cmtbvs4mf000330cfwesbwobe",
@@ -785,7 +864,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787855356529-2950f74d.webp",
     category: "Produtos diversos",
-    stock: 40,
+    stock: 38,
+    manageStock: true,
   },
   {
     id: "cmtboq5u80008j7oybhjhm7jm",
@@ -796,6 +876,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787844432689-b34b4f23.webp",
     category: "Informática",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmtbn0zm80009wzdplvptvo09",
@@ -806,6 +887,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787840820004-952b56ec.webp",
     category: "Ferramentas",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmtblnm4b0001ckpqjly55tz6",
@@ -816,6 +898,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787839240584-fc18de01.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmta9y5xt000wvycu8asfrzi4",
@@ -826,6 +909,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787758405694-0f7003b6.webp",
     category: "Produtos diversos",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmta61ip30001a2ozxsraepht",
@@ -836,6 +920,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787752659203-b3f687a2.webp",
     category: "Produtos diversos",
     stock: 48,
+    manageStock: true,
   },
   {
     id: "cmta4vczz0001yqy3hwl8n0rz",
@@ -846,6 +931,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787750507194-5b227892.webp",
     category: "Salão & Barbearia",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmt8t0mxh0008s2oa77yz91qv",
@@ -856,6 +942,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787669966405-4ee9f67a.webp",
     category: "Relogios e Smartwatchs",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmt8rxgr70004gzh1f6k8wor1",
@@ -866,6 +953,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787668618452-331e7cbc.webp",
     category: "Carregadores & Power Banks",
     stock: 43,
+    manageStock: true,
   },
   {
     id: "cmt8qx7u8003vkbkgec4c46rd",
@@ -876,6 +964,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787666448933-34713fb3.webp",
     category: "Produto de Natal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmt67aofj0003ba3imfni2usv",
@@ -886,6 +975,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787512778042-2c6632a8.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmt5wemh40002avfnmp3f5rz9",
@@ -896,6 +986,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787494858333-40df3712.webp",
     category: "Produto de Natal",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmt5vfn1y0007383zvbl1nhyw",
@@ -906,6 +997,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787491937856-b760def2.webp",
     category: "Produto de Natal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmt5twhb2001l11pzvi1wzqgo",
@@ -916,6 +1008,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787490380484-39b6a26e.webp",
     category: "Ferramentas",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmt3kekkn0016sn798r2xjje8",
@@ -926,6 +1019,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787353500160-b44da186.webp",
     category: "Produto de Natal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmt3efqsi0001y9zu489dz9bk",
@@ -936,6 +1030,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787343668689-833727c9.webp",
     category: "Produtos diversos",
     stock: 35,
+    manageStock: true,
   },
   {
     id: "cmt3d64qs000ukn1thx8xoeir",
@@ -946,6 +1041,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787341236332-94f9ec60.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 45,
+    manageStock: true,
   },
   {
     id: "cmt3bfsok00152v5hxm5uv2vm",
@@ -956,6 +1052,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787338491535-0789b4e9.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmt0j3bpc0007mg2l13ycb1d4",
@@ -966,6 +1063,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787169820114-1037165f.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmt0bjdgp003viwxutf3vnvj9",
@@ -976,6 +1074,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787157128467-1ffe60af.webp",
     category: "Materiais de Pesca",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmsyr1fs40009k4wzd2sp025u",
@@ -986,6 +1085,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787062367444-3e9e2d72.webp",
     category: "Caixas de Som",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmsyqg73t000t6yqrsg10elhv",
@@ -996,6 +1096,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787060944317-e51e4514.webp",
     category: "Salão & Barbearia",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmst1d2ue002j1384h0sc01eg",
@@ -1006,6 +1107,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786716245771-a697446f.webp",
     category: "Iluminação",
     stock: 44,
+    manageStock: true,
   },
   {
     id: "cmsszxzpo001o1017ng3a1xmf",
@@ -1015,7 +1117,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786714615248-c942bae0.webp",
     category: "Brinquedos",
-    stock: 35,
+    stock: 33,
+    manageStock: true,
   },
   {
     id: "cmssz7rba00159lg5khe467yw",
@@ -1026,6 +1129,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786712948248-8a18016d.webp",
     category: "Produtos diversos",
     stock: 46,
+    manageStock: true,
   },
   {
     id: "cmsqkf0d0001irrogvr5ir7la",
@@ -1036,6 +1140,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791935374187-51dd2a10.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 46,
+    manageStock: true,
   },
   {
     id: "cmsqjc36u0022yhw9d7uq4z25",
@@ -1046,6 +1151,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786565432881-ac505cc2.webp",
     category: "Produtos diversos",
     stock: 48,
+    manageStock: true,
   },
   {
     id: "cmsq4qjba002n12rnr53jv2er",
@@ -1056,6 +1162,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786540858675-e3f1751e.webp",
     category: "Caixas de Som",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmsq3897y001i12rnhck1p4ew",
@@ -1066,6 +1173,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786537891409-bfe0d766.webp",
     category: "Produtos diversos",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmsp083no006yez8tocmws7e0",
@@ -1076,6 +1184,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786473066094-29475067.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmsoqjo4q0018fptoqbixgeaf",
@@ -1086,6 +1195,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786456814385-14ce5195.webp",
     category: "Brinquedos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmso53mu50001h890xebugase",
@@ -1096,6 +1206,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786421063534-9039c9b4.webp",
     category: "Informática",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmso3yiq4000cd0d5o8drmxsv",
@@ -1106,6 +1217,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786418711031-9b73304a.webp",
     category: "Ferramentas",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmso2vne9000a143lacp9jec0",
@@ -1116,6 +1228,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786416128100-664303a7.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmso1gwmu000a525divk6fv7f",
@@ -1126,6 +1239,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786414794905-69802d00.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmsnwf3m5000ca7mno25nmsb8",
@@ -1135,7 +1249,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786406220119-892943bf.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 50,
+    stock: 49,
+    manageStock: true,
   },
   {
     id: "cmsnvglt3000dhvbjlaupito8",
@@ -1146,6 +1261,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786404592985-69fe8346.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmsnteu0x000z9z843ddd2a3z",
@@ -1156,6 +1272,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786400848601-0f632d8a.webp",
     category: "Ferramentas",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmskywbxw00029jeet4y5eunq",
@@ -1166,6 +1283,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786228871900-756c487b.webp",
     category: "Informática",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmskk9d470008r7af0nm65sbl",
@@ -1176,6 +1294,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786204533305-ee5b4016.webp",
     category: "Produtos diversos",
     stock: 44,
+    manageStock: true,
   },
   {
     id: "cmskjibos00019lb8ye38n08l",
@@ -1186,6 +1305,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786203048501-af120076.webp",
     category: "Salão & Barbearia",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmski3tx30002xgj4xbojvdrc",
@@ -1196,6 +1316,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786200768067-07740665.webp",
     category: "Carregadores & Power Banks",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmsjkm0vs00158ez4i6282bfa",
@@ -1206,6 +1327,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786144589395-377f7e7d.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmsjja2bp000c14ma4eia15gx",
@@ -1216,6 +1338,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786142223924-874d138a.webp",
     category: "Informática",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmsje4vwo0003qhvk17camox1",
@@ -1226,6 +1349,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786133793477-8ee52f41.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmsjcoqi4000iiawlzfjk97cj",
@@ -1236,6 +1360,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786131217414-a4ad1b1b.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 38,
+    manageStock: true,
   },
   {
     id: "cmsjb0b9n0026n7heitf4dftu",
@@ -1246,6 +1371,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786127148280-4d4b767c.webp",
     category: "Informática",
     stock: 48,
+    manageStock: true,
   },
   {
     id: "cmsj9l9j0001n4xw4m7iydkhd",
@@ -1256,6 +1382,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786126064830-205beb84.webp",
     category: "Informática",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmshipa51000fgbpwjwtofkht",
@@ -1266,6 +1393,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786020544329-9426d8a4.webp",
     category: "Fones de Ouvido",
     stock: -8,
+    manageStock: true,
   },
   {
     id: "cmshhz1ia00073nke5dyvjgwv",
@@ -1276,6 +1404,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786019142682-e1425ae5.webp",
     category: "Media Streaming",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmshh2n9o000i9izvnadh1t2l",
@@ -1286,6 +1415,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786017786388-0f4155d8.webp",
     category: "Media Streaming",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmsgiyzsc0008nqnnq130sjpd",
@@ -1296,6 +1426,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785960315315-ff5f6373.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 44,
+    manageStock: true,
   },
   {
     id: "cmsgi8mj40013k4wyqpnrt496",
@@ -1306,6 +1437,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785959312253-bbf833d7.webp",
     category: "Fora de Estoque",
     stock: 48,
+    manageStock: false,
   },
   {
     id: "cmsghhdg7001n6c17d2rryxls",
@@ -1316,6 +1448,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785957420199-01f6e694.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmsgfw5eg00148j225bgfvoi3",
@@ -1326,6 +1459,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785955241172-2b987f50.webp",
     category: "Produtos diversos",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmsgekh0b00034xmx8oolf1g1",
@@ -1336,6 +1470,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785953366652-21efa242.webp",
     category: "Câmeras",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmserawjc0035szrwb1b832bx",
@@ -1346,6 +1481,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785853557098-cbe03112.webp",
     category: "Salão & Barbearia",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmseql4ny0019md4y3hl69rp5",
@@ -1356,6 +1492,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785851918135-c9bb43be.webp",
     category: "Fones de Ouvido",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmseosnrq0031riz0u1hqhwmc",
@@ -1366,6 +1503,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785849039441-3d2cf8ec.webp",
     category: "Produtos diversos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cms5fh3sd000k11h4xobd6yht",
@@ -1376,6 +1514,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785289272056-b60209f5.webp",
     category: "Fora de Estoque",
     stock: -2,
+    manageStock: true,
   },
   {
     id: "cms5eg7bu002zgwunhbmzbb0n",
@@ -1386,6 +1525,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785287866812-dbb65c13.webp",
     category: "Produtos diversos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cms4u5r4r004snfhgr7u91tw7",
@@ -1396,6 +1536,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785253197350-54e7bafc.webp",
     category: "Carregadores & Power Banks",
     stock: 41,
+    manageStock: true,
   },
   {
     id: "cms4rpgqv001lhtsz6q09j446",
@@ -1406,6 +1547,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785249682613-81125e00.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cms4qeh110008nfhg1kal8dx8",
@@ -1416,6 +1558,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785247294561-460e989a.webp",
     category: "Informática",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cms40ijdp000a7as8ktup8adp",
@@ -1426,6 +1569,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785203850223-a7af12ab.webp",
     category: "Informática",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cms3wc5wb001ld4o2ajejqanx",
@@ -1435,7 +1579,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785196704285-41dbab3a.webp",
     category: "Informática",
-    stock: 50,
+    stock: 49,
+    manageStock: true,
   },
   {
     id: "cms3v6vwg0015ah5usq8vgpe8",
@@ -1446,6 +1591,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785194998918-88d77e98.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cms3u2wlk000210ul3pcnk4hr",
@@ -1456,6 +1602,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785193123597-f42a2474.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cms3t8dpe000j10u06ongyrji",
@@ -1466,6 +1613,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785191770547-055a0858.webp",
     category: "Informática",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cms0jfto7000n33rth8gv6ahi",
@@ -1476,6 +1624,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784993887205-231dca28.webp",
     category: "Informática",
     stock: 44,
+    manageStock: true,
   },
   {
     id: "cms0iy9jk000lqpjztdru8b6p",
@@ -1485,7 +1634,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784992941575-2a105e56.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 25,
+    stock: 22,
+    manageStock: true,
   },
   {
     id: "cms0hxuva0005h14akemy2dqx",
@@ -1496,6 +1646,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784991126677-1a1add35.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cms0h4vsp0008x21apysk58wd",
@@ -1506,6 +1657,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784989603999-678ea101.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cms0fbzm3001byzt1hm0abpu5",
@@ -1516,6 +1668,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784987211580-832ecde6.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmrzrq3aj000a9o56pvqu9t2t",
@@ -1526,6 +1679,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784947276864-08521120.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrzr25xi0004ilny6wzm0wcb",
@@ -1536,6 +1690,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784946199062-cbaa4b4a.webp",
     category: "Câmeras",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmrzqajy5006z74693ws61vw4",
@@ -1546,6 +1701,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784944696049-8dae3490.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrzlhn3k0002cbiok4rtgsmf",
@@ -1556,6 +1712,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784936932935-1e2f3d76.webp",
     category: "Câmeras",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrzknwgo0005ab1f1k3k7v2c",
@@ -1566,6 +1723,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784935631385-8531a44f.webp",
     category: "Brinquedos",
     stock: 38,
+    manageStock: true,
   },
   {
     id: "cmrzjfjqg0004qpv3pp3qminz",
@@ -1576,6 +1734,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784933355475-1b93056d.webp",
     category: "Brinquedos",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmrzemhx1000vvieqcw75zz3n",
@@ -1586,6 +1745,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784925382643-e479dc41.webp",
     category: "Brinquedos",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmrzd8bus00018zim91thtzbg",
@@ -1596,6 +1756,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784922906928-9d755f77.webp",
     category: "Brinquedos",
     stock: 48,
+    manageStock: true,
   },
   {
     id: "cmrz6cu7a000rkq08aq5h183f",
@@ -1606,6 +1767,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784911354571-bda62488.webp",
     category: "Brinquedos",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmrz564gr000g70hivt9teqwm",
@@ -1616,6 +1778,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784909324305-8a4820e1.webp",
     category: "Brinquedos",
     stock: 42,
+    manageStock: true,
   },
   {
     id: "cmrz3t3bk001lzdxwwinfl9g8",
@@ -1626,6 +1789,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784906711838-6148a588.webp",
     category: "Brinquedos",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmrz2py6a00091e513irj6bya",
@@ -1636,6 +1800,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784905234463-5011556f.webp",
     category: "Brinquedos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrz24i7j001rr4aef42njm1v",
@@ -1646,6 +1811,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784904294265-f3f74c74.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrwo6zd4001im5metfeijktp",
@@ -1656,6 +1822,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784759998485-d909ce37.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmrwnkt1p000dwuc7wntsc8u6",
@@ -1666,6 +1833,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784758744264-1e17f778.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrwmtoj90005105hrqupwkey",
@@ -1676,6 +1844,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784757668660-58e96bbb.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrw7j713001bsysjfvxqiy1v",
@@ -1686,6 +1855,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784730028842-64f12cae.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrw4qq4b000p2ofnqgytl7wp",
@@ -1696,6 +1866,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784726793247-8415f5d9.webp",
     category: "Umidificadores & Ventiladores",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrv7cm7q001qolgd14md8s4n",
@@ -1706,6 +1877,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784671392905-5350ed38.webp",
     category: "Umidificadores & Ventiladores",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrv6ljf70002txjmhea929zh",
@@ -1716,6 +1888,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784670119614-158acbb8.webp",
     category: "Relogios e Smartwatchs",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrv3ywoe001brvv6ect7a6mh",
@@ -1726,6 +1899,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784665261360-81fa1572.webp",
     category: "Relogios e Smartwatchs",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmruwkgcx0002mbhgdn1hagcr",
@@ -1736,6 +1910,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784653034990-33cd3188.webp",
     category: "Relogios e Smartwatchs",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmruuukl50036fz7h2irq7g6k",
@@ -1746,6 +1921,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784664512339-f34ee13f.webp",
     category: "Câmeras",
     stock: 31,
+    manageStock: true,
   },
   {
     id: "cmrutainx000pdta59gi08fn7",
@@ -1756,6 +1932,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784647811420-347e8fef.webp",
     category: "Informática",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrti2l3z0010y00tytslf0we",
@@ -1766,6 +1943,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784568377143-0e2b607e.webp",
     category: "Relogios e Smartwatchs",
     stock: 48,
+    manageStock: true,
   },
   {
     id: "cmrslx1py0027nc2txmul9znb",
@@ -1775,7 +1953,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0524adc809-8-54.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 58,
+    stock: 57,
+    manageStock: true,
   },
   {
     id: "cmrslwxmf001tnc2tproi61vq",
@@ -1786,6 +1965,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/21332c20c1-1-69.jpg",
     category: "Produtos diversos",
     stock: 98,
+    manageStock: true,
   },
   {
     id: "cmrslwto6001hnc2tp9nog6f2",
@@ -1795,7 +1975,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5cbd642ace-4-59.jpg",
     category: "Carregadores & Power Banks",
-    stock: 84,
+    stock: 82,
+    manageStock: true,
   },
   {
     id: "cmrslwpp10013nc2tzyalvgps",
@@ -1806,6 +1987,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0823e7bcb3-1-9.webp",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrslwlqe000pnc2t5de7f718",
@@ -1816,6 +1998,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/551caafefc-3-17.webp",
     category: "Informática",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrslwhrt000bnc2ttx6afn91",
@@ -1826,6 +2009,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/db632c83de-1-71.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrslwdsl0000nc2tyq3mb4ai",
@@ -1836,6 +2020,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2de7456eb6-1-11.webp",
     category: "Informática",
     stock: -38,
+    manageStock: false,
   },
   {
     id: "cmrryd6hq006g6py3zty5d44f",
@@ -1846,6 +2031,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/213016f867-1-52.jpg",
     category: "Informática",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrryd2k200626py37nbyf01a",
@@ -1856,6 +2042,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/be5eccd935-1-53.jpg",
     category: "Caixas de Som",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrrycylm005o6py3x893892i",
@@ -1866,6 +2053,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/894350716b-4-44.jpg",
     category: "Caixas de Som",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrrycupy005a6py3d6lagqbx",
@@ -1876,6 +2064,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b7371346de-5-43.jpg",
     category: "Caixas de Som",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrrycquf00506py3t9nqaqfa",
@@ -1886,6 +2075,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e00c44bf35-1-55.jpg",
     category: "Produtos diversos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrrycn08004m6py3hw8rfsiq",
@@ -1896,6 +2086,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/de22e362b0-1-56.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrrycio100486py3sihyx65d",
@@ -1906,6 +2097,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a85d2c838b-1-57.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrryceu7003u6py38hy9yy60",
@@ -1916,6 +2108,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/264e1013db-1-58.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -10,
+    manageStock: false,
   },
   {
     id: "cmrrycazt003g6py38bquas6p",
@@ -1926,6 +2119,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c025a751b3-9-45.jpg",
     category: "Fora de Estoque",
     stock: -1,
+    manageStock: true,
   },
   {
     id: "cmrryc73l00366py3vn0pmadf",
@@ -1936,6 +2130,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/42bc61b7c6-1-60.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrryc384002t6py370y9q226",
@@ -1946,6 +2141,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82c91561d1-2-59.jpg",
     category: "Ferramentas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrrybzdb002f6py3r6uxljsf",
@@ -1956,6 +2152,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45cdbbd4db-1-62.jpg",
     category: "Ferramentas",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrrybve0001s6py38w04yt73",
@@ -1966,6 +2163,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dfde9fe186-1-63.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrrybrkc001k6py3jaqouial",
@@ -1976,6 +2174,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eb7fb8a77d-1-8.webp",
     category: "Produtos diversos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrrybnn500166py3c0j9m9go",
@@ -1986,6 +2185,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8a73803c88-1-64.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrrybjs7000s6py3krb7gc9k",
@@ -1996,6 +2196,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/53e66bbe23-2-63.jpg",
     category: "Ferramentas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrrybfz3000e6py3gxactfj6",
@@ -2006,6 +2207,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec39be50d8-6-54.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrrybc3f00006py3dk8100c6",
@@ -2016,6 +2218,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c15997d646-1-67.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsneb08dxiudhvsgsi9ue",
@@ -2026,6 +2229,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/14e18b2388-1-51.jpg",
     category: "Caixas de Som",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvsn7t08dmiudheiit21e4",
@@ -2036,6 +2240,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e2b342c7ca-9-38.jpg",
     category: "Informática",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvsn2308dbiudhwc8lnn9q",
@@ -2046,6 +2251,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ece4082ede-8-9.webp",
     category: "Iluminação",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsmvw08d0iudh4k3std4q",
@@ -2056,6 +2262,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9d33462481-1-48.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsmpp08cpiudh21so5th8",
@@ -2066,6 +2273,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b442c3188b-4-39.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsmj008ceiudhy8kp6z3g",
@@ -2076,6 +2284,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b0fcb0e40-7-39.jpg",
     category: "Fones de Ouvido",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsmcd08c3iudh2i8i7ail",
@@ -2086,6 +2295,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1d6c1cd0a4-1-45.jpg",
     category: "Fones de Ouvido",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvsm5w08bsiudhsxpm9hdi",
@@ -2096,6 +2306,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b538dc6e50-1-6.webp",
     category: "Fones de Ouvido",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvslzo08bhiudhl45w7327",
@@ -2106,6 +2317,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6eee6a845d-1-44.jpg",
     category: "Fones de Ouvido",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvslsy08b7iudhnl0epecu",
@@ -2116,6 +2328,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5f05dcdb4-2-41.jpg",
     category: "Fones de Ouvido",
     stock: -7,
+    manageStock: false,
   },
   {
     id: "cmrnvslmq08awiudhtykwoo41",
@@ -2126,6 +2339,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aa37379955-5-33.jpg",
     category: "Ferramentas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvslgl08aliudhk7jy3vbw",
@@ -2136,6 +2350,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b8cbafd2d8-6-32.jpg",
     category: "Ferramentas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvslac08aaiudhxb08l9k1",
@@ -2146,6 +2361,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bade4426d1-9-29.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsl4508a0iudhufw6tozl",
@@ -2156,6 +2372,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fda9da4db8-8-29.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvskyf089piudh6s11mlpo",
@@ -2166,6 +2383,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/118978f735-2-36.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsks7089eiudhcj2zqmov",
@@ -2176,6 +2394,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6fb01aef9b-7-30.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsklr0893iudh4jatp8py",
@@ -2186,6 +2405,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/73b81e6ca5-1-35.jpg",
     category: "Ferramentas",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvskfi088siudhy4zur73m",
@@ -2196,6 +2416,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7983379f6c-6-28.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvsk99088jiudh5r9ibkm2",
@@ -2206,6 +2427,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/812c703daf-5-28.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsjwg0888iudhrchvyplv",
@@ -2216,6 +2438,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c5e419551-1-34.jpg",
     category: "Ferramentas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsjq1087xiudh8mrkijq2",
@@ -2226,6 +2449,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/01f321a3d1-7-5.webp",
     category: "Ferramentas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsjja087qiudhfl2c29fo",
@@ -2236,6 +2460,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ef594effc5-1-32.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsjdm087giudht5fux4h5",
@@ -2246,6 +2471,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45354a498a-2-30.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsj7d0875iudh87widxp8",
@@ -2256,6 +2482,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6b40a39d5-1-30.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvsj12086uiudh25j5qlkz",
@@ -2266,6 +2493,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/13f9a82a68-1-29.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsiuu086jiudhmfwhy10m",
@@ -2276,6 +2504,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa796b7001-8-21.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvsior0869iudh9jw1ju91",
@@ -2286,6 +2515,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6ad317b806-capa.jpg",
     category: "Ferramentas",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvsiik085yiudhh4wy8qot",
@@ -2295,7 +2525,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7f68a7aa9a-1-2.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: -26,
+    stock: -27,
+    manageStock: false,
   },
   {
     id: "cmrnvsicb085niudhzsorpbuj",
@@ -2306,6 +2537,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5a67183872-8-19.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsi5w085ciudh9dmpkk4p",
@@ -2316,6 +2548,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cd9d40ed41-3-20.jpg",
     category: "Celulares e Smartphones",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvshzk0851iudh4bd7oisx",
@@ -2326,6 +2559,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd257716ef-3-19.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvsht9084qiudhl0i4qxip",
@@ -2336,6 +2570,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2b7cdc3c91-1-23.jpg",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvshn1084fiudh5ldvycup",
@@ -2346,6 +2581,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a849fad5b-1-22.jpg",
     category: "Informática",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvshgu0844iudhqseuohw6",
@@ -2356,6 +2592,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/132858ff52-2-20.jpg",
     category: "Informática",
     stock: -10,
+    manageStock: false,
   },
   {
     id: "cmrnvshaf083uiudhotlelw52",
@@ -2366,6 +2603,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f3e4b8635a-8-16.jpg",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsh3x083kiudhvw4phwu6",
@@ -2376,6 +2614,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/90132a4b75-1a.jpg",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsgxe0839iudhho89aaz4",
@@ -2386,6 +2625,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8bd2116ea6-8-15.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsgr60833iudhrh845u8p",
@@ -2396,6 +2636,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/faf12c43b0-1-18.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvsgkx082siudhmkvk25lk",
@@ -2406,6 +2647,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d8df85041d-1-17.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvsgem082hiudhbyvnxv4k",
@@ -2416,6 +2658,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa86f54ffa-1-16.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvsg8f0826iudhc5q3hu0q",
@@ -2426,6 +2669,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4493a89890-1-15.jpg",
     category: "Caixas de Som",
     stock: -19,
+    manageStock: false,
   },
   {
     id: "cmrnvsg28081viudhdi1vwgqs",
@@ -2436,6 +2680,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa298ca9ca-1-14.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsfvr081kiudhr8112six",
@@ -2446,6 +2691,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ada1beac56-1-13.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsfpl0819iudhzov9xzaz",
@@ -2456,6 +2702,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/059ba88c52-9-11.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsfjx080yiudhq81hhdi4",
@@ -2466,6 +2713,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f79e0b08cf-1-11.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvsfdu080niudhoom9iqvv",
@@ -2476,6 +2724,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc2871cf24-1.webp",
     category: "Fora de Estoque",
     stock: -2,
+    manageStock: true,
   },
   {
     id: "cmrnvsf7m080ciudhosxtzjoo",
@@ -2486,6 +2735,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/385f982fa1-1-10.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsf1u0801iudhnkjnn0yz",
@@ -2496,6 +2746,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d862c44d8a-7-7.jpg",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsevo07zqiudhbwnz5m42",
@@ -2506,6 +2757,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/18ac53b4d4-1-8.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsepa07zfiudha88409bz",
@@ -2516,6 +2768,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/363395c5ec-1-7.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsej307z4iudh0hg7677y",
@@ -2526,6 +2779,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a22949d6db-1-6.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvsect07ytiudh7zufl9z4",
@@ -2536,6 +2790,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7e423d2c56-9-4.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvse6n07yjiudh77ds6kss",
@@ -2546,6 +2801,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/af00ab6a4f-1-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvse0i07y8iudha7rt4b3e",
@@ -2556,6 +2812,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c7291e1da8-7-2.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvsdub07xziudhp214444i",
@@ -2566,6 +2823,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec123d7807-1-2.jpg",
     category: "Embalagens e Etiquetas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsdok07xoiudhcfler7s6",
@@ -2576,6 +2834,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6584f4d120-6.jpg",
     category: "Salão & Barbearia",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsdib07xfiudhcslkuqtg",
@@ -2586,6 +2845,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/18584826f1-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvsdc307x4iudhedhwc85u",
@@ -2595,7 +2855,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61366e5208-1-27.jpg",
     category: "Produtos diversos",
-    stock: -11,
+    stock: -12,
+    manageStock: false,
   },
   {
     id: "cmrnvsd5k07wtiudhonu3hkan",
@@ -2606,6 +2867,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8c939893f-4-21.jpg",
     category: "Garrafas, Copos e Canecas",
     stock: -11,
+    manageStock: false,
   },
   {
     id: "cmrnvscze07wiiudhtk3qzwa3",
@@ -2616,6 +2878,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7a568a1bf2-1-25.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvscts07w7iudh9em5yzoa",
@@ -2626,6 +2889,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2b8f4366b-6-21.jpg",
     category: "Produtos diversos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvscnk07vwiudh0aw890ai",
@@ -2636,6 +2900,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/497d62fc46-1-23.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsch907vliudhmadxsjsx",
@@ -2646,6 +2911,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60d2ef78de-1-22.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 30,
+    manageStock: true,
   },
   {
     id: "cmrnvscb007vaiudh5t45tp1s",
@@ -2656,6 +2922,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cfeda0b469-1-21.jpg",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsc4n07uziudha3b0iiw0",
@@ -2666,6 +2933,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/57686c368c-1-20.jpg",
     category: "Produtos diversos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvsbyf07uoiudhwcpsy1pe",
@@ -2676,6 +2944,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/424a6b7a19-2-1.webp",
     category: "Copa do Mundo",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsbs407ueiudh2f7zd0ee",
@@ -2686,6 +2955,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a0242b045-1-17.jpg",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvsblt07u3iudhk0zcg83p",
@@ -2696,6 +2966,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6160f15578-1-16.jpg",
     category: "Caixas de Som",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvsbfo07tsiudh0ury2r6l",
@@ -2706,6 +2977,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eabe36e6be-1-15.jpg",
     category: "Produtos diversos",
     stock: -14,
+    manageStock: false,
   },
   {
     id: "cmrnvsb9f07tiiudhcucrz16c",
@@ -2716,6 +2988,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a118907c3d-1-14.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -9,
+    manageStock: false,
   },
   {
     id: "cmrnvsb3807t7iudhz6359doc",
@@ -2726,6 +2999,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a63a6affad-8-10.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvsawl07t2iudhxv88c993",
@@ -2736,6 +3010,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/48acf71055-1-12.jpg",
     category: "Mais vendidos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvsaqy07suiudhnyngmxu5",
@@ -2746,6 +3021,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0507ee5c6e-3-11.jpg",
     category: "Produtos diversos",
     stock: -16,
+    manageStock: false,
   },
   {
     id: "cmrnvsakr07sjiudhtc79xmwa",
@@ -2755,7 +3031,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/baa4c74545-1-10.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -4,
+    stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvsaek07s8iudh3wk5ci8j",
@@ -2766,6 +3043,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e95bdd9943-4-9.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvsa8i07rxiudh1g7xxrar",
@@ -2776,6 +3054,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e46bf68fbd-1-8.jpg",
     category: "Produtos diversos",
     stock: -10,
+    manageStock: false,
   },
   {
     id: "cmrnvsa2907rmiudhzrq6l7ar",
@@ -2786,6 +3065,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c6be653294-1-18.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs9vy07rdiudhecun87qf",
@@ -2796,6 +3076,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786542674692-cfa959f0.webp",
     category: "Câmeras",
     stock: -12,
+    manageStock: false,
   },
   {
     id: "cmrnvs9ps07r5iudhxbla2xtj",
@@ -2806,6 +3087,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cc449117cc-4-5.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs9jj07quiudhnydg4wvw",
@@ -2816,6 +3098,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cdd81236aa-1-4.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs9d107qjiudhf6rifrk0",
@@ -2826,6 +3109,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c9d419b670-1-3.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvs96u07q8iudhnnbbmbsr",
@@ -2836,6 +3120,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0f5a5ebad0-2-3.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvs90j07pxiudhk6x4j72z",
@@ -2846,6 +3131,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ebc39b1b3f-5-1.jpg",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvs8ua07pmiudhzfgqchet",
@@ -2856,6 +3142,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1794b29537-1.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs8o407pfiudheodwith1",
@@ -2866,6 +3153,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a0cfa05cf5-5-19.jpg",
     category: "Informática",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvs8hv07p4iudhmdn7gry1",
@@ -2876,6 +3164,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4128294c77-1-20.jpg",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvs8bh07otiudhwb50385b",
@@ -2886,6 +3175,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8d454c4ae-1-19.jpg",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvs85907oiiudho6qtietr",
@@ -2896,6 +3186,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/123ea5b35e-3-15.jpg",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs7yn07o8iudh6uxofxpr",
@@ -2906,6 +3197,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f6b368d23e-3-14.jpg",
     category: "Copa do Mundo",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs7se07nxiudhpfa8cuko",
@@ -2916,6 +3208,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7837d294c9-4-1.webp",
     category: "Copa do Mundo",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs7m807nmiudhctbrps42",
@@ -2926,6 +3219,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9f9200bd96-6-14.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvs7g007nfiudhxsfwld6t",
@@ -2936,6 +3230,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e9fdd42aca-1-14.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs79j07n4iudhqt5tba2h",
@@ -2946,6 +3241,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c894017222-1-13.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvs73c07muiudhon175gw5",
@@ -2956,6 +3252,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9adf563401-1-12.jpg",
     category: "Fora de Estoque",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvs6x807mjiudh4ksniw4c",
@@ -2966,6 +3263,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c129df8a2e-6-11.jpg",
     category: "Produtos diversos",
     stock: 98,
+    manageStock: true,
   },
   {
     id: "cmrnvs6r307m8iudhjo413sb7",
@@ -2976,6 +3274,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/580cec757c-1-10.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs6ku07lyiudhq4w1piyr",
@@ -2986,6 +3285,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aabef0fec5-4-9.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs6ej07loiudh7evgx8vn",
@@ -2996,6 +3296,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/10d50e9893-2-8.jpg",
     category: "Informática",
     stock: 9,
+    manageStock: true,
   },
   {
     id: "cmrnvs68b07leiudhyf606f0r",
@@ -3006,6 +3307,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bdcf54c81e-8-5.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs62507l6iudheg47egyy",
@@ -3016,6 +3318,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/caa61b2ce3-6178LYltfL._AC_SL1254_.jpg",
     category: "Promoções do Mês",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs5vv07kviudhmilyijgw",
@@ -3026,6 +3329,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b497955515-1-4.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs5pm07kliudhdhncdq13",
@@ -3036,6 +3340,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1414e25fd6-1-3.jpg",
     category: "Produtos diversos",
     stock: 29,
+    manageStock: true,
   },
   {
     id: "cmrnvs5iz07kbiudhcpuvpdhf",
@@ -3046,6 +3351,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bbbfa7c478-1a.jpg",
     category: "Fora de Estoque",
     stock: 46,
+    manageStock: true,
   },
   {
     id: "cmrnvs5ct07k0iudh9pke0pzc",
@@ -3056,6 +3362,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ee1e25e30-6-2.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs56g07jpiudha857tee9",
@@ -3065,7 +3372,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8baefda1b9-4-1.jpg",
     category: "Informática",
-    stock: -6,
+    stock: -8,
+    manageStock: false,
   },
   {
     id: "cmrnvs50707jeiudhsqb0avtq",
@@ -3076,6 +3384,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f8212e619c-1.jpg",
     category: "Câmeras",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs4u007j9iudhlhj66lup",
@@ -3086,6 +3395,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/66f76d4ca6-figurinha.png",
     category: "Copa do Mundo",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs4nr07j1iudh7jk1712t",
@@ -3096,6 +3406,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8a745c741-1.png",
     category: "Promoções do Mês",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs4hj07iqiudhq2lhrl6x",
@@ -3106,6 +3417,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/edfa416f2d-8-18.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvs4ba07iiiudhip9rhja3",
@@ -3116,6 +3428,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2c1a2f9e5e-2-22.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvs45807i7iudhtfjeyqbq",
@@ -3126,6 +3439,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f3786f4024-1-26.jpg",
     category: "Caixas de Som",
     stock: -33,
+    manageStock: false,
   },
   {
     id: "cmrnvs3z407hziudhf6jlhi03",
@@ -3136,6 +3450,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aaa5430452-3-20.jpg",
     category: "Produtos diversos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvs3su07hoiudh5vbzfm73",
@@ -3146,6 +3461,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4285c35759-4-17.jpg",
     category: "Caixas de Som",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvs3ml07hhiudhq6jp9f6f",
@@ -3156,6 +3472,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b368d59284-1-23.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs3gi07hdiudh513b8oy9",
@@ -3166,6 +3483,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2605e87351-1-22.jpg",
     category: "Materiais de Pesca",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs3ae07h2iudhsj7ka6pb",
@@ -3176,6 +3494,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35cc762467-1-21.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvs34707gsiudh6x4oh0ol",
@@ -3186,6 +3505,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dbaffe872a-1-20.jpg",
     category: "Ferramentas",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvs2xy07giiudh8fi0okxr",
@@ -3196,6 +3516,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1949f27fd3-1-19.jpg",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs2rl07g7iudhloajl4na",
@@ -3206,6 +3527,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5ec453bae-5-15.jpg",
     category: "Produtos diversos",
     stock: -8,
+    manageStock: false,
   },
   {
     id: "cmrnvs2l507fwiudhxjfggti4",
@@ -3216,6 +3538,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8c66cc89e-3-14.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs2es07fmiudhjd5jr7cw",
@@ -3226,6 +3549,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf047eda64-1-16.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs28607fdiudhjb39qk43",
@@ -3236,6 +3560,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/562f61bc13-5-12.jpg",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvs21y07f1iudhemz39wl9",
@@ -3246,6 +3571,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2de837f735-1-14.jpg",
     category: "Fora de Estoque",
     stock: -1,
+    manageStock: true,
   },
   {
     id: "cmrnvs1vp07eqiudh6xqg9a3s",
@@ -3256,6 +3582,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f40114c0ce-1-13.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs1pc07efiudhvrt4g5xa",
@@ -3266,6 +3593,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7f309d5abb-6-7.jpg",
     category: "Relogios e Smartwatchs",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvs1j307e4iudhq167zen1",
@@ -3276,6 +3604,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b6a8e3294e-4-6.jpg",
     category: "Ferramentas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvs1cr07dxiudhj5qex6kv",
@@ -3286,6 +3615,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9326094d5e-5-7.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvs16h07dmiudhadp2xmf9",
@@ -3296,6 +3626,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5883fddcbc-1-9.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvs10907dbiudhe8qwop9v",
@@ -3306,6 +3637,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f685606cf4-7-6.jpg",
     category: "Materiais de Pesca",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvs0tq07d1iudhm4sdbz5x",
@@ -3316,6 +3648,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cba98834dc-2-1.webp",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvs0nh07cqiudhau22uikj",
@@ -3326,6 +3659,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c45250ebe4-7-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs0hb07cgiudhtpx8rdtk",
@@ -3336,6 +3670,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5a95595360-2-6.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvs0b007caiudhx3i8tu6y",
@@ -3346,6 +3681,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/29c5ecd5ad-2-5.jpg",
     category: "Produtos diversos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvs04u07bziudho6k3622o",
@@ -3356,6 +3692,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd0fbc8de0-1-4.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrzyp07boiudhp7eo0o6f",
@@ -3366,6 +3703,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d67f1fbcb4-1-3.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrzrz07bdiudhhda1ehye",
@@ -3376,6 +3714,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b0211c8d78-1-2.jpg",
     category: "Promoções do Mês",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrzlq07b3iudhqbdbi39h",
@@ -3386,6 +3725,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f549b50e6-6.jpg",
     category: "Produtos diversos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvrzfh07aziudh9x48dapx",
@@ -3396,6 +3736,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7091265cb-3a.jpg",
     category: "Produtos diversos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvrz9707aoiudh4gbif560",
@@ -3406,6 +3747,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9a38f26567-7.webp",
     category: "Produtos diversos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvrz2z07aeiudhyl1k8yjv",
@@ -3416,6 +3758,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0644d8f736-1-85.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrywn07a3iudhlv70o6cn",
@@ -3426,6 +3769,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9c46640126-2-80.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvryqh079yiudhfiy1k0sh",
@@ -3436,6 +3780,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/64339c53a4-3-70.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrykb079qiudh54d1x4fm",
@@ -3446,6 +3791,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e18873d43e-2-78.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvrydx079fiudhumakbgqt",
@@ -3456,6 +3802,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/23cd25e8ec-1-81.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvry7q0794iudhsr8jzm0r",
@@ -3466,6 +3813,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45de8fed18-2-76.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvry0z078siudho4n6gxa0",
@@ -3476,6 +3824,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bb8ce42f5f-1-79.jpg",
     category: "Mais vendidos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrxtu078hiudhdxlpf77m",
@@ -3486,6 +3835,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8f0a2349f4-1-78.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrxnn0786iudh352w6j8e",
@@ -3496,6 +3846,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/27267bc5e1-1-77.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvrxhg077yiudh8qmavoxb",
@@ -3506,6 +3857,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb6da071f7-6-56.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrxb3077oiudhqo37qj12",
@@ -3516,6 +3868,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c171161b78-4-63.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrx4u077giudhh4hc0vtj",
@@ -3526,6 +3879,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1166ff3f13-1-73.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrwyi0776iudhow4slbgv",
@@ -3536,6 +3890,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cc70dc4377-8-45.jpg",
     category: "Garrafas, Copos e Canecas",
     stock: 6,
+    manageStock: true,
   },
   {
     id: "cmrnvrwrf076uiudhokvw1k35",
@@ -3546,6 +3901,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5bb07ecdf-9-36.jpg",
     category: "Fora de Estoque",
     stock: -5,
+    manageStock: true,
   },
   {
     id: "cmrnvrwl9076jiudh5ajob4zu",
@@ -3556,6 +3912,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa9cb3b97c-8-43.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -9,
+    manageStock: false,
   },
   {
     id: "cmrnvrweh0768iudh4rj2mk9x",
@@ -3566,6 +3923,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c01d4a021d-9-34.jpg",
     category: "Salão & Barbearia",
     stock: -9,
+    manageStock: false,
   },
   {
     id: "cmrnvrw89075yiudhsry81oy1",
@@ -3576,6 +3934,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b156d3550-3-56.jpg",
     category: "Informática",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvrw23075riudhah3hic9f",
@@ -3585,7 +3944,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6b9927239b-1-66.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -25,
+    stock: -26,
+    manageStock: false,
   },
   {
     id: "cmrnvrvvr075iiudhz48uhero",
@@ -3596,6 +3956,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b0cf2301f-6-49.jpg",
     category: "Games",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrvoz0757iudhzn3gb5lq",
@@ -3606,6 +3967,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c5b0648e1e-8-39.jpg",
     category: "Mais vendidos",
     stock: -19,
+    manageStock: false,
   },
   {
     id: "cmrnvrviw074ziudhe7o5l6yw",
@@ -3616,6 +3978,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cca7c83ec5-6-47.jpg",
     category: "Copa do Mundo",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvrvcq074qiudh02w793hg",
@@ -3626,6 +3989,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cd1a76956d-1-63.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrv6k074jiudhh1sim64s",
@@ -3636,6 +4000,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6836a26469-1-62.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrv0b074ciudhnoggxd6w",
@@ -3646,6 +4011,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92b002a132-1-61.jpg",
     category: "Copa do Mundo",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvruu50746iudhb8ogh46p",
@@ -3656,6 +4022,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d44cf66f3b-1-5.webp",
     category: "Copa do Mundo",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvruo0073viudhpm1rjja7",
@@ -3666,6 +4033,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/66fe8c733d-1-60.jpg",
     category: "Copa do Mundo",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvruhs073niudh6g0z8ee6",
@@ -3676,6 +4044,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9ff9a97a2c-1-59.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrub4073hiudhv3jus4np",
@@ -3686,6 +4055,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d5d02cb628-1-58.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvru4w0738iudh6ffnb7nn",
@@ -3696,6 +4066,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce4a1f4e14-1-57.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -7,
+    manageStock: false,
   },
   {
     id: "cmrnvrtyl072yiudhhfr2v85h",
@@ -3706,6 +4077,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d943e10a79-8-36.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrtsi072niudh1dhzs3gk",
@@ -3716,6 +4088,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/adf67ae83b-4-9.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrtmg072ciudh8e94sreb",
@@ -3726,6 +4099,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d933a932d1-1-3.webp",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvrtgb0726iudh8fqiyq6q",
@@ -3736,6 +4110,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/64249dd5d9-2-54.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvrt9r071viudhnwek8apa",
@@ -3746,6 +4121,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5b73b1a34-8-34.jpg",
     category: "Mais vendidos",
     stock: -13,
+    manageStock: false,
   },
   {
     id: "cmrnvrt3m071piudh2jokkpve",
@@ -3756,6 +4132,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ea76a2adce-image_944b8583.png",
     category: "Casa e Utensílios Domésticos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvrsxj071iiudhww4gy2n2",
@@ -3766,6 +4143,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0db79a06e7-2-52.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrsrh071biudhjt29rnm8",
@@ -3776,6 +4154,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/452c416930-5-41.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 45,
+    manageStock: true,
   },
   {
     id: "cmrnvrslf0713iudhmyg39jwa",
@@ -3786,6 +4165,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44e854b70c-5-40.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -7,
+    manageStock: false,
   },
   {
     id: "cmrnvrsfc070viudhn8q5pl7k",
@@ -3796,6 +4176,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/959578fe6c-3-40.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrs95070niudho5rpiise",
@@ -3806,6 +4187,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/632be545ae-8-33.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrs33070fiudhbae7reuv",
@@ -3816,6 +4198,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eda3cc5513-2-47.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrrwk0704iudh1hc219cg",
@@ -3826,6 +4209,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37ee733039-9-30.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrrqf06zviudhjzft18f9",
@@ -3836,6 +4220,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/10ab16ab68-7-34.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrrk106zmiudh381d1285",
@@ -3846,6 +4231,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785030784763-f6f132a1.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrrdw06zdiudht551ocsv",
@@ -3856,6 +4242,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37f73c1110-1-45.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrr7s06z2iudh48k9bd6d",
@@ -3866,6 +4253,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3591dbfda1-1-43.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrr1m06yriudhrrvy018p",
@@ -3876,6 +4264,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2e51751d27-2-41.jpg",
     category: "Produtos diversos",
     stock: -23,
+    manageStock: false,
   },
   {
     id: "cmrnvrqve06yhiudhd1emmzj9",
@@ -3886,6 +4275,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7fe28e816f-1-42.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvrqpa06y7iudhjxy87mbp",
@@ -3896,6 +4286,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/629a6d979a-1-41.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrqj206xziudhfke0qusg",
@@ -3906,6 +4297,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/156ed24eed-image_afb40c6c.png",
     category: "Materiais de Pesca",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvrqcx06xpiudhkhur596m",
@@ -3916,6 +4308,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f9f8c4ec5d-6-34.jpg",
     category: "Materiais de Pesca",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrq6n06xiiudhx4n44zli",
@@ -3926,6 +4319,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8527255111-1-38.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrq0d06x7iudharlty87d",
@@ -3936,6 +4330,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d4c48c236a-7-26.jpg",
     category: "Materiais de Pesca",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrpu906wziudhf7ge21wp",
@@ -3946,6 +4341,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/443fdf9c22-image_c5fe9c21.png",
     category: "Materiais de Pesca",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrpo406wqiudh7qyyxo87",
@@ -3956,6 +4352,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6684d6407f-1-36.jpg",
     category: "Materiais de Pesca",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrphs06wfiudh4dgtt6dv",
@@ -3966,6 +4363,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60bc3e1e01-1-35.jpg",
     category: "Materiais de Pesca",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvrpbw06w4iudhm4o7g1f2",
@@ -3976,6 +4374,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82e28e729c-1-34.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvrp5h06vtiudhqtk3ttyr",
@@ -3986,6 +4385,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bd53ad0c8a-1-33.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvroz606vliudhnxwxue72",
@@ -3996,6 +4396,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7817c547be-2-29.jpg",
     category: "Materiais de Pesca",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrot406vaiudh1aygqoi7",
@@ -4006,6 +4407,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9c66c9e728-1-31.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvromy06v4iudhygg1601n",
@@ -4016,6 +4418,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/643c6e87c7-image_9bb81fb6.png",
     category: "Materiais de Pesca",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrogq06uwiudhoz26olkw",
@@ -4026,6 +4429,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/da049125a2-4-24.jpg",
     category: "Materiais de Pesca",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrob206uliudhc7a2scbd",
@@ -4036,6 +4440,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7bf0cff9e-5-24.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvro4w06uaiudhfu56gxt7",
@@ -4046,6 +4451,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cbb432a037-2-24.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrnyl06tyiudhnq0ec9a0",
@@ -4056,6 +4462,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/170bea3c4a-1-27.jpg",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrnsf06tniudh2zy086i3",
@@ -4066,6 +4473,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/358cc3e093-1-26.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvrnm506tdiudhpdx3ww7q",
@@ -4076,6 +4484,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2a0691c8d7-1-25.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: -10,
+    manageStock: false,
   },
   {
     id: "cmrnvrnfp06t2iudh4so8hhab",
@@ -4086,6 +4495,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0d4c63e048-5-19.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrn9006sqiudh25jpnm6m",
@@ -4096,6 +4506,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/900f9f3585-a.jpg",
     category: "Produtos diversos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvrn2r06sgiudhpeftftop",
@@ -4106,6 +4517,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/755a447572-1-22.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrmwj06s7iudhnzaohc7l",
@@ -4116,6 +4528,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9035655f83-1.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrmqc06rwiudho2mnosnf",
@@ -4126,6 +4539,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4376abdfa8-1-21.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvrmk306rliudhjx214fbu",
@@ -4136,6 +4550,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/23290aaaaa-ca.jpg",
     category: "Fora de Estoque",
     stock: -5,
+    manageStock: true,
   },
   {
     id: "cmrnvrmds06raiudhvd4b8c9j",
@@ -4146,6 +4561,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c89740c129-1-19.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvrm1b06qqiudhoc89wg1l",
@@ -4156,6 +4572,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37dda9113c-3-11.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvrlv206qhiudhicdebw85",
@@ -4166,6 +4583,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9fa755a980-1-16.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvrlor06q6iudht3psvk9d",
@@ -4176,6 +4594,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00783d44d1-1-14.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrlil06pviudh7c8ir88q",
@@ -4186,6 +4605,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c8e2a347c-7-10.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrlce06pkiudhoazl687y",
@@ -4196,6 +4616,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/77840c6481-1-12.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvrl6806p9iudhw33pjg1w",
@@ -4206,6 +4627,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0d9f6f78f5-7-8.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrkzx06p1iudhrmaefk4h",
@@ -4216,6 +4638,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e78a11eda5-6-9.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrktb06oxiudhis7esbj5",
@@ -4226,6 +4649,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b9734d2007-capa.png",
     category: "Copa do Mundo",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrkn506omiudhov91k9ug",
@@ -4236,6 +4660,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eba143eccd-1-9.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrkgx06obiudh63ra3yrz",
@@ -4246,6 +4671,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61ea4a4d59-1-8.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrkam06o0iudhtyy8qtwr",
@@ -4256,6 +4682,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e9506c384f-1-7.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrk4d06npiudhusrs995n",
@@ -4266,6 +4693,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0ede11f252-7-6.jpg",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvrjy706neiudh3cn4y2bm",
@@ -4276,6 +4704,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bb5c78dcc9-1-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrjsj06n3iudh8yc579k2",
@@ -4286,6 +4715,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bceedbf7d-9-3.jpg",
     category: "Fora de Estoque",
     stock: -20,
+    manageStock: true,
   },
   {
     id: "cmrnvrjmc06msiudh3tyr60yi",
@@ -4296,6 +4726,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/06f5c1506b-1-3.jpg",
     category: "Produtos diversos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvrjgn06mhiudhdy4zz09q",
@@ -4306,6 +4737,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c6664a2313-1-2.jpg",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvrjaa06m6iudhztac6xaa",
@@ -4316,6 +4748,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d3acc4def6-2-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrj4006lviudhxoeq2d2h",
@@ -4326,6 +4759,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/62459b569f-1.jpg",
     category: "Brinquedos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrixu06lniudh8f5z4tfb",
@@ -4336,6 +4770,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8bf56acefa-1a-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvril706laiudhgahwd5e9",
@@ -4346,6 +4781,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b8ccc0ce95-3-53.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrif406kziudhlno7b9j0",
@@ -4356,6 +4792,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/70560a73ac-4-51.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvri8y06koiudhri6xk5r0",
@@ -4366,6 +4803,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2d7e1c80e0-1-57.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: -14,
+    manageStock: false,
   },
   {
     id: "cmrnvri2r06keiudhskeasiek",
@@ -4376,6 +4814,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/55acad6104-4-49.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrhwb06k5iudhcuirqfjz",
@@ -4386,6 +4825,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dff1306ccc-1-55.jpg",
     category: "Produtos diversos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvrhq706juiudh5vprci3d",
@@ -4396,6 +4836,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/22e23e0ed4-9-38.jpg",
     category: "Mais vendidos",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmrnvrhjz06jkiudhjjjcgzl0",
@@ -4406,6 +4847,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c71f8f807-1-53.jpg",
     category: "Produtos diversos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvrhds06jfiudhugckns1h",
@@ -4416,6 +4858,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c02da4baed-1-44.jpg",
     category: "Copa do Mundo",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrh7n06j4iudhu2ncimhs",
@@ -4426,6 +4869,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3ddcff1a88-1-52.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrh1g06itiudh7575nu75",
@@ -4436,6 +4880,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35f6ab0bd3-8-39.jpg",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrgv806ijiudhexlfnk67",
@@ -4446,6 +4891,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5ac1c6048f-6-44.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrgp506i8iudhglncejm9",
@@ -4456,6 +4902,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a52049f4fe-3-44.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrgiy06hxiudhwsik46yp",
@@ -4466,6 +4913,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7ef3fc0ffe-8-36.jpg",
     category: "Fora de Estoque",
     stock: -2,
+    manageStock: true,
   },
   {
     id: "cmrnvrgcq06hmiudhrwjlo3n8",
@@ -4476,6 +4924,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6b446d0961-3-42.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrg6k06hciudhyf3cjhye",
@@ -4486,6 +4935,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c4005ddbbf-6-40.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrg0c06h1iudh4dtxfo41",
@@ -4496,6 +4946,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/28ac579502-1-1.webp",
     category: "Informática",
     stock: -31,
+    manageStock: false,
   },
   {
     id: "cmrnvrftz06gqiudh4pqz0dea",
@@ -4506,6 +4957,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e99f53dd8-2-41.jpg",
     category: "Produtos diversos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvrfnk06gjiudhzvhqgl35",
@@ -4516,6 +4968,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2f705f6286-1-1.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrfhc06g8iudh1dphgpgg",
@@ -4526,6 +4979,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0fa2bb483d-5-37.jpg",
     category: "Informática",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvrfb306fxiudh1gq27x0d",
@@ -4536,6 +4990,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e051405b4-7-35.jpg",
     category: "Carregadores & Power Banks",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrf4506fliudhmgowfvly",
@@ -4546,6 +5001,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d2b73fe271-1a.jpg",
     category: "Fones de Ouvido",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrexp06fciudhdhbpmlzv",
@@ -4556,6 +5012,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c8e5135c12-2-34.jpg",
     category: "Carregadores & Power Banks",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvrerh06f1iudhz0jk5268",
@@ -4566,6 +5023,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/55551da5ac-1-37.jpg",
     category: "Carregadores & Power Banks",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrel906eqiudhnbwn0sf8",
@@ -4576,6 +5034,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e1920d718e-6-31.jpg",
     category: "Ring Light & Suportes",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvref206ehiudhaso9tp2y",
@@ -4586,6 +5045,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b207282f68-6-30.jpg",
     category: "Caixas de Som",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvre8v06eaiudh0iinadcz",
@@ -4596,6 +5056,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/718157961d-1-34.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvre3606dziudhgn7yjbob",
@@ -4605,7 +5066,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a7bb92d909-3-30.jpg",
     category: "Iluminação",
-    stock: 38,
+    stock: 37,
+    manageStock: true,
   },
   {
     id: "cmrnvrdwy06doiudhimh03p9f",
@@ -4616,6 +5078,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e013374937-1-32.jpg",
     category: "Produtos diversos",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvrdko06ddiudhroykevk2",
@@ -4626,6 +5089,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7895fd8eb2-9-23.jpg",
     category: "Brinquedos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvrde206d2iudhc3govycn",
@@ -4636,6 +5100,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a2c6d7d2ad-2-28.jpg",
     category: "Fora de Estoque",
     stock: -1,
+    manageStock: true,
   },
   {
     id: "cmrnvrd6h06criudhf5g4dzzf",
@@ -4646,6 +5111,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/029e995c4c-1-29.jpg",
     category: "Celulares e Smartphones",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvrczu06ciiudhskvi2p3u",
@@ -4656,6 +5122,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a4e850b14-3-26.jpg",
     category: "Celulares e Smartphones",
     stock: -8,
+    manageStock: false,
   },
   {
     id: "cmrnvrct706c6iudhi8jwwlrx",
@@ -4666,6 +5133,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7435e1d00-ca-1.jpg",
     category: "Media Streaming",
     stock: -179,
+    manageStock: false,
   },
   {
     id: "cmrnvrcml06buiudhrplue16f",
@@ -4676,6 +5144,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/136ae2938e-ca.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrcge06bjiudh9r51mrz9",
@@ -4685,7 +5154,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c1c135febe-4-23.jpg",
     category: "Produtos diversos",
-    stock: -53,
+    stock: -55,
+    manageStock: false,
   },
   {
     id: "cmrnvrca706b8iudh2y5u1s1k",
@@ -4696,6 +5166,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec8301090f-1-24.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrc3x06ayiudh5zszf1ku",
@@ -4706,6 +5177,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/348d031754-1-23.jpg",
     category: "Fora de Estoque",
     stock: -2,
+    manageStock: true,
   },
   {
     id: "cmrnvrbxp06aniudheqq4vezp",
@@ -4716,6 +5188,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ec185f79e-2-21.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrbrf06aciudh3v9c7gvb",
@@ -4726,6 +5199,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00ed555ffc-Gemini_Generated_Image_4nlpdh4nlpdh4nlp.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrbl806a1iudh9h9lssw0",
@@ -4736,6 +5210,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/49030489b8-1.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvrbf0069qiudh0cfhxze4",
@@ -4746,6 +5221,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/71d049a002-5-17.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvrb8e069fiudhg1295bj2",
@@ -4756,6 +5232,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e96a8d71f5-2-19.jpg",
     category: "Celulares e Smartphones",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvrb230694iudhvh3h0t1p",
@@ -4766,6 +5243,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/04bd493563-9-13.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvravt068tiudhleg2gffa",
@@ -4776,6 +5254,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/53b1bfeec9-5-14.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvrapk068jiudhaly8bvtz",
@@ -4786,6 +5265,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c71bc42dad-3-16.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvraj80688iudhh73tmq3q",
@@ -4796,6 +5276,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/940fb92ffd-8-12.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvracp067xiudhi6xolx5z",
@@ -4806,6 +5287,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fdeefa750f-1-14.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvra6e067miudhyvdhd9gt",
@@ -4816,6 +5298,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7367dac8cf-1-13.jpg",
     category: "Informática",
     stock: -71,
+    manageStock: false,
   },
   {
     id: "cmrnvr9yh067ciudht3jvzg5j",
@@ -4826,6 +5309,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb23ab035f-5-12.jpg",
     category: "Copa do Mundo",
     stock: -1,
+    manageStock: true,
   },
   {
     id: "cmrnvr9s00671iudhvs9fu1me",
@@ -4835,7 +5319,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c05cd058f4-3-12.jpg",
     category: "Fora de Estoque",
-    stock: -1,
+    stock: 49,
+    manageStock: true,
   },
   {
     id: "cmrnvr9lq066qiudhgli6p5l7",
@@ -4846,6 +5331,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa50bba430-2-11.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr9fh066fiudhkjgshrcs",
@@ -4856,6 +5342,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d24e733de9-1-9.jpg",
     category: "Informática",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvr98y0664iudhal932u3o",
@@ -4866,6 +5353,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f2b31d2d31-1-8.jpg",
     category: "Relogios e Smartwatchs",
     stock: -24,
+    manageStock: false,
   },
   {
     id: "cmrnvr92p065tiudhsshd54ic",
@@ -4876,6 +5364,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/93c675045b-1-7.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr8wj065kiudhr9b1lfvl",
@@ -4886,6 +5375,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9e343dcf49-5-7.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvr8q90659iudhvv4kb3fz",
@@ -4896,6 +5386,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92631a3a9f-8-5.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr8ju064yiudh1tbsqk5p",
@@ -4906,6 +5397,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ff15dbb171-8-4.jpg",
     category: "Fora de Estoque",
     stock: -3,
+    manageStock: true,
   },
   {
     id: "cmrnvr8df064miudhlfbw8pdu",
@@ -4916,6 +5408,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ac9f46c318-4-4.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -14,
+    manageStock: false,
   },
   {
     id: "cmrnvr87b064biudhgsm5h96z",
@@ -4926,6 +5419,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a935f23030-5-3.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr8130640iudhqdg9vam0",
@@ -4936,6 +5430,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a143d3df03-5-2.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvr7ut063qiudhreibwxak",
@@ -4946,6 +5441,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8558e01bac-2-1.jpg",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvr7ok063fiudhz5djt4m0",
@@ -4956,6 +5452,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a6630c4221-2.jpg",
     category: "Brinquedos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvr7id0638iudhiadovyly",
@@ -4966,6 +5463,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/69e6409b76-1-62.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr7bn062xiudhoqelranx",
@@ -4976,6 +5474,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/65deb12ea2-5-49.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvr75e062kiudhjs6h73uq",
@@ -4986,6 +5485,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/77b1bb3e50-1-63.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr6z5062eiudhn7ro1hz2",
@@ -4996,6 +5496,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1f4e3d6dd0-2-55.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr6sz0623iudh32mg22wq",
@@ -5006,6 +5507,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b1488c2806-1-58.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvr6mt061xiudhp2d0yk0u",
@@ -5016,6 +5518,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/64f359bcd4-1-57.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr6gz061niudhe6pucj0y",
@@ -5026,6 +5529,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bfba4a0c68-2-52.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr6ao061ciudh4r9ekt18",
@@ -5036,6 +5540,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c8a6031a38-1-56.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvr64e0612iudhrvu3yvpq",
@@ -5046,6 +5551,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c39f122283-5-44.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr5yq060riudhjd8gm1ol",
@@ -5056,6 +5562,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2ebf251363-1-54.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvr5sg060giudhvmhr19w8",
@@ -5066,6 +5573,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5d22cf6bc5-1-53.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr5m90605iudhyzuuz5cn",
@@ -5076,6 +5584,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/24b57a7767-1-52.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr5g205zuiudh1lv20smr",
@@ -5086,6 +5595,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7794cca243-8-31.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr59w05zoiudhxqww2bgn",
@@ -5096,6 +5606,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fd0967f2bf-2-5.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr53p05zdiudhi8i3gc60",
@@ -5106,6 +5617,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec3bf46af2-1-50.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -13,
+    manageStock: false,
   },
   {
     id: "cmrnvr4xj05z3iudhl6x9ef7g",
@@ -5116,6 +5628,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/16468f1453-1-49.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr4rb05ytiudhmiwrs6kc",
@@ -5126,6 +5639,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb830b560d-2-43.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr4ks05yjiudhjq13r2n6",
@@ -5136,6 +5650,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7851852c03-9-23.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr4el05yaiudhc3gytw2r",
@@ -5146,6 +5661,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b216eec5a7-1-47.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvr48a05y1iudhac4ongu4",
@@ -5156,6 +5672,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/943a85479d-1-46.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr41n05xqiudhices27kq",
@@ -5166,6 +5683,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f6996e465e-1-45.jpg",
     category: "Fora de Estoque",
     stock: -6,
+    manageStock: true,
   },
   {
     id: "cmrnvr3vg05xfiudh6h3767lw",
@@ -5176,6 +5694,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f856a8f4c0-2-39.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr3p605x4iudhqql30eok",
@@ -5186,6 +5705,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/763209e2eb-2-38.jpg",
     category: "Iluminação",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvr3im05wuiudhkxcdh1cc",
@@ -5196,6 +5716,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82b9ce285e-2-37.jpg",
     category: "Celulares e Smartphones",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmrnvr3by05wiiudhg0afod1t",
@@ -5206,6 +5727,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/feba3d857b-1-41.jpg",
     category: "Informática",
     stock: 68,
+    manageStock: true,
   },
   {
     id: "cmrnvr35t05w7iudhf52p8s31",
@@ -5216,6 +5738,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/337a02d8c6-4-31.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr2zk05vyiudhkly24fmz",
@@ -5226,6 +5749,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7751596aa-4-30.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr2tc05vsiudhskkfo2dr",
@@ -5236,6 +5760,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec07999fce-WhatsApp-Image-2026-01-24-at-19.50.49.jpeg",
     category: "Copa do Mundo",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr2n705vjiudhjhaoxecm",
@@ -5246,6 +5771,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/663ea6f52f-4-29.jpg",
     category: "Copa do Mundo",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr2gy05vbiudhv4safffc",
@@ -5256,6 +5782,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/11b235e683-2-31.jpg",
     category: "Copa do Mundo",
     stock: 18,
+    manageStock: true,
   },
   {
     id: "cmrnvr2ap05v2iudhhnayqhr5",
@@ -5266,6 +5793,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/12fe148177-1-35.jpg",
     category: "Copa do Mundo",
     stock: 16,
+    manageStock: true,
   },
   {
     id: "cmrnvr24e05usiudhbwyjgbcx",
@@ -5275,7 +5803,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3554601cc0-7-24.jpg",
     category: "Copa do Mundo",
-    stock: 18,
+    stock: 16,
+    manageStock: true,
   },
   {
     id: "cmrnvr1y505uiiudhekzq8189",
@@ -5285,7 +5814,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/055b71a1f3-7-23.jpg",
     category: "Copa do Mundo",
-    stock: -1,
+    stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvr1rx05uciudhze7g24ur",
@@ -5296,6 +5826,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44683455c3-1-32.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr1lo05u1iudhcjd7ifjf",
@@ -5306,6 +5837,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/89a3f49a01-6-21.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr1fb05txiudhi6iwsm35",
@@ -5316,6 +5848,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a0cd8dc25-1-30.jpg",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr19405tqiudhgxrcsc43",
@@ -5325,7 +5858,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8df0656441-1-29.jpg",
     category: "Brinquedos",
-    stock: -2,
+    stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvr12w05thiudhwvex9b8a",
@@ -5336,6 +5870,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/38ac158568-7-21.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr0wm05t7iudhycc73vx4",
@@ -5346,6 +5881,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6d0ecc5d22-4-21.jpg",
     category: "Produtos diversos",
     stock: -11,
+    manageStock: false,
   },
   {
     id: "cmrnvr0qe05swiudhwp44giwm",
@@ -5356,6 +5892,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/758bdf4e8d-6-17.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr0kb05sqiudhc5zdo4f5",
@@ -5366,6 +5903,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fc46199964-WhatsApp-Image-2026-01-15-at-19.15.48.jpeg",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvr0e205sgiudhu00jj39w",
@@ -5376,6 +5914,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/20ef15e8ca-1-24.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr07o05s6iudh49buc6gx",
@@ -5386,6 +5925,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/964bdc6c9a-6-16.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvr01h05rxiudh20e837m3",
@@ -5396,6 +5936,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7cb0262d3-1-22.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqzv905roiudhpguw3z9y",
@@ -5406,6 +5947,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8cf8abb32f-6-15.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqzp305rhiudhyosbbpn7",
@@ -5416,6 +5958,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4c877893e0-2-17.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqzit05raiudhz1ouha8c",
@@ -5426,6 +5969,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/59c3629e09-1-19.jpg",
     category: "Fora de Estoque",
     stock: -5,
+    manageStock: true,
   },
   {
     id: "cmrnvqzcm05qziudh28e762aw",
@@ -5436,6 +5980,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6226044e13-1-18.jpg",
     category: "Fora de Estoque",
     stock: -7,
+    manageStock: true,
   },
   {
     id: "cmrnvqz6h05qoiudh33cwpygk",
@@ -5446,6 +5991,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0ab9771454-9-14.jpg",
     category: "Papelaria",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvqz0b05qjiudhj5yvo2zl",
@@ -5456,6 +6002,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/965d496c40-WhatsApp-Image-2026-01-13-at-11.25.59.jpeg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqynu05pwiudh3m5er4ud",
@@ -5466,6 +6013,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2d1ac1c78a-1-15.jpg",
     category: "Papelaria",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvqyho05poiudhu6gwfz84",
@@ -5476,6 +6024,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8db62718c9-1-14.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqybi05peiudhhpy42quw",
@@ -5486,6 +6035,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c42151eab6-6-11.jpg",
     category: "Informática",
     stock: 93,
+    manageStock: true,
   },
   {
     id: "cmrnvqy5a05p3iudhx1irfndj",
@@ -5496,6 +6046,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/11bc7a2bd8-2-9.jpg",
     category: "Produtos diversos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvqxyz05otiudh9n07fjyx",
@@ -5506,6 +6057,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b58bb6f5c6-1-10.jpg",
     category: "Informática",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvqxso05ojiudhwurd2zi3",
@@ -5516,6 +6068,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/27c30e04ea-1-9.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqxme05o8iudhnhrnxky4",
@@ -5526,6 +6079,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c981488c60-7-8.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqxfq05nxiudh5r4e5x1v",
@@ -5536,6 +6090,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/65692de347-1-7.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqx9k05noiudhdllqg73c",
@@ -5546,6 +6101,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f5f2c3fadd-1-1.webp",
     category: "Iluminação",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvqx3f05ndiudhgis56zmb",
@@ -5556,6 +6112,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/520fb1e266-9-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqwx805n0iudhfmtuwh8b",
@@ -5566,6 +6123,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/19beca0a6e-6-1.webp",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqwqs05mpiudhj7797926",
@@ -5576,6 +6134,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8da6b6bfa2-9-4.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqwkk05meiudh7fwvtsvn",
@@ -5586,6 +6145,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3bc6a0eb4e-4-3.jpg",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvqweg05m6iudhixwnoenl",
@@ -5596,6 +6156,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7b026c88fc-1-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqw8805lviudh20lu3ckk",
@@ -5606,6 +6167,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/289815d3c6-4-2.jpg",
     category: "Umidificadores & Ventiladores",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvqw2105lkiudhrm8xosu6",
@@ -5616,6 +6178,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/12c38b802b-1-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqvvr05l9iudhcuz23bdp",
@@ -5626,6 +6189,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5bfbe68ddf-6.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqvp905kxiudhh65fe8kj",
@@ -5636,6 +6200,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f104e93eff-1-30.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqvj005kmiudhnw0ljzt7",
@@ -5646,6 +6211,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c6aabc515f-7-25.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqvcv05kbiudhggw2qxi7",
@@ -5656,6 +6222,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb62b0ffd5-8-22.jpg",
     category: "Produtos diversos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvqv6r05k7iudh3z6fqc5u",
@@ -5666,6 +6233,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2b05c682cd-bluu.jpeg",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqv0n05k3iudh7lyi94eq",
@@ -5676,6 +6244,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/550780685f-rosa.jpeg",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvquuh05jziudhxeft0v6s",
@@ -5686,6 +6255,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/59147d9b6a-KK.jpeg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvquo605jqiudhwf1pj0nj",
@@ -5696,6 +6266,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8ba1c536b-5-4.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqui105jmiudhdqktigoc",
@@ -5706,6 +6277,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8579664ffc-2-24.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqubs05jbiudhm730cusi",
@@ -5716,6 +6288,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/109e4b9c69-7-22.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvqu4t05j0iudhzoahskbu",
@@ -5726,6 +6299,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d283cccece-4a-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqtyo05ipiudhcqdsepbm",
@@ -5736,6 +6310,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/66f560efd2-1-24.jpg",
     category: "Fora de Estoque",
     stock: 47,
+    manageStock: true,
   },
   {
     id: "cmrnvqtsl05ieiudhwgfnu2yp",
@@ -5746,6 +6321,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a874f7c64-5-21.jpg",
     category: "Fones de Ouvido",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvqtme05i3iudh6niy7k2x",
@@ -5756,6 +6332,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c97b1ea936-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqtfy05hsiudhwannnhos",
@@ -5766,6 +6343,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/97af3ac412-7-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqt9r05hhiudhmz6ujy1c",
@@ -5776,6 +6354,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e210845c3d-1-2.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvqt3i05h7iudh6adfz592",
@@ -5786,6 +6365,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6892d6c3f-1-3.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqsxb05gwiudhjs9ujj6i",
@@ -5796,6 +6376,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/75efde6c03-2a.jpg",
     category: "Fora de Estoque",
     stock: -1,
+    manageStock: true,
   },
   {
     id: "cmrnvqsr505gliudh5ropkav4",
@@ -5806,6 +6387,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/14197f0d98-1-5.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqsky05gaiudhhx18t34e",
@@ -5816,6 +6398,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bf414757d3-5-5.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvqseo05fziudht4uh5evw",
@@ -5825,7 +6408,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cac55f0c13-1-6.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvqs8a05foiudhve1dmo2o",
@@ -5836,6 +6420,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b1032b287c-3-4.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqs1v05fdiudhippxpcel",
@@ -5846,6 +6431,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5749009c77-2-7.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqrvk05f2iudhxpo7h45t",
@@ -5856,6 +6442,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92d91d05bb-1-9.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqrpa05eriudhqcuaykg1",
@@ -5866,6 +6453,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00c6f2718b-1-10.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqrj105eiiudhgqw3415t",
@@ -5876,6 +6464,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f0eb1d2ca-7-11.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqrcf05ediudhdohel42o",
@@ -5886,6 +6475,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e3ab4099b5-24-2.jpg",
     category: "Mais vendidos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqr6a05e7iudhsltobrt1",
@@ -5896,6 +6486,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/273cd9d3a6-24-4.jpg",
     category: "Mais vendidos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqqzl05e2iudhfzmdc8ph",
@@ -5906,6 +6497,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/285d37c7f6-aq.jpg",
     category: "Mais vendidos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqqti05dsiudh587ujd9y",
@@ -5916,6 +6508,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0709981659-1-12.jpg",
     category: "Relogios e Smartwatchs",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvqqn805dhiudhnb7fevc7",
@@ -5926,6 +6519,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61f04adc95-4-8.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqqgy05d6iudhuyos6wwf",
@@ -5936,6 +6530,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/490202a7b7-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqqaf05cuiudhufzdx4a4",
@@ -5946,6 +6541,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/975ae31312-2-14.jpg",
     category: "Informática",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmrnvqq4105cjiudhd2bjuyjw",
@@ -5956,6 +6552,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2c3225d913-6-15.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqpxu05c9iudhvldvuwwi",
@@ -5966,6 +6563,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/68df5d0cd1-2-16.jpg",
     category: "Brinquedos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvqpro05byiudhc5llr3kc",
@@ -5976,6 +6574,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aa6562127a-3-12.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqple05bniudh2iilvrly",
@@ -5985,7 +6584,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a4bddc66d9-1-17.jpg",
     category: "Fora de Estoque",
-    stock: 4,
+    stock: 2,
+    manageStock: true,
   },
   {
     id: "cmrnvqpf505bciudhndcdzyao",
@@ -5996,6 +6596,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf40e979d7-1-19.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqp8z05b1iudhv3rshlqt",
@@ -6006,6 +6607,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b8a0f7d427-1-21.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqp2l05ariudhmkhhc5oa",
@@ -6016,6 +6618,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c9e3653285-6-22.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqowb05aiiudhw8r01v8o",
@@ -6026,6 +6629,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/29a94bfbde-4-11.jpg",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqopk05a7iudhkuez7bjo",
@@ -6036,6 +6640,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a21d1c3e4d-1-14.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqojd059yiudh7cslkbal",
@@ -6046,6 +6651,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/df0f0d6712-1.webp",
     category: "Papelaria",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvqod7059oiudhuycmh5lx",
@@ -6056,6 +6662,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf2b889242-5-12.jpg",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqo6z059eiudh8htuya0k",
@@ -6066,6 +6673,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ab84477f5c-1-12.jpg",
     category: "Ferramentas",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvqo0q0593iudh18661dye",
@@ -6076,6 +6684,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd8516b651-5-10.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqnuf058siudh55qwom2g",
@@ -6086,6 +6695,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b0995e3051-8-6.jpg",
     category: "Ferramentas",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvqnoa058hiudhm0y88z1h",
@@ -6096,6 +6706,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d131d57ba-1-10.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqni20586iudhuts04d8l",
@@ -6106,6 +6717,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0367eaba60-2-8.jpg",
     category: "Ferramentas",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvqnby057viudh82rjidr5",
@@ -6116,6 +6728,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5de7d4a21-2-7.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqn5r057miudhl3n3bszq",
@@ -6126,6 +6739,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f0f603a309-1-6.jpg",
     category: "Fora de Estoque",
     stock: 3,
+    manageStock: true,
   },
   {
     id: "cmrnvqmzl057diudhgwg8h6u3",
@@ -6136,6 +6750,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bbd1149521-2-6.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqmta0571iudh6ug0wwbr",
@@ -6146,6 +6761,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9290ffd845-6-3.jpg",
     category: "Fora de Estoque",
     stock: 99,
+    manageStock: true,
   },
   {
     id: "cmrnvqmmv056siudhlh37yc2y",
@@ -6156,6 +6772,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2dd08a87dd-5-4.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqmgp056iiudhp0zp6esc",
@@ -6166,6 +6783,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/122a6f1a9a-1-3.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqma1056biudhow0fato3",
@@ -6176,6 +6794,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f93c839817-1-2.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -14,
+    manageStock: false,
   },
   {
     id: "cmrnvqm3u0560iudhp9cawl9c",
@@ -6186,6 +6805,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ea8b07204a-8.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvqlxq055siudh6e32gb8r",
@@ -6196,6 +6816,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0decd3b65a-2.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -15,
+    manageStock: false,
   },
   {
     id: "cmrnvqlrl055hiudh1mtmv43m",
@@ -6206,6 +6827,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35f56834c9-1-49.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqlle0554iudh4anh8pid",
@@ -6216,6 +6838,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/817b8c6556-00.webp",
     category: "Produto de Natal",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvqlf4054tiudhzu4skmfc",
@@ -6226,6 +6849,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/867a583eda-7-36.jpg",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvql2i054iiudhnv9g99wr",
@@ -6236,6 +6860,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7afa07717e-1-46.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqkwb0547iudhqs9bdnj3",
@@ -6246,6 +6871,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b5673916e2-7-34.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqkq00541iudh9ssn9m1c",
@@ -6256,6 +6882,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d2ae498f1b-capa.jpg",
     category: "Produto de Natal",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqkjt053piudhifdp103z",
@@ -6266,6 +6893,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b17540333-1-44.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqkdk053eiudh7a2madzy",
@@ -6276,6 +6904,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e9939d794c-2-45.jpg",
     category: "Produtos diversos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvqk7d0536iudhxb6728qj",
@@ -6286,6 +6915,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2216e989d8-6-38.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqk12052xiudh5ivs3cq2",
@@ -6296,6 +6926,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/463d25d7e3-4-35.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqjuv052miudh3ipmw0km",
@@ -6306,6 +6937,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c8fa3c8318-1-41.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqjo4052aiudh8i1a7fpn",
@@ -6316,6 +6948,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d15411eac0-1-40.jpg",
     category: "Produtos diversos",
     stock: -12,
+    manageStock: false,
   },
   {
     id: "cmrnvqji10521iudhhuw5e60e",
@@ -6326,6 +6959,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c61af4bfd-3-36.jpg",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqjby051qiudhvjo87iar",
@@ -6336,6 +6970,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b19eead996-2-41.jpg",
     category: "Brinquedos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvqj69051fiudh8zbhr9qt",
@@ -6346,6 +6981,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/94ac866f9a-1-37.jpg",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqizy0514iudhiymxzt4x",
@@ -6356,6 +6992,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/74e72a3a92-1-36.jpg",
     category: "Fora de Estoque",
     stock: -1,
+    manageStock: true,
   },
   {
     id: "cmrnvqitr050uiudh7fw3f40q",
@@ -6366,6 +7003,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a313c811fb-6-31.jpg",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvqinl050jiudh572gwb08",
@@ -6376,6 +7014,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b2fc10cea-4-28.jpg",
     category: "Brinquedos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvqihi0508iudhkde5m5w2",
@@ -6386,6 +7025,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c24e3302db-5-29.jpg",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqiba04zwiudhtkzozjgn",
@@ -6396,6 +7036,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/afa266136f-10-1.webp",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvqi5604zliudhqv3gn7qi",
@@ -6406,6 +7047,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b0cb8f3d1c-1-32.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqhys04zciudhdgzg04cm",
@@ -6416,6 +7058,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b37c711718-7.jgp_.webp",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqhsi04z2iudh06meyc0x",
@@ -6426,6 +7069,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/286f25484e-2-34.jpg",
     category: "Produtos diversos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvqhmu04ysiudh3n2car5d",
@@ -6436,6 +7080,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/49b34a4548-3-28.jpg",
     category: "Iluminação",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvqhgr04yiiudhkl6dzrsg",
@@ -6446,6 +7091,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/20030b8f35-6-25.jpg",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvqham04y7iudh2h36ngia",
@@ -6456,6 +7102,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4e56a1c602-1-28.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqh4i04xxiudhdfkk19y3",
@@ -6466,6 +7113,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2a94bf17d7-4-6.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqgye04xuiudhbdheaocy",
@@ -6476,6 +7124,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cd15766fc8-2-29.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqgsb04xkiudhk1evakxa",
@@ -6486,6 +7135,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/48f8897dfe-6-22.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqgm104xaiudhqjl50tvy",
@@ -6496,6 +7146,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4f2c03676c-2-27.jpg",
     category: "Brinquedos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvqgfs04x0iudhbwa3mtbz",
@@ -6506,6 +7157,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b97306078a-1-2.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqg9h04wpiudh0i1ugo45",
@@ -6516,6 +7168,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/51a7638dcc-1-24.jpg",
     category: "Fora de Estoque",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvqg3904wiiudhhq7qqe05",
@@ -6526,6 +7179,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cc1f6920dc-2.webp",
     category: "Brinquedos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvqfx604w7iudhgkyq5ss1",
@@ -6536,6 +7190,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e755b08e93-9-13.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvqfqw04vwiudhvzkixxs1",
@@ -6546,6 +7201,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f7d3629980-3-19.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvqfki04vkiudh3et3fiuj",
@@ -6556,6 +7212,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5fc4be6702-10-6.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqfea04vdiudhs27d96qm",
@@ -6566,6 +7223,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7ecbca146b-1-19.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqf7v04v3iudhf1w53m9m",
@@ -6576,6 +7234,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc91bb571e-1-18.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqf1p04uriudh9iei5up6",
@@ -6586,6 +7245,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4e780bace8-1-17.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqevg04ugiudh0qjqyydn",
@@ -6596,6 +7256,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c5e3b5913-7-10.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqep704u4iudhaivwt9q9",
@@ -6606,6 +7267,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fe6b903201-2-18.jpg",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqeis04ttiudhzv58ckty",
@@ -6614,8 +7276,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     priceCents: 4700,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/36bd23f700-1-15.jpg",
-    category: "Fora de Estoque",
-    stock: -2,
+    category: "Brinquedos",
+    stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvqed204tjiudh7hzkl37b",
@@ -6626,6 +7289,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/583cde44be-4-9.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqe6r04t9iudhujzss331",
@@ -6636,6 +7300,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/061912a633-1-13.jpg",
     category: "Brinquedos",
     stock: -8,
+    manageStock: false,
   },
   {
     id: "cmrnvqe0h04sziudh64cby90k",
@@ -6646,6 +7311,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82fc658f12-2-14.jpg",
     category: "Brinquedos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvqdu704sriudh1y9rple9",
@@ -6656,6 +7322,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a21e4c7fd-6-6.jpg",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqdo004seiudhn5983mue",
@@ -6666,6 +7333,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb46d72500-12.webp",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqdhr04s5iudhauf6lejo",
@@ -6676,6 +7344,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e96cc4e5cf-3-9.jpg",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqdbj04rxiudhg11nn9kr",
@@ -6686,6 +7355,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f6836f51de-11.jpg",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqd5804rniudh4hjrsek3",
@@ -6696,6 +7366,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/93a80d5244-18.jpg",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqcyv04rfiudh0x0ozbov",
@@ -6706,6 +7377,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31525838dd-5-6.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqcsk04r1iudhspbhg46h",
@@ -6716,6 +7388,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a206fd783-1-7.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqcmc04qriudhbr3uq5gz",
@@ -6726,6 +7399,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f960884567-7-4.jpg",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvqcg504qfiudhfey7raax",
@@ -6736,6 +7410,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99b770bd83-5-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqc9v04q4iudh97112fap",
@@ -6746,6 +7421,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d25bc927d1-4-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqc3k04ptiudhgzj4k5av",
@@ -6756,6 +7432,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a586a4af51-2-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqbx704pkiudhf8f3g9m9",
@@ -6766,6 +7443,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6b53fd3747-7-2.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqbqr04pciudh8augxe2w",
@@ -6776,6 +7454,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1bcb1bf81d-6-2.jpg",
     category: "Produtos diversos",
     stock: -7,
+    manageStock: false,
   },
   {
     id: "cmrnvqbkh04p1iudhaya09iz0",
@@ -6786,6 +7465,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/41bcf65250-3-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqbea04opiudhvfgsbo7z",
@@ -6796,6 +7476,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/622a7e5532-LC.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqb8004oiiudhmbv553qe",
@@ -6806,6 +7487,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99cc01f690-A.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqb1t04o6iudhxybe6hld",
@@ -6816,6 +7498,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ceb2aed235-2.jpg",
     category: "Informática",
     stock: 46,
+    manageStock: true,
   },
   {
     id: "cmrnvqavp04nwiudh7urmh57y",
@@ -6825,7 +7508,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/259c970d7f-589.jpg",
     category: "Produto de Natal",
-    stock: -1,
+    stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvqapg04npiudha28166he",
@@ -6836,6 +7520,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d472c2e61b-Prancheta-4.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqaiz04ngiudhkirnb8f5",
@@ -6846,6 +7531,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c4dd46e160-1-55.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvqaca04n7iudhlt6bc9kn",
@@ -6856,6 +7542,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c363567f46-4-39.jpg",
     category: "Produto de Natal",
     stock: 300,
+    manageStock: true,
   },
   {
     id: "cmrnvqa6204mxiudh56mdjlcn",
@@ -6866,6 +7553,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fac1f62a14-3-12.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq9zz04mriudhrydk72cm",
@@ -6876,6 +7564,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb61621452-1-53.jpg",
     category: "Produtos diversos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvq9tu04mgiudhje5j6bqy",
@@ -6886,6 +7575,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/33135d367a-7-26.jpg",
     category: "Fora de Estoque",
     stock: 4,
+    manageStock: true,
   },
   {
     id: "cmrnvq9ng04m8iudhjokb4oyj",
@@ -6896,6 +7586,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/995de5a05e-1-51.jpg",
     category: "Fora de Estoque",
     stock: 1,
+    manageStock: true,
   },
   {
     id: "cmrnvq9h604lziudhhrkwhtge",
@@ -6906,6 +7597,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f29f491584-2-43.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvq9av04loiudh8sj56iyw",
@@ -6916,6 +7608,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/25049e7833-9-16.jpg",
     category: "Câmeras",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvq94o04leiudhg0r5362a",
@@ -6926,6 +7619,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3ba4a56ed5-1-48.jpg",
     category: "Fora de Estoque",
     stock: -1,
+    manageStock: true,
   },
   {
     id: "cmrnvq8yc04l1iudhnwfx7vbh",
@@ -6936,6 +7630,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/95fe14326a-1-47.jpg",
     category: "Umidificadores & Ventiladores",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq8s504kviudhpci6ur7x",
@@ -6946,6 +7641,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb3e899a9d-12-3.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq8ly04kmiudhe3jkkhm6",
@@ -6956,6 +7652,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5ddd334dbb-1-45.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq8fe04kciudhqeqkcwqq",
@@ -6966,6 +7663,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/955b64811f-6-28.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvq88z04k1iudh401pxcx0",
@@ -6976,6 +7674,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7ac1044d9-2-36.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvq82f04jsiudhq5qf2b57",
@@ -6986,6 +7685,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d2dd9fb2e7-8-19.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq7w504jfiudh92rorjh8",
@@ -6996,6 +7696,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ff2228a83-a.jpg",
     category: "Câmeras",
     stock: -8,
+    manageStock: false,
   },
   {
     id: "cmrnvq7px04j8iudhjkm9gm2h",
@@ -7006,6 +7707,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d79079d1cf-2-11.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq7jr04j4iudhqz1k0ed2",
@@ -7016,6 +7718,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a40a89d278-2-33.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq7d504iziudhzpm1f100",
@@ -7026,6 +7729,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/919bcd3888-11-2.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq76m04itiudhywh9hr6b",
@@ -7036,6 +7740,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/62715305ae-112.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq70f04iqiudhy6105tb9",
@@ -7046,6 +7751,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ceca1da0b4-11-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq6u004iliudhkia7n120",
@@ -7056,6 +7762,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ca3dcbabed-2-31.jpg",
     category: "Mais vendidos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvq6ns04ibiudhei9s9vzx",
@@ -7066,6 +7773,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/558f6ae388-Imagem-do-WhatsApp-de-2025-09-15-as-20.58.49_ab50aa3a.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq6hg04i3iudhrwch7t7z",
@@ -7076,6 +7784,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/04e7eb955b-12-1.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq6b104huiudhkt2437sl",
@@ -7086,6 +7795,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/760a8e11ea-12.jpeg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq64r04hkiudhsv0gb7wi",
@@ -7096,6 +7806,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/614f7845ec-2-8.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq5y904hciudhz3bycnqq",
@@ -7106,6 +7817,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/52fe7fda22-4-23.jpg",
     category: "Mais vendidos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvq5s704h8iudhx89jp6mx",
@@ -7116,6 +7828,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/16f81c8488-11.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvq5ll04gxiudhd8t2hg6b",
@@ -7126,6 +7839,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/333ebd25af-1-33.jpg",
     category: "Câmeras",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq5fa04goiudhpqi7fx4a",
@@ -7136,6 +7850,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/328a18c21a-1-32.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq59404giiudh6t2rcf98",
@@ -7146,6 +7861,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/911c921d0e-AD.webp",
     category: "Mais vendidos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvq52y04gbiudhorhgzhf0",
@@ -7156,6 +7872,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bfa586315-3-27.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq4ww04g7iudh90icjtq5",
@@ -7166,6 +7883,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/40391c7655-ssz.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq4qj04fxiudhe5sl86v8",
@@ -7176,6 +7894,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8d44c294de-g-1.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq4ke04fniudhoxbc90vm",
@@ -7186,6 +7905,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc909edf5b-7-5.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq4e904feiudhha2ml0le",
@@ -7196,6 +7916,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/db36243643-j.webp",
     category: "Mais vendidos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvq48204f6iudh3fexfjx5",
@@ -7206,6 +7927,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7843794a0f-12.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq42004f1iudhzwag86o5",
@@ -7216,6 +7938,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ffbb62c4e8-2-5.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq3vs04eqiudhclr67aco",
@@ -7226,6 +7949,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d0089627f-2-24.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq3pm04ekiudhvlksqweg",
@@ -7236,6 +7960,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d4421dcd8b-1-1.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq3jk04efiudhxlwd3onl",
@@ -7246,6 +7971,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a325ba9f8f-2-23.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq3de04e6iudhtjoo7ek0",
@@ -7256,6 +7982,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8f9422a629-1-25.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq37804dwiudh6zpqoj08",
@@ -7266,6 +7993,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc3a337124-4-21.jpg",
     category: "Mais vendidos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvq31004doiudh1ietr3y0",
@@ -7276,6 +8004,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d70f608487-6-20.jpg",
     category: "Mais vendidos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvq2ur04deiudhr9yus53y",
@@ -7286,6 +8015,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/95578ea50b-7-14.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvq2oi04d3iudhyhzcf5or",
@@ -7296,6 +8026,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9e026edfa6-1-20.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq2i704ctiudhseayvhq7",
@@ -7306,6 +8037,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/af5fbaaa5b-5-17.jpg",
     category: "Carregadores & Power Banks",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvq2bx04ciiudhewyhsllp",
@@ -7316,6 +8048,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5b5d390571-6-16.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvq25r04c7iudhgc8atvre",
@@ -7326,6 +8059,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/957f112cea-5-16.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvq1zl04bziudhu5cgdrw2",
@@ -7336,6 +8070,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2c3c2fec6b-1-15.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvq1ti04bqiudh2gmw4bog",
@@ -7346,6 +8081,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00f768d5b3-5-14.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvq1nx04bgiudh3qjd4apk",
@@ -7356,6 +8092,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7283f1c716-7-9.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvq1hu04b5iudhvi4assf4",
@@ -7366,6 +8103,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/737d9549fb-1-12.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvq1bq04auiudhqrhh2m1o",
@@ -7376,6 +8114,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2531c1af1b-1-11.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq15i04ajiudh1s687701",
@@ -7386,6 +8125,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/71ee00873b-6-9.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvq0zf04abiudh6ktft28n",
@@ -7396,6 +8136,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/51ed2eb8cc-1-9.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvq0ta04a5iudhhl5rakv4",
@@ -7406,6 +8147,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/944e14c0c4-5-8.jpg",
     category: "Informática",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvq0mo049yiudhinth10tj",
@@ -7416,6 +8158,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ff46783d60-6-7.jpg",
     category: "Mais vendidos",
     stock: -3,
+    manageStock: true,
   },
   {
     id: "cmrnvq0ab049hiudhzdhuwv8y",
@@ -7426,6 +8169,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/daaa138ced-12-2.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvq0460497iudhirjc46t5",
@@ -7436,6 +8180,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/193ccccca8-2-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpzxx048xiudh4v8ivobl",
@@ -7446,6 +8191,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb4aad0dec-4-5.jpg",
     category: "Caixas de Som",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpzr8048miudhm5gw7ofr",
@@ -7456,6 +8202,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e96947f95-6-1.webp",
     category: "Caixas de Som",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpzl4048ciudhcdmf9ks7",
@@ -7466,6 +8213,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b4540c5bfe-9-1.jpg",
     category: "Brinquedos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvpzex0484iudh4g49367l",
@@ -7476,6 +8224,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6205047a75-4-3.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpz8t047uiudhczfogu93",
@@ -7486,6 +8235,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ac892d0e92-1-2.jpg",
     category: "Fora de Estoque",
     stock: -3,
+    manageStock: true,
   },
   {
     id: "cmrnvpz2p047jiudha5qia84v",
@@ -7496,6 +8246,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/472c3475df-5-1.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpywk0479iudhwyvr0bue",
@@ -7506,6 +8257,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/14da07da5b-7.jpg",
     category: "Produtos diversos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvpyph046xiudhlu49iaz6",
@@ -7516,6 +8268,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/857aa46018-2-48.jpg",
     category: "Câmeras",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpyjb046niudhr8ij1uoe",
@@ -7526,6 +8279,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6d30d3325-9-18.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmrnvpyd2046giudhrkv6i5nh",
@@ -7536,6 +8290,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bff517b974-5-42.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpy6y0465iudhtqzcxtty",
@@ -7546,6 +8301,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2d4fc0576c-6-37.jpg",
     category: "Mais vendidos",
     stock: -16,
+    manageStock: false,
   },
   {
     id: "cmrnvpy0u045uiudho8945vh8",
@@ -7556,6 +8312,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8628de461-6-9.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpxus045jiudhny9hqbmg",
@@ -7566,6 +8323,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6394d43bd-4-44.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpxoq045ciudh00ydh8qu",
@@ -7576,6 +8334,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/56ea2db954-4-43.jpg",
     category: "Produtos diversos",
     stock: -11,
+    manageStock: false,
   },
   {
     id: "cmrnvpxii0452iudhzep9booj",
@@ -7586,6 +8345,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/447bf044b7-1-50.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpxc9044siudhn0vagm9t",
@@ -7596,6 +8356,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f8bbd04f38-1-47.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpx62044iiudhgkgglxp4",
@@ -7606,6 +8367,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5c0e2e1798-6-33.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpwzw044biudhmdyr3bc0",
@@ -7616,6 +8378,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99c81baa1d-Prancheta-3-2.png",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpwts0443iudhgbfy9dok",
@@ -7626,6 +8389,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cdb2cc8765-3-38.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpwno043xiudhcelhnpia",
@@ -7636,6 +8400,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8809de2452-case-gaveta-para-hd-e-ssd-tomate-mcs-2530-6vy5t224tz.jpg",
     category: "Informática",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvpwhh043oiudhrm9d7eyp",
@@ -7646,6 +8411,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6bd2bf9f7-1-43.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpwbb043jiudhn9cx8fia",
@@ -7656,6 +8422,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cbb1cb2e49-Prancheta-2-17.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpw560438iudhmrzxb1ny",
@@ -7666,6 +8433,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/587d88a0f9-9-14.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpvz1042xiudhezvfn4uf",
@@ -7676,6 +8444,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/47f49f5577-6-29.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpvsy042niudht78a4vx9",
@@ -7686,6 +8455,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8d5ebd629-1-41.jpg",
     category: "Iluminação",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvpvmq042eiudh55i88bpo",
@@ -7696,6 +8466,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d3d56b38d3-1-40.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpvgd0423iudhry4eer8e",
@@ -7706,6 +8477,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/da9c01de42-1.webp",
     category: "Casa e Utensílios Domésticos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvpva9041tiudhtkns81wk",
@@ -7716,6 +8488,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8de56bd39c-8-21.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpv45041jiudhfbwcrtm7",
@@ -7726,6 +8499,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8e35449bc-7-26.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpuy00419iudhjdqbacdo",
@@ -7735,7 +8509,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -19,
+    stock: -20,
+    manageStock: false,
   },
   {
     id: "cmrnvpurw0410iudh8d2a54vp",
@@ -7746,6 +8521,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6518cecb27-5jpg.jpg",
     category: "Informática",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpufk040riudh9lz48zxl",
@@ -7756,6 +8532,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/880c70f2ae-1-36.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpu9i040kiudhfu14ypet",
@@ -7766,6 +8543,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9674db3d9f-Prancheta-5-1.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpu3f0409iudh9panslpx",
@@ -7776,6 +8554,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/972d5ba0c9-1-35.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvptxd03zyiudh0xsekbni",
@@ -7786,6 +8565,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a442109318-1-34.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvptr903zoiudhkyz1hy0c",
@@ -7796,6 +8576,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ebcaea0844-1-33.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvptl603zdiudhsw3ojaiy",
@@ -7806,6 +8587,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/358ef572fa-9-8.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvptf403z3iudhq5uhalhr",
@@ -7816,6 +8598,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1c7ffe87ed-2-28.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpt8y03yuiudht4pyoz1m",
@@ -7826,6 +8609,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/12539cbd54-7-21.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpt2w03ymiudhhpslmi1s",
@@ -7836,6 +8620,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2ff9c7c9a2-1-29.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpswd03yciudhzjxaj7yy",
@@ -7846,6 +8631,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d40e179d93-2-25.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpsqc03y1iudhph2bv54f",
@@ -7856,6 +8642,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/16f43f77db-9-7.jpg",
     category: "Games",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpsj103xsiudh8vfo08yv",
@@ -7866,6 +8653,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b027c27508-1-26.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpscy03xhiudhf9eu2837",
@@ -7876,6 +8664,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ca51943113-3-23.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvps6y03x9iudho2rmqvap",
@@ -7886,6 +8675,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f27c5e204-6-16.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvps0w03wyiudhdhi0tv8k",
@@ -7896,6 +8686,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a6a6875957-9-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvprus03wpiudhkam266i9",
@@ -7906,6 +8697,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d60c40fbe1-4-20.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvproe03wfiudh6dxfgmny",
@@ -7916,6 +8708,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d9da417233-3-19.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpri903w8iudhw8h9x7fc",
@@ -7926,6 +8719,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/418954fb45-Prancheta-4.png",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvprbz03w2iudhkho26ydc",
@@ -7936,6 +8730,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d6bcaef20-3-18.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpr5w03vsiudhovp5mcvl",
@@ -7946,6 +8741,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/563cab50d6-2-18.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpqzs03vhiudhf8mbme30",
@@ -7956,6 +8752,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6d120cf527-8-8.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpqtp03v7iudhfi2uaqm6",
@@ -7965,7 +8762,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c6844e307c-1-17.jpg",
     category: "Brinquedos",
-    stock: -14,
+    stock: -16,
+    manageStock: false,
   },
   {
     id: "cmrnvpqnf03v1iudhz4on28vv",
@@ -7976,6 +8774,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0af494d15a-1-16.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpqh903usiudhin88fq9q",
@@ -7986,6 +8785,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/01c02916f6-1-15.jpg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpqb503ukiudhi3di37hd",
@@ -7996,6 +8796,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/24c97d5406-5-12.jpg",
     category: "Informática",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpq4v03ubiudh6eeif4fg",
@@ -8006,6 +8807,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/852f152e43-6-8.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvppys03u1iudhgzd6q3e0",
@@ -8016,6 +8818,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/15c1f4e8ff-1-11.jpg",
     category: "Iluminação",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvppso03tpiudhcme5rc63",
@@ -8026,6 +8829,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/defa901253-3-9.jpg",
     category: "Iluminação",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvppmg03tfiudhv1n46rsy",
@@ -8036,6 +8840,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b9b9f8f2d8-1-9.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvppg803t5iudhiq2bc2pk",
@@ -8046,6 +8851,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/72f0c03d89-3-7.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvppa503syiudh9a97uz31",
@@ -8056,6 +8862,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b64b8f03a4-5.png",
     category: "Carregadores & Power Banks",
     stock: -15,
+    manageStock: false,
   },
   {
     id: "cmrnvpp4203sniudh9w6yg4r2",
@@ -8066,6 +8873,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1c0eb0bb48-4-6.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpoy003seiudhnbzgfnm3",
@@ -8076,6 +8884,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4794d0ff38-1-6.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpors03s5iudh8dyitql8",
@@ -8086,6 +8895,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/65dffd7e52-specsbackground.jpg",
     category: "Relogios e Smartwatchs",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvpolr03rwiudhoxksva7b",
@@ -8096,6 +8906,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7782b46a90-3-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpofp03rsiudhk51tdtce",
@@ -8106,6 +8917,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9e3eb8d929-2-5.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpo9k03rkiudhumvtxr6h",
@@ -8116,6 +8928,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/47772a9be3-4-3.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpo3a03rbiudhdrlb36kc",
@@ -8126,6 +8939,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0d233c4e2b-D_Q_NP_2X_891682-MLA83099538048_032025-T.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpnx803r6iudh9mpbgpge",
@@ -8136,6 +8950,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6111f93b91-1-2.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpnqz03qviudh3d1c7h73",
@@ -8146,6 +8961,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5a4702b4ee-2-2.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpnkw03qliudhcdgjmml6",
@@ -8156,6 +8972,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/723e8d91ee-3-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpnes03qdiudhcnq2wv25",
@@ -8166,6 +8983,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/414794ee90-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpn8n03q3iudhjr4n23o4",
@@ -8176,6 +8994,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/687b937569-5-8.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpn2403puiudh029ioi4e",
@@ -8186,6 +9005,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99f03c01dd-4-9.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpmvx03pkiudh93wkjkwj",
@@ -8196,6 +9016,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/08b9a9a34d-2-12.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpmpv03paiudhe73xpt4u",
@@ -8206,6 +9027,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5560adc910-4-7.jpg",
     category: "Produtos diversos",
     stock: -12,
+    manageStock: false,
   },
   {
     id: "cmrnvpmjl03oziudhez4ad1g0",
@@ -8216,6 +9038,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/171903da91-2-10.jpg",
     category: "Celulares e Smartphones",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvpmdk03otiudhk5u396wy",
@@ -8226,6 +9049,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b5399a2bf-capa.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpm7g03ojiudh3tmhtw6l",
@@ -8236,6 +9060,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/79b9f9efb4-1-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpm1d03oaiudhf4u7xhza",
@@ -8246,6 +9071,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/143304a771-ca2.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpluq03o0iudhuep8ir1a",
@@ -8256,6 +9082,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a90110aae8-4-3.jpg",
     category: "Ferramentas",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvplon03nmiudh8uhkui3t",
@@ -8266,6 +9093,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f041b13200-ComboConjuntoDeChavesCanhoFacilDeUsarp-899626-MLB54266707025_032023.jpeg",
     category: "Ferramentas",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvplij03neiudh3bvse93w",
@@ -8276,6 +9104,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0dda4e7323-1-40.webp",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvplcf03n3iudha4kne4ij",
@@ -8286,6 +9115,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ed76907702-2-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpl6803muiudhwbf4x4j3",
@@ -8296,6 +9126,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/40ed36bea7-7-23.webp",
     category: "Brinquedos",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmrnvpl0203mjiudhxq9wzr72",
@@ -8306,6 +9137,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c4b5197218-7-22.webp",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpktk03mbiudhl9e055r2",
@@ -8316,6 +9148,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ba6c30e732-3-32.webp",
     category: "Maquiagem",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpknh03lziudhlmax4dzk",
@@ -8326,6 +9159,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c3e1fc7c1e-capa-2.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpkgw03lsiudhiwpxkir1",
@@ -8336,6 +9170,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a0ecab3c16-Prancheta-6-2.png",
     category: "Casa e Utensílios Domésticos",
     stock: -31,
+    manageStock: false,
   },
   {
     id: "cmrnvpkao03lhiudht40fvpzq",
@@ -8346,6 +9181,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/981600b93e-1-34.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpk4k03l8iudh0yn8m6mg",
@@ -8356,6 +9192,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3392edcaae-6-19.webp",
     category: "Ferramentas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpjyh03kyiudhnffnsste",
@@ -8366,6 +9203,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/901ffa5604-Prancheta-6-1.png",
     category: "Informática",
     stock: -8,
+    manageStock: false,
   },
   {
     id: "cmrnvpjsf03ksiudhwe8z9dsz",
@@ -8376,6 +9214,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4e770f4c4-1-32.webp",
     category: "Fora de Estoque",
     stock: 2,
+    manageStock: true,
   },
   {
     id: "cmrnvpjma03kiiudha8kde2p9",
@@ -8386,6 +9225,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bba1098b0c-4-29.webp",
     category: "Câmeras",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpjg603k9iudhucziflfu",
@@ -8396,6 +9236,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/097fbca861-4-28.webp",
     category: "Câmeras",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpja403jziudhac53imfe",
@@ -8406,6 +9247,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44064e137a-Prancheta-7.png",
     category: "Produtos diversos",
     stock: -16,
+    manageStock: false,
   },
   {
     id: "cmrnvpj3u03jriudh9mwe9a62",
@@ -8416,6 +9258,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/505d18309e-6-16.webp",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpixu03jjiudhbj6ctojr",
@@ -8426,6 +9269,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/96cf30f22a-6-15.webp",
     category: "Fones de Ouvido",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvpirs03jdiudhga0vywg9",
@@ -8436,6 +9280,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/26c6893760-3-1.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpilp03j4iudhsgbzrlb0",
@@ -8446,6 +9291,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/01c8c1b60a-5.png",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpifm03ixiudhrscehjgz",
@@ -8456,6 +9302,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6574d319a5-4-24.webp",
     category: "Salão & Barbearia",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvpi8y03imiudhre9l8ltw",
@@ -8466,6 +9313,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf7686161e-5-22.webp",
     category: "Ferramentas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpi2t03ibiudhycfzjuzj",
@@ -8476,6 +9324,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/994bf3381c-6-12.webp",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvphwr03i4iudh2lyny3yq",
@@ -8486,6 +9335,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/858ff4efa7-1-24.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvphqr03i0iudhky1fadhn",
@@ -8496,6 +9346,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61950c50b7-1-23.webp",
     category: "Caixas de Som",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvphl503htiudhwinzhh86",
@@ -8506,6 +9357,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d350db34cd-2-21.webp",
     category: "Caixas de Som",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvphf103hoiudhnpz1qj9j",
@@ -8516,6 +9368,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/19b9cf3c4b-2-20.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvph8y03hhiudhqsyp25en",
@@ -8526,6 +9379,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f43e33eed2-1-2.png",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvph2803haiudh6u1oizl7",
@@ -8536,6 +9390,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b2683c651c-4-18-1.webp",
     category: "Informática",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpgw803h1iudh0zijd06q",
@@ -8546,6 +9401,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2e494a19b8-capa2.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpgq603gqiudh5uo8pxms",
@@ -8556,6 +9412,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ef395fef2b-1a.png",
     category: "Fora de Estoque",
     stock: 31,
+    manageStock: true,
   },
   {
     id: "cmrnvpgk303gfiudht28x1ipg",
@@ -8566,6 +9423,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6fc15ed143-1-17.webp",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpgdy03g4iudh7udh04z7",
@@ -8576,6 +9434,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5af360d88c-2-14.webp",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpg7v03ftiudhw0e979l4",
@@ -8586,6 +9445,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6bbdafc234-1-15.webp",
     category: "Câmeras",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvpg1k03foiudhv3l75jvp",
@@ -8596,6 +9456,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/84b1e4de85-1-13.webp",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpfvh03feiudhhwyfyr8z",
@@ -8606,6 +9467,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5c406fb60a-ca.webp",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpfpe03f8iudhqifu9ntt",
@@ -8616,6 +9478,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d1a0ca5189-1-12.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpfjd03f2iudh8n8pll3q",
@@ -8626,6 +9489,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/34159af762-1-11.webp",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpfdb03eriudhp012tgxv",
@@ -8636,6 +9500,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ef3c48d591-capa2.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpf6o03eiiudh0baisk1f",
@@ -8645,7 +9510,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45faeb8a94-capa.webp",
     category: "Informática",
-    stock: -94,
+    stock: -95,
+    manageStock: false,
   },
   {
     id: "cmrnvpf0j03ediudhc06ygj74",
@@ -8656,6 +9522,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/076fa4209c-3-7.webp",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpeud03e3iudhjs3jj3bn",
@@ -8666,6 +9533,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5e1d128868-4-7.webp",
     category: "Casa e Utensílios Domésticos",
     stock: -12,
+    manageStock: false,
   },
   {
     id: "cmrnvpeo903dsiudhja5lvkyn",
@@ -8676,6 +9544,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8ba1303a9c-1-6.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpehu03dmiudhmwe1svem",
@@ -8686,6 +9555,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d22bc15adf-5-4.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpebq03dfiudhlayysjti",
@@ -8696,6 +9566,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/af80707cc1-2-2.webp",
     category: "Informática",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpe5l03d6iudhpufb938q",
@@ -8706,6 +9577,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7388a6687-cap.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpdzh03cviudhc9pse288",
@@ -8715,7 +9587,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2cc3cd0abf-1-11.jpg",
     category: "Iluminação",
-    stock: -9,
+    stock: -11,
+    manageStock: false,
   },
   {
     id: "cmrnvpdt703cmiudhu6eo2eqk",
@@ -8726,6 +9599,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b59f8e31d-2.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpdn103ceiudhlant3qv4",
@@ -8735,7 +9609,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/270b1e08fe-1-42.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: -15,
+    stock: -16,
+    manageStock: false,
   },
   {
     id: "cmrnvpdgx03c6iudh5qcekmz2",
@@ -8745,7 +9620,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2e24f01c99-1.png",
     category: "Produtos diversos",
-    stock: -32,
+    stock: -33,
+    manageStock: false,
   },
   {
     id: "cmrnvpdav03bwiudhjggw1ucp",
@@ -8756,6 +9632,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/17c63d59e7-1-40.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvpd4r03bqiudhgu8293r6",
@@ -8766,6 +9643,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ed43731e9a-Design-sem-nome.png",
     category: "Produtos diversos",
     stock: -12,
+    manageStock: false,
   },
   {
     id: "cmrnvpcyo03bhiudhw35gz14m",
@@ -8776,6 +9654,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4915722e52-1-38.webp",
     category: "Fora de Estoque",
     stock: -3,
+    manageStock: true,
   },
   {
     id: "cmrnvpcsi03baiudhb7d1tn62",
@@ -8786,6 +9665,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/189b4f1630-1-37.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpcmf03aziudhwgxlpnp9",
@@ -8796,6 +9676,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9cf9977581-1-9.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpcgc03aoiudhu2gcyn33",
@@ -8806,6 +9687,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a709aca403-6-26.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpca703aeiudh3dld7db2",
@@ -8816,6 +9698,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c0c68b3ff7-1-34.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpc4303a5iudhcl9z0kts",
@@ -8826,6 +9709,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/943ba4bb84-3-34.webp",
     category: "Ring Light & Suportes",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvpby2039yiudhro4wqtcq",
@@ -8836,6 +9720,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d5c552088-3-33.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpbry039uiudhfcom2543",
@@ -8846,6 +9731,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f2d4870cc5-1-31.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpblv039liudh0h4kixcy",
@@ -8856,6 +9742,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/28c1e16a92-7-15.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpbev039biudh9gf1q8f7",
@@ -8866,6 +9753,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/190fd82b57-1-29.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpb8p0393iudh2olxt3gz",
@@ -8876,6 +9764,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a9793f99ac-1-28.webp",
     category: "Ferramentas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvpb2j038xiudhqoxq42ga",
@@ -8886,6 +9775,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e125511128-1-27.webp",
     category: "Celulares e Smartphones",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpawd038qiudhehcqw1en",
@@ -8896,6 +9786,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/80ddbb41d9-5-18.webp",
     category: "Celulares e Smartphones",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvpaqd038iiudhemp0qwwv",
@@ -8906,6 +9797,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92eeb54b11-6-18.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvpak70388iudh89x0i2c7",
@@ -8916,6 +9808,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2f30cd8cb0-1-23.webp",
     category: "Informática",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvpae0037xiudhekxx9lyz",
@@ -8926,6 +9819,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ad5e48b21e-3-24.webp",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvpa0r037ciudh7j12opnw",
@@ -8936,6 +9830,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/987a75c7db-bra.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp9uj0374iudhcjaeu081",
@@ -8946,6 +9841,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/775c457211-1-19.webp",
     category: "Informática",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvp9og036wiudhan68013y",
@@ -8956,6 +9852,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/48c1148b0a-ring.png",
     category: "Ring Light & Suportes",
     stock: -11,
+    manageStock: false,
   },
   {
     id: "cmrnvp9id036qiudhsewr3tdt",
@@ -8966,6 +9863,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a7d18b9c12-3-19.webp",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvp9c8036jiudhxtzvwnib",
@@ -8976,6 +9874,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2039ecdae9-capa-6.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp965036diudho9uh7gd1",
@@ -8986,6 +9885,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8251c7e40d-5-11.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp9010367iudhiwy3ef6i",
@@ -8996,6 +9896,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d137418aaf-2-13.webp",
     category: "Media Streaming",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvp8tp0361iudh74ov26pw",
@@ -9006,6 +9907,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/429d4cc700-4-10.jpg",
     category: "Fora de Estoque",
     stock: 4,
+    manageStock: true,
   },
   {
     id: "cmrnvp8nk035qiudhn8qane2t",
@@ -9016,6 +9918,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6b0ddd73a9-2-6.jpg",
     category: "Salão & Barbearia",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvp8he035fiudhrzfhb9e8",
@@ -9026,6 +9929,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2e02caba8-capa-4.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp8bb0354iudh0kf2pgzb",
@@ -9036,6 +9940,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9632107ed6-1-11.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp851034siudho2afux2h",
@@ -9046,6 +9951,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7ed8833dbf-3-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp7yn034liudhjgdu9r9d",
@@ -9056,6 +9962,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/afe7d6676a-5-7.webp",
     category: "Fones de Ouvido",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvp7sk0349iudhdzpomeia",
@@ -9066,6 +9973,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/09a8e90e78-10.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp7mi033xiudhp7op5u5g",
@@ -9076,6 +9984,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c8cb7d7d6-6-12.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp7ga033miudh6qrvqhb0",
@@ -9086,6 +9995,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4bedd7bd3e-capa-2.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp7a4033iiudh5re1rxki",
@@ -9096,6 +10006,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/777be9e7ea-1-9.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp73z0337iudh6a233yhh",
@@ -9106,6 +10017,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4ee02f2434-capa-1.jpg",
     category: "Caixas de Som",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvp6xx0331iudhvj0z6nxe",
@@ -9116,6 +10028,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7236c6e288-2-7.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvp6rt032siudhomu74e3r",
@@ -9126,6 +10039,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b98c9fd20f-1-2.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: -16,
+    manageStock: false,
   },
   {
     id: "cmrnvp6lq032iiudhja7gypmp",
@@ -9136,6 +10050,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d070a96075-ca2.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp6g10327iudhoby557wi",
@@ -9146,6 +10061,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b79d0066d5-dourada.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp69z031wiudhdr6fgtgv",
@@ -9156,6 +10072,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/33eb4bc7d0-7-3.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp63v031niudhl0neg67d",
@@ -9166,6 +10083,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/36b3bf83f2-8.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp5xp031eiudh15rohosa",
@@ -9176,6 +10094,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d83a0ce60d-capa-1.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp5rh0313iudh1lyc0zm8",
@@ -9186,6 +10105,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf9383dc84-capa.jpg",
     category: "Umidificadores & Ventiladores",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvp5ld030wiudh8935nrrv",
@@ -9196,6 +10116,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f239da2592-2-2.webp",
     category: "Brinquedos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvp5f3030piudhraft93db",
@@ -9206,6 +10127,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/86825b7929-whatsapp-image-2024-03-07-at-15-42-00-cuzqeos55v2.jpeg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp58v030hiudhx8vmxkr5",
@@ -9216,6 +10138,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/039c9fec32-12.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp52r0308iudhlngw9r00",
@@ -9226,6 +10149,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/70f46ed229-2-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp4wn0300iudhhysnpsqk",
@@ -9236,6 +10160,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3663b9e733-1.jpg",
     category: "Iluminação",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp4ql02zqiudh4gjihex8",
@@ -9246,6 +10171,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92caa682ed-capa.webp",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvp4kd02zjiudh4wx7wnf8",
@@ -9256,6 +10182,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f42d538751-Prancheta-2-14.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp4eb02zciudhscnmscmv",
@@ -9266,6 +10193,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/038cc32bbf-Prancheta-2-13.png",
     category: "Fones de Ouvido",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvp48202z5iudh9n2seifi",
@@ -9276,6 +10204,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bf6f998b3c-Prancheta-4-9.png",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvp42002yyiudhe0at8dl9",
@@ -9286,6 +10215,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c930a21da3-Prancheta-3-9.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp3vw02ysiudh3ajm5zpn",
@@ -9296,6 +10226,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/50121b2ec0-Prancheta-2-8.png",
     category: "Informática",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvp3pt02ymiudhgjf8lgvw",
@@ -9306,6 +10237,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b245c2d74-Prancheta-3-6.png",
     category: "Casa e Utensílios Domésticos",
     stock: 99,
+    manageStock: true,
   },
   {
     id: "cmrnvp3jr02yfiudhv0org1n7",
@@ -9316,6 +10248,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fe8accb697-Prancheta-3-5.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp3dn02yciudh7jqzk5ep",
@@ -9326,6 +10259,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c2790ca73-1-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp37k02y5iudhfzziueto",
@@ -9336,6 +10270,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/467420a639-Prancheta-5-3.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp31j02xziudhiqctbdr2",
@@ -9346,6 +10281,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cdc6745d0b-c3.jpg",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvp2vj02xtiudh1djjtwdk",
@@ -9356,6 +10292,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f286f3ee95-z1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp2ph02xjiudhagcsbkje",
@@ -9366,6 +10303,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/88e57b7c9f-c2.jpg",
     category: "Papelaria",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvp2jh02xdiudh8nk87p6h",
@@ -9376,6 +10314,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/22a5f2941e-13.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp2de02x6iudh5dqvcnnz",
@@ -9386,6 +10325,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/033b2f6b60-sa5.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp27d02wyiudhe5jnhl1z",
@@ -9396,6 +10336,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/afe14ef539-Prancheta-4-2.png",
     category: "Caixas de Som",
     stock: 40,
+    manageStock: true,
   },
   {
     id: "cmrnvp21a02wviudh7evjn8jg",
@@ -9406,6 +10347,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8e5f71ea85-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp1v902wqiudhfn4lujgj",
@@ -9416,6 +10358,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d4899bdb83-s.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvp1p602wjiudh7c5akauz",
@@ -9426,6 +10369,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9fdd1e8eaf-Prancheta-1-1.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp1jl02wciudhw9189xc4",
@@ -9436,6 +10380,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4def4b759a-Prancheta-1.png",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvp17k02vziudhco34viwa",
@@ -9446,6 +10391,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d700467fd-Prancheta-1-62.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp11h02vtiudhzr2j1p8t",
@@ -9456,6 +10402,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8120d01432-Prancheta-4-49.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp0vd02vmiudheh3pq53o",
@@ -9466,6 +10413,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/354b66abb0-1-2.png",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvp0p502vgiudhl5eka1v1",
@@ -9476,6 +10424,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bc67714fb7-Prancheta-1-60.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvp0j202v5iudhtha2r6zm",
@@ -9486,6 +10435,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/97d7f362d5-Prancheta-2-57.png",
     category: "Iluminação",
     stock: -8,
+    manageStock: false,
   },
   {
     id: "cmrnvp0cy02uyiudht0b63sff",
@@ -9496,6 +10446,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b6e8e85481-Prancheta-1-58.png",
     category: "Salão & Barbearia",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvp06e02utiudhzgvmzwvo",
@@ -9506,6 +10457,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c38f347953-Prancheta-3-55.png",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvp00902ukiudhv22szkzy",
@@ -9515,7 +10467,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e423b442c-1-1.png",
     category: "Media Streaming",
-    stock: -46,
+    stock: -47,
+    manageStock: false,
   },
   {
     id: "cmrnvozua02ueiudhjjdz630j",
@@ -9526,6 +10479,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0da06c9f28-Prancheta-4-44.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvozns02u7iudhl6y38pfe",
@@ -9536,6 +10490,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82b7391401-Prancheta-3-53.png",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvozhk02u2iudhkp0lgqo1",
@@ -9546,6 +10501,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a3f38cefd5-Prancheta-3-52.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvozbf02txiudhqcwn42t6",
@@ -9556,6 +10512,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2566fbc778-Prancheta-1-52.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoz5d02tsiudh034x1b6e",
@@ -9566,6 +10523,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4d1b497193-Prancheta-1-50.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoyt702tgiudhqfzsics5",
@@ -9576,6 +10534,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dbac11d3c8-Prancheta-4-42.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoyn602t8iudhn2bono0c",
@@ -9586,6 +10545,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/505327a815-1.png",
     category: "Umidificadores & Ventiladores",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvoyh602t0iudhj5fqvu7q",
@@ -9596,6 +10556,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ba62ca2ec9-Prancheta-4-41.png",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoyb002suiudhw19er608",
@@ -9606,6 +10567,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9033bf2aa6-Prancheta-4-40.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoy4z02sriudhaj020cdj",
@@ -9616,6 +10578,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d95694a755-Prancheta-2-43.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoxyq02sliudhxxyr371h",
@@ -9626,6 +10589,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f4575d732-ss.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoxso02sdiudh9txjght9",
@@ -9636,6 +10600,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/27d2b80bb5-d.webp",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvoxmk02s5iudh305e2zkb",
@@ -9646,6 +10611,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d11d528ad2-Prancheta-5-32.png",
     category: "Salão & Barbearia",
     stock: -83,
+    manageStock: false,
   },
   {
     id: "cmrnvoxgh02s1iudh8f32c3d3",
@@ -9656,6 +10622,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c4804c73f4-2-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoxag02ryiudhmgh3b254",
@@ -9666,6 +10633,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/de890feb8b-Prancheta-1-42.png",
     category: "Brinquedos",
     stock: 2,
+    manageStock: true,
   },
   {
     id: "cmrnvox4g02rriudhr7wc9hvi",
@@ -9675,7 +10643,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bdb9466ce0-Prancheta-1-41.png",
     category: "Ferramentas",
-    stock: -11,
+    stock: -12,
+    manageStock: false,
   },
   {
     id: "cmrnvowyd02rliudherwn25bd",
@@ -9686,6 +10655,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/40e6722506-Prancheta-1-40.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvowrx02reiudhjy2mow0b",
@@ -9696,6 +10666,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9330d64201-Prancheta-1-38.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvowlv02r6iudhrxt2mj7g",
@@ -9706,6 +10677,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/73392e31e8-1-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvowft02r1iudhyv05ds5j",
@@ -9716,6 +10688,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0209fea492-1-2.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvow9r02qsiudh3m7gyiqd",
@@ -9726,6 +10699,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ee0f3267df-1-3.png",
     category: "Brinquedos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvow3p02qfiudhzw9wvb7l",
@@ -9736,6 +10710,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dff41a6288-MAAA.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvovxl02q8iudh47jq6i6a",
@@ -9746,6 +10721,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e4ed5959e7-Prancheta-1-36.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvovri02q2iudhefjj5t8k",
@@ -9756,6 +10732,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/76213912f6-1111.jpg",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvovl702puiudhpk1l3uop",
@@ -9766,6 +10743,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ac0efcb6c-Prancheta-4-30.png",
     category: "Informática",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvovf602pniudhyyzp7req",
@@ -9776,6 +10754,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/196e72ae39-Prancheta-3-34.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvov8002pgiudhypsf5eb2",
@@ -9786,6 +10765,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0f113eb7fa-Prancheta-5-23.png",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvov1x02p7iudhrm5n8sbw",
@@ -9796,6 +10776,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a07a153c4-Prancheta-1-33.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvouvu02p0iudhw8rkerpr",
@@ -9806,6 +10787,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b0946895a5-Prancheta-2-31.png",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoupr02oviudhrplb3z9w",
@@ -9816,6 +10798,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45b4f42bbf-Prancheta-1-30.png",
     category: "Informática",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvoujk02ooiudh8a7k59vz",
@@ -9826,6 +10809,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/77cdd8b89f-Prancheta-2-26.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoudi02ohiudh5i7nnq4m",
@@ -9836,6 +10820,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a6b9881a42-Prancheta-2-24.png",
     category: "Informática",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvou7w02oaiudhebk9wv4k",
@@ -9846,6 +10831,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/78f83e263f-Prancheta-1-24.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvou1v02o3iudh628dooln",
@@ -9856,6 +10842,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7e81bc7a8c-Prancheta-4-18.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvotvt02nviudhgjvuet2h",
@@ -9866,6 +10853,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5b0052ce97-Prancheta-4-17.png",
     category: "Produtos diversos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvotpp02noiudhxteqjsri",
@@ -9876,6 +10864,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e46091006c-Prancheta-2-20.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvotji02njiudhadmsfi7x",
@@ -9886,6 +10875,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d08134cbd0-Prancheta-1-19.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvotdg02nciudh549i7f43",
@@ -9896,6 +10886,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/190140ba36-Prancheta-1-18.png",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvot7b02n5iudh4xva2vy1",
@@ -9906,6 +10897,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/baf78a67d5-Prancheta-1-17.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvot1802mziudhqmj0lpgk",
@@ -9916,6 +10908,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/55c0158949-Prancheta-1-13.png",
     category: "Ferramentas",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvosv502muiudhwp5b2bet",
@@ -9926,6 +10919,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c110a34f3c-Prancheta-2-12.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvosoj02mpiudhnzul9lf5",
@@ -9936,6 +10930,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b4eab6e24-Prancheta-3-11.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvosc702mjiudh0nvria2d",
@@ -9946,6 +10941,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788526670152-13009a86.webp",
     category: "Ferramentas",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvos6402meiudhqsy1csnh",
@@ -9956,6 +10952,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b76a48eeb7-Prancheta-2-7.png",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvorzy02m7iudh7zp79f0k",
@@ -9966,6 +10963,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f732387e3b-Prancheta-2-6.png",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvorty02m0iudhdtx5q7d2",
@@ -9976,6 +10974,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9d81954ef8-Prancheta-2-5.png",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvornv02luiudhoqrw4r2m",
@@ -9986,6 +10985,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9a6b2bcff7-Prancheta-1-4.png",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvorht02lniudhlzlhulho",
@@ -9996,6 +10996,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6069c19c2d-Prancheta-1-3.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvorbr02lfiudhqabzqck6",
@@ -10006,6 +11007,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5cbd2b9202-Prancheta-1-2.png",
     category: "Ferramentas",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvor5o02laiudhxskzla3v",
@@ -10016,6 +11018,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf6a98df5f-Prancheta-1-1.png",
     category: "Ferramentas",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvor0302l3iudhx6dlwxnu",
@@ -10026,6 +11029,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/41ba7cb637-Prancheta-4.png",
     category: "Ferramentas",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvoqnf02ktiudhsizl9z2p",
@@ -10036,6 +11040,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf85b28038-1.jpg",
     category: "Media Streaming",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvoqhb02kmiudhlhomsue3",
@@ -10046,6 +11051,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bcd64a8ca-Prancheta-1-13.png",
     category: "Relogios e Smartwatchs",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvoqb602kfiudh6u5eazox",
@@ -10056,6 +11062,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2cc4a833db-Prancheta-1-12.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoq5402k8iudhkxv59ndr",
@@ -10066,6 +11073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/63fe93d593-Prancheta-1-11.png",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvopyy02k0iudh9evyo6tc",
@@ -10076,6 +11084,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d6dce89a49-Prancheta-1-10.png",
     category: "Fones de Ouvido",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvopsx02jtiudhf09etx0c",
@@ -10086,6 +11095,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/84525cbab8-Prancheta-1-9.png",
     category: "Fones de Ouvido",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvopmo02jmiudhm9yhnznk",
@@ -10096,6 +11106,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/69ff9b6546-Prancheta-2-8.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvopg802jeiudh1otwcblo",
@@ -10106,6 +11117,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b24e9f2d00-Prancheta-1-7.png",
     category: "Informática",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvopa002j7iudh9q3zwvyy",
@@ -10116,6 +11128,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92abbe2655-Prancheta-1-6.png",
     category: "Informática",
     stock: -7,
+    manageStock: false,
   },
   {
     id: "cmrnvop3z02j0iudhbe9x8sww",
@@ -10126,6 +11139,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/622e9a796b-Prancheta-1-5.png",
     category: "Carregadores & Power Banks",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvooxy02iuiudhrcxbicju",
@@ -10136,6 +11150,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ea5433c7a1-Prancheta-2-4.png",
     category: "Informática",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvoort02iniudhzocg53e4",
@@ -10146,6 +11161,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a5d9012f1a-Prancheta-1-3.png",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvoom902igiudhcz1qteum",
@@ -10156,6 +11172,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2dc4da4e71-Prancheta-1-2.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoog602i9iudhjxva4j7g",
@@ -10166,6 +11183,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/698661c791-Prancheta-1-1.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvooa302i4iudhy2fiv5wk",
@@ -10176,6 +11194,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c64c84a313-Prancheta-1-17.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoo3i02hxiudhberdbt80",
@@ -10186,6 +11205,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3c373099fc-Prancheta-5-31.png",
     category: "Fora de Estoque",
     stock: 1,
+    manageStock: true,
   },
   {
     id: "cmrnvonx802hqiudhm8k5kj8u",
@@ -10196,6 +11216,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f71d524c35-Prancheta-1-32.png",
     category: "Papelaria",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvonr202hjiudh4kwg2k1i",
@@ -10206,6 +11227,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b9ec491607-Prancheta-1-31.png",
     category: "Câmeras",
     stock: 95,
+    manageStock: true,
   },
   {
     id: "cmrnvonky02hciudhtemv73z5",
@@ -10216,6 +11238,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f892684721-Prancheta-1-30.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvonfd02h6iudhuukvjkbx",
@@ -10226,6 +11249,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/76014fced8-Prancheta-3-26.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvon9902gziudh9dzrq2im",
@@ -10236,6 +11260,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc051acdd9-Prancheta-1-28.png",
     category: "Fora de Estoque",
     stock: 100,
+    manageStock: true,
   },
   {
     id: "cmrnvon2c02gqiudhhlldgn59",
@@ -10246,6 +11271,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9322e7d597-5.png",
     category: "Ferramentas",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvomw902gjiudhenltc7aq",
@@ -10256,6 +11282,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4e8ffd3218-Prancheta-5-23.png",
     category: "Brinquedos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvomq102gciudhn2za96fp",
@@ -10266,6 +11293,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a502923853-Prancheta-1-23.png",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvomjw02g6iudh407eh0l3",
@@ -10276,6 +11304,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9356da77b9-06a7e356ad27317e0d56cc6f695000dc.png",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvomdt02fziudhkz5kl3eb",
@@ -10286,6 +11315,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/deea8b8804-Prancheta-5-22.png",
     category: "Câmeras",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvom7o02fsiudhx51d3qy9",
@@ -10296,6 +11326,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f263c61ceb-Prancheta-2-19.png",
     category: "Fones de Ouvido",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvom1h02fliudheibz6zfy",
@@ -10306,6 +11337,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99f5eca3f7-Prancheta-2-18-1.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvolvb02feiudh84o55wfm",
@@ -10316,6 +11348,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/432931cbce-Prancheta-1-18.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvolpa02f6iudhyt20zwit",
@@ -10326,6 +11359,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e30f22f5b-Prancheta-2-15.png",
     category: "Produtos diversos",
     stock: 35,
+    manageStock: true,
   },
   {
     id: "cmrnvolj502eyiudhm25m6hu4",
@@ -10336,6 +11370,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e5af6060d-caixa-de-som-bluetooth-jbl-clip-5_1031866.webp",
     category: "Caixas de Som",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvold102eriudh13ndxyh8",
@@ -10346,6 +11381,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/62c500189e-Prancheta-1-13.png",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvol7f02ekiudhob2zbzup",
@@ -10356,6 +11392,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3fe7e47cc6-Prancheta-1-10.png",
     category: "Iluminação",
     stock: -13,
+    manageStock: false,
   },
   {
     id: "cmrnvol1b02ediudhbvjtfkkp",
@@ -10366,6 +11403,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/70dd033254-Prancheta-4-9.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvokuy02e6iudhbkq346d6",
@@ -10376,6 +11414,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5395d22e14-Prancheta-1-8.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvokoq02dziudhieyb87ya",
@@ -10386,6 +11425,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fd271f8aba-Prancheta-5-7.png",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvokio02dsiudhxqgcqvmg",
@@ -10396,6 +11436,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e52555c033-Prancheta-1-6.png",
     category: "Games",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvokci02dliudhz8brj7h4",
@@ -10406,6 +11447,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4f2b20216-Prancheta-2-5.png",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvok6b02deiudhrpyh3hsi",
@@ -10416,6 +11458,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/259d5ae435-Prancheta-1-4.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvok0702d7iudhjzng386b",
@@ -10426,6 +11469,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a56c47c22c-Prancheta-1-3.png",
     category: "Produtos diversos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvojtx02d0iudh53lh4jrm",
@@ -10436,6 +11480,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7a7de52fab-Prancheta-1-2.png",
     category: "Fora de Estoque",
     stock: 4,
+    manageStock: true,
   },
   {
     id: "cmrnvojns02ctiudhn2x6gi09",
@@ -10446,6 +11491,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9148002e67-Prancheta-5.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvojhp02cmiudhja9dy5q2",
@@ -10456,6 +11502,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6d6702de53-Prancheta-1-4.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvojbl02cfiudhz77r4s5x",
@@ -10466,6 +11513,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3cdba399dc-Prancheta-1-2.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoj5g02c8iudhuh8zu3j6",
@@ -10476,6 +11524,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ccf48f4114-Prancheta-1.png",
     category: "Celulares e Smartphones",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoize02c1iudh6e4svp39",
@@ -10486,6 +11535,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35bad5695d-Prancheta-1-26.png",
     category: "Ring Light & Suportes",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvoitd02buiudhd7ob7k0t",
@@ -10496,6 +11546,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0acc403b05-Prancheta-2-22.png",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvoin902bmiudhgrvgh2zh",
@@ -10506,6 +11557,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a59f2fb7d-Prancheta-1-24.png",
     category: "Promoções do Mês",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoih902bfiudhg80uzhr3",
@@ -10515,7 +11567,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7da4642ceb-Prancheta-4-20.png",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvoib402b8iudhaobjpldv",
@@ -10526,6 +11579,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e026c2f1e2-Prancheta-1-21.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoi5202b1iudhf595vzoa",
@@ -10536,6 +11590,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37c1b267cd-3-2.webp",
     category: "Iluminação",
     stock: 98,
+    manageStock: true,
   },
   {
     id: "cmrnvohyz02auiudhtdaltw5n",
@@ -10546,6 +11601,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8fb371516c-Prancheta-1-20.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvohsv02aniudh7cmrkl4r",
@@ -10556,6 +11612,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92968d969d-Prancheta-1-19.png",
     category: "Fora de Estoque",
     stock: -4,
+    manageStock: true,
   },
   {
     id: "cmrnvohm802agiudh34m3eh58",
@@ -10566,6 +11623,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/85dcbcfb22-Prancheta-3-14.png",
     category: "Carregadores & Power Banks",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvohfs02a9iudhnupjm7wx",
@@ -10576,6 +11634,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/081fae2cfa-Prancheta-1-17.png",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvoh9o02a2iudh19gkk3lc",
@@ -10586,6 +11645,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0f99aecb99-1-1.png",
     category: "Iluminação",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvoh3c029viudh7ptbe9zz",
@@ -10596,6 +11656,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c7b20a0fd9-Prancheta-1-16.png",
     category: "Iluminação",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvogx5029oiudh8cznpg1l",
@@ -10606,6 +11667,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9412d4ef34-1.webp",
     category: "Iluminação",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvogr1029hiudhyddu50aa",
@@ -10616,6 +11678,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a9795575b-Prancheta-1-11.png",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvogkz029biudhzwwem2ho",
@@ -10626,6 +11689,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/016aab7323-Prancheta-1-7.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvogew0296iudhhp05ln3y",
@@ -10636,6 +11700,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ae61ef4ea7-1.jpg",
     category: "Fora de Estoque",
     stock: -1,
+    manageStock: true,
   },
   {
     id: "cmrnvog8o028ziudhmdh96hq9",
@@ -10646,6 +11711,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/24e2f7aed5-Prancheta-2-2.png",
     category: "Iluminação",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvog2j028siudh94y1rpag",
@@ -10655,7 +11721,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e47094dcf4-Prancheta-2-1.png",
     category: "Salão & Barbearia",
-    stock: -1,
+    stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvofwh028kiudhy3bqakzr",
@@ -10666,6 +11733,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/85f2d6dc77-12.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvofqe028giudhplp56ukf",
@@ -10676,6 +11744,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bf6e986b6-1-11.jpg",
     category: "Carregadores & Power Banks",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvofk80286iudhecm5x2pc",
@@ -10686,6 +11755,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31a8c07673-1-8.jpg",
     category: "Brinquedos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvofdr027yiudhtpnpo3h7",
@@ -10696,6 +11766,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/27c2d83fd0-5-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvof7n027riudhde12r1fb",
@@ -10706,6 +11777,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/79c16ef442-1-4.jpg",
     category: "Fora de Estoque",
     stock: -4,
+    manageStock: true,
   },
   {
     id: "cmrnvof1j027iiudh46czdgtu",
@@ -10716,6 +11788,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eca4773478-1-3.jpg",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvoevf027ciudhxerquv8j",
@@ -10726,6 +11799,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b63dd0747a-1-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoep70276iudhnplu8nu9",
@@ -10736,6 +11810,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/38c08e4d1c-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoeit026ziudhgkc1h69k",
@@ -10746,6 +11821,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a7c972439a-1-7.png",
     category: "Casa e Utensílios Domésticos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvoecl026oiudhpotamh1z",
@@ -10756,6 +11832,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e51f29feb-1-6.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoe6g026eiudhs0hn7k4h",
@@ -10766,6 +11843,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cfbfdeabba-1-5.png",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvoe0e0263iudh3u8b0s9i",
@@ -10776,6 +11854,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9df5b27ca3-1-24.jpg",
     category: "Fora de Estoque",
     stock: 1,
+    manageStock: true,
   },
   {
     id: "cmrnvodu8025uiudhy6s2yom6",
@@ -10786,6 +11865,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf28c0415f-1-21.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvodmn025liudhjq5soev7",
@@ -10796,6 +11876,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4ea85a00f4-1-19.jpg",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvodgc025ciudhdcvop2r5",
@@ -10806,6 +11887,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7f5d7bffe-1-18.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoda60255iudhn1kyxnll",
@@ -10816,6 +11898,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4e6c76eb15-1-15.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvod40024ziudh7nnwcsog",
@@ -10826,6 +11909,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a1584e520c-1-14.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvocxv024niudhzo5gxkiw",
@@ -10836,6 +11920,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c82407f0d-1-11.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: -23,
+    manageStock: false,
   },
   {
     id: "cmrnvocrr024biudh5138dx9g",
@@ -10846,6 +11931,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9aa438e839-Design-sem-nome-1.jpg",
     category: "Relogios e Smartwatchs",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvoclm0241iudhjultswet",
@@ -10856,6 +11942,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/72a549a992-1-9.jpg",
     category: "Relogios e Smartwatchs",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvocez023piudhh45afbmf",
@@ -10866,6 +11953,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eb112bb5c7-2-8.jpg",
     category: "Câmeras",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvoc8t023giudhc17el3gz",
@@ -10876,6 +11964,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b80d44a1b0-2-4.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoc2c0238iudh0vxxinr2",
@@ -10886,6 +11975,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8fb708572a-2-4.jpg",
     category: "Informática",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvobw8022wiudhfitjblv3",
@@ -10896,6 +11986,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f9bbac22b7-10.jpg",
     category: "Câmeras",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvobq6022miudh4ra8quia",
@@ -10906,6 +11997,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dfb33d2670-7.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvobk3022diudh2gt44rqa",
@@ -10916,6 +12008,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6dede0d5e0-br-11134207-7r98o-m0aprvxct03h73.jpeg",
     category: "Informática",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvobdz0222iudhqh0il7hu",
@@ -10926,6 +12019,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b2622e457e-1-1.png",
     category: "Media Streaming",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvob7a021riudh8gtn3xrb",
@@ -10936,6 +12030,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd0f77aae8-1-7.png",
     category: "Produtos diversos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvob1a021giudhp9tvx99u",
@@ -10946,6 +12041,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ebcd202f2-1-6.png",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvoav40218iudhw2favm2g",
@@ -10956,6 +12052,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/823bab1c0e-1-5.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvoap1020yiudhqo0q352n",
@@ -10966,6 +12063,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a5f60bc79c-1-4.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvoaiy020niudhnmy48k2v",
@@ -10976,6 +12074,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f6833b3f1b-1-3.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvoac0020biudhxbwfc59h",
@@ -10986,6 +12085,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4c206ebd3d-3-11.png",
     category: "Casa e Utensílios Domésticos",
     stock: 37,
+    manageStock: true,
   },
   {
     id: "cmrnvoa5w01zziudhzierlbho",
@@ -10995,7 +12095,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3d2c6c5ecf-1.png",
     category: "Brinquedos",
-    stock: -11,
+    stock: -12,
+    manageStock: false,
   },
   {
     id: "cmrnvo9z001zpiudhs085kurz",
@@ -11006,6 +12107,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d8f900985a-111-1.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo9sx01z9iudh02fy65rt",
@@ -11016,6 +12118,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0e9e858dda-1-1.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvo9m501yuiudh3ii651bs",
@@ -11025,7 +12128,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c16ad7ee15-1.png",
     category: "Fora de Estoque",
-    stock: 98,
+    stock: 96,
+    manageStock: true,
   },
   {
     id: "cmrnvo9g001ykiudhju3tdta4",
@@ -11036,6 +12140,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7b20d43a74-capa-8.png",
     category: "Ferramentas",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvo99q01ybiudhzsvf3ccf",
@@ -11046,6 +12151,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4970ece263-1.png",
     category: "Casa e Utensílios Domésticos",
     stock: -17,
+    manageStock: false,
   },
   {
     id: "cmrnvo93m01y0iudhd0nen5k8",
@@ -11056,6 +12162,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3032a95870-CAPA-7.png",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvo8xj01xriudh4f29yelz",
@@ -11066,6 +12173,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5fc4204eb1-CAPA-6.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo8rf01xkiudhbj24ir5x",
@@ -11076,6 +12184,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fe91ab29fc-CAPA-3.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo8l901xeiudh30w8ihw3",
@@ -11086,6 +12195,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/496b4cd31a-main_0_.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo8f501x4iudh0y7mgmsc",
@@ -11096,6 +12206,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/16d4d1493a-capa-1.png",
     category: "Fora de Estoque",
     stock: -2,
+    manageStock: true,
   },
   {
     id: "cmrnvo88x01wuiudh3s62uzl8",
@@ -11106,6 +12217,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/090bc5c1fb-capa-2.png",
     category: "Fora de Estoque",
     stock: -3,
+    manageStock: true,
   },
   {
     id: "cmrnvo82q01wniudhcxyrz1ca",
@@ -11116,6 +12228,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f7f9bdd7f3-capa.png",
     category: "Fora de Estoque",
     stock: -2,
+    manageStock: true,
   },
   {
     id: "cmrnvo7wo01waiudh3qz2g178",
@@ -11126,6 +12239,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/55b3995cc3-1-6.png",
     category: "Caixas de Som",
     stock: -13,
+    manageStock: false,
   },
   {
     id: "cmrnvo7qd01w1iudh90qc7y7p",
@@ -11136,6 +12250,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/580f1a9414-1-4.png",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvo7ka01vwiudhrp0orp1d",
@@ -11146,6 +12261,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/049f34adce-CAPA-7.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo7e401vmiudhdlxowjir",
@@ -11156,6 +12272,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ff23c2d469-capa-5.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo78001vbiudhm5kfyrpl",
@@ -11166,6 +12283,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aca7d30265-1-2.png",
     category: "Salão & Barbearia",
     stock: -8,
+    manageStock: false,
   },
   {
     id: "cmrnvo71y01v1iudh458f95rh",
@@ -11176,6 +12294,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3d9cf2880f-CAPA-3.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo6ul01utiudhff0ud54d",
@@ -11186,6 +12305,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b8a67eb2d-capa-1.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo6og01ugiudhgk79nbf6",
@@ -11196,6 +12316,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c90abb6330-1-1.png",
     category: "Ferramentas",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvo6ib01u7iudhmbjq6au6",
@@ -11206,6 +12327,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/10aaf466cb-CAPA.png",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvo6c501txiudh303mleba",
@@ -11216,6 +12338,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a7c23a5ffe-CAPA-25.png",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvo66101toiudh3wdnt4mc",
@@ -11226,6 +12349,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4908c70f4d-CAPA-21.png",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvo5zw01tfiudhl6bajh4m",
@@ -11236,6 +12360,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/483105005d-CAPA-19.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo5ts01t8iudh1vnn488g",
@@ -11246,6 +12371,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9268893a55-1-6.png",
     category: "Informática",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvo5nf01syiudhq1fqpb2n",
@@ -11256,6 +12382,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dcef76b37d-1-5.png",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo5hc01spiudh6jrs1mv2",
@@ -11266,6 +12393,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/88a9b90c93-capa-14.png",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo5b801sfiudhlpkh6hsg",
@@ -11276,6 +12404,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8d0036758-3-15.png",
     category: "Carregadores & Power Banks",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvo55401s5iudhg2t7q03c",
@@ -11285,7 +12414,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/677df56011-1-7.png",
     category: "Salão & Barbearia",
-    stock: -4,
+    stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvo4z101rwiudhg0r6ugll",
@@ -11296,6 +12426,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/749f9f8ca2-CAPA-13.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo4sq01rmiudh44us8lka",
@@ -11306,6 +12437,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/811e9f7d6e-Design-sem-nome.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo4mf01rbiudh0mk4h8yx",
@@ -11316,6 +12448,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/34a66d966f-CAPA-11.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo4gc01r6iudhu800ol2b",
@@ -11326,6 +12459,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2bf7863297-1-1.png",
     category: "Caixas de Som",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvo4a901qwiudh4agmeb5p",
@@ -11336,6 +12470,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1d19890daa-1-4.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo44801qriudhpoxk10dn",
@@ -11346,6 +12481,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/10038b8e42-capa-4.png",
     category: "Casa e Utensílios Domésticos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvo3y501qiiudh7130rzv8",
@@ -11356,6 +12492,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00de1f3d43-capa-2.png",
     category: "Casa e Utensílios Domésticos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvo3rl01q7iudh2feldg0r",
@@ -11366,6 +12503,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/913663cddf-capa.png",
     category: "Brinquedos",
     stock: -10,
+    manageStock: false,
   },
   {
     id: "cmrnvo3l701q2iudh3ppk44tr",
@@ -11376,6 +12514,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/39f334cc88-capa-17.png",
     category: "Umidificadores & Ventiladores",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvo3f101priudhcki0mq2c",
@@ -11386,6 +12525,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c16f2e84e-CAPA-18.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvo38x01pjiudhsk5sa6cf",
@@ -11396,6 +12536,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31f297e2b9-1-8.png",
     category: "Informática",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvo32v01paiudhcmg5nzpp",
@@ -11406,6 +12547,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f7f365413-Design-sem-nome-1.png",
     category: "Informática",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvo2ws01p3iudhfzhkke6y",
@@ -11416,6 +12558,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35da6fb564-1-6.png",
     category: "Mais vendidos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvo2ql01ouiudh9z4nd1jt",
@@ -11426,6 +12569,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cea0575c46-Capa-15.png",
     category: "Câmeras",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvo2ke01okiudh7354adcp",
@@ -11436,6 +12580,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cabf7191fd-CAPA-11.png",
     category: "Casa e Utensílios Domésticos",
     stock: -9,
+    manageStock: false,
   },
   {
     id: "cmrnvo2eb01o9iudh3d1gx6zg",
@@ -11446,6 +12591,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/26bd7e341f-CAPA-10.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo28801nziudhgp1ghiu4",
@@ -11456,6 +12602,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/db1200c0b0-capa-8.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvo22501nmiudh4liexo42",
@@ -11466,6 +12613,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cc7c831220-61vg2btBt-L._AC_SL1500_.jpg",
     category: "Iluminação",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvo1w301neiudhzx6k0082",
@@ -11476,6 +12624,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/293fbc8870-CAPA-5.png",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvo1py01n6iudh5cfxj7pj",
@@ -11486,6 +12635,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5d944e474a-CAPA-4.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo1ju01mviudh4ylkz1zv",
@@ -11496,6 +12646,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b9114b24e9-1-5.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo1dp01mkiudhpqn9hfmg",
@@ -11506,6 +12657,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5f7514bc5d-1-4.png",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvo17i01mbiudhjl29yekx",
@@ -11516,6 +12668,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/06640156cd-6-3.png",
     category: "Casa e Utensílios Domésticos",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmrnvo11e01m5iudhajsx82tf",
@@ -11526,6 +12679,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a40677f55e-1-2.png",
     category: "Iluminação",
     stock: -19,
+    manageStock: false,
   },
   {
     id: "cmrnvo0uv01lxiudh5onvg8k4",
@@ -11536,6 +12690,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a0718bf4b2-capa.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo0os01lniudhfgx1rzk4",
@@ -11546,6 +12701,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d0491b94f6-capa-3.png",
     category: "Fora de Estoque",
     stock: 98,
+    manageStock: true,
   },
   {
     id: "cmrnvo0i801lbiudhbvk34vjf",
@@ -11556,6 +12712,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/436ffdd33b-2-13.png",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvo0c401l1iudhjdmrh22p",
@@ -11566,6 +12723,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d34dc0dc28-1-11.png",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvo06201kqiudhnmcnpibh",
@@ -11576,6 +12734,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3bf2197957-doppler-fetal-portatil-rosa-63f685b4113e5-large1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnzzs01kfiudh3al7u1uc",
@@ -11586,6 +12745,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/85c284017c-5-10.png",
     category: "Fones de Ouvido",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnztl01k8iudh14lw5hky",
@@ -11596,6 +12756,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/193687eaed-5-9.png",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnznk01jyiudhvnluf8qg",
@@ -11606,6 +12767,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a06e94d507-1-8.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnzhi01jniudh78zjv8nr",
@@ -11616,6 +12778,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b592d07bd7-4-6.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnzbc01j9iudhswcxoxoe",
@@ -11626,6 +12789,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/94a4ac41ea-6-5.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnz5901j1iudhqf583zbv",
@@ -11636,6 +12800,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5462d8c292-8-2.png",
     category: "Umidificadores & Ventiladores",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnyyy01isiudh7gn8d899",
@@ -11646,6 +12811,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/879711abc8-4-2.png",
     category: "Iluminação",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvnyst01ihiudh5qfmd5k6",
@@ -11656,6 +12822,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7f57bb24d9-6-2.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnymp01i8iudhe63rzlx4",
@@ -11666,6 +12833,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/abde5fc498-8.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnygl01hziudh8jvgagos",
@@ -11676,6 +12844,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2930ec9fed-2.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnyaj01htiudhm2x1gbd4",
@@ -11686,6 +12855,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/496b4cd31a-main_0_.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvny4d01hniudhv1cetxp7",
@@ -11696,6 +12866,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f15933ee87-Caranguejo-Fujao-Brinquedo-Sr-Joe-Toca-Musica-Sensor-Bebe.jpg",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnxy501heiudhbcf2jke2",
@@ -11706,6 +12877,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a5bcd60486-Levantador-Movedor-Suporte-Transportador-Moveis-Com-Rodinhas-4.jpg",
     category: "Ferramentas",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvnxrd01h6iudhdmnlsbnh",
@@ -11716,6 +12888,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/94b201941a-capa.png",
     category: "Umidificadores & Ventiladores",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvnxl501gsiudhkxchwst4",
@@ -11726,6 +12899,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ddc7365760-8-4.webp",
     category: "Informática",
     stock: -3,
+    manageStock: true,
   },
   {
     id: "cmrnvnxez01ghiudhp4rtaz3z",
@@ -11736,6 +12910,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b51452fe02-1-1.jpg",
     category: "Brinquedos",
     stock: -10,
+    manageStock: false,
   },
   {
     id: "cmrnvnx8w01g2iudh8ob1o9m0",
@@ -11746,6 +12921,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9b8a9bd971-12-2.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnx2u01fniudh71mjjjj4",
@@ -11756,6 +12932,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6a7aebcc92-Xiaomi-Mi-Stick-Tv-4k-Controle-De-Voz-8gb-2gb-De-Memoria-Ram.jpg",
     category: "Media Streaming",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnwwp01f9iudh0cozmm9n",
@@ -11766,6 +12943,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8c585b08f5-3.webp",
     category: "Fora de Estoque",
     stock: -3,
+    manageStock: true,
   },
   {
     id: "cmrnvnwqn01esiudh6wi23vi2",
@@ -11776,6 +12954,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6255aa06b7-8-Copia-1.jpg",
     category: "Papelaria",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvnwkf01efiudh5hb0s74m",
@@ -11786,6 +12965,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dbf28a11b2-7-11.jpg",
     category: "Umidificadores & Ventiladores",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvnwea01dziudhreoxuy9x",
@@ -11796,6 +12976,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a58f6b4f8-14-1.webp",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnw8601doiudhwfixr03k",
@@ -11806,6 +12987,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d14560429e-9-7.jpg",
     category: "Caixas de Som",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnw1z01dbiudh9gpxojqu",
@@ -11816,6 +12998,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/39fec58c50-CAPA.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnvvx01cyiudhgvvy80r7",
@@ -11826,6 +13009,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ffdb046070-11-2.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnvpt01cjiudhakh0ot8k",
@@ -11836,6 +13020,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/170d3b2682-8-6.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnvjp01c5iudhzkz5zfy4",
@@ -11846,6 +13031,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eb89495515-12-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnvdd01boiudhla0rrsgd",
@@ -11855,7 +13041,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/86081b97d3-17-Copia.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnv7801b6iudh1fb5n5aj",
@@ -11866,6 +13053,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9192e7ba4d-2.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnv1n01ayiudhny4w8f95",
@@ -11876,6 +13064,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/416f897060-1-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnuvj01aliudhpj0f1byh",
@@ -11886,6 +13075,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/743ca3dec0-8-1.jpg",
     category: "Iluminação",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvnupd01a6iudhqz6bknty",
@@ -11896,6 +13086,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3c1c0f0626-8.webp",
     category: "Mais vendidos",
     stock: -7,
+    manageStock: false,
   },
   {
     id: "cmrnvnuiq019oiudhm34afl6w",
@@ -11906,6 +13097,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b4c9242e39-7.jpg",
     category: "Promoções do Mês",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnuck0198iudhz2y3zz86",
@@ -11916,6 +13108,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6aa68d18be-ProjetorGalxiaAstronautaGalaxyLightsEstrelas-754935-MLB70234636222_072023.jpeg",
     category: "Brinquedos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvnu01018uiudhsk2pvvbx",
@@ -11926,6 +13119,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c4b57eb94-12-10.webp",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvntty018giudh48r9muol",
@@ -11936,6 +13130,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8e4d59414-1-6.jpg",
     category: "Câmeras",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvntns0181iudhom40wt1m",
@@ -11946,6 +13141,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/abb6c2690c-14-3.webp",
     category: "Ring Light & Suportes",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvntho017oiudhhxb7cc81",
@@ -11956,6 +13152,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aca1c2dbbf-8-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvntb7017eiudh0li7b1jf",
@@ -11966,6 +13163,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/26d5944254-4-3.webp",
     category: "Media Streaming",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvnt400170iudhbmg5526j",
@@ -11976,6 +13174,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b79d869fa-capa-1.png",
     category: "Caixas de Som",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvnsxu016iiudh4u8lx2o5",
@@ -11986,6 +13185,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9775f5f57b-capa.jpeg",
     category: "Ring Light & Suportes",
     stock: 18,
+    manageStock: true,
   },
   {
     id: "cmrnvnsrs0166iudh7i3h13yj",
@@ -11996,6 +13196,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2281cef04-BastoTripMiniPauDeSelfieBluetoothem-951709-MLB45132467872_032021.jpeg",
     category: "Ring Light & Suportes",
     stock: -8,
+    manageStock: false,
   },
   {
     id: "cmrnvnslr015viudhu3g4cx6f",
@@ -12006,6 +13207,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dfb4d16337-PapaBolinhasLimpaRoupasTiraPelosEltricoRec-667077-MLB70048854591_062023-1.jpeg",
     category: "Casa e Utensílios Domésticos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvnsfo015hiudhoddiz24h",
@@ -12016,6 +13218,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f81078d31a-0-MoedorTrituradorDeCafGroswEltricoInox.jpeg",
     category: "Casa e Utensílios Domésticos",
     stock: -12,
+    manageStock: false,
   },
   {
     id: "cmrnvns9m0155iudhf7e47s3u",
@@ -12026,6 +13229,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cbebc4f812-capa.jpeg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvns3e014qiudhs0n7o0j7",
@@ -12036,6 +13240,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://c7drop.com.br/wp-content/uploads/2023/06/0-DifusorAromatizadorUmidificadorArAromaleoEf.jpeg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnrxe014biudhovxrf0h0",
@@ -12046,6 +13251,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/89a958c5ce-5180TStGVrL._AC_SL1200_.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnrrc0146iudhnnodo67d",
@@ -12055,7 +13261,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9a5d081df4-2-2.webp",
     category: "Brinquedos",
-    stock: -375,
+    stock: -378,
+    manageStock: false,
   },
   {
     id: "cmrnvnrl80140iudhy7weck1r",
@@ -12066,6 +13273,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ceb5a099d8-3-1.webp",
     category: "Brinquedos",
     stock: -51,
+    manageStock: false,
   },
   {
     id: "cmrnvnrf2013siudhz93a3qtc",
@@ -12076,6 +13284,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0e04ffaaf5-capa.png",
     category: "Caixas de Som",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnr90013iiudh1d7rkuq5",
@@ -12086,6 +13295,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5f12c706a9-3-6.webp",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnr2y0134iudh4treg1bv",
@@ -12096,6 +13306,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/75f1416e32-AspiradorPorttilAutomotivoPotenteRecarregvel-833424-MLB52275247199_112022.jpeg",
     category: "Promoções do Mês",
     stock: -58,
+    manageStock: false,
   },
   {
     id: "cmrnvnqwu012viudh1gdden7o",
@@ -12106,6 +13317,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e2ea22f967-8-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnqq2012giudhdv8edlmf",
@@ -12116,6 +13328,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7afe464f3b-0-MopDeLimpezaTringuloAjustvelGiratrio.jpeg",
     category: "Fora de Estoque",
     stock: -1,
+    manageStock: true,
   },
   {
     id: "cmrnvnqjt0123iudhl0wnfz7r",
@@ -12126,6 +13339,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b17a136f0-0-MiniMquinaPorttilFerroDePassarRoupaVapor.jpeg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnqdp011tiudhrnp524kb",
@@ -12136,6 +13350,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/483dc8e9db-3-2.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnq7m011niudhnd73ckj3",
@@ -12146,6 +13361,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d620f2a39c-4.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnq1j011eiudh4kp61ioj",
@@ -12156,6 +13372,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0f77ddd8fb-Design-sem-nome.jpg",
     category: "Anúncios em Massa",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnpvh0117iudhvtvein0y",
@@ -12166,6 +13383,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3c42f284ad-Choque-el-trico-l-mpada-assassino-do-mosquito-recarreg-vel-usb-levou-voar-repelente-anti-inseto.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnppf010tiudhub97fxr0",
@@ -12176,6 +13394,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a1afbd8948-cad-luatek-1.jpg",
     category: "Ferramentas",
     stock: -15,
+    manageStock: false,
   },
   {
     id: "cmrnvnpjf010miudh2utwbf2a",
@@ -12186,6 +13405,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b990d6669-6-5.webp",
     category: "Iluminação",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnpdf010aiudhttkwwsx3",
@@ -12196,6 +13416,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c5a7daa8d-0-LanternaTticawLongoAlcancePotenteRecar.jpeg",
     category: "Iluminação",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvnp6p00zxiudhzo4l0lq9",
@@ -12205,7 +13426,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/79ebed91e9-0-FarolLanternaDeCabeaLedSuperForteResistent.jpeg",
     category: "Iluminação",
-    stock: -1,
+    stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvnp0l00zliudh154ulmqx",
@@ -12216,6 +13438,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60240a8b0a-AfiadorAmoladorDeFacasETesourasInProfis-635518-MLB53834318229_022023.jpeg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnouk00zeiudhga6dt2lw",
@@ -12226,6 +13449,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/de9bf7f555-WhatsApp-Image-2023-02-10-at-13.59.16.jpeg",
     category: "Beleza e Cuidado Pessoal",
     stock: -8,
+    manageStock: false,
   },
   {
     id: "cmrnvnooh00z4iudhfphpr6rc",
@@ -12236,6 +13460,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb92d6c31b-61so63LPWqL._AC_SL1500_.jpg",
     category: "Media Streaming",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnohq00yxiudhzgzj63k2",
@@ -12245,7 +13470,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3450091448-1-1.webp",
     category: "Caixas de Som",
-    stock: -169,
+    stock: -171,
+    manageStock: false,
   },
   {
     id: "cmrnvnobq00ypiudh41wlmuhv",
@@ -12256,6 +13482,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a4ba405fe0-1-6.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvno5m00yciudhjlfooirz",
@@ -12266,6 +13493,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a4f25b880c-3-ProcessadorEltricoCortadorEFatiadorDeLegume.jpeg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnnzj00y4iudhvj41rfub",
@@ -12275,7 +13503,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b869ec0597-t.jpg",
     category: "Brinquedos",
-    stock: -6,
+    stock: -7,
+    manageStock: false,
   },
   {
     id: "cmrnvnntb00xxiudhf961dpso",
@@ -12286,6 +13515,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/73c80d4ef7-2-6.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvnnn700xpiudh8k85c1wk",
@@ -12296,6 +13526,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2573ac9b3a-TelefoneCelularBaratogTelaGrandeHomologado-707902-MLB54195964273_032023.jpeg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnnh400xfiudh8fh3ylu8",
@@ -12306,6 +13537,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e08717deb-3-2.webp",
     category: "Salão & Barbearia",
     stock: -14,
+    manageStock: false,
   },
   {
     id: "cmrnvnnb500x7iudheh330ozz",
@@ -12316,6 +13548,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/95d3f51ec9-4-1.webp",
     category: "Salão & Barbearia",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnn4y00wziudhdqbpcy55",
@@ -12326,6 +13559,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/abbbd263dc-capa.jpeg",
     category: "Relogios e Smartwatchs",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnmyw00wqiudh33ehovga",
@@ -12336,6 +13570,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a12572430b-Copia-de-Cem-Tecnologias-1.jpg",
     category: "Anúncios em Massa",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnmsn00wjiudhxq36ebtd",
@@ -12346,6 +13581,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e11280b109-1.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 49,
+    manageStock: true,
   },
   {
     id: "cmrnvnmmh00waiudh2yr07it0",
@@ -12356,6 +13592,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/75ed1f427c-2-2.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvnmgd00w2iudhcmk551ga",
@@ -12366,6 +13603,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8ac61acf8b-1-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnma900vtiudhpji0yrqu",
@@ -12376,6 +13614,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e3431cabee-2-3.jpg",
     category: "Produtos diversos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnm3w00veiudh5h6ciw0m",
@@ -12386,6 +13625,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e54708099-4-3.webp",
     category: "Câmeras",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvnlxp00v6iudhlb9gnkc5",
@@ -12396,6 +13636,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2aeccaec2-1-1.jpg",
     category: "Salão & Barbearia",
     stock: -49,
+    manageStock: false,
   },
   {
     id: "cmrnvnlri00uziudh6957ebna",
@@ -12406,6 +13647,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/594b2a56d9-1-1.png",
     category: "Salão & Barbearia",
     stock: 43,
+    manageStock: true,
   },
   {
     id: "cmrnvnllc00uniudhdwbipbb7",
@@ -12416,6 +13658,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60bfbcb305-1.png",
     category: "Salão & Barbearia",
     stock: -49,
+    manageStock: false,
   },
   {
     id: "cmrnvnlf800ufiudhb9qeaji5",
@@ -12426,6 +13669,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45b8030acf-6-7.webp",
     category: "Brinquedos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvnl9200u6iudh3ajvdu80",
@@ -12436,6 +13680,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e06dc814ab-1-22.webp",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnl3000tviudh7fgio0q8",
@@ -12446,6 +13691,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/670ea02be4-5-PianoTecladoMusicalInfantilMicrofoneEducativo.jpeg",
     category: "Brinquedos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvnkwt00thiudh44tox4js",
@@ -12456,6 +13702,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5c4caf02ee-0-JogoTipoPieFaceBrinquedoTortaNaCaraTop.jpeg",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnkqf00tbiudh1qd9fu55",
@@ -12466,6 +13713,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/df010757db-1-18.webp",
     category: "Papelaria",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnkka00t4iudhhykj1scc",
@@ -12476,6 +13724,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/58ae20165a-1-14.webp",
     category: "Brinquedos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvnke700syiudhr1wqtsu6",
@@ -12486,6 +13735,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d9ba7f7a25-capa.jpg",
     category: "Salão & Barbearia",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnk8400stiudh19k7t46t",
@@ -12496,6 +13746,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/115d503125-3-7.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnk2400sniudhqp3nyj6l",
@@ -12506,6 +13757,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e4d6e9f101-1-5.webp",
     category: "Iluminação",
     stock: -13,
+    manageStock: false,
   },
   {
     id: "cmrnvnjw000sbiudh0uauky79",
@@ -12516,6 +13768,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e078efd6f0-0-IrrigadorOralWaterpikPortatilBivoltUsbLinha.jpeg",
     category: "Beleza e Cuidado Pessoal",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvnjpz00s5iudhse0hvye2",
@@ -12526,6 +13779,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/76f5ab0609-1-35.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnjjn00s1iudhqszetg2i",
@@ -12536,6 +13790,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b646d80d7b-dino.jpeg",
     category: "Brinquedos",
     stock: -9,
+    manageStock: false,
   },
   {
     id: "cmrnvnjdl00rwiudhjd4yny9i",
@@ -12546,6 +13801,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d9261a0a3c-chave.jpeg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnj7h00rqiudhr83o9d9d",
@@ -12556,6 +13812,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61803b2b5d-2-12.webp",
     category: "Carregadores & Power Banks",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnj1f00rliudhd18geght",
@@ -12566,6 +13823,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b83098022-1-12.webp",
     category: "Ferramentas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnivd00rhiudh60958pkn",
@@ -12576,6 +13834,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7e2be0f01-caixa-de-som-c-subwoofer-2-1-knup-12w-rms-kp-7023_14268.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnipe00r3iudhuordyeno",
@@ -12586,6 +13845,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5c721c63a7-0-KitCUniLousaMgicaTabletInfantilPol.jpeg",
     category: "Brinquedos",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvniiw00qtiudh97zh9tlr",
@@ -12595,7 +13855,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c22968fecf-1-1.png",
     category: "Salão & Barbearia",
-    stock: -15,
+    stock: -16,
+    manageStock: false,
   },
   {
     id: "cmrnvnicp00qoiudhf4aqemyq",
@@ -12606,6 +13867,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0268c24b50-1651153767533.png",
     category: "Ferramentas",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvni6g00qliudhwhnlxi48",
@@ -12616,6 +13878,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce3d926294-4-1.png",
     category: "Anúncios em Massa",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvni0d00qaiudhebhqdx9v",
@@ -12626,6 +13889,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/59d6c7ad6e-Capa.jpeg",
     category: "Fones de Ouvido",
     stock: -15,
+    manageStock: false,
   },
   {
     id: "cmrnvnhub00pyiudhzkb33brl",
@@ -12636,6 +13900,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8424bba050-isso-ai-3.png",
     category: "Anúncios em Massa",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnho700pjiudh6ywfyo6z",
@@ -12646,6 +13911,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/69a26f5aa1-16.webp",
     category: "Games",
     stock: 93,
+    manageStock: true,
   },
   {
     id: "cmrnvnhi600pfiudh7ibukp1d",
@@ -12656,6 +13922,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e730de1e5e-4ec95c5cb8e87468d226c8e8631a106c.jpeg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnhc500paiudhudgoaygh",
@@ -12666,6 +13933,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb5eb3010e-kittt.jpeg",
     category: "Beleza e Cuidado Pessoal",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvnh6100p6iudhzigknqve",
@@ -12676,6 +13944,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0d8b8537ce-caboo.webp",
     category: "Carregadores & Power Banks",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvngto00oyiudhfrcq7uwv",
@@ -12686,6 +13955,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bb21e9c7da-mn.jpeg",
     category: "Ferramentas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvngnm00otiudh3zedfs47",
@@ -12696,6 +13966,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d8ca35bf26-lll.webp",
     category: "Umidificadores & Ventiladores",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnghl00opiudhccl8vo6k",
@@ -12706,6 +13977,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4f2b70e082-Iluminador-Ring-Light-Led-14-polegadas-Completo-com-tripe-1.jpeg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvngbi00omiudhl60wgvwg",
@@ -12716,6 +13988,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d8651b77a2-p2-p3.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvng5d00oeiudhkngcf0gy",
@@ -12726,6 +13999,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc529d326f-capa.png",
     category: "Ring Light & Suportes",
     stock: 50,
+    manageStock: true,
   },
   {
     id: "cmrnvnfz800o9iudhcitrm4mc",
@@ -12736,6 +14010,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4f83fa522-1.jpg",
     category: "Salão & Barbearia",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvnft400o3iudh3fv6x22l",
@@ -12746,6 +14021,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b3ea31fcc3-htsss.webp",
     category: "Iluminação",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnfn100nviudhv9y3qip6",
@@ -12756,6 +14032,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fc79733f4f-1-1.png",
     category: "Beleza e Cuidado Pessoal",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvnfgv00nliudhr2e3ny8u",
@@ -12766,6 +14043,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1852f2910c-7.png",
     category: "Relogios e Smartwatchs",
     stock: -16,
+    manageStock: false,
   },
   {
     id: "cmrnvnfau00niiudhnaent614",
@@ -12776,6 +14054,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44000f7329-nivel-laser-kkkk.jpeg",
     category: "Ferramentas",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnf4s00nfiudh5jr6e016",
@@ -12786,6 +14065,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce3d926294-4-1.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvneyp00n4iudh3dvlmzve",
@@ -12796,6 +14076,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/024dd3c2b8-3-GravadorDigitalSonyPxudioVozgbOriginal.jpeg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnesl00myiudh9vuo27nu",
@@ -12806,6 +14087,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a55912f8af-72a822e7cdf685c4580086e99910b195.jpg",
     category: "Iluminação",
     stock: -14,
+    manageStock: false,
   },
   {
     id: "cmrnvnem000mriudh4t8xb2b0",
@@ -12816,6 +14098,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/428f7fb113-cabo_adaptador_type_c_otg_usb_mobile_phone_s_k07_1519_2_2dbd0a1f8d4d6d11c942f5121bc4cae7.jpg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnefs00mliudhfodanh6q",
@@ -12826,6 +14109,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bfa7e8a914-hub_7_portas_regua_usb_2_0_hi_speed_500gb_3133_1_20181228145950.jpg",
     category: "Informática",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvne9q00miiudhtkcyr7yc",
@@ -12836,6 +14120,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce3d926294-4-1.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvne3n00mciudhahgamh7j",
@@ -12846,6 +14131,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0e4300525c-capa-1.jpg",
     category: "Umidificadores & Ventiladores",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvndx200lyiudh2njmftcw",
@@ -12855,7 +14141,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5615ce508f-1-BombaEltricaGarrafesBebedouroGaloDguaCo.jpeg",
     category: "Promoções do Mês",
-    stock: -6,
+    stock: -7,
+    manageStock: false,
   },
   {
     id: "cmrnvndqy00ljiudhzjz9xxd4",
@@ -12865,7 +14152,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6e6105413f-12-33.webp",
     category: "Salão & Barbearia",
-    stock: -21,
+    stock: -22,
+    manageStock: false,
   },
   {
     id: "cmrnvndka00l2iudhczpp66mw",
@@ -12876,6 +14164,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd2d07828b-8-42.jpg",
     category: "Produtos diversos",
     stock: -23,
+    manageStock: false,
   },
   {
     id: "cmrnvnde700kziudh2li2wsnf",
@@ -12886,6 +14175,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce3d926294-4-1.png",
     category: "Anúncios em Massa",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnd8200kkiudhdbm1p3jm",
@@ -12895,7 +14185,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/98f279ab33-3-68.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: -69,
+    stock: -71,
+    manageStock: false,
   },
   {
     id: "cmrnvnd1p00k7iudh7xzy1l0o",
@@ -12905,7 +14196,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd5bf89801-11-44.webp",
     category: "Ring Light & Suportes",
-    stock: -3,
+    stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvncv300jviudhqfdml0kv",
@@ -12915,7 +14207,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb47aabb59-8-61.webp",
     category: "Ferramentas",
-    stock: -1,
+    stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvncp200joiudhof2nsh4u",
@@ -12926,6 +14219,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f9a97e532d-1-61.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvncit00jeiudhcm7nw1uh",
@@ -12936,6 +14230,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ca6b47d438-1-47.jpg",
     category: "Brinquedos",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvncc800j3iudh6eplbzue",
@@ -12946,6 +14241,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8946330f23-2-56.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnc6000iniudhnk6c1r6d",
@@ -12956,6 +14252,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/401bb74a85-5-49.webp",
     category: "Iluminação",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnbzu00i9iudhlu8n0y1p",
@@ -12966,6 +14263,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99a8558f18-1-3.png",
     category: "Iluminação",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvnbtq00huiudhe0zi74h5",
@@ -12975,7 +14273,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c7f8a4952e-18-1.jpg",
     category: "Relogios e Smartwatchs",
-    stock: -3,
+    stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvnbnh00heiudhklr5jt54",
@@ -12986,6 +14285,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ac293a5d6-8-50.webp",
     category: "Fones de Ouvido",
     stock: -7,
+    manageStock: false,
   },
   {
     id: "cmrnvnbhc00h2iudh8nt28itw",
@@ -12996,6 +14296,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6700ce9c63-capa-7-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnbb600gniudh1sj77nwt",
@@ -13006,6 +14307,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9c3fff35cd-61qCa2MnA3L._AC_SL1000_.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnb5000g9iudhhlec9kk7",
@@ -13016,6 +14318,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b55485699-4-43.webp",
     category: "Produtos diversos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvnayw00fxiudhnhfdx8lz",
@@ -13026,6 +14329,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8685cb04ab-0-BarbeadorEltricoMaquinaDeBarbearAparelhoBar.jpeg",
     category: "Salão & Barbearia",
     stock: -68,
+    manageStock: false,
   },
   {
     id: "cmrnvnaso00fkiudhxiwkenxo",
@@ -13036,6 +14340,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c83f38232-1-47.webp",
     category: "Caixas de Som",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnamm00f7iudhcs2uls3k",
@@ -13046,6 +14351,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6543abc5ac-5-CopoTrmicoCtampaAbridorCervejaOriginalm.jpeg",
     category: "Garrafas, Copos e Canecas",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvnage00eqiudhihqjs98b",
@@ -13056,6 +14362,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/26e7dd858d-0-LuminriaLedSensorDePresenaArandelaLuzS.jpeg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvnaa900ejiudhw9si4tsf",
@@ -13065,7 +14372,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c455e9e28-Sem-titulo-7.jpg",
     category: "Produtos diversos",
-    stock: -3,
+    stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvna3x00e6iudhmyg1xf2d",
@@ -13076,6 +14384,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31e3fefc50-4-42.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvn9xt00duiudhibeb8965",
@@ -13086,6 +14395,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4842294eb0-capa-1.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvn9rm00dhiudhwigk5xx3",
@@ -13095,7 +14405,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0223a406c9-8-45.webp",
     category: "Fora de Estoque",
-    stock: 1,
+    stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvn9lg00d2iudhjs31sgpc",
@@ -13106,6 +14417,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce7ff0c75f-7-29.jpg",
     category: "Salão & Barbearia",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvn9fe00cpiudhsfj517sk",
@@ -13116,6 +14428,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7022247d59-0-MiniProcessadorEltricoTrituradorLegumesSFi.jpeg",
     category: "Casa e Utensílios Domésticos",
     stock: -11,
+    manageStock: false,
   },
   {
     id: "cmrnvn99e00cciudhb8cqhpt4",
@@ -13126,6 +14439,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c496b453e0-8-26.jpg",
     category: "Brinquedos",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvn93800byiudhjkkf30w7",
@@ -13136,6 +14450,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/98561cd0dc-10-36.webp",
     category: "Brinquedos",
     stock: -24,
+    manageStock: false,
   },
   {
     id: "cmrnvn8wm00briudhcei5xpoc",
@@ -13146,6 +14461,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1165956953-f3a6cff0aa58432382f1df3070aaab80-1.jpg",
     category: "Brinquedos",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvn8qk00bhiudhrrhz4ng8",
@@ -13156,6 +14472,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a68ec27b52-3-39.webp",
     category: "Casa e Utensílios Domésticos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvn8ki00b7iudh1wyk1km9",
@@ -13166,6 +14483,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e8e7c2a43-4-34.webp",
     category: "Brinquedos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvn8ef00aviudh4hu7zjvj",
@@ -13176,6 +14494,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1935ea354f-11-31.webp",
     category: "Brinquedos",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvn88900agiudhso51vs02",
@@ -13186,6 +14505,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/49df8d1846-t-4.jpg",
     category: "Brinquedos",
     stock: -9,
+    manageStock: false,
   },
   {
     id: "cmrnvn82300a3iudhz9g75c7v",
@@ -13196,6 +14516,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e0b0614674-CaixaDeSomCaixinhaBluetoothPorttilPotenteU-955701-MLB69663564869_052023.jpg",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvn7vx009riudh1xxm50s1",
@@ -13205,7 +14526,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3d4d39e06d-11-15.jpg",
     category: "Caixas de Som",
-    stock: -13,
+    stock: -14,
+    manageStock: false,
   },
   {
     id: "cmrnvn7pt009aiudhklo0d651",
@@ -13216,6 +14538,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f5609ebf28-0-ControleCelularJoystickBluetoothPcPsPsAnd.jpg",
     category: "Games",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvn7j7008xiudh9ammotfg",
@@ -13226,6 +14549,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/197008a9bb-3-FoneOuvidoGatinhaBluetoothLedOrelhaGatoCria.jpeg",
     category: "Fones de Ouvido",
     stock: -13,
+    manageStock: false,
   },
   {
     id: "cmrnvn7cj008iiudhpo7nyoz0",
@@ -13235,7 +14559,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/28f50f388f-1-36.webp",
     category: "Ring Light & Suportes",
-    stock: 13,
+    stock: 12,
+    manageStock: true,
   },
   {
     id: "cmrnvn76f0087iudhaxxeizgv",
@@ -13245,7 +14570,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/58261b9a84-1-5.png",
     category: "Câmeras",
-    stock: -2,
+    stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvn70a0082iudh0vn4yy5z",
@@ -13256,6 +14582,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2dc94080f5-667844_635854295881055365-1.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -8,
+    manageStock: false,
   },
   {
     id: "cmrnvn6tv007qiudh5o1i4n0c",
@@ -13266,6 +14593,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/840fd7933f-10916017973c4ff017b.jpg",
     category: "Produtos diversos",
     stock: -11,
+    manageStock: false,
   },
   {
     id: "cmrnvn6nq007ciudh8yc3o2pc",
@@ -13276,6 +14604,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/54cd019c8a-5-29.webp",
     category: "Produtos diversos",
     stock: -4,
+    manageStock: false,
   },
   {
     id: "cmrnvn6hl0070iudhmsf841ys",
@@ -13285,7 +14614,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c5063f5ba5-0-BalanaDigitalDePrecisoCozinhakgNutrio.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvn6ay006kiudhblxv12mk",
@@ -13296,6 +14626,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2de60ccd21-13-5.jpg",
     category: "Informática",
     stock: 0,
+    manageStock: false,
   },
   {
     id: "cmrnvn64y0068iudhmwgmlkg4",
@@ -13306,6 +14637,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9105a9dac6-6-18.jpg",
     category: "Games",
     stock: -5,
+    manageStock: false,
   },
   {
     id: "cmrnvn5yu005tiudhrzrfee5c",
@@ -13316,6 +14648,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d550e4977d-capa.jpeg",
     category: "Produtos diversos",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvn5sp005hiudhutok81ya",
@@ -13326,6 +14659,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37295f0f55-1-4.png",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvn5lx0057iudhu2c5ueof",
@@ -13336,6 +14670,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d699bc7680-1-7.png",
     category: "Fora de Estoque",
     stock: 22,
+    manageStock: true,
   },
   {
     id: "cmrnvn5ft004viudhvpivn9c1",
@@ -13346,6 +14681,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/96aec8f5c7-7-28.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvn59o004hiudhsvcrn26x",
@@ -13356,6 +14692,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/81653f7826-1b-1.webp",
     category: "Relogios e Smartwatchs",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvn5310048iudh7b0b4enr",
@@ -13366,6 +14703,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/120948dd30-bb559d0faf4250d7319958704204bede.jpeg",
     category: "Media Streaming",
     stock: -10,
+    manageStock: false,
   },
   {
     id: "cmrnvn4wx003viudhs2votc4z",
@@ -13376,6 +14714,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8c21ad97a3-0-XiaomiMiTvStickMdzaaDeVozFullHdgbPr.jpeg",
     category: "Produtos diversos",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvn4qu003jiudh07nxztgt",
@@ -13386,6 +14725,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/392b9ac81e-MiniLiquidificadorPorttilShakeSucoJuiceCup-792431-MLB53456753600_012023.jpeg",
     category: "Casa e Utensílios Domésticos",
     stock: -18,
+    manageStock: false,
   },
   {
     id: "cmrnvn4k80038iudhp4fn7tdq",
@@ -13396,6 +14736,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eee0d0c863-8118csCTRuL._AC_SL1500_-1.jpg",
     category: "Informática",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvn4dj002xiudh72zbtfde",
@@ -13406,6 +14747,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d43616140a-1-16.webp",
     category: "Relogios e Smartwatchs",
     stock: -6,
+    manageStock: false,
   },
   {
     id: "cmrnvn47b002oiudhgp9a6jps",
@@ -13416,6 +14758,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4340413447-9-4.jpg",
     category: "Informática",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvn4160028iudhkoe77ruj",
@@ -13426,6 +14769,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/43a3eda1ab-11-1.jpg",
     category: "Ring Light & Suportes",
     stock: -2,
+    manageStock: false,
   },
   {
     id: "cmrnvn3u9001wiudhabi2brxy",
@@ -13436,6 +14780,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b19f72c1a2-13-1.webp",
     category: "Carregadores & Power Banks",
     stock: -1,
+    manageStock: false,
   },
   {
     id: "cmrnvn3nq001liudhpepgwts7",
@@ -13446,6 +14791,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/359f31f70c-7-5.webp",
     category: "Caixas de Som",
     stock: -3,
+    manageStock: false,
   },
   {
     id: "cmrnvn3ho001aiudhr1likfr1",
@@ -13455,7 +14801,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2729a840f7-0-CaixinhaDeSomPortatilQBluetoothMpPenDriv.jpeg",
     category: "Caixas de Som",
-    stock: 45,
+    stock: 44,
+    manageStock: true,
   },
   {
     id: "cmrnvn3bn0010iudhbwtsc4dc",
@@ -13466,6 +14813,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/088a751c34-8.webp",
     category: "Fora de Estoque",
     stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvn33a000siudhq5h3nkxb",
@@ -13475,6 +14823,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e94d067fa-71p7JN9q-pL._AC_SL1000_-1.jpg",
     category: "Caixas de Som",
-    stock: -34,
+    stock: -35,
+    manageStock: false,
   },
 ];
