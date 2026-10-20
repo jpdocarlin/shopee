@@ -132,7 +132,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
   },
   {
     id: "cmv1kw4c2000a137h8t5kj78j",
-    name: "Aparelho Radio Freqeência Photon Led 3mhz Tratamento 7 Cores",
+    name: "Aparelho Radio Frequência Photon Led 3mhz Tratamento 7 Cores",
     slug: "aparelho-radio-freqeencia-photon-led-3mhz-tratamento-7-cores",
     priceCents: 6400,
     compareAtPriceCents: null,
@@ -182,7 +182,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791421689025-6ad0efd4.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 44,
+    stock: 43,
     manageStock: true,
   },
   {
@@ -259,7 +259,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791290442082-4bb76c43.webp",
     category: "Brinquedos",
-    stock: 10,
+    stock: 7,
     manageStock: true,
   },
   {
@@ -281,7 +281,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790897741615-9668cc80.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 46,
+    stock: 44,
     manageStock: true,
   },
   {
@@ -589,7 +589,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788269619485-877021ce.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 48,
+    stock: 47,
     manageStock: true,
   },
   {
@@ -853,7 +853,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787857879084-2b4c2d59.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 43,
+    stock: 41,
     manageStock: true,
   },
   {
@@ -2338,7 +2338,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aa37379955-5-33.jpg",
     category: "Ferramentas",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -3009,7 +3009,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/48acf71055-1-12.jpg",
     category: "Mais vendidos",
-    stock: -5,
+    stock: -7,
     manageStock: false,
   },
   {
@@ -3152,7 +3152,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a0cfa05cf5-5-19.jpg",
     category: "Informática",
-    stock: -4,
+    stock: -7,
     manageStock: false,
   },
   {
@@ -4087,7 +4087,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/adf67ae83b-4-9.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -4164,7 +4164,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44e854b70c-5-40.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -7,
+    stock: -9,
     manageStock: false,
   },
   {
@@ -5209,7 +5209,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/49030489b8-1.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -9444,7 +9444,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6bbdafc234-1-15.webp",
     category: "Câmeras",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -9510,7 +9510,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45faeb8a94-capa.webp",
     category: "Informática",
-    stock: -95,
+    stock: -96,
     manageStock: false,
   },
   {
@@ -10940,7 +10940,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788526670152-13009a86.webp",
     category: "Ferramentas",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -11567,7 +11567,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7da4642ceb-Prancheta-4-20.png",
     category: "Produtos diversos",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -11941,7 +11941,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/72a549a992-1-9.jpg",
     category: "Relogios e Smartwatchs",
-    stock: -3,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -11974,7 +11974,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8fb708572a-2-4.jpg",
     category: "Informática",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -13041,7 +13041,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/86081b97d3-17-Copia.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -13206,7 +13206,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dfb4d16337-PapaBolinhasLimpaRoupasTiraPelosEltricoRec-667077-MLB70048854591_062023-1.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -14702,7 +14702,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/120948dd30-bb559d0faf4250d7319958704204bede.jpeg",
     category: "Media Streaming",
-    stock: -10,
+    stock: -11,
     manageStock: false,
   },
   {
@@ -14724,7 +14724,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/392b9ac81e-MiniLiquidificadorPorttilShakeSucoJuiceCup-792431-MLB53456753600_012023.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -18,
+    stock: -19,
     manageStock: false,
   },
   {
