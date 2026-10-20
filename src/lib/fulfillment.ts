@@ -50,6 +50,8 @@ export async function createFulfillmentRequest(params: {
   submitterPersonType: PersonType;
   submitterDocument: string;
   productName: string;
+  productId: string;
+  productImageUrl: string;
   costCents: number;
   labelFile: File;
   proofFile: File;
@@ -72,6 +74,8 @@ export async function createFulfillmentRequest(params: {
       submitter_person_type: params.submitterPersonType,
       submitter_document: params.submitterDocument,
       product_name: params.productName,
+      product_id: params.productId,
+      product_image_url: params.productImageUrl,
       cost_cents: params.costCents,
       label_path: labelPath,
       proof_path: proofPath,
@@ -132,32 +136,32 @@ export function subscribeToTrackingUpdates(
   userId: string,
   onTrackingReceived: (request: FulfillmentRequest) => void,
 ): () => void {
-try {
-  const channel = supabase
-    .channel(`fulfillment-tracking-${userId}`)
-    .on(
-      "postgres_changes",
-      {
-        event: "UPDATE",
-        schema: "public",
-        table: "fulfillment_requests",
-        filter: `user_id=eq.${userId}`,
-      },
-      (payload) => {
-        const next = payload.new as FulfillmentRequest;
-        const prev = payload.old as Partial<FulfillmentRequest>;
-        if (next.tracking_code && next.tracking_code !== prev.tracking_code) {
-          onTrackingReceived(next);
-        }
-      },
-    )
-    .subscribe();
+  try {
+    const channel = supabase
+      .channel(`fulfillment-tracking-${userId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "fulfillment_requests",
+          filter: `user_id=eq.${userId}`,
+        },
+        (payload) => {
+          const next = payload.new as FulfillmentRequest;
+          const prev = payload.old as Partial<FulfillmentRequest>;
+          if (next.tracking_code && next.tracking_code !== prev.tracking_code) {
+            onTrackingReceived(next);
+          }
+        },
+      )
+      .subscribe();
 
-  return () => {
-    void supabase.removeChannel(channel);
-  };
-} catch (error) {
-  console.error("[fulfillment] realtime indisponivel, seguindo sem notificacao ao vivo:", error);
-  return () => {};
-}
+    return () => {
+      void supabase.removeChannel(channel);
+    };
+  } catch (error) {
+    console.error("[fulfillment] realtime indisponivel, seguindo sem notificacao ao vivo:", error);
+    return () => {};
+  }
 }

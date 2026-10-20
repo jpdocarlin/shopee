@@ -1,3 +1,4 @@
+import { OrderProduct } from "@/components/pedidos/order-product";
 import { useEffect, useState } from "react";
 import { Download, Loader2, PackageSearch, RefreshCw, Truck } from "lucide-react";
 import { toast } from "sonner";
@@ -82,7 +83,7 @@ function PedidoRow({
     <div className="flex flex-col gap-2 px-5 py-3.5 sm:flex-row sm:items-center sm:justify-between">
       <div className="min-w-0 flex-1 space-y-1">
         <div className="flex flex-wrap items-center gap-2">
-          <p className="truncate text-[13px] font-medium text-foreground">{request.product_name}</p>
+          <OrderProduct order={request} showCatalogMatch={isOwner} />
           <Badge variant={statusVariant(request.status)} className="shrink-0">
             {STATUS_LABEL[request.status]}
           </Badge>

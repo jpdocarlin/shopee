@@ -327,6 +327,8 @@ export type Database = {
       };
       fulfillment_requests: {
         Row: {
+          product_id: string | null;
+          product_image_url: string | null;
           admin_notified_at: string | null;
           cost_cents: number;
           created_at: string;
@@ -347,6 +349,8 @@ export type Database = {
           user_id: string;
         };
         Insert: {
+          product_id?: string | null;
+          product_image_url?: string | null;
           admin_notified_at?: string | null;
           cost_cents: number;
           created_at?: string;
@@ -367,6 +371,8 @@ export type Database = {
           user_id: string;
         };
         Update: {
+          product_id?: string | null;
+          product_image_url?: string | null;
           admin_notified_at?: string | null;
           cost_cents?: number;
           created_at?: string;

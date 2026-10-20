@@ -1,3 +1,4 @@
+import { OrderProduct } from "@/components/pedidos/order-product";
 import { useEffect, useMemo, useState } from "react";
 import {
   CircleDollarSign,
@@ -172,14 +173,11 @@ function PedidoCard({
   return (
     <div className="surface-card space-y-4 p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <Package className="size-4 shrink-0 text-brand" />
-          <div>
-            <p className="text-[13.5px] font-medium text-foreground">{request.product_name}</p>
-            <p className="text-[11.5px] text-muted-foreground">
-              {formatDateTime(request.created_at)}
-            </p>
-          </div>
+        <div className="min-w-0 flex-1 space-y-1">
+          <OrderProduct order={request} size="lg" showCatalogMatch />
+          <p className="pl-[76px] text-[11.5px] text-muted-foreground">
+            {formatDateTime(request.created_at)}
+          </p>
         </div>
         <Badge variant={statusVariant(request.status)}>{STATUS_LABEL[request.status]}</Badge>
       </div>

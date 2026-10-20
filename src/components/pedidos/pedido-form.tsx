@@ -15,6 +15,7 @@ import { formatBRL } from "@/lib/format";
 import { convertImageToPdf } from "@/lib/image-to-pdf";
 import { PixPayment } from "@/components/pedidos/pix-payment";
 import { ProductAutocomplete } from "@/components/pedidos/product-autocomplete";
+import type { C7DropProduct } from "@/data/c7drop-products";
 
 // Toda vez que fecha uma venda, o revendedor tem que mandar R$ 2,00 a mais
 // no PIX referente à embalagem (regra do fornecedor C7 Drop).
@@ -113,7 +114,7 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
   const [phone, setPhone] = useState("");
   const [document, setDocument] = useState("");
 
-  const [productName, setProductName] = useState("");
+  const [product, setProduct] = useState<C7DropProduct | null>(null);
   const [costInput, setCostInput] = useState("");
   const [notes, setNotes] = useState("");
   const [labelFile, setLabelFile] = useState<File | null>(null);
@@ -130,7 +131,7 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
     email.trim().length > 0 &&
     phone.trim().length > 0 &&
     document.trim().length > 0 &&
-    productName.trim().length > 0 &&
+    Boolean(product) &&
     costCents > 0 &&
     Boolean(labelFile) &&
     Boolean(proofFile) &&
@@ -138,7 +139,7 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!userId || !labelFile || !proofFile) return;
+    if (!userId || !labelFile || !proofFile || !product) return;
 
     setSubmitting(true);
     setError(null);
@@ -150,7 +151,9 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
         submitterPhone: phone.trim(),
         submitterPersonType: personType,
         submitterDocument: document.trim(),
-        productName: productName.trim(),
+        productName: product.name,
+        productId: product.id,
+        productImageUrl: product.image,
         costCents,
         labelFile,
         proofFile,
@@ -163,7 +166,7 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
       toast.success("Pedido enviado", {
         description: "Assim que confirmarmos o PIX, seguimos com o envio.",
       });
-      setProductName("");
+      setProduct(null);
       setCostInput("");
       setNotes("");
       setLabelFile(null);
@@ -294,17 +297,16 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
             </label>
             <ProductAutocomplete
               id="produto"
-              value={productName}
-              onChange={setProductName}
-              onSelectProduct={(product) => {
-                setProductName(product.name);
-                setCostInput(centsToDecimalInput(product.priceCents));
+              selected={product}
+              onSelect={(picked) => {
+                setProduct(picked);
+                setCostInput(picked ? centsToDecimalInput(picked.priceCents) : "");
               }}
-              placeholder="Digite pra buscar no catálogo…"
+              placeholder="Digite o nome do produto que você vendeu…"
               className="h-9 text-[13px]"
             />
             <p className="mt-1 text-[11px] text-muted-foreground">
-              Escolha um produto do catálogo e o custo é preenchido sozinho.
+              Escolha na lista o mesmo produto que você anunciou — o custo é preenchido sozinho.
             </p>
           </div>
           <div>
