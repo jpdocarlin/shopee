@@ -2,6 +2,9 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
+// Snapshot de 2026-10-19 — 1346 produtos, na ordem retornada pela API
+// (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
+// ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
   id: string;
   name: string;
@@ -15,15 +18,994 @@ export type C7DropProduct = {
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
   {
+    id: "cmvejwwkz000m1zhyqj57ozt7",
+    name: "Pista De Carrinhos Construção Brinquedo Infantil 125 Peças Amarelo",
+    slug: "pista-de-carrinhos-construcao-brinquedo-infantil-125-pecas-amarelo",
+    priceCents: 6400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792371501750-d5887c72.webp",
+    category: "Brinquedos",
+    stock: 50,
+  },
+  {
+    id: "cmvej6xs8002st436nhfpdwqm",
+    name: "Transmissor Bluetooth Para Tv Fone E Caixa De Som Rca Usb",
+    slug: "transmissor-bluetooth-para-tv-fone-e-caixa-de-som-rca-usb",
+    priceCents: 3400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792369827753-38c06b52.webp",
+    category: "Produtos diversos",
+    stock: 50,
+  },
+  {
+    id: "cmveicezi001gjdugk5ar0vq6",
+    name: "Cafeteira Eletrica Elgin 15 Xicaras 650w Caf100 Cor Preto 220v",
+    slug: "cafeteira-eletrica-elgin-15-xicaras-650w-caf100-cor-preto-220v",
+    priceCents: 6900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792368666634-b272fdb1.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+  },
+  {
+    id: "cmv7ex4dr001zwznwehl8tgua",
+    name: "TV Box Smart MCD-125 Android 10 4K com Controle de Voz",
+    slug: "tv-box-smart-mcd-125-android-10-4k-com-controle-de-voz",
+    priceCents: 18900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791939763407-de77ada2.webp",
+    category: "Outros",
+    stock: 50,
+  },
+  {
+    id: "cmv7e54sk0009wznw58eml1i1",
+    name: "Lanterna Led Portátil Usb-c Com Ímã E Luz Lateral",
+    slug: "lanterna-led-portatil-usb-c-com-ima-e-luz-lateral",
+    priceCents: 6400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791938538903-dac442e9.webp",
+    category: "Produtos diversos",
+    stock: 49,
+  },
+  {
+    id: "cmv7cyrb9000910fqehu1khhw",
+    name: "Suporte Ajustável Dobrável Tablet Celular Mesa Universal Cor Cinza",
+    slug: "suporte-ajustavel-dobravel-tablet-celular-mesa-universal-cor-cinza",
+    priceCents: 2750,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791936296914-0863119b.webp",
+    category: "Ring Light & Suportes",
+    stock: 50,
+  },
+  {
+    id: "cmv5wvz7w001bp3khdxtufvgq",
+    name: "Suporte Magnético Plegável Tripé Para Celular E Tablet",
+    slug: "suporte-magnetico-plegavel-tripe-para-celular-e-tablet",
+    priceCents: 4900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791848946226-3c404c7f.webp",
+    category: "Ring Light & Suportes",
+    stock: 50,
+  },
+  {
+    id: "cmv5v9u8w002b6qihsysst4bo",
+    name: "Adaptador Ethernet Starlink V2 Internet Rede Rj45 Satélite",
+    slug: "adaptador-ethernet-starlink-v2-internet-rede-rj45-satelite",
+    priceCents: 7300,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791846298299-1e692f8b.webp",
+    category: "Informática",
+    stock: 49,
+  },
+  {
+    id: "cmv5ugqsh000w12nhwh3mru0y",
+    name: "Suporte Giratório 360° Ajustável Tablet Ate 12 Polegadas",
+    slug: "suporte-giratorio-360-ajustavel-tablet-ate-12-polegadas",
+    priceCents: 2800,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791844966313-803456c8.webp",
+    category: "Produtos diversos",
+    stock: 50,
+  },
+  {
+    id: "cmv1mppz90002d4o823n8vym5",
+    name: "Câmera Segurança Solar 4G Tripla Lente SIGMA SEG6223S",
+    slug: "camera-seguranca-solar-4g-tripla-lente-sigma-seg6223s",
+    priceCents: 30000,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791589905409-6b761281.webp",
+    category: "Câmeras",
+    stock: 50,
+  },
+  {
+    id: "cmv1kw4c2000a137h8t5kj78j",
+    name: "Aparelho Radio Freqeência Photon Led 3mhz Tratamento 7 Cores",
+    slug: "aparelho-radio-freqeencia-photon-led-3mhz-tratamento-7-cores",
+    priceCents: 6400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791586866746-3db0c082.webp",
+    category: "Beleza e Cuidado Pessoal",
+    stock: 50,
+  },
+  {
+    id: "cmv1k1fy0000j7clirmgaqeta",
+    name: "Arco Tiara Laço Vermelho Festa Princesa Branca Neve Natal",
+    slug: "arco-tiara-laco-vermelho-festa-princesa-branca-neve-natal",
+    priceCents: 900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791585383599-b52be79a.webp",
+    category: "Produto de Natal",
+    stock: 50,
+  },
+  {
+    id: "cmuzmphm30013qn85pee0uvjj",
+    name: "Organizador De Mesa Escritório 3 Gavetas Metal Aramado Preto",
+    slug: "organizador-de-mesa-escritorio-3-gavetas-metal-aramado-preto",
+    priceCents: 3650,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791469239453-7e4f17ff.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+  },
+  {
+    id: "cmuzlmjvw0002nffk1u743b40",
+    name: "Mini Violão Acústico Infantil Cordas Aço Brinquedo Criança",
+    slug: "mini-violao-acustico-infantil-cordas-aco-brinquedo-crianca",
+    priceCents: 6700,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791467064425-794aa16c.webp",
+    category: "Brinquedos",
+    stock: 50,
+  },
+  {
+    id: "cmuyuluu60001p47xrnhbnl65",
+    name: "Suporte De Monitor Com 2 Gavetas De Armazenamento Practical",
+    slug: "suporte-de-monitor-com-2-gavetas-de-armazenamento-practical",
+    priceCents: 6780,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791421689025-6ad0efd4.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 45,
+  },
+  {
+    id: "cmuytorz40006l5x1na3wmv0k",
+    name: "Organizador De Madeira Para Mesa, Porta-arquivos Com Gaveta",
+    slug: "organizador-de-madeira-para-mesa-porta-arquivos-com-gaveta",
+    priceCents: 7780,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791420237802-fe1b3145.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+  },
+  {
+    id: "cmuwwb7iw00039b52ugzioynb",
+    name: "Engate Flexível Aço Inox Alta Vazão 40cm",
+    slug: "engate-flexivel-aco-inox-alta-vazao-40cm",
+    priceCents: 2300,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791303763449-df1c1b16.webp",
+    category: "Ferramentas",
+    stock: 50,
+  },
+  {
+    id: "cmuwuei0q0016xz5ksuh8f40x",
+    name: "Descanso para panela - sextavado",
+    slug: "descanso-para-panela-sextavado",
+    priceCents: 1550,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791300428356-f10600c2.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+  },
+  {
+    id: "cmuwsqq5u0006qukxdsnv1a7q",
+    name: "Maleta Poker 300 Fichas Numeradas Holográficas 11g Acrílico",
+    slug: "maleta-poker-300-fichas-numeradas-holograficas-11g-acrilico",
+    priceCents: 21500,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791297827062-014b0873.webp",
+    category: "Produtos diversos",
+    stock: 50,
+  },
+  {
+    id: "cmuwrtxtq00068rrpmhi46bv7",
+    name: "Kit com 3 tesouras BMVNK BOM-3301 Multiuso",
+    slug: "kit-com-3-tesouras-bmvnk-bom-3301-multiuso",
+    priceCents: 2000,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791296142987-8ff573ab.webp",
+    category: "Papelaria",
+    stock: 50,
+  },
+  {
+    id: "cmuwqafgr00062pl4jyqgp3no",
+    name: "Mesa Para Volante De Mesa Antiderrapante E Convertível",
+    slug: "mesa-para-volante-de-mesa-antiderrapante-e-convertivel",
+    priceCents: 15500,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791293615833-1ab1b8b6.webp",
+    category: "Produtos diversos",
+    stock: 50,
+  },
+  {
+    id: "cmuwoek1z0002gda8d746en4f",
+    name: "Squishy Brilhante Dumpling Pãozinho Baozi Glitter",
+    slug: "squishy-brilhante-dumpling-paozinho-baozi-glitter",
+    priceCents: 2400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791290442082-4bb76c43.webp",
+    category: "Brinquedos",
+    stock: 15,
+  },
+  {
+    id: "cmurdmogm000bv239vtngmohw",
+    name: "Câmera de Foto com Impressora Infantil MO-D25 Átomo",
+    slug: "camera-de-foto-com-impressora-infantil-mo-d25-rosa-atomo",
+    priceCents: 9900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790970044460-0a0b7608.webp",
+    category: "Câmeras",
+    stock: 47,
+  },
+  {
+    id: "cmuq6it3b000mwu6t13r71uua",
+    name: "Balança Digital Pediátrica Infantil Bebê Criança Até 20kg Rn",
+    slug: "balanca-digital-pediatrica-infantil-bebe-crianca-ate-20kg-rn",
+    priceCents: 12800,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790897741615-9668cc80.webp",
+    category: "Beleza e Cuidado Pessoal",
+    stock: 46,
+  },
+  {
+    id: "cmuq4zbzk000pmmq45dh4ghuq",
+    name: "Vaporizador Facial Quente E Frio Para Limpeza De Pele 800w 110V",
+    slug: "vaporizador-facial-quente-e-frio-para-limpeza-de-pele-800w",
+    priceCents: 44000,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790894562975-dcc3b713.webp",
+    category: "Beleza e Cuidado Pessoal",
+    stock: 50,
+  },
+  {
+    id: "cmueom0ed000a58dqsqifffyt",
+    name: "Suporte C/ Rodinha Geladeira Fogão Maquina Móvel Ajustável",
+    slug: "2-suporte-c-rodinha-geladeira-fogao-maquina-movel-ajustavel",
+    priceCents: 3300,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790202596018-3ab8d4fa.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+  },
+  {
+    id: "cmuenpejy0004mxh8pl3vqz5i",
+    name: "Tampões De Ouvido Com Cancelamento De Ruido Para Dormir",
+    slug: "tampoes-de-ouvido-com-cancelamento-de-ruido-para-dormir",
+    priceCents: 2900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790200812352-97f997d8.webp",
+    category: "Fones de Ouvido",
+    stock: 44,
+  },
+  {
+    id: "cmuemlbzj000nrr9rn7nnotgi",
+    name: "Mousepad Antiderrapante Preto para Mesa 26x21",
+    slug: "mousepad-antiderrapante-preto-para-mesa-26x21",
+    priceCents: 700,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790203499265-dfddc765.webp",
+    category: "Informática",
+    stock: 46,
+  },
+  {
+    id: "cmucofn8a000mhp3hcronlort",
+    name: "Luz De Festa Usb Mini Bola Para Carro Celular Computador",
+    slug: "luz-de-festa-usb-mini-bola-para-carro-celular-computador",
+    priceCents: 1300,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790081017911-ecb1f2c3.webp",
+    category: "Produtos diversos",
+    stock: 50,
+  },
+  {
+    id: "cmuaeg8av000413nl8rs3lskj",
+    name: "Tupia Laminadora Modelo BOM-9541 600W para Madeira 127v",
+    slug: "tupia-laminadora-modelo-bom-9541-600w-para-madeira",
+    priceCents: 12700,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789943953938-7a0bba37.webp",
+    category: "Ferramentas",
+    stock: 50,
+  },
+  {
+    id: "cmuad1t9k000bsy2mqayqek43",
+    name: "Mini Bola De Futebol Colorida Infantil",
+    slug: "mini-bola-de-futebol-colorida-infantil",
+    priceCents: 1900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789941225766-35ee5c40.webp",
+    category: "Brinquedos",
+    stock: 49,
+  },
+  {
+    id: "cmuaaxlrs000jio79kw8pozbi",
+    name: "Limpador A Vapor De Alta Temperatura E Pressão 1500w 1250ml 220v",
+    slug: "limpador-a-vapor-de-alta-temperatura-e-pressao-1500w-1250ml",
+    priceCents: 20000,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789937673949-6d1dabfd.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 49,
+  },
+  {
+    id: "cmu5kst4g00028n8g21ytdx6u",
+    name: "Quadro Mágico Lousa Mágica Lousa Magica Canetas Colorida Presente",
+    slug: "quadro-magico-lousa-magica-lousa-magica-canetas-colorida-presente",
+    priceCents: 3400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789651853148-aef0682f.webp",
+    category: "Brinquedos",
+    stock: 28,
+  },
+  {
+    id: "cmu5jxhk9000nxekh84ljxsm6",
+    name: "Bola Mágica Esfera De Hoberman Bola Abre E Fecha Ao Lançar",
+    slug: "bola-magica-esfera-de-hoberman-bola-abre-e-fecha-ao-lancar",
+    priceCents: 1900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789650495771-e170773f.webp",
+    category: "Brinquedos",
+    stock: 42,
+  },
+  {
+    id: "cmu5j96f700073r1fz83eqvjz",
+    name: "Brinquedo Jogo Xadrez Magnético Bolinhas Crianças E Adultos",
+    slug: "brinquedo-jogo-xadrez-magnetico-bolinhas-criancas-e-adultos",
+    priceCents: 2400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789649363959-e9aeaf1a.webp",
+    category: "Brinquedos",
+    stock: 48,
+  },
+  {
+    id: "cmu5imyyt0009jxry00xxplrc",
+    name: "Luminária de Mesa Led Grampo - Regulável 360° - p/ Leitura",
+    slug: "luminaria-de-mesa-led-grampo-regulavel-360-p-leitura",
+    priceCents: 2400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789648184982-24deca1e.webp",
+    category: "Iluminação",
+    stock: 50,
+  },
+  {
+    id: "cmu2quv7y0002kyiv0lb84lxa",
+    name: "Porta-temperos Com 6 Potes BM-F1160",
+    slug: "porta-temperos-com-6-potes-bm-f1160",
+    priceCents: 4700,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789479725632-c61fb423.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+  },
+  {
+    id: "cmu2pjwva0001oy9f20uy6gns",
+    name: "Ring Light 16 cm de 10 W com Tripé  Ajustável e Controle de Luminosidade",
+    slug: "ring-light-26-cm-de-10-w-com-tripe-ajustavel-e-controle-de-luminosidade",
+    priceCents: 2900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1789478394855-519cfe23.webp",
+    category: "Ring Light & Suportes",
+    stock: 50,
+  },
+  {
+    id: "cmttb9rhq000410lazuam6s93",
+    name: "Almofada De Pescoço De Carro Para Dirigir De Cabeça Lombar",
+    slug: "almofada-de-pescoco-de-carro-para-dirigir-de-cabeca-lombar",
+    priceCents: 8400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788910347180-b107cc0b.webp",
+    category: "Produtos diversos",
+    stock: 49,
+  },
+  {
+    id: "cmtsp4oe8000122tdt8cxe5ti",
+    name: "Power Bank Pro 10000mah Turbo 22.5w Com Tomada Cs-01w",
+    slug: "power-bank-pro-10000mah-turbo-22-5w-com-tomada-cs-01w",
+    priceCents: 7400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788873267079-55b90c9d.webp",
+    category: "Carregadores & Power Banks",
+    stock: 48,
+  },
+  {
+    id: "cmtn0nkf9000l36gvyw1ybyzy",
+    name: "Gravador De Voz 8gb Digital Espião Gravação Profissional Mp3 8004",
+    slug: "gravador-de-voz-8gb-digital-espiao-gravacao-profissional-mp3-cor-preto",
+    priceCents: 7300,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788529877398-126183c7.webp",
+    category: "Produtos diversos",
+    stock: 38,
+  },
+  {
+    id: "cmtn00ckh000m9cr4a9u455i9",
+    name: "Relógio Smartwatch Smart Band 11 Active Tela 1.47 Preto",
+    slug: "relogio-smartwatch-smart-band-11-active-tela-1-47-preto-pulseira-preto",
+    priceCents: 19800,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788528572683-905cc912.webp",
+    category: "Relogios e Smartwatchs",
+    stock: 49,
+  },
+  {
+    id: "cmtmzaz0p001pdysp8prmpdw6",
+    name: "Drone Al-2725 Dobrável Câmera 4K WiFi FPV Preto 2 Baterias",
+    slug: "drone-al-2725-dobravel-camera-4k-wifi-fpv-preto-2-baterias",
+    priceCents: 10400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788527500056-e70175e1.webp",
+    category: "Produtos diversos",
+    stock: 0,
+  },
+  {
+    id: "cmtlipmp1000313zmtiisvqwf",
+    name: "Relógio Despertador Digital Fala Hora E Temp. Cabeceira Mesa",
+    slug: "relogio-despertador-digital-fala-hora-e-temp-cabeceira-mesa",
+    priceCents: 2700,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788439269871-c7fd64e0.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 39,
+  },
+  {
+    id: "cmtli3rfm0009a8gcq917hbsf",
+    name: "Suporte Apoiador De Celular Mesa Tripé Selfie Regulagem 360°",
+    slug: "suporte-apoiador-de-celular-mesa-tripe-selfie-regulagem-360",
+    priceCents: 1400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788438226763-f0e2e8cb.webp",
+    category: "Ring Light & Suportes",
+    stock: 49,
+  },
+  {
+    id: "cmtlhcp5u0004p83gvvoo9b82",
+    name: "Kit Ferro de Solda 60w Profissional Completo Ajustavel Completo Eletrônica 127v",
+    slug: "kit-ferro-de-solda-60w-profissional-completo-ajustavel-completo-eletronica",
+    priceCents: 7200,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788436609543-c7812cc5.webp",
+    category: "Ferramentas",
+    stock: 47,
+  },
+  {
+    id: "cmtlgeit7000fw4hbq79g0fzb",
+    name: "Projetor De Luz Noturna Led Com 10 Imagens Cósmicas",
+    slug: "projetor-de-luz-noturna-led-com-10-imagens-cosmicas",
+    priceCents: 2300,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788435279735-a9afa59f.webp",
+    category: "Fones de Ouvido",
+    stock: 0,
+  },
+  {
+    id: "cmtk771ft0019j9x2zpclt4se",
+    name: "Máquina de Cortar e Aparar Sem Fio KPBM Dragon Trimmer Dourado Profissional",
+    slug: "maquina-de-cortar-e-aparar-sem-fio-kpbm-dragon-trimmer-dourado-profissional",
+    priceCents: 3200,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788359467788-1354b25c.webp",
+    category: "Fora de Estoque",
+    stock: 0,
+  },
+  {
+    id: "cmtk6iq9r0015h53qhr5zpoio",
+    name: "Plataforma Giratória Fotografia Foto Joias 360° Preto",
+    slug: "plataforma-giratoria-fotografia-foto-joias-360-preto",
+    priceCents: 5400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788358483015-6f3afae7.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 46,
+  },
+  {
+    id: "cmtk5qy9k000bhqefbow8gfel",
+    name: "Lâmpada Led Bulboe27 20w Emergência Bateria Portátil Camping",
+    slug: "lampada-led-bulboe27-20w-emergencia-bateria-portatil-camping",
+    priceCents: 2500,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788356901045-cfbf08bf.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 44,
+  },
+  {
+    id: "cmtk51wcg0005zqgs1tcazimk",
+    name: "Relógio Smartwatch S12 Serie 12 47mm Gps Nfc Whatsapp 2027",
+    slug: "relogio-smartwatch-s12-serie-12-47mm-gps-nfc-whatsapp-2027",
+    priceCents: 9400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788355737322-fa2d2bc6.webp",
+    category: "Relogios e Smartwatchs",
+    stock: 45,
+  },
+  {
+    id: "cmtipskc2000jx51wui25ujsy",
+    name: "Extensão Coibeu 6usb 4pd Bivolt Portátil 50w",
+    slug: "extensao-coibeu-6usb-4pd-bivolt-portatil-50w",
+    priceCents: 4400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788269619485-877021ce.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 48,
+  },
+  {
+    id: "cmtip6u6v000egoqygchfvj1q",
+    name: "Fone de Ouvido Over-ear P47 Bluetooth sem Fio com Cancelamento de Ruído e Rádio FM",
+    slug: "fone-de-ouvido-over-ear-p47-bluetooth-sem-fio-com-cancelamento-de-ruido-e-radio-fm-vermelho",
+    priceCents: 2000,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788268540502-23a3d6cd.webp",
+    category: "Fones de Ouvido",
+    stock: 36,
+  },
+  {
+    id: "cmtioih70000113vbwy9gutyd",
+    name: "Plataforma Vibratória Esportivo Fitness Bluetooth",
+    slug: "plataforma-vibratoria-esportivo-fitness-bluetooth",
+    priceCents: 37500,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788267481433-4c84684f.webp",
+    category: "Beleza e Cuidado Pessoal",
+    stock: 49,
+  },
+  {
+    id: "cmthxfy53000nloncrc1lkdc7",
+    name: "Porta Retrato Digital 14 Polegada Tmt Preto",
+    slug: "porta-retrato-digital-14-polegada-tmt-preto",
+    priceCents: 36000,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788222145957-022a9a77.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 49,
+  },
+  {
+    id: "cmthw413a000e2yrgr9lha0f0",
+    name: "Isqueiro Eletrônico Tomate Tc-517c Recarregável Usb-c",
+    slug: "isqueiro-eletronico-tomate-tc-517c-recarregavel-usb-c",
+    priceCents: 1650,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788219969302-d38bea34.webp",
+    category: "Produtos diversos",
+    stock: 47,
+  },
+  {
+    id: "cmthv2wu9001ttfistuzr72uz",
+    name: "Pelúcia De Natal Rena Com Cachecol Vermelho",
+    slug: "pelucia-de-natal-rena-com-cachecol-vermelho",
+    priceCents: 5500,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788218174783-d36fc2bf.webp",
+    category: "Produto de Natal",
+    stock: 50,
+  },
+  {
+    id: "cmthcakjg001l109ag0de1sdf",
+    name: "Brinquedo De Rena De Natal, Boneca De Rena De Pelúcia",
+    slug: "brinquedo-de-rena-de-natal-boneca-de-rena-de-pelucia",
+    priceCents: 5690,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788186490741-a67913a7.webp",
+    category: "Produto de Natal",
+    stock: 50,
+  },
+  {
+    id: "cmthbpl5l000myjam7cmb3omp",
+    name: "Bandeja De Plastico Personalizada Estampa De Natal",
+    slug: "bandeja-de-plastico-personalizada-estampa-de-natal",
+    priceCents: 700,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788185182132-f611d94e.webp",
+    category: "Produto de Natal",
+    stock: 50,
+  },
+  {
+    id: "cmthakuz5000m12isr2r0r3c4",
+    name: "Guirlanda De Natal Enfeite Pendurar Porta Flor Grande",
+    slug: "guirlanda-de-natal-enfeite-pendurar-porta-flor-grande",
+    priceCents: 3200,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788183530652-e9b95277.webp",
+    category: "Produto de Natal",
+    stock: 50,
+  },
+  {
+    id: "cmth9i6uv000i95tun0vzldt5",
+    name: "Estrela Brilhante Glitter Ponteira Árvore De Natal 20 Cm",
+    slug: "estrela-brilhante-glitter-ponteira-arvore-de-natal-20-cm",
+    priceCents: 1900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788181902025-b76d6d36.webp",
+    category: "Produto de Natal",
+    stock: 49,
+  },
+  {
+    id: "cmth8twx2000keykab5h4kjn1",
+    name: "Kit Bola Enfeite Natalino Pendurar Árvore 6cm 24 Unidade",
+    slug: "kit-bola-enfeite-natalino-pendurar-arvore-6cm-24-unidade",
+    priceCents: 4900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788180820749-cc5abbc3.webp",
+    category: "Produto de Natal",
+    stock: 50,
+  },
+  {
+    id: "cmtezvp38001764kdilu83re6",
+    name: "Laço Extra Grande Decoração De Natal 20cm Altura Glitter",
+    slug: "laco-extra-grande-decoracao-de-natal-20cm-altura-glitter",
+    priceCents: 2450,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788043707501-49e0cc25.webp",
+    category: "Produto de Natal",
+    stock: 49,
+  },
+  {
+    id: "cmtex3ogx00033swohg8rs9uv",
+    name: "30 Bolas De Natal 6cm Enfeites Natalino Árvore Luxo Premium",
+    slug: "30-bolas-de-natal-6cm-enfeites-natalino-arvore-luxo-premium",
+    priceCents: 4900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788040167580-4794356a.webp",
+    category: "Produto de Natal",
+    stock: 45,
+  },
+  {
+    id: "cmteve0ta0001b7t6idpbdw37",
+    name: "Bola Dourada Brilhante Kit Com 10",
+    slug: "bola-dourada-brilhante-10-cm-kit-com-6",
+    priceCents: 3900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788037006831-49ca79ed.webp",
+    category: "Produto de Natal",
+    stock: 49,
+  },
+  {
+    id: "cmtetsh2k000kcss6wyzqzorw",
+    name: "Caixa Bola Natal 07cm 05un Vermelho",
+    slug: "caixa-bola-natal-07cm-05un-vermelho",
+    priceCents: 2330,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788034476902-adc78d33.webp",
+    category: "Produto de Natal",
+    stock: 50,
+  },
+  {
+    id: "cmteswnk8000ikjq1d4md5xpx",
+    name: "Árvore Natal Verde 1,50m 220 Galhos Promoção",
+    slug: "arvore-natal-verde-1-50m-220-galhos-promocao",
+    priceCents: 7000,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788032858526-e12c084d.webp",
+    category: "Produto de Natal",
+    stock: 47,
+  },
+  {
+    id: "cmtd1mm0z0001k7m1o7hudbs4",
+    name: "Bolas Natalinas 4,8 Cm 25 Pecas Enfeites Natalinos Festa",
+    slug: "bolas-natalinas-4-8-cm-25-pecas-enfeites-natalinos-festa",
+    priceCents: 4000,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787926551700-85f03288.webp",
+    category: "Produto de Natal",
+    stock: 50,
+  },
+  {
+    id: "cmtd0vz6b002f6hdbaut066d3",
+    name: "Kit 10 Peças De Laços De Natal E Suprimentos Para Festas De Natal",
+    slug: "kit-10-pecas-de-lacos-de-natal-e-suprimentos-para-festas-de-natal",
+    priceCents: 2200,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787925294891-5876dcde.webp",
+    category: "Produto de Natal",
+    stock: 50,
+  },
+  {
+    id: "cmtczpzr0001cou6rv4vb2hku",
+    name: "Caneta Teste De Fluído De Freio Dot3 Dot4 Carro Moto Auto",
+    slug: "caneta-teste-de-fluido-de-freio-dot3-dot4-carro-moto-auto",
+    priceCents: 2500,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787923885871-3b4b9b2b.webp",
+    category: "Ferramentas",
+    stock: 50,
+  },
+  {
+    id: "cmtcz81if001xy3g1qnmohrvv",
+    name: "Micro Retífica Com Acessórios Mini Furadeira E Maleta 96 Pcs",
+    slug: "micro-retifica-com-acessorios-mini-furadeira-e-maleta-96-pcs",
+    priceCents: 7900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787922615916-5dbbd6ea.webp",
+    category: "Ferramentas",
+    stock: 49,
+  },
+  {
+    id: "cmtcyfwe4000r6hdbtlh7bprx",
+    name: "Torradeira Elétrica 650w 7 Níveis 127V",
+    slug: "torradeira-eletrica-650w-7-niveis-127v",
+    priceCents: 6900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787921191547-1e29114d.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+  },
+  {
+    id: "cmtcxff5z000flh7a3qlb3hxw",
+    name: "Frigideira Antiaderente 4 Divisórias Multiuso Para Fogão",
+    slug: "frigideira-antiaderente-4-divisorias-multiuso-para-fogao",
+    priceCents: 3700,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787919712713-f82b549c.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 49,
+  },
+  {
+    id: "cmtbyfshz0009m4jomytuufks",
+    name: "Carregador Veicular USB  2 Saídas 3.1A Rápido Azul",
+    slug: "carregador-veicular-usb-2-saidas-3-1a-rapido-azul",
+    priceCents: 2600,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787860861291-c0a4e6ab.webp",
+    category: "Produtos diversos",
+    stock: 50,
+  },
+  {
+    id: "cmtbxhwjl0001cf6muw3k1945",
+    name: "Tomada Carregador Veicular Usb Duplo 2.1a Rápido12/24v",
+    slug: "tomada-carregador-veicular-usb-duplo-2-1a-rapido12-24v",
+    priceCents: 2000,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787859270772-2aa6d0cd.webp",
+    category: "Produtos diversos",
+    stock: 50,
+  },
+  {
+    id: "cmtbwqhn2001113dcxjaasazk",
+    name: "Molde Unico Para Hambúrguer Caseiro Forma De Alumínio Multiuso",
+    slug: "molde-para-hamburguer-caseiro-forma-de-aluminio-multiuso",
+    priceCents: 1900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787857879084-2b4c2d59.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 43,
+  },
+  {
+    id: "cmtbvs4mf000330cfwesbwobe",
+    name: "Óculos Vr Shinecon Realidade Virtual 3d Com Fone De Ouvido E Controle Cor Preto",
+    slug: "oculos-vr-shinecon-realidade-virtual-3d-com-fone-de-ouvido-e-controle-cor-preto",
+    priceCents: 14500,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787855356529-2950f74d.webp",
+    category: "Produtos diversos",
+    stock: 40,
+  },
+  {
+    id: "cmtboq5u80008j7oybhjhm7jm",
+    name: "Adaptador Hub 8 Em 2 Usb-c Extenso Usb Compatível Com Macbook Air M1 M2 Dex Hdmi 4k Usb 3.0 / 2.0 + Sd/tf",
+    slug: "adaptador-hub-8-em-2-usb-c-extenso-usb-compativel-com-macbook-air-m1-m2-dex-hdmi-4k-usb-3-0-2-0-sd-tf",
+    priceCents: 2500,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787844432689-b34b4f23.webp",
+    category: "Informática",
+    stock: 47,
+  },
+  {
+    id: "cmtbn0zm80009wzdplvptvo09",
+    name: "Caneta Teste Voltagem Carro Chave De Teste Fusível",
+    slug: "caneta-teste-voltagem-carro-chave-de-teste-fusivel",
+    priceCents: 2600,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787840820004-952b56ec.webp",
+    category: "Ferramentas",
+    stock: 50,
+  },
+  {
+    id: "cmtblnm4b0001ckpqjly55tz6",
+    name: "Depilador Removedor De Pelos 5 Em 1 Recarregável Elétrico",
+    slug: "depilador-removedor-de-pelos-5-em-1-recarregavel-eletrico",
+    priceCents: 7400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787839240584-fc18de01.webp",
+    category: "Beleza e Cuidado Pessoal",
+    stock: 47,
+  },
+  {
+    id: "cmta9y5xt000wvycu8asfrzi4",
+    name: "Kit Adaptador Kd-102 Cabo 60w Turbo 9em1 Espelho",
+    slug: "kit-adaptador-kd-102-cabo-60w-turbo-9em1-espelho",
+    priceCents: 1450,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787758405694-0f7003b6.webp",
+    category: "Produtos diversos",
+    stock: 47,
+  },
+  {
+    id: "cmta61ip30001a2ozxsraepht",
+    name: "Oculos Inteligente Microwear W AI 3 com Câmera 4K e Kit 3 Lentes Intercambiáveis",
+    slug: "oculos-inteligente-microwear-wa13-com-camera-4k-e-kit-3-lentes-intercambiaveis",
+    priceCents: 26500,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787752659203-b3f687a2.webp",
+    category: "Produtos diversos",
+    stock: 48,
+  },
+  {
+    id: "cmta4vczz0001yqy3hwl8n0rz",
+    name: "Aparador Cortador de Pelos 2 em 1 KM-6511 Nariz e Orelhas",
+    slug: "aparador-cortador-de-pelos-2-em-1-km-6511-nariz-e-orelhas",
+    priceCents: 2600,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787750507194-5b227892.webp",
+    category: "Salão & Barbearia",
+    stock: 49,
+  },
+  {
+    id: "cmt8t0mxh0008s2oa77yz91qv",
+    name: "Relógio Smartwatch Redmi Watch 6 Lite Preto Global Gps",
+    slug: "relogio-smartwatch-redmi-watch-6-lite-preto-global-gps",
+    priceCents: 39500,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787669966405-4ee9f67a.webp",
+    category: "Relogios e Smartwatchs",
+    stock: 50,
+  },
+  {
+    id: "cmt8rxgr70004gzh1f6k8wor1",
+    name: "Carregador Sem Fio Magnetico 3 Em 1 15w Celular Fone Relogio",
+    slug: "carregador-sem-fio-magnetico-3-em-1-15w-celular-fone-relogio",
+    priceCents: 6400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787668618452-331e7cbc.webp",
+    category: "Carregadores & Power Banks",
+    stock: 43,
+  },
+  {
+    id: "cmt8qx7u8003vkbkgec4c46rd",
+    name: "Bandeja Plástico 33cm Redonda Decoração De Natal Ano",
+    slug: "bandeja-plastico-33cm-redonda-decoracao-de-natal-ano",
+    priceCents: 2420,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787666448933-34713fb3.webp",
+    category: "Produto de Natal",
+    stock: 50,
+  },
+  {
+    id: "cmt67aofj0003ba3imfni2usv",
+    name: "kit Colher Natal e Garfo de Natal",
+    slug: "kit-colher-natal-e-garfo-de-natal",
+    priceCents: 1690,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787512778042-2c6632a8.webp",
+    category: "Fora de Estoque",
+    stock: 0,
+  },
+  {
+    id: "cmt5wemh40002avfnmp3f5rz9",
+    name: "Anéis De Guardanapo 4 Unidades",
+    slug: "aneis-de-guardanapo-4-unidades",
+    priceCents: 3980,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787494858333-40df3712.webp",
+    category: "Produto de Natal",
+    stock: 49,
+  },
+  {
+    id: "cmt5vfn1y0007383zvbl1nhyw",
+    name: " Meia de Natal vermelhas",
+    slug: "meias-de-natal-vermelhas",
+    priceCents: 2190,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787491937856-b760def2.webp",
+    category: "Produto de Natal",
+    stock: 50,
+  },
+  {
+    id: "cmt5twhb2001l11pzvi1wzqgo",
+    name: "Alicate Crimpar Rj45 Rj11 Cabo De Rede Crimpador Desencapar",
+    slug: "alicate-crimpar-rj45-rj11-cabo-de-rede-crimpador-desencapar",
+    priceCents: 2900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787490380484-39b6a26e.webp",
+    category: "Ferramentas",
+    stock: 50,
+  },
+  {
+    id: "cmt3kekkn0016sn798r2xjje8",
+    name: "Boneco Quebra-nozes Soldados Natal Enfeite Árvore",
+    slug: "boneco-quebra-nozes-soldados-natal-enfeite-arvore",
+    priceCents: 5900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787353500160-b44da186.webp",
+    category: "Produto de Natal",
+    stock: 50,
+  },
+  {
+    id: "cmt3efqsi0001y9zu489dz9bk",
+    name: "Churrasqueira Japonesa Para Uso Na Cozinha Estilo B",
+    slug: "churrasqueira-japonesa-para-uso-na-cozinha-estilo-b",
+    priceCents: 7400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787343668689-833727c9.webp",
+    category: "Produtos diversos",
+    stock: 35,
+  },
+  {
+    id: "cmt3d64qs000ukn1thx8xoeir",
+    name: "Porta Jóias Viagem Couro Estojo Maquiagem Portátil",
+    slug: "porta-joias-viagem-couro-estojo-maquiagem-portatil-cor-rosa-claro",
+    priceCents: 1600,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787341236332-94f9ec60.webp",
+    category: "Beleza e Cuidado Pessoal",
+    stock: 45,
+  },
+  {
+    id: "cmt3bfsok00152v5hxm5uv2vm",
+    name: "Massageador De Tornozelo Sem Fio Com Aquecimento Preto",
+    slug: "massageador-de-tornozelo-sem-fio-com-aquecimento-preto",
+    priceCents: 5900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787338491535-0789b4e9.webp",
+    category: "Beleza e Cuidado Pessoal",
+    stock: 50,
+  },
+  {
+    id: "cmt0j3bpc0007mg2l13ycb1d4",
+    name: "Joelheira Com Aquecimento Massageador Joelho Alivia Dor",
+    slug: "joelheira-com-aquecimento-massageador-joelho-alivia-dor",
+    priceCents: 6900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787169820114-1037165f.webp",
+    category: "Beleza e Cuidado Pessoal",
+    stock: 49,
+  },
+  {
+    id: "cmt0bjdgp003viwxutf3vnvj9",
+    name: "Balança Digital Gancho Mala Bagagem Pesca 50 Kg LCD",
+    slug: "balanca-digital-gancho-mala-bagagem-pesca-50-kg-lcd",
+    priceCents: 1800,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787157128467-1ffe60af.webp",
+    category: "Materiais de Pesca",
+    stock: 49,
+  },
+  {
+    id: "cmsyr1fs40009k4wzd2sp025u",
+    name: "Caixa Caixinha De Som Pc Computador Notebook Celular Usb P2 Cor Preto",
+    slug: "caixa-caixinha-de-som-pc-computador-notebook-celular-usb-p2-cor-preto",
+    priceCents: 3000,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787062367444-3e9e2d72.webp",
+    category: "Caixas de Som",
+    stock: 49,
+  },
+  {
+    id: "cmsyqg73t000t6yqrsg10elhv",
+    name: "Máquina De Acabamento Km-5027 Com Motor Forte E Lcd",
+    slug: "maquina-de-acabamento-km-5027-com-motor-forte-e-lcd",
+    priceCents: 9400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787060944317-e51e4514.webp",
+    category: "Salão & Barbearia",
+    stock: 50,
+  },
+  {
     id: "cmst1d2ue002j1384h0sc01eg",
     name: "Luminária Mesa Abajur Articulável Escritório Com Ventilador",
     slug: "luminaria-mesa-abajur-articulavel-escritorio-com-ventilador",
     priceCents: 4900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786716245771-a697446f.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786716245771-a697446f.webp",
     category: "Iluminação",
-    stock: 50,
+    stock: 44,
   },
   {
     id: "cmsszxzpo001o1017ng3a1xmf",
@@ -31,32 +1013,29 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "walkie-talkie-infantil-com-chamada-de-video-bate-papo-200m",
     priceCents: 8400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786714615248-c942bae0.webp",
-    category: "Outros",
-    stock: 50,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786714615248-c942bae0.webp",
+    category: "Brinquedos",
+    stock: 35,
   },
   {
     id: "cmssz7rba00159lg5khe467yw",
     name: "Tradutor Instantâneo Utilidades 138 Idiomas Preto Bluetooth",
     slug: "tradutor-instantaneo-utilidades-138-idiomas-preto-bluetooth",
-    priceCents: 26400,
+    priceCents: 28500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786712948248-8a18016d.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786712948248-8a18016d.webp",
     category: "Produtos diversos",
-    stock: 50,
+    stock: 46,
   },
   {
     id: "cmsqkf0d0001irrogvr5ir7la",
-    name: "Grill Elétrico Com Coletor De Gordura Preto/inox",
+    name: "Grill Elétrico Preto/inox",
     slug: "grill-eletrico-com-coletor-de-gordura-preto-inox",
     priceCents: 10400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786567403210-efa17674.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791935374187-51dd2a10.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 50,
+    stock: 46,
   },
   {
     id: "cmsqjc36u0022yhw9d7uq4z25",
@@ -64,10 +1043,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "microfone-lapela-sem-fio-p1-ac-duplo-iphone-android",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786565432881-ac505cc2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786565432881-ac505cc2.webp",
     category: "Produtos diversos",
-    stock: 50,
+    stock: 48,
   },
   {
     id: "cmsq4qjba002n12rnr53jv2er",
@@ -75,21 +1053,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "alto-falante-sem-fio-preto-preto-suporte-de-bicicleta",
     priceCents: 5400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786540858675-e3f1751e.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786540858675-e3f1751e.webp",
     category: "Caixas de Som",
     stock: 50,
   },
   {
     id: "cmsq3897y001i12rnhck1p4ew",
-    name: "Tablet Infantil 7 Android 13 4gb 64gb Wi-fi Bluetooth 7023",
+    name: "Tablet Infantil Novo 7 Android 13 4gb 64gb Wi-fi Bluetooth 7023",
     slug: "tablet-infantil-7-android-13-4gb-64gb-wi-fi-bluetooth-7023",
     priceCents: 27500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786537891409-bfe0d766.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786537891409-bfe0d766.webp",
     category: "Produtos diversos",
-    stock: 50,
+    stock: 47,
   },
   {
     id: "cmsp083no006yez8tocmws7e0",
@@ -97,10 +1073,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "figura-articulada-dummy-13-multi-jointed-movable-robotica",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786473066094-29475067.webp",
-    category: "Brinquedos",
-    stock: 50,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786473066094-29475067.webp",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cmsoqjo4q0018fptoqbixgeaf",
@@ -108,10 +1083,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "conjunto-de-brinquedos-domino-para-criancas-domino-d-train",
     priceCents: 4400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786456814385-14ce5195.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786456814385-14ce5195.webp",
     category: "Brinquedos",
-    stock: 50,
+    stock: 0,
   },
   {
     id: "cmso53mu50001h890xebugase",
@@ -119,8 +1093,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "keyboard-case-para-samsung-galaxy-tab-s9-s8-s7-11-inch",
     priceCents: 40000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786421063534-9039c9b4.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786421063534-9039c9b4.webp",
     category: "Informática",
     stock: 50,
   },
@@ -130,8 +1103,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "par-haste-elevacao-telescopica-terceira-mao-armario-gesso",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786418711031-9b73304a.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786418711031-9b73304a.webp",
     category: "Ferramentas",
     stock: 50,
   },
@@ -141,10 +1113,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "escova-sanitaria-para-limpeza-de-vaso-de-banheiro-aco-inox",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786416128100-664303a7.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786416128100-664303a7.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 50,
+    stock: 47,
   },
   {
     id: "cmso1gwmu000a525divk6fv7f",
@@ -152,8 +1123,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "prancha-chapinha-profissional-ceramica-bivolt-230-visor-led",
     priceCents: 7100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786414794905-69802d00.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786414794905-69802d00.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 50,
   },
@@ -163,8 +1133,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "modelador-cachos-automatico-3-em-1-temperatura-bivolt-32-mm",
     priceCents: 14400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786406220119-892943bf.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786406220119-892943bf.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 50,
   },
@@ -174,10 +1143,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maleta-organizadora-ferramenta-17-divisorias-removiveis",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786404592985-69fe8346.webp",
-    category: "Ferramentas",
-    stock: 50,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786404592985-69fe8346.webp",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cmsnteu0x000z9z843ddd2a3z",
@@ -185,8 +1153,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lixadeira-pneumatica-orbital-5-aspiracao",
     priceCents: 18400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786400848601-0f632d8a.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786400848601-0f632d8a.webp",
     category: "Ferramentas",
     stock: 50,
   },
@@ -196,10 +1163,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "repetidor-sinal-wifi-4-antenas-alta-estabilidade-longo-alcance-300mbps",
     priceCents: 7900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786228871900-756c487b.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786228871900-756c487b.webp",
     category: "Informática",
-    stock: 50,
+    stock: 49,
   },
   {
     id: "cmskk9d470008r7af0nm65sbl",
@@ -207,10 +1173,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-divisor-4-portas-12-24v-usb-isqueiro-carro-120w-pd",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786204533305-ee5b4016.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786204533305-ee5b4016.webp",
     category: "Produtos diversos",
-    stock: 50,
+    stock: 44,
   },
   {
     id: "cmskjibos00019lb8ye38n08l",
@@ -218,10 +1183,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "estojo-com-6-pecas-tesouras-e-navalha-profissionais-barbeiro-fio-laser-prata",
     priceCents: 4400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786203048501-af120076.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786203048501-af120076.webp",
     category: "Salão & Barbearia",
-    stock: 50,
+    stock: 47,
   },
   {
     id: "cmski3tx30002xgj4xbojvdrc",
@@ -229,10 +1193,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "despertador-de-carregamento-sem-fio-carregador-sem-fio-3-em-1",
     priceCents: 5700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786200768067-07740665.webp",
-    category: "Casa e Utensílios Domésticos",
-    stock: 50,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786200768067-07740665.webp",
+    category: "Carregadores & Power Banks",
+    stock: 0,
   },
   {
     id: "cmsjkm0vs00158ez4i6282bfa",
@@ -240,8 +1203,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-de-limpeza-e-secagem-de-pinceis-de-maquiagem-de-silicone",
     priceCents: 2900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786144589395-377f7e7d.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786144589395-377f7e7d.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 50,
   },
@@ -249,45 +1211,41 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmsjja2bp000c14ma4eia15gx",
     name: "Ssd 2.5 Sata Iii 256gb Gravação 450mb/s Leitura 550mb/s",
     slug: "ssd-2-5-sata-iii-256gb-gravacao-450mb-s-leitura-550mb-s",
-    priceCents: 26000,
+    priceCents: 25500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786142223924-874d138a.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786142223924-874d138a.webp",
     category: "Informática",
     stock: 50,
   },
   {
     id: "cmsje4vwo0003qhvk17camox1",
-    name: "Aparelho De Pressão Digital Pulso Portátil Recarregável Usb",
+    name: "Novo Aparelho De Pressão Digital Pulso Portátil Recarregável Usb",
     slug: "aparelho-de-pressao-digital-pulso-portatil-recarregavel-usb",
-    priceCents: 4400,
+    priceCents: 4900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786133793477-8ee52f41.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786133793477-8ee52f41.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 50,
   },
   {
     id: "cmsjcoqi4000iiawlzfjk97cj",
-    name: "3 Formas Assadeira Bandeja Aço Inoxidável Forno",
+    name: "Formas Com 3 Assadeira Bandeja Aço Inoxidável Forno",
     slug: "3-formas-assadeira-bandeja-aco-inoxidavel-forno",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786131217414-a4ad1b1b.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786131217414-a4ad1b1b.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 50,
+    stock: 38,
   },
   {
     id: "cmsjb0b9n0026n7heitf4dftu",
-    name: "Adaptador Otg 3 Em 1 Tipo C Lightning V8 Cor Prata",
-    slug: "adaptador-otg-3-em-1-tipo-c-lightning-v8-cor-prata",
-    priceCents: 2200,
+    name: "Adaptador Otg 3 Em 1 Tipo C Lightning V8 HM006",
+    slug: "adaptador-otg-3-em-1-tipo-c-lightning-v8",
+    priceCents: 1800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786127148280-4d4b767c.webp",
-    category: "Outros",
-    stock: 50,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786127148280-4d4b767c.webp",
+    category: "Informática",
+    stock: 48,
   },
   {
     id: "cmsj9l9j0001n4xw4m7iydkhd",
@@ -295,8 +1253,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-wi-fi-usb-dual-band-1200mbps-5g-e-2-4g-4-antenas",
     priceCents: 5600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786126064830-205beb84.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786126064830-205beb84.webp",
     category: "Informática",
     stock: 50,
   },
@@ -306,10 +1263,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "olho-magico-inteligente-ezviz-dp2c-full-hd-com-video-porteiro-e-wi-fi",
     priceCents: 58000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786020544329-9426d8a4.webp",
-    category: "Casa e Utensílios Domésticos",
-    stock: 50,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786020544329-9426d8a4.webp",
+    category: "Fones de Ouvido",
+    stock: -8,
   },
   {
     id: "cmshhz1ia00073nke5dyvjgwv",
@@ -317,10 +1273,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tv-box-mi-stick-android-full-hd-versao-global-preto",
     priceCents: 28900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786019142682-e1425ae5.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786019142682-e1425ae5.webp",
     category: "Media Streaming",
-    stock: 48,
+    stock: 0,
   },
   {
     id: "cmshh2n9o000i9izvnadh1t2l",
@@ -328,8 +1283,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tv-stick-4k-de-2-geracao-com-controle-remoto-do-google-tv",
     priceCents: 39900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786017786388-0f4155d8.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786017786388-0f4155d8.webp",
     category: "Media Streaming",
     stock: 50,
   },
@@ -339,10 +1293,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cafeteira-portatil-pratica-recarregavel-expresso-3em1",
     priceCents: 16500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785960315315-ff5f6373.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785960315315-ff5f6373.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 48,
+    stock: 44,
   },
   {
     id: "cmsgi8mj40013k4wyqpnrt496",
@@ -350,9 +1303,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-de-seguranca-wifi-h90-dual-2k-4mp-4mp-pt-360-branco",
     priceCents: 54000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785959312253-bbf833d7.webp",
-    category: "Câmeras",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785959312253-bbf833d7.webp",
+    category: "Fora de Estoque",
     stock: 48,
   },
   {
@@ -361,10 +1313,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-ip-wi-fi-h9c-5mp-5mp-lente-dupla-3k-externa",
     priceCents: 54000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785957420199-01f6e694.webp",
-    category: "Câmeras",
-    stock: 50,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785957420199-01f6e694.webp",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cmsgfw5eg00148j225bgfvoi3",
@@ -372,10 +1323,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "isqueiro-macarico-recarregavel-mod-cartas-baralho",
     priceCents: 2900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785955241172-2b987f50.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785955241172-2b987f50.webp",
     category: "Produtos diversos",
-    stock: 50,
+    stock: 47,
   },
   {
     id: "cmsgekh0b00034xmx8oolf1g1",
@@ -383,8 +1333,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-inteligente-de-seguranca-c100-2k-com-inteligencia-artificial-e-protecao-de-privacidade",
     priceCents: 13900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785953366652-21efa242.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785953366652-21efa242.webp",
     category: "Câmeras",
     stock: 50,
   },
@@ -394,8 +1343,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "barbeador-km-2293-recarregavel-5w-display-led-sem-fio-preciso-preto",
     priceCents: 7900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785853557098-cbe03112.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785853557098-cbe03112.webp",
     category: "Salão & Barbearia",
     stock: 50,
   },
@@ -405,8 +1353,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-gancho-tws-bluetooth-esporte-corrida-ciclismo-cor-preto-cor-da-luz-azul-e-vermelho",
     priceCents: 5650,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785851918135-c9bb43be.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785851918135-c9bb43be.webp",
     category: "Fones de Ouvido",
     stock: 50,
   },
@@ -416,8 +1363,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pistola-de-etiqueta-etiquetadora-roupas-aplicador-tags-pinos",
     priceCents: 2200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785849039441-3d2cf8ec.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785849039441-3d2cf8ec.webp",
     category: "Produtos diversos",
     stock: 50,
   },
@@ -427,10 +1373,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-de-ferramentas-chave-boca-l-kit-10-pecas-soquete-estojo-jogo-chave-l-kit-10-pecas-soquete",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785289272056-b60209f5.webp",
-    category: "Ferramentas",
-    stock: 50,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785289272056-b60209f5.webp",
+    category: "Fora de Estoque",
+    stock: -2,
   },
   {
     id: "cms5eg7bu002zgwunhbmzbb0n",
@@ -438,8 +1383,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "localizador-itag-rastreador-bluetooth-anti-perda-chaveiro-chaves-bolsa-ios",
     priceCents: 3400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785287866812-dbb65c13.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785287866812-dbb65c13.webp",
     category: "Produtos diversos",
     stock: 50,
   },
@@ -449,10 +1393,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "power-bank-magnetico-5000mah-magsafe-15w-usb-c-22-5w",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785253197350-54e7bafc.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785253197350-54e7bafc.webp",
     category: "Carregadores & Power Banks",
-    stock: 50,
+    stock: 41,
   },
   {
     id: "cms4rpgqv001lhtsz6q09j446",
@@ -460,10 +1403,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "radio-classic-retro-am-fm-sd-usb-mp3-bivolt-bluetooth",
     priceCents: 5600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785249682613-81125e00.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785249682613-81125e00.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 50,
+    stock: 49,
   },
   {
     id: "cms4qeh110008nfhg1kal8dx8",
@@ -471,8 +1413,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-adaptador-usb-wifi-n-300mbps-2-4ghz-tl-wn823n",
     priceCents: 5400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785247294561-460e989a.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785247294561-460e989a.webp",
     category: "Informática",
     stock: 50,
   },
@@ -482,19 +1423,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-usb-sem-fio-archer-t3uplus-dual-ac1300",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785203850223-a7af12ab.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785203850223-a7af12ab.webp",
     category: "Informática",
-    stock: 50,
+    stock: 49,
   },
   {
     id: "cms3wc5wb001ld4o2ajejqanx",
-    name: "Adaptador Usb Bluetooth Ub5a Nano - C/nfe",
+    name: "Adaptador Usb Bluetooth Ub5a Nano",
     slug: "adaptador-usb-bluetooth-tp-link-ub5a-nano-c-nfe",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785196704285-41dbab3a.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785196704285-41dbab3a.webp",
     category: "Informática",
     stock: 50,
   },
@@ -504,10 +1443,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-sem-fio-gatinho-led-bluetooth-infantil-gato-cor-rosa",
     priceCents: 3900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785194998918-88d77e98.webp",
-    category: "Fones de Ouvido",
-    stock: 49,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785194998918-88d77e98.webp",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cms3u2wlk000210ul3pcnk4hr",
@@ -515,10 +1453,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mouse-gamer-recarregavel-ms17-ate-12800-dpi-alta-precisao",
     priceCents: 5400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785193123597-f42a2474.webp",
-    category: "Informática",
-    stock: 50,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785193123597-f42a2474.webp",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cms3t8dpe000j10u06ongyrji",
@@ -526,10 +1463,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mouse-pad-gamer-delta-p9040-90x40cm-led-rgb-antiderrapante",
     priceCents: 4600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785191770547-055a0858.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785191770547-055a0858.webp",
     category: "Informática",
-    stock: 50,
+    stock: 47,
   },
   {
     id: "cms0jfto7000n33rth8gv6ahi",
@@ -537,21 +1473,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mouse-convencional-com-fio-lehmox-ley-28-preto-usb-optico-ambidestro",
     priceCents: 1050,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784993887205-231dca28.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784993887205-231dca28.webp",
     category: "Informática",
-    stock: 50,
+    stock: 44,
   },
   {
     id: "cms0iy9jk000lqpjztdru8b6p",
-    name: "Extensão Filtro 8 Tomadas 10A 16A 20A  + 3 Usb + 3 Usb-c Branco",
+    name: "Extensão Filtro 8 Tomadas 10A 16A 20A  + 3 Usb + 3 Usb-c",
     slug: "extensao-filtro-8-tomadas-10a-16a-20a-3-usb-3-usb-c-branco",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784992941575-2a105e56.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784992941575-2a105e56.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 47,
+    stock: 25,
   },
   {
     id: "cms0hxuva0005h14akemy2dqx",
@@ -559,19 +1493,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tomada-inteligente-wi-fi-aitek-3-pinos-2-usb-1-tipo-c-alexa-google",
     priceCents: 7200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784991126677-1a1add35.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784991126677-1a1add35.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 50,
+    stock: 49,
   },
   {
     id: "cms0h4vsp0008x21apysk58wd",
-    name: "Tomada Inteligente 10a Touch Espelhado Wifi Automação Alexa",
+    name: "Tomada Interruptor Inteligente 10a Touch Espelhado Wifi Automação Alexa",
     slug: "tomada-inteligente-10a-touch-espelhado-wifi-automacao-alexa",
     priceCents: 7700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784989603999-678ea101.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784989603999-678ea101.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
   },
@@ -581,10 +1513,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-8-pinceis-de-maquiagem-profissional",
     priceCents: 1600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784987211580-832ecde6.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784987211580-832ecde6.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 50,
+    stock: 49,
   },
   {
     id: "cmrzrq3aj000a9o56pvqu9t2t",
@@ -592,8 +1523,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "interruptor-inteligente-4-botoes-wifi-wirelles-alexa-preto",
     priceCents: 7200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784947276864-08521120.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784947276864-08521120.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
   },
@@ -603,10 +1533,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tapo-c320ws-camera-de-seguranca-wifi-2k-qhd-colorida-ip66",
     priceCents: 32000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784946199062-cbaa4b4a.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784946199062-cbaa4b4a.webp",
     category: "Câmeras",
-    stock: 50,
+    stock: 49,
   },
   {
     id: "cmrzqajy5006z74693ws61vw4",
@@ -614,10 +1543,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-de-seguranca-kap-s381-branca-hd-1080p-externa",
     priceCents: 8200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784944696049-8dae3490.webp",
-    category: "Câmeras",
-    stock: 50,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784944696049-8dae3490.webp",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cmrzlhn3k0002cbiok4rtgsmf",
@@ -625,8 +1553,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-de-seguranca-a-gold-plus-cam-10-wi-fi-c-visao-noturna",
     priceCents: 12500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784936932935-1e2f3d76.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784936932935-1e2f3d76.webp",
     category: "Câmeras",
     stock: 50,
   },
@@ -636,10 +1563,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-ben-10-digital-hora-omnitrix-brinquedo-som-e-luz",
     priceCents: 2200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784935631385-8531a44f.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784935631385-8531a44f.webp",
     category: "Brinquedos",
-    stock: 48,
+    stock: 38,
   },
   {
     id: "cmrzjfjqg0004qpv3pp3qminz",
@@ -647,10 +1573,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "parafusadeira-furadeira-eletrica-pilha-infantil-gira-menino",
     priceCents: 3400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784933355475-1b93056d.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784933355475-1b93056d.webp",
     category: "Brinquedos",
-    stock: 50,
+    stock: 47,
   },
   {
     id: "cmrzemhx1000vvieqcw75zz3n",
@@ -658,8 +1583,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-didatico-alfabeto-madeira-27-pecas-cores-e-numeros",
     priceCents: 2400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784925382643-e479dc41.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784925382643-e479dc41.webp",
     category: "Brinquedos",
     stock: 49,
   },
@@ -669,10 +1593,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-de-alimentos-de-borracha-para-banheira-com-6-pecas",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784922906928-9d755f77.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784922906928-9d755f77.webp",
     category: "Brinquedos",
-    stock: 50,
+    stock: 48,
   },
   {
     id: "cmrz6cu7a000rkq08aq5h183f",
@@ -680,10 +1603,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fidget-toy-slug-3d-lagarta-lesma-articulada-brinquedo",
     priceCents: 1650,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784911354571-bda62488.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784911354571-bda62488.webp",
     category: "Brinquedos",
-    stock: 50,
+    stock: 49,
   },
   {
     id: "cmrz564gr000g70hivt9teqwm",
@@ -691,10 +1613,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-brinquedo-comidinha-infantil-frutas-de-cortar",
     priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784909324305-8a4820e1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784909324305-8a4820e1.webp",
     category: "Brinquedos",
-    stock: 50,
+    stock: 42,
   },
   {
     id: "cmrz3t3bk001lzdxwwinfl9g8",
@@ -702,10 +1623,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-pula-pirata-para-criancas-e-familia",
     priceCents: 2400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784906711838-6148a588.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784906711838-6148a588.webp",
     category: "Brinquedos",
-    stock: 50,
+    stock: 47,
   },
   {
     id: "cmrz2py6a00091e513irj6bya",
@@ -713,8 +1633,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-jogo-do-pinguim-equilibrio-quebra-gelo-martelo",
     priceCents: 3150,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784905234463-5011556f.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784905234463-5011556f.webp",
     category: "Brinquedos",
     stock: 50,
   },
@@ -724,8 +1643,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cesto-de-roupa-suja-com-rodinhas-grande-dobravel-portatil",
     priceCents: 9300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784904294265-f3f74c74.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784904294265-f3f74c74.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -735,10 +1653,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "alicate-desencravador-de-unhas-aco-inox-anatomico-oferta",
     priceCents: 1300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784759998485-d909ce37.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784759998485-d909ce37.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 50,
+    stock: 47,
   },
   {
     id: "cmrwnkt1p000dwuc7wntsc8u6",
@@ -746,8 +1663,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "faca-churrasco-8-inox-cabo-madeira-sq-para-corte-de-carne",
     priceCents: 2850,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784758744264-1e17f778.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784758744264-1e17f778.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
   },
@@ -757,10 +1673,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tablet-pc-dual-sim-10-1-hd-pro-16gb-ram-512gb-android-13-0-octa-core-gps-bluetooth-capa-teclado-mouse",
     priceCents: 58500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784757668660-58e96bbb.webp",
-    category: "Produtos diversos",
-    stock: 2,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784757668660-58e96bbb.webp",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cmrw7j713001bsysjfvxqiy1v",
@@ -768,10 +1683,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "termometro-digital-infravermelho-medicao-rapida-sem-contato-alta-precisao-temperatura-corporal-alarme-de-febre",
     priceCents: 3400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784730028842-64f12cae.webp",
-    category: "Beleza e Cuidado Pessoal",
-    stock: 50,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784730028842-64f12cae.webp",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cmrw4qq4b000p2ofnqgytl7wp",
@@ -779,8 +1693,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "difusor-umidificador-ambientes-oleos-essenciais-ultrassonico",
     priceCents: 3400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784726793247-8415f5d9.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784726793247-8415f5d9.webp",
     category: "Umidificadores & Ventiladores",
     stock: 50,
   },
@@ -790,30 +1703,27 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-lareira-umidificador-difusor-de-aromas-luz-noturna-cor-madeira",
     priceCents: 4050,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784671392905-5350ed38.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784671392905-5350ed38.webp",
     category: "Umidificadores & Ventiladores",
     stock: 50,
   },
   {
     id: "cmrv6ljf70002txjmhea929zh",
-    name: 'Smartwatch Haylou Solar Neo de 1.53" com Bluetooth e Monitor de Saúde Preto',
+    name: "Smartwatch Haylou Solar Neo de 1.53\" com Bluetooth e Monitor de Saúde Preto",
     slug: "smartwatch-haylou-solar-neo-de-1-53-com-bluetooth-e-monitor-de-saude-preto",
     priceCents: 13000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784670119614-158acbb8.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784670119614-158acbb8.webp",
     category: "Relogios e Smartwatchs",
     stock: 50,
   },
   {
     id: "cmrv3ywoe001brvv6ect7a6mh",
-    name: 'Smartband Haylou Solar 5 com Tela AMOLED de 1.58" e Resistência IP68',
+    name: "Smartband Haylou Solar 5 com Tela AMOLED de 1.58\" e Resistência IP68",
     slug: "smartband-haylou-solar-5-com-tela-amoled-de-1-58-e-resistencia-ip68",
-    priceCents: 23500,
+    priceCents: 24800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784665261360-81fa1572.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784665261360-81fa1572.webp",
     category: "Relogios e Smartwatchs",
     stock: 50,
   },
@@ -823,21 +1733,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smartwatch-haylou-solar-ultra-preto-1-6-sport-silicone-gps-preto-mesh-cinza-escuro",
     priceCents: 27500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784653034990-33cd3188.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784653034990-33cd3188.webp",
     category: "Relogios e Smartwatchs",
     stock: 50,
   },
   {
     id: "cmruuukl50036fz7h2irq7g6k",
-    name: "Câmera solar WiFi Bateria Embutida Segurança 2K Painel Solar CCTV",
+    name: "Câmera solar 4G ao ar livre, bateria embutida, lente dupla, segurança 2K",
     slug: "camera-solar-wifi-bateria-embutida-seguranca-2k-painel-solar-cctv",
     priceCents: 26000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784664512339-f34ee13f.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784664512339-f34ee13f.webp",
     category: "Câmeras",
-    stock: 39,
+    stock: 31,
   },
   {
     id: "cmrutainx000pdta59gi08fn7",
@@ -845,8 +1753,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "repetidor-sinal-wifi-kapbom-ka-x332-300-mbps-tomada-branco",
     priceCents: 4200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784647811420-347e8fef.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784647811420-347e8fef.webp",
     category: "Informática",
     stock: 50,
   },
@@ -856,8 +1763,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-smartwatch-ka-9973-49mm-nfc-prateado-com-10-pulseiras",
     priceCents: 8600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784568377143-0e2b607e.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784568377143-0e2b607e.webp",
     category: "Relogios e Smartwatchs",
     stock: 48,
   },
@@ -865,34 +1771,31 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrslx1py0027nc2txmul9znb",
     name: "Panela De Churrasco Coreana Antiaderente Redonda",
     slug: "panela-de-churrasco-coreana-antiaderente-redonda",
-    priceCents: 5900,
+    priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0524adc809-8-54.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0524adc809-8-54.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 91,
+    stock: 58,
   },
   {
     id: "cmrslwxmf001tnc2tproi61vq",
-    name: "Balança Digital Portátil de Mão 50kg Bagagem Mala Pesca",
+    name: "Balança Digital Portátil Mão 50kg Bagagem Mala Pesca",
     slug: "balanca-digital-portatil-de-mao-50kg-bagagem-mala-pesca",
-    priceCents: 2400,
+    priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/21332c20c1-1-69.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/21332c20c1-1-69.jpg",
     category: "Produtos diversos",
-    stock: 100,
+    stock: 98,
   },
   {
     id: "cmrslwto6001hnc2tp9nog6f2",
-    name: "Bateria externa Xiaomi Power Bank 10000mah 22,5w Lite Grey",
+    name: "Bateria externa Power Bank 10000mah 22,5w P16ZM",
     slug: "bateria-externa-xiaomi-power-bank-10000mah-225w-lite-grey",
-    priceCents: 7700,
+    priceCents: 8900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5cbd642ace-4-59.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5cbd642ace-4-59.jpg",
     category: "Carregadores & Power Banks",
-    stock: 94,
+    stock: 84,
   },
   {
     id: "cmrslwpp10013nc2tzyalvgps",
@@ -900,8 +1803,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smartwatch-mi-smart-band-10-pro-gps-preto",
     priceCents: 39900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0823e7bcb3-1-9.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0823e7bcb3-1-9.webp",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -911,8 +1813,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "repetidor-wifi-range-extender-n300-cor-branco",
     priceCents: 6700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/551caafefc-3-17.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/551caafefc-3-17.webp",
     category: "Informática",
     stock: 0,
   },
@@ -922,10 +1823,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "oculos-inteligente-de-sol-camera-4k-full-hd-bluetooth-wifi-gravacao-video-audio-traducao-ia",
     priceCents: 33000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/db632c83de-1-71.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/db632c83de-1-71.jpg",
     category: "Produtos diversos",
-    stock: -4,
+    stock: 0,
   },
   {
     id: "cmrslwdsl0000nc2tyq3mb4ai",
@@ -933,10 +1833,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ssd-128gb-sata-iii-2-5-interno-para-pc-e-notebook-kp-ss128",
     priceCents: 16000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2de7456eb6-1-11.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2de7456eb6-1-11.webp",
     category: "Informática",
-    stock: -13,
+    stock: -38,
   },
   {
     id: "cmrryd6hq006g6py3zty5d44f",
@@ -944,8 +1843,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-subwoofer-lehmox-ley-1916-3w-usb-preto-led-rgb-gamer",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/213016f867-1-52.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/213016f867-1-52.jpg",
     category: "Informática",
     stock: -1,
   },
@@ -955,19 +1853,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixinha-de-som-bluetooth-portatil-prova-dagua-suporte-bike",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/be5eccd935-1-53.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/be5eccd935-1-53.jpg",
     category: "Caixas de Som",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrrycylm005o6py3x893892i",
     name: "Caixa de Som Portátil AM55 15W Bluetooth USB-C Magnética",
     slug: "caixa-de-som-portatil-am55-15w-bluetooth-usb-c-magnetica",
-    priceCents: 5000,
+    priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/894350716b-4-44.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/894350716b-4-44.jpg",
     category: "Caixas de Som",
     stock: 0,
   },
@@ -977,8 +1873,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-bluetooth-7w-ka-8193",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b7371346de-5-43.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b7371346de-5-43.jpg",
     category: "Caixas de Som",
     stock: 0,
   },
@@ -988,10 +1883,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "leitor-de-codigo-de-barras-com-fio-usb-2-0-a-laser-de-16-m",
     priceCents: 9400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e00c44bf35-1-55.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e00c44bf35-1-55.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrrycn08004m6py3hw8rfsiq",
@@ -999,8 +1893,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "megafone-tomate-mlb-001-20w-gravacao-30m-cor-vermelho",
     priceCents: 5700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/de22e362b0-1-56.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/de22e362b0-1-56.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -1010,8 +1903,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pilha-auditiv-a13-pr48-1-4v-cartela-com-6-unidades",
     priceCents: 2150,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a85d2c838b-1-57.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a85d2c838b-1-57.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -1021,10 +1913,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-digital-bluetooth-espelhado-led-fm-microsd",
     priceCents: 3900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/264e1013db-1-58.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/264e1013db-1-58.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -6,
+    stock: -10,
   },
   {
     id: "cmrrycazt003g6py38bquas6p",
@@ -1032,10 +1923,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "localizador-tag-branco-kt-4-unidades-full-branco",
     priceCents: 27000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c025a751b3-9-45.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c025a751b3-9-45.jpg",
     category: "Fora de Estoque",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrryc73l00366py3vn0pmadf",
@@ -1043,8 +1933,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cesto-organizador-de-parede-com-duas-grades-de-arame-metalico",
     priceCents: 4900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/42bc61b7c6-1-60.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/42bc61b7c6-1-60.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
   },
@@ -1054,10 +1943,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-com-6-brocas-chatas-para-madeira-tamanhos-10-a-25mm",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82c91561d1-2-59.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82c91561d1-2-59.jpg",
     category: "Ferramentas",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrrybzdb002f6py3r6uxljsf",
@@ -1065,19 +1953,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "afiador-de-correntes-motosserras-cor-amarelo-profissional",
     priceCents: 5200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45cdbbd4db-1-62.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45cdbbd4db-1-62.jpg",
     category: "Ferramentas",
-    stock: -1,
+    stock: -5,
   },
   {
     id: "cmrrybve0001s6py38w04yt73",
-    name: 'Corrente para Motosserra 22" 20" 18" 16"  Aço Temperado',
+    name: "Corrente para Motosserra 22\" 20\" 18\" 16\"  Aço Temperado",
     slug: "corrente-para-motosserra-22-20-18-16-aco-temperado",
     priceCents: 2400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dfde9fe186-1-63.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dfde9fe186-1-63.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -1087,10 +1973,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "etiqueta-adesiva-fragil-vermelha-90x50mm-kit-com-500-etiquetas",
     priceCents: 1950,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eb7fb8a77d-1-8.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eb7fb8a77d-1-8.webp",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrrybnn500166py3c0j9m9go",
@@ -1098,8 +1983,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-mini-chaves-de-precisao-fenda-phillips-bom-3129",
     priceCents: 1600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8a73803c88-1-64.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8a73803c88-1-64.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -1109,8 +1993,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-4-pincas-longas-em-aco-relogio-eletronica-e-artesanato",
     priceCents: 1600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/53e66bbe23-2-63.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/53e66bbe23-2-63.jpg",
     category: "Ferramentas",
     stock: -1,
   },
@@ -1120,8 +2003,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-adesivo-para-vassoura-mop-rodo-organizador-de-parede-sem-furar",
     priceCents: 1200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec39be50d8-6-54.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec39be50d8-6-54.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -1131,19 +2013,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-gancho-inox-adesivo-forte-rodo-vassoura",
     priceCents: 1300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c15997d646-1-67.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c15997d646-1-67.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvsneb08dxiudhvsgsi9ue",
     name: "Caixa De Som Potente Pc Notebook Subwoofer Para Computador 6w Usb P2 Alto Falante De Mesa",
     slug: "caixa-de-som-potente-pc-notebook-subwoofer-para-computador-6w-usb-p2-alto-falante-de-mesa",
-    priceCents: 3500,
+    priceCents: 1600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/14e18b2388-1-51.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/14e18b2388-1-51.jpg",
     category: "Caixas de Som",
     stock: -5,
   },
@@ -1153,8 +2033,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "base-ventilada-notebook-gamer-b1010-led-azul-silenciosa-usb",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e2b342c7ca-9-38.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e2b342c7ca-9-38.jpg",
     category: "Informática",
     stock: -4,
   },
@@ -1164,8 +2043,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ring-light-led-portatil-20w-pemium-suporte-celular-vlog",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ece4082ede-8-9.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ece4082ede-8-9.webp",
     category: "Iluminação",
     stock: -1,
   },
@@ -1175,8 +2053,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "led-portatil-de-controle-remoto-de-acampamento-solar",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9d33462481-1-48.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9d33462481-1-48.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -1184,10 +2061,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvsmpp08cpiudh21so5th8",
     name: "Maquina Maquininha Depilador Pelos Femininos Km-1900",
     slug: "maquina-maquininha-depilador-pelos-femininos-km-1900",
-    priceCents: 7500,
+    priceCents: 5900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b442c3188b-4-39.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b442c3188b-4-39.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
@@ -1197,8 +2073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-intra-auricular-com-fio-tune-110-preto-jbl",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b0fcb0e40-7-39.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b0fcb0e40-7-39.jpg",
     category: "Fones de Ouvido",
     stock: -1,
   },
@@ -1208,8 +2083,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-in-ear-sem-fio-jbl-wave-beam-preto",
     priceCents: 20500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1d6c1cd0a4-1-45.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1d6c1cd0a4-1-45.jpg",
     category: "Fones de Ouvido",
     stock: 0,
   },
@@ -1217,21 +2091,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvsm5w08bsiudhsxpm9hdi",
     name: "Fone De Ouvido Bluetooth Soundcore Sns15 Sem Fio Headphone Cancelamento De Ruído Anc Híbrido",
     slug: "fone-de-ouvido-bluetooth-soundcore-sns15-sem-fio-headphone-cancelamento-de-ruido-anc-hibrido-headset-60h-bateria-app-carga-rapida-dobravel-preto",
-    priceCents: 12000,
-    compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b538dc6e50-1-6.webp",
+    priceCents: 11500,
+    compareAtPriceCents: 800,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b538dc6e50-1-6.webp",
     category: "Fones de Ouvido",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvslzo08bhiudhl45w7327",
     name: "Headset Gamer Fone De Ouvido com Fio FB512 Aitek",
     slug: "headset-gamer-fone-de-ouvido-com-fio-v5-3-preto",
-    priceCents: 14500,
+    priceCents: 13000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6eee6a845d-1-44.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6eee6a845d-1-44.jpg",
     category: "Fones de Ouvido",
     stock: -1,
   },
@@ -1241,10 +2113,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fones-de-ouvido-bluetooth-ativos-xiaomi-redmi-buds-8-active-cor-preta",
     priceCents: 14000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5f05dcdb4-2-41.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5f05dcdb4-2-41.jpg",
     category: "Fones de Ouvido",
-    stock: -1,
+    stock: -7,
   },
   {
     id: "cmrnvslmq08awiudhtykwoo41",
@@ -1252,10 +2123,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "alicate-de-bico-fino-reto-meia-cana-profissional-6-polegadas",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aa37379955-5-33.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aa37379955-5-33.jpg",
     category: "Ferramentas",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvslgl08aliudhk7jy3vbw",
@@ -1263,10 +2133,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chave-combinada-48-em-1-tigre-cabecote-rotativo-360-8mm-a-19mm",
     priceCents: 4100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b8cbafd2d8-6-32.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b8cbafd2d8-6-32.jpg",
     category: "Ferramentas",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvslac08aaiudhxb08l9k1",
@@ -1274,8 +2143,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "estilete-compacto-dobravel-amarelo-pequeno",
     priceCents: 2300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bade4426d1-9-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bade4426d1-9-29.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
   },
@@ -1285,8 +2153,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-serrote-de-poda-2-pecas-profissional-corte-afiada-galhos",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fda9da4db8-8-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fda9da4db8-8-29.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -1296,8 +2163,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-reparos-para-pneus-de-carro-e-moto-remendo",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/118978f735-2-36.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/118978f735-2-36.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -1307,8 +2173,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chave-de-bike-boca-chave-universal-skate-8mm-a-17-mm",
     priceCents: 1960,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6fb01aef9b-7-30.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6fb01aef9b-7-30.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -1318,10 +2183,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "alicate-tesoura-descascadora-e-decapador-de-fios-aco-cortar",
     priceCents: 2900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/73b81e6ca5-1-35.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/73b81e6ca5-1-35.jpg",
     category: "Ferramentas",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvskfi088siudhy4zur73m",
@@ -1329,8 +2193,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tesoura-p-podar-arvores-alicate-manual-cortar-ramos-folhas",
     priceCents: 3100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7983379f6c-6-28.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7983379f6c-6-28.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -1340,8 +2203,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "alicate-de-pressao-curvo-10pol-emborrachado-mordedor",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/812c703daf-5-28.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/812c703daf-5-28.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -1351,8 +2213,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "alicate-crimpar-corte-cabo-de-rede-rj11-rj12-rj45-decapador",
     priceCents: 3300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c5e419551-1-34.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c5e419551-1-34.jpg",
     category: "Ferramentas",
     stock: -1,
   },
@@ -1362,10 +2223,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "multimetro-digital-profissional-c-capacimetro-bateria",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/01f321a3d1-7-5.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/01f321a3d1-7-5.webp",
     category: "Ferramentas",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvsjja087qiudhfl2c29fo",
@@ -1373,10 +2233,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cutelo-profissional-aco-cozinha-faca-acougueiro-corta-osso",
     priceCents: 4300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ef594effc5-1-32.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ef594effc5-1-32.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvsjdm087giudht5fux4h5",
@@ -1384,8 +2243,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pedra-de-amolar-afiar-faca-profissional-dupla-face",
     priceCents: 2350,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45354a498a-2-30.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45354a498a-2-30.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -1395,8 +2253,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ima-de-neodimio-super-forte-60mm-130kg-pesca",
     priceCents: 5800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6b40a39d5-1-30.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6b40a39d5-1-30.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -1406,8 +2263,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pastilha-tablete-limpeza-maquina-lavar-roupa-kit-12-unidade",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/13f9a82a68-1-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/13f9a82a68-1-29.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -1417,8 +2273,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pastilhas-para-vaso-sanitario-eliminacao-de-manchas-odores",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa796b7001-8-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa796b7001-8-21.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -3,
   },
@@ -1428,10 +2283,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "guia-base-de-serra-circular-gabarito-maquina-corte-ajustavel",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6ad317b806-capa.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6ad317b806-capa.jpg",
     category: "Ferramentas",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvsiik085yiudhh4wy8qot",
@@ -1439,10 +2293,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luminaria-de-mesa-abajur-quarto-articulavel-led-touch-escritorio-leitura-recarregavel",
     priceCents: 3700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7f68a7aa9a-1-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7f68a7aa9a-1-2.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: -9,
+    stock: -26,
   },
   {
     id: "cmrnvsicb085niudhzsorpbuj",
@@ -1450,8 +2303,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "repelente-ultrassonico-pest-reject-para-ratos-e-insetos",
     priceCents: 2400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5a67183872-8-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5a67183872-8-19.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -1461,10 +2313,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "celular-caterpillar-b68-4g-resistente-tecla-grande-p-idoso",
     priceCents: 16000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cd9d40ed41-3-20.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cd9d40ed41-3-20.jpg",
     category: "Celulares e Smartphones",
-    stock: 0,
+    stock: -5,
   },
   {
     id: "cmrnvshzk0851iudh4bd7oisx",
@@ -1472,8 +2323,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fechadura-digital-reconhecimento-facial-prova-dagua",
     priceCents: 61500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd257716ef-3-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd257716ef-3-19.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -1483,8 +2333,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smartwatch-watch-2-pro-bt-5-3-tela-de-1-85-pol",
     priceCents: 14000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2b7cdc3c91-1-23.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2b7cdc3c91-1-23.jpg",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -1492,23 +2341,21 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvshn1084fiudh5ldvycup",
     name: "Kit Teclado E Mouse Com Fio Usb Para Jogos E Office Abnt2",
     slug: "kit-teclado-e-mouse-com-fio-usb-para-jogos-e-office-abnt2",
-    priceCents: 4900,
+    priceCents: 3900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a849fad5b-1-22.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a849fad5b-1-22.jpg",
     category: "Informática",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvshgu0844iudhqseuohw6",
-    name: "Teclado Dobrável Bluetooth Portátil E Mouse Sem Fio Wireless ",
+    name: " Teclado Com Mouse Dobrável Bluetooth Portátil E Mouse Sem Fio Wireless",
     slug: "teclado-dobravel-bluetooth-portatil-e-mouse-sem-fio-wireless-preto",
-    priceCents: 7900,
+    priceCents: 6900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/132858ff52-2-20.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/132858ff52-2-20.jpg",
     category: "Informática",
-    stock: -2,
+    stock: -10,
   },
   {
     id: "cmrnvshaf083uiudhotlelw52",
@@ -1516,8 +2363,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "recipiente-de-alimentos-isolado-branco-lunch-304-em-aco-inox",
     priceCents: 5300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f3e4b8635a-8-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f3e4b8635a-8-16.jpg",
     category: "Produtos diversos",
     stock: -1,
   },
@@ -1527,10 +2373,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-3-lancheira-termica-portatil-de-aco-inoxidavel-com-bolsa",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/90132a4b75-1a.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/90132a4b75-1a.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvsgxe0839iudhho89aaz4",
@@ -1538,8 +2383,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-4-lancheira-com-bolsa-termica-redonda-isolada-aco-inox",
     priceCents: 7300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8bd2116ea6-8-15.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8bd2116ea6-8-15.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -1549,8 +2393,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "337085",
     priceCents: 1500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/faf12c43b0-1-18.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/faf12c43b0-1-18.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
   },
@@ -1560,8 +2403,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-cafe-expresso-portatil-3em1-para-viagem-cabo-usb-c-cinza",
     priceCents: 17100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d8df85041d-1-17.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d8df85041d-1-17.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -1571,10 +2413,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "descascador-eletrico-de-alimentos-alhos-legumes-e-frutas",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa86f54ffa-1-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa86f54ffa-1-16.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    stock: -3,
   },
   {
     id: "cmrnvsg8f0826iudhc5q3hu0q",
@@ -1582,10 +2423,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-multimidia-xc-cm-14-de-10w-rms-para-pc",
     priceCents: 5100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4493a89890-1-15.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4493a89890-1-15.jpg",
     category: "Caixas de Som",
-    stock: -1,
+    stock: -19,
   },
   {
     id: "cmrnvsg28081viudhdi1vwgqs",
@@ -1593,8 +2433,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "central-multimidia-2-din-7-p-carplay-e-android-auto-sem-fio",
     priceCents: 28100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa298ca9ca-1-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa298ca9ca-1-14.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -1604,10 +2443,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-4-em-1-bacia-bowl-ralador-fatiadora-inox-tigela-vasilha",
     priceCents: 4850,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ada1beac56-1-13.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ada1beac56-1-13.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvsfpl0819iudhzov9xzaz",
@@ -1615,8 +2453,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-saco-de-roupas-para-maquina-de-lavar-ziper-com-protecao",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/059ba88c52-9-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/059ba88c52-9-11.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -1626,8 +2463,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "escorredor-de-pratos-louca-bancada-secador-aco-inox-porta-talher-cor-preto",
     priceCents: 9750,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f79e0b08cf-1-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f79e0b08cf-1-11.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -1637,8 +2473,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "organizador-de-louca-escorredor-de-pratos-copo-talheres-com-dreno-para-agua-cozinha-pia-2-andares",
     priceCents: 8650,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc2871cf24-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc2871cf24-1.webp",
     category: "Fora de Estoque",
     stock: -2,
   },
@@ -1648,8 +2483,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-caipirinha-coqueteleira-profissional-bartender-12-pecas-inox-barman-homebar-drinks-coquetel-e-batidinhas-presente",
     priceCents: 14800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/385f982fa1-1-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/385f982fa1-1-10.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -1659,8 +2493,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "oculos-de-solda-para-soldador-c-escurecimento-automatico",
     priceCents: 3100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d862c44d8a-7-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d862c44d8a-7-7.jpg",
     category: "Produtos diversos",
     stock: -1,
   },
@@ -1670,8 +2503,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tabua-de-corte-redonda-antiderrapante-verde-para-churrasco-e-cozinha",
     priceCents: 3300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/18ac53b4d4-1-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/18ac53b4d4-1-8.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -1681,8 +2513,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fogareiro-portatil-camping-1-boca-automatico",
     priceCents: 15600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/363395c5ec-1-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/363395c5ec-1-7.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -1692,10 +2523,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "forma-de-bolo-pao-ingles-retangular-assadeira-antiaderente",
     priceCents: 4150,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a22949d6db-1-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a22949d6db-1-6.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvsect07ytiudh7zufl9z4",
@@ -1703,8 +2533,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-5-organizadores-geladeira-caixa-organizadora-cesto",
     priceCents: 5900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7e423d2c56-9-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7e423d2c56-9-4.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -3,
   },
@@ -1714,8 +2543,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "organizador-cosmeticos-madeira-umbra-bellwood-com-3-bandejas-e-copo-removivel",
     priceCents: 5150,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/af00ab6a4f-1-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/af00ab6a4f-1-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -1725,8 +2553,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cesto-de-roupa-dobravel-57-litros-caixa-com-rodinhas-organizador-brinquedos-organizacao-multifuncional",
     priceCents: 8200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c7291e1da8-7-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c7291e1da8-7-2.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -1736,20 +2563,18 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "rolos-papel-etiqueta-lacuna-p-impressora-termica-portatil-cor-colorida",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec123d7807-1-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec123d7807-1-2.jpg",
     category: "Embalagens e Etiquetas",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvsdok07xoiudhcfler7s6",
     name: "Aparelho De Barbear Manual De Lâmina Dupla (inclui 20 Refis)",
     slug: "aparelho-de-barbear-manual-de-lamina-dupla-inclui-20-refis",
-    priceCents: 2800,
+    priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6584f4d120-6.jpg",
-    category: "Beleza e Cuidado Pessoal",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6584f4d120-6.jpg",
+    category: "Salão & Barbearia",
     stock: 0,
   },
   {
@@ -1758,8 +2583,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "panela-de-pressao-em-aco-inoxidavel-com-tres-configuracoes-6l-inox",
     priceCents: 31600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/18584826f1-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/18584826f1-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -1769,10 +2593,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "oculos-vr-realidade-virtual-3d-com-fone-bluetooth-cor-branco",
     priceCents: 18600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61366e5208-1-27.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61366e5208-1-27.jpg",
     category: "Produtos diversos",
-    stock: -2,
+    stock: -11,
   },
   {
     id: "cmrnvsd5k07wtiudhonu3hkan",
@@ -1780,30 +2603,27 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "garrafa-termica-magsafe-fitness-suporte-smartphone-800ml",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8c939893f-4-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8c939893f-4-21.jpg",
     category: "Garrafas, Copos e Canecas",
-    stock: -5,
+    stock: -11,
   },
   {
     id: "cmrnvscze07wiiudhtk3qzwa3",
-    name: "Kit Manicure E Pedicure Portátil Com 18 Peças, Lixa Unha /pé",
-    slug: "kit-manicure-e-pedicure-portatil-com-18-pecas-lixa-unha-pe",
-    priceCents: 2500,
+    name: "Kit Manicure E Pedicure Portátil Com 5 Peças, Lixa Unha /pé",
+    slug: "kit-manicure-e-pedicure-portatil-com-5-pecas-lixa-unha-pe",
+    priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7a568a1bf2-1-25.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7a568a1bf2-1-25.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: -1,
   },
   {
-    id: "cmrnvsctt07w7iudh9em5yzoa",
+    id: "cmrnvscts07w7iudh9em5yzoa",
     name: "Projetor T6 Android Espelha Wifi Bluetooth Youtube Netflix",
     slug: "projetor-t6-android-espelha-wifi-bluetooth-youtube-netflix",
     priceCents: 30600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2b8f4366b-6-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2b8f4366b-6-21.jpg",
     category: "Produtos diversos",
     stock: -2,
   },
@@ -1813,8 +2633,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-termica-cooler-vira-mesa-cadeira-com-rodas-32l-praia",
     priceCents: 60600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/497d62fc46-1-23.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/497d62fc46-1-23.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -1822,21 +2641,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvsch907vliudhmadxsjsx",
     name: "Echo Dot Max Smart Speaker Com Alexa Grafite Amazon Bivolt Preto",
     slug: "echo-dot-max-smart-speaker-com-alexa-grafite-amazon-bivolt-preto",
-    priceCents: 59500,
+    priceCents: 57900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60d2ef78de-1-22.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60d2ef78de-1-22.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: 30,
   },
   {
     id: "cmrnvscb007vaiudh5t45tp1s",
     name: "Amazfit Bip Bip Max A2568 2.07 Amoled Mapas 5atm",
     slug: "amazfit-bip-bip-max-a2568-2-07-amoled-mapas-5atm",
-    priceCents: 61500,
+    priceCents: 58000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cfeda0b469-1-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cfeda0b469-1-21.jpg",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -1844,12 +2661,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvsc4n07uziudha3b0iiw0",
     name: "Cabo Usb 4 40gbps Thunderbolt Tipo C 240w Ps5 Mac Win 8k 4k",
     slug: "cabo-usb-4-40gbps-thunderbolt-tipo-c-240w-ps5-mac-win-8k-4k",
-    priceCents: 4000,
+    priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/57686c368c-1-20.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/57686c368c-1-20.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvsbyf07uoiudhwcpsy1pe",
@@ -1857,8 +2673,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "album-copa-do-mundo-fifa-2026-capa-mole-ou-capa-dura",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/424a6b7a19-2-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/424a6b7a19-2-1.webp",
     category: "Copa do Mundo",
     stock: 0,
   },
@@ -1868,10 +2683,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-wireless-carplay-android-auto-sem-fio-usb-2em1",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a0242b045-1-17.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a0242b045-1-17.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvsblt07u3iudhk0zcg83p",
@@ -1879,8 +2693,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-bluetooth-30w-ipx5-bicicleta",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6160f15578-1-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6160f15578-1-16.jpg",
     category: "Caixas de Som",
     stock: 0,
   },
@@ -1890,10 +2703,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "encosto-de-cabeca-para-banco-de-carro-auto-para-travesseiro",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eabe36e6be-1-15.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eabe36e6be-1-15.jpg",
     category: "Produtos diversos",
-    stock: -4,
+    stock: -14,
   },
   {
     id: "cmrnvsb9f07tiiudhcucrz16c",
@@ -1901,19 +2713,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "descascador-eletrico-automatico-para-frutas-e-alho-sem-fio",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a118907c3d-1-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a118907c3d-1-14.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -9,
   },
   {
     id: "cmrnvsb3807t7iudhz6359doc",
-    name: 'Case HD Externo Transparente Para HD/SSD SATA 2,5"  Adaptador Portátil Notebook e PC',
+    name: "Case HD Externo Transparente Para HD/SSD SATA 2,5\"  Adaptador Portátil Notebook e PC",
     slug: "case-hd-externo-transparente-para-hd-ssd-sata-25-adaptador-portatil-notebook-e-pc",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a63a6affad-8-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a63a6affad-8-10.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -1923,21 +2733,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-pia-2-esponjas-rodo-ralo-de-pia",
     priceCents: 750,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/48acf71055-1-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/48acf71055-1-12.jpg",
     category: "Mais vendidos",
-    stock: 0,
+    stock: -5,
   },
   {
     id: "cmrnvsaqy07suiudhnyngmxu5",
     name: "Turbina Universal Escapamento Dispositivo Simula Som Turbo",
     slug: "turbina-universal-escapamento-dispositivo-simula-som-turbo",
-    priceCents: 3000,
+    priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0507ee5c6e-3-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0507ee5c6e-3-11.jpg",
     category: "Produtos diversos",
-    stock: -2,
+    stock: -16,
   },
   {
     id: "cmrnvsakr07sjiudhtc79xmwa",
@@ -1945,10 +2753,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "medidor-de-glicose-e-acido-urico-2-em-1-uso-domestico",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/baa4c74545-1-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/baa4c74545-1-10.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -4,
   },
   {
     id: "cmrnvsaek07s8iudh3wk5ci8j",
@@ -1956,10 +2763,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "aquecedor-ar-eletrico-portatil-quente-varios-ambientes-1500w-127v",
     priceCents: 12000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e95bdd9943-4-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e95bdd9943-4-9.jpg",
     category: "Fora de Estoque",
-    stock: 1,
+    stock: 0,
   },
   {
     id: "cmrnvsa8i07rxiudh1g7xxrar",
@@ -1967,10 +2773,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-de-endoscopica-1080p-c-cabo-semi-rigido-1m-borescopio-com-tela-4-3",
     priceCents: 19600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e46bf68fbd-1-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e46bf68fbd-1-8.jpg",
     category: "Produtos diversos",
-    stock: -4,
+    stock: -10,
   },
   {
     id: "cmrnvsa2907rmiudhzrq6l7ar",
@@ -1978,10 +2783,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "vaporizador-residencial-1500w-vapor-clean",
     priceCents: 35600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c6be653294-1-18.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c6be653294-1-18.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    stock: 0,
   },
   {
     id: "cmrnvs9vy07rdiudhecun87qf",
@@ -1989,10 +2793,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-solar-de-lente-dupla-com-visao-noturna-hd-cor-branco",
     priceCents: 29600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786542674692-cfa959f0.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786542674692-cfa959f0.webp",
     category: "Câmeras",
-    stock: -4,
+    stock: -12,
   },
   {
     id: "cmrnvs9ps07r5iudhxbla2xtj",
@@ -2000,19 +2803,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-mini-displayport-hdtv-180m-full-hd-1080p",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cc449117cc-4-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cc449117cc-4-5.jpg",
     category: "Informática",
     stock: 0,
   },
   {
     id: "cmrnvs9jj07quiudhnydg4wvw",
-    name: "Novo Modelo Pistola Massageadora Elétrica Facial Corporal Fisioterapia",
+    name: "Novo Modelo Pistola Massageadora Elétrica Facial Corporal Fisioterapia Cores",
     slug: "pistola-massageadora-eletrica-facial-corporal-fisioterapia",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cdd81236aa-1-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cdd81236aa-1-4.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
@@ -2022,10 +2823,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-depilador-eletrico-feminino-2-em-1-pelos-corporais",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c9d419b670-1-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c9d419b670-1-3.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -1,
+    stock: -6,
   },
   {
     id: "cmrnvs96u07q8iudhnnbbmbsr",
@@ -2033,21 +2833,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-cabine-led-uv-secador-portatil-para-unhas-gel-e-posticas",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0f5a5ebad0-2-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0f5a5ebad0-2-3.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvs90j07pxiudhk6x4j72z",
     name: "Happy Baby Ballon Conjunto 37 Balões Água Brinquedo Infantil",
     slug: "happy-baby-ballon-conjunto-37-baloes-agua-brinquedo-infantil",
-    priceCents: 2000,
+    priceCents: 1000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ebc39b1b3f-5-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ebc39b1b3f-5-1.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvs8ua07pmiudhzfgqchet",
@@ -2055,8 +2853,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carregador-com-4-pilhas-aa-recarregavel-2600-mah-mo-cp51-auto-stop",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1794b29537-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1794b29537-1.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -2066,10 +2863,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "transmissor-hdmi-s-fio-1080p-para-pc-notebook-tv-projetores",
     priceCents: 36500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a0cfa05cf5-5-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a0cfa05cf5-5-19.jpg",
     category: "Informática",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvs8hv07p4iudhmdn7gry1",
@@ -2077,10 +2873,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "inversor-carro-veicular-350w-6portas-usb-usbc-12v-110v",
     priceCents: 12600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4128294c77-1-20.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4128294c77-1-20.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvs8bh07otiudhwb50385b",
@@ -2088,10 +2883,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "inversor-de-energia-automotivo-400w-12v-para-110v-usb-tipo-c",
     priceCents: 14800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8d454c4ae-1-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8d454c4ae-1-19.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvs85907oiiudho6qtietr",
@@ -2099,8 +2893,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "xiaomi-redmi-watch-6-gps-integrado-amoled-prova-dagua",
     priceCents: 58100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/123ea5b35e-3-15.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/123ea5b35e-3-15.jpg",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -2110,8 +2903,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "album-capa-dura-dourado-copa-do-mundo-2026-fifa-world-ouro",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f6b368d23e-3-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f6b368d23e-3-14.jpg",
     category: "Copa do Mundo",
     stock: 0,
   },
@@ -2121,8 +2913,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "album-capa-dura-prata-copa-do-mundo-2026-oficial-panini",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7837d294c9-4-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7837d294c9-4-1.webp",
     category: "Copa do Mundo",
     stock: 0,
   },
@@ -2132,10 +2923,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-processador-eletrico-350ml-45w-usb-recarregavel",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9f9200bd96-6-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9f9200bd96-6-14.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvs7g007nfiudhxsfwld6t",
@@ -2143,8 +2933,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-bluetooth-portatil-ka-8508-preto",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e9fdd42aca-1-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e9fdd42aca-1-14.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2152,23 +2941,21 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvs79j07n4iudhqt5tba2h",
     name: "Tomada De Trilho Móvel 40cm 3 Plugues 32a",
     slug: "tomada-de-trilho-movel-40cm-3-plugues-32a",
-    priceCents: 16600,
+    priceCents: 14000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c894017222-1-13.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c894017222-1-13.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -5,
   },
   {
     id: "cmrnvs73c07muiudhon175gw5",
     name: "Ventilador Portatil Bateria 8'' Inclui 21v Bateria Até 5 H 6000mAh",
     slug: "ventilador-portatil-bateria-8-inclui-21v-bateria-ate-5-h-6000mah",
-    priceCents: 9000,
+    priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9adf563401-1-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9adf563401-1-12.jpg",
     category: "Fora de Estoque",
-    stock: 0,
+    stock: 50,
   },
   {
     id: "cmrnvs6x807mjiudh4ksniw4c",
@@ -2176,10 +2963,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tela-selfie-monitor-espelho-ima-para-celular-camera-traseira",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c129df8a2e-6-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c129df8a2e-6-11.jpg",
     category: "Produtos diversos",
-    stock: 100,
+    stock: 98,
   },
   {
     id: "cmrnvs6r307m8iudhjo413sb7",
@@ -2187,8 +2973,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lata-de-lixo-eletrica-com-sensor-de-movimento-automatica-16l-cor-branco",
     priceCents: 9800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/580cec757c-1-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/580cec757c-1-10.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2198,8 +2983,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "amplificador-de-voz-megafone-bluetooth-com-microfone-e-radio",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aabef0fec5-4-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aabef0fec5-4-9.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -2209,10 +2993,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-notebook-cooler-resfriamento-led-rgb-personalizavel",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/10d50e9893-2-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/10d50e9893-2-8.jpg",
     category: "Informática",
-    stock: -2,
+    stock: 9,
   },
   {
     id: "cmrnvs68b07leiudhyf606f0r",
@@ -2220,8 +3003,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sapateira-portatil-rack-organizador-calcados-6-andares-preto",
     priceCents: 6900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bdcf54c81e-8-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bdcf54c81e-8-5.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -2231,8 +3013,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-album-capa-dura-figurinhas-copa-do-mundo-fifa-2026",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/caa61b2ce3-6178LYltfL._AC_SL1254_.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/caa61b2ce3-6178LYltfL._AC_SL1254_.jpg",
     category: "Promoções do Mês",
     stock: 0,
   },
@@ -2242,8 +3023,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "microfone-hollyland-lark-m2-mini-combo-sem-fio-preto",
     priceCents: 55900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b497955515-1-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b497955515-1-4.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -2253,21 +3033,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "microfone-hollyland-lark-a1-combo-duo-usb-c-cor-preto",
     priceCents: 37500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1414e25fd6-1-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1414e25fd6-1-3.jpg",
     category: "Produtos diversos",
-    stock: 30,
+    stock: 29,
   },
   {
     id: "cmrnvs5iz07kbiudhcpuvpdhf",
     name: "Microfone Hollyland Lark M2 Combo Duo Usb-c, Lightning",
     slug: "microfone-hollyland-lark-m2-combo-duo-usb-c-lightning",
-    priceCents: 63500,
+    priceCents: 59900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bbbfa7c478-1a.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bbbfa7c478-1a.jpg",
     category: "Fora de Estoque",
-    stock: 0,
+    stock: 46,
   },
   {
     id: "cmrnvs5ct07k0iudh9pke0pzc",
@@ -2275,8 +3053,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "repetidor-ponto-de-acesso-wifi-5g-xiaomi-mi-ac1200-rc04-cor-preto",
     priceCents: 16500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ee1e25e30-6-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ee1e25e30-6-2.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2286,10 +3063,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-gamer-notebook-base-com-4-coolers-fans-ventoinhas-potentes-mesa-projetada-laptop-ate-19-polegadas-com-painel-de-controle-ajuste-de-velocidade-ultra-silenciosa",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8baefda1b9-4-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8baefda1b9-4-1.jpg",
     category: "Informática",
-    stock: 0,
+    stock: -6,
   },
   {
     id: "cmrnvs50707jeiudhsqb0avtq",
@@ -2297,8 +3073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-solar-sem-fio-wifi-externa-com-lente-dupla",
     priceCents: 27500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f8212e619c-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f8212e619c-1.jpg",
     category: "Câmeras",
     stock: 0,
   },
@@ -2308,8 +3083,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "envelope-figurinha-fifa-world-copa-mundo-26-futebol-copa-do-mundo-2026-7-figurinhas",
     priceCents: 650,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/66f76d4ca6-figurinha.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/66f76d4ca6-figurinha.png",
     category: "Copa do Mundo",
     stock: 0,
   },
@@ -2319,8 +3093,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-album-capa-mole-copa-do-mundo-fifa-2026-figurinhas",
     priceCents: 9800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8a745c741-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8a745c741-1.png",
     category: "Promoções do Mês",
     stock: 0,
   },
@@ -2330,10 +3103,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fruteira-de-mesa-2-andares-em-metal-e-madeira-organizador-de-frutas-e-legumes",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/edfa416f2d-8-18.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/edfa416f2d-8-18.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvs4ba07iiiudhip9rhja3",
@@ -2341,21 +3113,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-para-shampoo-e-sabonete-banheiro",
     priceCents: 3700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2c1a2f9e5e-2-22.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2c1a2f9e5e-2-22.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvs45807i7iudhtfjeyqbq",
-    name: "Alto-falante Bluetooth Para Pc, Jogos E Escritório 60w",
+    name: "Alto-falante Bluetooth Para Pc, Jogos E Escritório 60w USB",
     slug: "alto-falante-bluetooth-tipo-c-para-pc-jogos-e-escritorio",
     priceCents: 7300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f3786f4024-1-26.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f3786f4024-1-26.jpg",
     category: "Caixas de Som",
-    stock: -15,
+    stock: -33,
   },
   {
     id: "cmrnvs3z407hziudhf6jlhi03",
@@ -2363,10 +3133,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "rastreador-xiaomi-tag-localizador-google-e-apple-find",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aaa5430452-3-20.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aaa5430452-3-20.jpg",
     category: "Produtos diversos",
-    stock: -2,
+    stock: -5,
   },
   {
     id: "cmrnvs3su07hoiudh5vbzfm73",
@@ -2374,10 +3143,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-som-jbl-go-5-bluetooth-portatil-prova-dagua-preto-127-220v",
     priceCents: 29900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4285c35759-4-17.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4285c35759-4-17.jpg",
     category: "Caixas de Som",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvs3ml07hhiudhq6jp9f6f",
@@ -2385,9 +3153,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ventilador-portatil-mini-de-mao-mesa-recarregavel-usb-led-2",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b368d59284-1-23.jpg",
-    category: "Umidificadores & Ventiladores",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b368d59284-1-23.jpg",
+    category: "Fora de Estoque",
     stock: 0,
   },
   {
@@ -2396,8 +3163,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-isca-artificial-soft-grub-8cm-trairas",
     priceCents: 2400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2605e87351-1-22.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2605e87351-1-22.jpg",
     category: "Materiais de Pesca",
     stock: 0,
   },
@@ -2405,12 +3171,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvs3ae07h2iudhsj7ka6pb",
     name: "Bomba De Ar Para Aquário E Fonte 360l 3w Recarregável 50h",
     slug: "bomba-de-ar-para-aquario-e-fonte-360l-3w-recarregavel-50h",
-    priceCents: 9500,
+    priceCents: 9300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35cc762467-1-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35cc762467-1-21.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -4,
+    stock: -5,
   },
   {
     id: "cmrnvs34707gsiudh6x4oh0ol",
@@ -2418,10 +3183,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "soprador-termico-pistola-portatil-c-bico-320w-quente-110v",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dbaffe872a-1-20.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dbaffe872a-1-20.jpg",
     category: "Ferramentas",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvs2xy07giiudh8fi0okxr",
@@ -2429,8 +3193,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "coelho-de-pelucia-pula-emite-som-brinquedo-infantil-pascoa",
     priceCents: 3100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1949f27fd3-1-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1949f27fd3-1-19.jpg",
     category: "Brinquedos",
     stock: 0,
   },
@@ -2440,10 +3203,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "organizador-de-carro-para-banco-traseiro-viagem-lancamento",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5ec453bae-5-15.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5ec453bae-5-15.jpg",
     category: "Produtos diversos",
-    stock: -3,
+    stock: -8,
   },
   {
     id: "cmrnvs2l507fwiudhxjfggti4",
@@ -2451,8 +3213,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "plafon-painel-inteligente-wifi-rgb-led-21w-redondo-sobrepor",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8c66cc89e-3-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8c66cc89e-3-14.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2462,8 +3223,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fechadura-eletrica-reversivel-12v-de-sobrepor-sigma-f110",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf047eda64-1-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf047eda64-1-16.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2473,8 +3233,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smartwatch-revenger-rg-u9-ultra-9-49mm-preto-android-ios-resistente-agua",
     priceCents: 11000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/562f61bc13-5-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/562f61bc13-5-12.jpg",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -2484,8 +3243,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-digital-infantil-queda-fotos-jogo-unicornio-alca",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2de837f735-1-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2de837f735-1-14.jpg",
     category: "Fora de Estoque",
     stock: -1,
   },
@@ -2495,8 +3253,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smartwatch-u4-ultra-4-lancamento-2025-prova-dagua",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f40114c0ce-1-13.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f40114c0ce-1-13.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2506,10 +3263,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-smartwatch-hw-ultra-2-call-5g-chip-android",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7f309d5abb-6-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7f309d5abb-6-7.jpg",
     category: "Relogios e Smartwatchs",
-    stock: -4,
+    stock: -5,
   },
   {
     id: "cmrnvs1j307e4iudhq167zen1",
@@ -2517,10 +3273,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "detector-de-metais-5-em-1-bomvink-para-fios-e-madeira",
     priceCents: 9700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b6a8e3294e-4-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b6a8e3294e-4-6.jpg",
     category: "Ferramentas",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvs1cr07dxiudhj5qex6kv",
@@ -2528,10 +3283,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-6-pacotes-c-2-unidades-esponja-mult-crespa-lavar-louca",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9326094d5e-5-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9326094d5e-5-7.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvs16h07dmiudhadp2xmf9",
@@ -2539,10 +3293,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-ventilador-umidificador-spray-portatil-usb-com-led",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5883fddcbc-1-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5883fddcbc-1-9.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvs10907dbiudhe8qwop9v",
@@ -2550,8 +3303,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "covo-armadilha-iscas-camaroes-siri-pesca-alevinos-6-furos",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f685606cf4-7-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f685606cf4-7-6.jpg",
     category: "Materiais de Pesca",
     stock: -1,
   },
@@ -2561,8 +3313,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-churrasco-inox-madeira-9-pcs-bolsa-utensilios-cozinha",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cba98834dc-2-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cba98834dc-2-1.webp",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
   },
@@ -2572,8 +3323,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lixeira-de-banheiro-em-aco-inox-7-litros-com-pedal-premium-cor-inox",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c45250ebe4-7-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c45250ebe4-7-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2583,10 +3333,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "abafador-de-ruidos-protetor-auricular-adulto-ajustavel",
     priceCents: 5100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5a95595360-2-6.jpg",
-    category: "Produtos diversos",
-    stock: -21,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5a95595360-2-6.jpg",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cmrnvs0b007caiudhx3i8tu6y",
@@ -2594,10 +3343,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-usb-para-ios-turbo-carga-rapidale-865p",
     priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/29c5ecd5ad-2-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/29c5ecd5ad-2-5.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvs04u07bziudho6k3622o",
@@ -2605,8 +3353,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-bluetooth-entrada-p2-radio-veicular",
     priceCents: 2250,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd0fbc8de0-1-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd0fbc8de0-1-4.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -2616,8 +3363,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lanterna-tatica-recarregavel-cor-preto-e-luz-branca",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d67f1fbcb4-1-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d67f1fbcb4-1-3.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -2627,8 +3373,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camisa-do-brasil-original-masculina-copa-2026",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b0211c8d78-1-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b0211c8d78-1-2.jpg",
     category: "Promoções do Mês",
     stock: 0,
   },
@@ -2638,10 +3383,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lanterna-tatica-led-ultra-potente-resistente-agua-poeira-alcance-1km-recarregavel-de-aluminio",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f549b50e6-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f549b50e6-6.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvrzfh07aziudh9x48dapx",
@@ -2649,10 +3393,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bateria-alcalina-botao-lr44",
     priceCents: 1850,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7091265cb-3a.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7091265cb-3a.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvrz9707aoiudh4gbif560",
@@ -2660,10 +3403,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lanterna-farol-frontal-de-bike-2-leds-super-forte-com-6-modos-de-luz-recarregavel-cor-preto",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9a38f26567-7.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9a38f26567-7.webp",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvrz2z07aeiudhyl1k8yjv",
@@ -2671,8 +3413,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cestos-de-armazenamento-empilhaveis-e-armario-de-ferro",
     priceCents: 7300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0644d8f736-1-85.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0644d8f736-1-85.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -2682,8 +3423,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "hidromassageador-para-pes-eletrico-spa-dos-pes-com-bolhas-aquecimento-e-infravermelho-roletes-massageadores",
     priceCents: 23100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9c46640126-2-80.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9c46640126-2-80.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
@@ -2693,8 +3433,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "escorredor-de-loucas-cromado",
     priceCents: 2850,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/64339c53a4-3-70.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/64339c53a4-3-70.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -2704,10 +3443,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caneca-de-vidro-bear-ursinho-com-tampa-e-colher-cor-transparente",
     priceCents: 2250,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e18873d43e-2-78.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e18873d43e-2-78.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvrydx079fiudhumakbgqt",
@@ -2715,8 +3453,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cafeteira-de-aluminio-italiana-300ml-serve-6-xicaras",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/23cd25e8ec-1-81.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/23cd25e8ec-1-81.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
   },
@@ -2726,10 +3463,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bomboniere-baleiro-de-vidro-com-tampa-diamante",
     priceCents: 2050,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45de8fed18-2-76.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45de8fed18-2-76.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvry0z078siudho4n6gxa0",
@@ -2737,8 +3473,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-de-torcida-para-a-copa-do-mundo-de-2026-brasil-12-itens",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bb8ce42f5f-1-79.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bb8ce42f5f-1-79.jpg",
     category: "Mais vendidos",
     stock: 0,
   },
@@ -2748,8 +3483,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "escorredor-de-louca-2-andares-inox-preto-c-drenagem-360",
     priceCents: 13600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8f0a2349f4-1-78.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8f0a2349f4-1-78.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2759,10 +3493,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fatiador-e-ralador-de-legumes-multifuncional-6-em-1",
     priceCents: 4850,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/27267bc5e1-1-77.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/27267bc5e1-1-77.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvrxhg077yiudh8qmavoxb",
@@ -2770,8 +3503,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "alicate-de-corte-afiado-diagonal-rente-150mm-6-polegadas",
     priceCents: 2490,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb6da071f7-6-56.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb6da071f7-6-56.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -2781,8 +3513,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "moedor-de-carne-manual-picador-de-carne-pesado-recheador",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c171161b78-4-63.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c171161b78-4-63.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2792,8 +3523,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-potes-de-vidro-5-pecas-hermeticos-com-tampa-redondo",
     priceCents: 3375,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1166ff3f13-1-73.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1166ff3f13-1-73.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2803,10 +3533,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "garrafa-de-agua-infantil-bola-de-futebol-dobravel-550ml",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cc70dc4377-8-45.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cc70dc4377-8-45.jpg",
     category: "Garrafas, Copos e Canecas",
-    stock: 0,
+    stock: 6,
   },
   {
     id: "cmrnvrwrf076uiudhokvw1k35",
@@ -2814,10 +3543,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-de-seguranca-ezviz-c3tn-com-resolucao-de-2mp-com-visao-nocturna-branca",
     priceCents: 31600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5bb07ecdf-9-36.jpg",
-    category: "Câmeras",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5bb07ecdf-9-36.jpg",
+    category: "Fora de Estoque",
+    stock: -5,
   },
   {
     id: "cmrnvrwl9076jiudh5ajob4zu",
@@ -2825,10 +3553,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smart-campainha-olho-magico-wi-fi-ezviz-hp4",
     priceCents: 57000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa9cb3b97c-8-43.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa9cb3b97c-8-43.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -9,
   },
   {
     id: "cmrnvrweh0768iudh4rj2mk9x",
@@ -2836,10 +3563,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-de-corte-sem-fio-kemei-km119-profissional-bivolt-com-bateria-recarregavel",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c01d4a021d-9-34.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c01d4a021d-9-34.jpg",
     category: "Salão & Barbearia",
-    stock: -4,
+    stock: -9,
   },
   {
     id: "cmrnvrw89075yiudhsry81oy1",
@@ -2847,10 +3573,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "modem-4g-v13-roteador-wi-fi-usb-chip-portatil",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b156d3550-3-56.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b156d3550-3-56.jpg",
     category: "Informática",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvrw23075riudhah3hic9f",
@@ -2858,10 +3583,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "liquidificador-portatil-recarregavel-potente-600ml-pequeno",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6b9927239b-1-66.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6b9927239b-1-66.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    stock: -25,
   },
   {
     id: "cmrnvrvvr075iiudhz48uhero",
@@ -2869,8 +3593,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "dock-carregador-duplo-dobe-ps5-controles-dualsense-led-rgb-branco",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b0cf2301f-6-49.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b0cf2301f-6-49.jpg",
     category: "Games",
     stock: 0,
   },
@@ -2878,12 +3601,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvrvoz0757iudhzn3gb5lq",
     name: "Limpador De Vidro Magnético Dupla Face/super Imã Rodo Mágico",
     slug: "limpador-de-vidro-magnetico-dupla-face-super-ima-rodo-magico",
-    priceCents: 3200,
+    priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c5b0648e1e-8-39.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c5b0648e1e-8-39.jpg",
     category: "Mais vendidos",
-    stock: -3,
+    stock: -19,
   },
   {
     id: "cmrnvrviw074ziudhe7o5l6yw",
@@ -2891,10 +3613,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "taca-copa-do-mundo-2026-futebol-decoracao-trofeu-grande",
     priceCents: 5490,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cca7c83ec5-6-47.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cca7c83ec5-6-47.jpg",
     category: "Copa do Mundo",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvrvcq074qiudh02w793hg",
@@ -2902,8 +3623,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tiaras-pompom-encapadas-verde-e-amarelo-brasil",
     priceCents: 2390,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cd1a76956d-1-63.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cd1a76956d-1-63.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2913,8 +3633,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "colar-coracao-selecao-nacao-brasil-copa-do-mundo",
     priceCents: 2190,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6836a26469-1-62.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6836a26469-1-62.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2924,8 +3643,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinco-bandeira-do-brasil-copa-do-mundo-plastico",
     priceCents: 2090,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92b002a132-1-61.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92b002a132-1-61.jpg",
     category: "Copa do Mundo",
     stock: 0,
   },
@@ -2935,8 +3653,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinco-pompom-brasil",
     priceCents: 2390,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d44cf66f3b-1-5.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d44cf66f3b-1-5.webp",
     category: "Copa do Mundo",
     stock: 0,
   },
@@ -2946,8 +3663,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "leque-de-mao-pequeno-copa-do-mundo-2026-torcida-bolsa-bolso",
     priceCents: 2190,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/66fe8c733d-1-60.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/66fe8c733d-1-60.jpg",
     category: "Copa do Mundo",
     stock: 0,
   },
@@ -2957,8 +3673,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-com-3-pecas-de-organizadores-com-separacoes-para-gavetas-e-armarios",
     priceCents: 5400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9ff9a97a2c-1-59.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9ff9a97a2c-1-59.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -2968,8 +3683,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-3-organizadores-de-escritorio-brinquedoteca-e-quarto-transparente-3l-5l-e-10l",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d5d02cb628-1-58.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d5d02cb628-1-58.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -2979,10 +3693,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "espanador-de-po-telescopico-microfibra-extensivel",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce4a1f4e14-1-57.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce4a1f4e14-1-57.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -5,
+    stock: -7,
   },
   {
     id: "cmrnvrtyl072yiudhhfr2v85h",
@@ -2990,8 +3703,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "colmeia-organizadora-gavetas-para-calcinhas-meias-cuecas-gravata-24-nichos-cinza",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d943e10a79-8-36.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d943e10a79-8-36.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -3001,8 +3713,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luminaria-de-mesa-led-abajur-touch-dimmer-recarregavel-usb",
     priceCents: 5700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/adf67ae83b-4-9.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/adf67ae83b-4-9.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -3012,10 +3723,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "capa-para-xiaomi-redmi-pad-2",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d933a932d1-1-3.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d933a932d1-1-3.webp",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvrtgb0726iudh8fqiyq6q",
@@ -3023,10 +3733,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "esponja-limpa-tudo-2-un",
     priceCents: 2790,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/64249dd5d9-2-54.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/64249dd5d9-2-54.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvrt9r071viudhnwek8apa",
@@ -3034,10 +3743,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "veda-porta-80-cm-tradicional-protetor-contra-inseto-e-poeira",
     priceCents: 1390,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5b73b1a34-8-34.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5b73b1a34-8-34.jpg",
     category: "Mais vendidos",
-    stock: -6,
+    stock: -13,
   },
   {
     id: "cmrnvrt3m071piudh2jokkpve",
@@ -3045,10 +3753,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "porta-prendedor-de-roupas",
     priceCents: 1200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ea76a2adce-image_944b8583.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ea76a2adce-image_944b8583.png",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvrsxj071iiudhww4gy2n2",
@@ -3056,8 +3763,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bloco-espuma-amarela-6x13x22cm",
     priceCents: 550,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0db79a06e7-2-52.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0db79a06e7-2-52.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -3067,10 +3773,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "rodo-reforcado-grande-60cm-borracha-dupla-1-un-sem-cabo",
     priceCents: 900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/452c416930-5-41.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/452c416930-5-41.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -8,
+    stock: 45,
   },
   {
     id: "cmrnvrslf0713iudhmyg39jwa",
@@ -3078,10 +3783,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pano-de-chao-capa-p-pisos-rodo-limpa-lustra-da-brilho-40-cm",
     priceCents: 950,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44e854b70c-5-40.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44e854b70c-5-40.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -3,
+    stock: -7,
   },
   {
     id: "cmrnvrsfc070viudhn8q5pl7k",
@@ -3089,8 +3793,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "enfeite-junino-balao-de-tecido-pequeno-25cm-arraia-sao-joao",
     priceCents: 950,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/959578fe6c-3-40.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/959578fe6c-3-40.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -3100,8 +3803,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "enfeite-junino-balao-de-tecido-medio-40cm-arraia-sao-joao",
     priceCents: 1300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/632be545ae-8-33.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/632be545ae-8-33.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -3111,8 +3813,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "enfeite-junino-balao-de-tecido-grande-60cm-arraia-sao-joao",
     priceCents: 1570,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eda3cc5513-2-47.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eda3cc5513-2-47.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -3122,8 +3823,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "roteador-wifi-mesh-x1-pro-wi-fi-7-3-6-gbps-dual-band-com-diagnostico-inteligente",
     priceCents: 80000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37ee733039-9-30.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37ee733039-9-30.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -3133,9 +3833,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-de-carro-dashcam-k2-2-mp",
     priceCents: 27000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/10ab16ab68-7-34.jpg",
-    category: "Câmeras",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/10ab16ab68-7-34.jpg",
+    category: "Fora de Estoque",
     stock: 0,
   },
   {
@@ -3144,9 +3843,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-movel-c200s-dash-cam-1080p-com-microfone-wi-fi",
     priceCents: 40000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785030784763-f6f132a1.webp",
-    category: "Câmeras",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785030784763-f6f132a1.webp",
+    category: "Fora de Estoque",
     stock: 0,
   },
   {
@@ -3155,9 +3853,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-para-carro-veicular-hikvision-ae-dc4328-k5-dash-cam",
     priceCents: 54500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37f73c1110-1-45.jpg",
-    category: "Câmeras",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37f73c1110-1-45.jpg",
+    category: "Fora de Estoque",
     stock: 0,
   },
   {
@@ -3166,8 +3863,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "almofada-anatomica-cocix-assento-lombar-gel-ergonomico-carro",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3591dbfda1-1-43.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3591dbfda1-1-43.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
@@ -3177,19 +3873,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-ponto-biometrico-digital-usb-para-funcionario-bivolt",
     priceCents: 12600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2e51751d27-2-41.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2e51751d27-2-41.jpg",
     category: "Produtos diversos",
-    stock: -9,
+    stock: -23,
   },
   {
     id: "cmrnvrqve06yhiudhd1emmzj9",
     name: "Conjunto De Talheres De Aço Luxo Inoxidável 24pcs Faqueiros Cor Prata",
     slug: "conjunto-de-talheres-de-aco-luxo-inoxidavel-24pcs-faqueiros-cor-prata",
-    priceCents: 6000,
+    priceCents: 5100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7fe28e816f-1-42.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7fe28e816f-1-42.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
   },
@@ -3197,10 +3891,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvrqpa06y7iudhjxy87mbp",
     name: "Desfiadores Garra De Urso Para Churrasco Garfo 2 Peças",
     slug: "desfiadores-garra-de-urso-para-churrasco-garfo-2-pecas",
-    priceCents: 2500,
+    priceCents: 1500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/629a6d979a-1-41.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/629a6d979a-1-41.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -3210,10 +3903,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "linha-multifilamento-dyneema-1-5mm-100-metros",
     priceCents: 3600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/156ed24eed-image_afb40c6c.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/156ed24eed-image_afb40c6c.png",
     category: "Materiais de Pesca",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvrqcx06xpiudhkhur596m",
@@ -3221,8 +3913,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luva-para-pratica-de-esportes-pesca-e-ciclismo",
     priceCents: 3900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f9f8c4ec5d-6-34.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f9f8c4ec5d-6-34.jpg",
     category: "Materiais de Pesca",
     stock: 0,
   },
@@ -3232,8 +3923,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-de-aco-para-pesca-nylon-70lbs-10m",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8527255111-1-38.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8527255111-1-38.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3243,8 +3933,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "alicate-de-contencao-p-pesca-inoxidavel-sem-balanca-isca",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d4c48c236a-7-26.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d4c48c236a-7-26.jpg",
     category: "Materiais de Pesca",
     stock: 0,
   },
@@ -3254,8 +3943,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "isca-camaraozinho-fishing",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/443fdf9c22-image_c5fe9c21.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/443fdf9c22-image_c5fe9c21.png",
     category: "Materiais de Pesca",
     stock: 0,
   },
@@ -3265,8 +3953,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-6-iscas-p-tucunare-superficie-estojo-brinde",
     priceCents: 5800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6684d6407f-1-36.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6684d6407f-1-36.jpg",
     category: "Materiais de Pesca",
     stock: 0,
   },
@@ -3276,10 +3963,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "isca-artificial-kit-5-pcs-cauda-giratoria-helice-13g-10-cm",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60bc3e1e01-1-35.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60bc3e1e01-1-35.jpg",
     category: "Materiais de Pesca",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvrpbw06w4iudhm4o7g1f2",
@@ -3287,8 +3973,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "faca-de-caca-pesca-churrasco-luxo-fulltang-inox-g61",
     priceCents: 5700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82e28e729c-1-34.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82e28e729c-1-34.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
   },
@@ -3298,8 +3983,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "faca-boa-para-churrasco-full-tang-1032",
     priceCents: 5700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bd53ad0c8a-1-33.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bd53ad0c8a-1-33.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -3309,8 +3993,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carretilha-pesca-alta-direita-vermelha-aluminio-stel30y-forca-e-precisao-para-pesca-pesada",
     priceCents: 36300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7817c547be-2-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7817c547be-2-29.jpg",
     category: "Materiais de Pesca",
     stock: 0,
   },
@@ -3320,8 +4003,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "molinete-rtx-6000-7-rol-4-71-carretel-aluminio-drag-28kg",
     priceCents: 12900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9c66c9e728-1-31.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9c66c9e728-1-31.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3331,8 +4013,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "molinete-giratorio-de-pesca-linha-de-metal-carretel-liso-acessivel-com-corpo-de-grafite",
     priceCents: 4400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/643c6e87c7-image_9bb81fb6.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/643c6e87c7-image_9bb81fb6.png",
     category: "Materiais de Pesca",
     stock: 0,
   },
@@ -3342,8 +4023,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "molinete-afg30",
     priceCents: 4900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/da049125a2-4-24.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/da049125a2-4-24.jpg",
     category: "Materiais de Pesca",
     stock: 0,
   },
@@ -3353,8 +4033,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tomada-inteligente-wi-fi-3-pinos-2-usb-1-tipo-c-alexa-google",
     priceCents: 9700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7bf0cff9e-5-24.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7bf0cff9e-5-24.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -3364,8 +4043,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "gato-da-sorte-maneki-neko-porcelana-calda-longa-almofada",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cbb432a037-2-24.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cbb432a037-2-24.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -3375,8 +4053,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-de-blocos-de-construcao-da-serie-street-view-mini",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/170bea3c4a-1-27.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/170bea3c4a-1-27.jpg",
     category: "Brinquedos",
     stock: 0,
   },
@@ -3386,10 +4063,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fontes-de-agua-internas-com-luz-de-mesa-decoracao-de-fonte-de-agua-interna-fontes-de-agua-internas-para-decoracao-de-mesa-de-escritorio-em-casa-ouro",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/358cc3e093-1-26.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/358cc3e093-1-26.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    stock: -4,
   },
   {
     id: "cmrnvrnm506tdiudhpdx3ww7q",
@@ -3397,10 +4073,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cinto-corretivo-ortopedico-para-endireitar-as-costas",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2a0691c8d7-1-25.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2a0691c8d7-1-25.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -10,
   },
   {
     id: "cmrnvrnfp06t2iudh4so8hhab",
@@ -3408,8 +4083,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "baba-eletronica-litex-sigma-b16-c-visao-noturna-e-audio-branco",
     priceCents: 33100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0d4c63e048-5-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0d4c63e048-5-19.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -3419,10 +4093,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "equipamento-de-reconhecimento-facial-para-rep-p-cinza-escuro-110v-220v",
     priceCents: 50000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/900f9f3585-a.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/900f9f3585-a.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvrn2r06sgiudhpeftftop",
@@ -3430,9 +4103,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-de-panelas-antiaderente-revestimento-em-ceramica-inducao-8-pecas",
     priceCents: 55700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/755a447572-1-22.jpg",
-    category: "Casa e Utensílios Domésticos",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/755a447572-1-22.jpg",
+    category: "Fora de Estoque",
     stock: 0,
   },
   {
@@ -3441,8 +4113,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "panela-de-pressao-4-litros-em-aluminio-reforcado-com-tampa-e-alta-durabilidade-premium",
     priceCents: 24800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9035655f83-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9035655f83-1.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -3452,10 +4123,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-organizador-utensilios-cozinha-parede-8-ganchos-inox",
     priceCents: 3850,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4376abdfa8-1-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4376abdfa8-1-21.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvrmk306rliudhjx214fbu",
@@ -3463,10 +4133,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "panela-frigideira-antiaderente-ceramica-dinda-home-inducao-gas-eletrico-linha-premium",
     priceCents: 8360,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/23290aaaaa-ca.jpg",
-    category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/23290aaaaa-ca.jpg",
+    category: "Fora de Estoque",
+    stock: -5,
   },
   {
     id: "cmrnvrmds06raiudhvd4b8c9j",
@@ -3474,8 +4143,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-organizadora-dobravel-46x28x20cm-multiuso-cinza-para-roupas-e-brinquedos",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c89740c129-1-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c89740c129-1-19.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
   },
@@ -3483,12 +4151,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvrm1b06qqiudhoc89wg1l",
     name: "Relógio Digital De Mesa A Pilhas Preto Despertador Led Grande Data Temperatura Ideal Quarto Escritório",
     slug: "relogio-digital-de-mesa-a-pilhas-preto-despertador-led-grande-data-temperatura-ideal-quarto-escritorio",
-    priceCents: 3750,
+    priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37dda9113c-3-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37dda9113c-3-11.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvrlv206qhiudhicdebw85",
@@ -3496,10 +4163,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "radio-relogio-despertador-digital-de-mesa-com-radio-flex-cor-preto",
     priceCents: 8250,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9fa755a980-1-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9fa755a980-1-16.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -3,
+    stock: -5,
   },
   {
     id: "cmrnvrlor06q6iudht3psvk9d",
@@ -3507,8 +4173,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pulverizador-eletrico-bateria-recarregavel-reservatorio-5l-azul",
     priceCents: 12450,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00783d44d1-1-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00783d44d1-1-14.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3518,8 +4183,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "limpa-telas-120ml-pano-microfibra",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c8e2a347c-7-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c8e2a347c-7-10.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3529,10 +4193,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "escova-multiuso-tira-pelo-sofa-4-em-1-esponja-e-limpa-vidros-cinza",
     priceCents: 2850,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/77840c6481-1-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/77840c6481-1-12.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvrl6806p9iudhw33pjg1w",
@@ -3540,8 +4203,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "giroflex-rotolight-led-estrobo-parabrisa-viatura-policia-12v-isqueiro-12v-azul-vermelho",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0d9f6f78f5-7-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0d9f6f78f5-7-8.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -3551,8 +4213,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "leitor-codigo-de-barras-sem-fio-2d-qr-usb-mdk103s",
     priceCents: 15100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e78a11eda5-6-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e78a11eda5-6-9.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -3562,8 +4223,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camisa-selecao-brasileira-copa-do-mundo-copia",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b9734d2007-capa.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b9734d2007-capa.png",
     category: "Copa do Mundo",
     stock: 0,
   },
@@ -3573,8 +4233,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lixeira-extensivel-retratil-dobravel-porta-gaveta",
     priceCents: 4600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eba143eccd-1-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eba143eccd-1-9.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -3584,8 +4243,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "inversor-conversor-350w-12v-para-110v-tomada-usb-turbo",
     priceCents: 15500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61ea4a4d59-1-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61ea4a4d59-1-8.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3595,8 +4253,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cafeteira-italiana-aco-inox-300ml-6-xicaras-cafe-expresso-cor-prateado",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e9506c384f-1-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e9506c384f-1-7.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -3606,8 +4263,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "oculos-inteligente-audio-estereo-bluetooth",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0ede11f252-7-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0ede11f252-7-6.jpg",
     category: "Produtos diversos",
     stock: -1,
   },
@@ -3617,8 +4273,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cinto-de-protecao-de-corrida-invisivel",
     priceCents: 2400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bb5c78dcc9-1-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bb5c78dcc9-1-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3628,10 +4283,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pistola-de-furar-orelha-piercing-automatica-98-brincos-azul",
     priceCents: 3900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bceedbf7d-9-3.jpg",
-    category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bceedbf7d-9-3.jpg",
+    category: "Fora de Estoque",
+    stock: -20,
   },
   {
     id: "cmrnvrjmc06msiudh3tyr60yi",
@@ -3639,10 +4293,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-de-notebook-bandeja-para-banco-do-carro-preto",
     priceCents: 18500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/06f5c1506b-1-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/06f5c1506b-1-3.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvrjgn06mhiudhdy4zz09q",
@@ -3650,8 +4303,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-maquina-bolha-de-sabao-pistola-automatica-c-luz-cor-rosa-azul",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c6664a2313-1-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c6664a2313-1-2.jpg",
     category: "Brinquedos",
     stock: -1,
   },
@@ -3661,8 +4313,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-pedagogico-bloco-de-encaixe-sequencia-formas-cores-colorido",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d3acc4def6-2-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d3acc4def6-2-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3672,19 +4323,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "xilofone-infantil-madeira-pronta-cor-colorido",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/62459b569f-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/62459b569f-1.jpg",
     category: "Brinquedos",
     stock: 0,
   },
   {
-    id: "cmrnvixu06lniudh8f5z4tfb",
+    id: "cmrnvrixu06lniudh8f5z4tfb",
     name: "Panela Tramontina para indução fundo triplo solar 16cm cor inox",
     slug: "panela-tramontina-para-inducao-fundo-triplo-solar-16cm-cor-inox",
     priceCents: 20100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8bf56acefa-1a-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8bf56acefa-1a-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3694,8 +4343,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-de-facas-tramontina-churrasco-inox-madeira-2-pecas",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b8ccc0ce95-3-53.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b8ccc0ce95-3-53.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3705,8 +4353,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cesto-de-frutas-24x10cm",
     priceCents: 3150,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/70560a73ac-4-51.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/70560a73ac-4-51.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -3716,10 +4363,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "secador-de-cabelo-glossy-color-2-000w-tourmaline-ion-elgin-lilas",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2d7e1c80e0-1-57.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2d7e1c80e0-1-57.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -1,
+    stock: -14,
   },
   {
     id: "cmrnvri2r06keiudhskeasiek",
@@ -3727,8 +4373,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bolsa-cintura-escondida-movimento-multifuncional-respirave",
     priceCents: 2400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/55acad6104-4-49.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/55acad6104-4-49.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3738,8 +4383,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "antena-digital-interna-com-amplificador-sinal-booster-flex",
     priceCents: 3600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dff1306ccc-1-55.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dff1306ccc-1-55.jpg",
     category: "Produtos diversos",
     stock: -2,
   },
@@ -3747,12 +4391,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvrhq706juiudh5vprci3d",
     name: "Teclado Usb Numérico",
     slug: "teclado-usb-numerico",
-    priceCents: 2900,
+    priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/22e23e0ed4-9-38.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/22e23e0ed4-9-38.jpg",
     category: "Mais vendidos",
-    stock: 0,
+    stock: 49,
   },
   {
     id: "cmrnvrhjz06jkiudhjjjcgzl0",
@@ -3760,10 +4403,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "intercomunicador-portaria-sc8991-prata-127-220v-c-fio",
     priceCents: 17500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c71f8f807-1-53.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c71f8f807-1-53.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -5,
   },
   {
     id: "cmrnvrhds06jfiudhugckns1h",
@@ -3771,8 +4413,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camisa-retro-do-brasil-copa-do-mundo-98",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c02da4baed-1-44.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c02da4baed-1-44.jpg",
     category: "Copa do Mundo",
     stock: 0,
   },
@@ -3782,8 +4423,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-inspecao-sonda-endoscopica-android-adap-tipo-c-2m",
     priceCents: 4300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3ddcff1a88-1-52.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3ddcff1a88-1-52.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3791,10 +4431,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvrh1g06itiudh7575nu75",
     name: "Impressora de Etiquetas Niimbot B21 Bluetooth Portátil Verde",
     slug: "impressora-de-etiquetas-niimbot-b21-bluetooth-portatil-verde",
-    priceCents: 33500,
+    priceCents: 35300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35f6ab0bd3-8-39.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35f6ab0bd3-8-39.jpg",
     category: "Papelaria",
     stock: 0,
   },
@@ -3804,8 +4443,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-depilador-eletrico-portatil-feminino-depilatta-5-em-1-cor-branco-1w",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5ac1c6048f-6-44.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5ac1c6048f-6-44.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3815,8 +4453,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "conjunto-de-14-ferramentas-para-relojoaria-e-diy",
     priceCents: 1400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a52049f4fe-3-44.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a52049f4fe-3-44.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -3826,10 +4463,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "assento-massageador-shiatsu-perseidas-para-carro-escritorio-e-sofa-bivolt",
     priceCents: 26500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7ef3fc0ffe-8-36.jpg",
-    category: "Beleza e Cuidado Pessoal",
-    stock: -1,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7ef3fc0ffe-8-36.jpg",
+    category: "Fora de Estoque",
+    stock: -2,
   },
   {
     id: "cmrnvrgcq06hmiudhrwjlo3n8",
@@ -3837,8 +4473,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fonte-de-alimentacao-atx-computador-pc-amd-intel-500w-bivolt",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6b446d0961-3-42.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6b446d0961-3-42.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3848,8 +4483,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "dvd-player-knup-kp-d120-preto-mp3-ripping-media-player-usb-pen-drive",
     priceCents: 15000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c4005ddbbf-6-40.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c4005ddbbf-6-40.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3859,10 +4493,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-nobreak-knup-ups-35w-usb-type-c-poe-bivolt-100-240v-kp-588",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/28ac579502-1-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/28ac579502-1-1.webp",
     category: "Informática",
-    stock: -14,
+    stock: -31,
   },
   {
     id: "cmrnvrftz06gqiudh4pqz0dea",
@@ -3870,10 +4503,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-localizador-rastreador-smart-tag-gps-compativel-com-iphone-apple-android-branco",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e99f53dd8-2-41.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e99f53dd8-2-41.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvrfnk06gjiudhzvhqgl35",
@@ -3881,8 +4513,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camisa-selecao-brasileira-copa-do-mundo-retro",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2f705f6286-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2f705f6286-1-1.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3892,10 +4523,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "dissipador-de-calor-infinito-m-2-nvme-argb-2280-infinity-lens",
     priceCents: 4300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0fa2bb483d-5-37.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0fa2bb483d-5-37.jpg",
     category: "Informática",
-    stock: -2,
+    stock: -5,
   },
   {
     id: "cmrnvrfb306fxiudh1gq27x0d",
@@ -3903,8 +4533,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-veicular-r1-pro-wiriless-inducao-original",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e051405b4-7-35.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e051405b4-7-35.jpg",
     category: "Carregadores & Power Banks",
     stock: 0,
   },
@@ -3914,10 +4543,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-bluetooth-esportivo-kd-903-kaidi-cor-preto-cor-da-luz-preto",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d2b73fe271-1a.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d2b73fe271-1a.jpg",
     category: "Fones de Ouvido",
-    stock: 99,
+    stock: 0,
   },
   {
     id: "cmrnvrexp06fciudhdhbpmlzv",
@@ -3925,10 +4553,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carregador-portatil-power-bank-10000mah-tela-visor-led",
     priceCents: 6800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c8e5135c12-2-34.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c8e5135c12-2-34.jpg",
     category: "Carregadores & Power Banks",
-    stock: 0,
+    stock: -5,
   },
   {
     id: "cmrnvrerh06f1iudhz0jk5268",
@@ -3936,8 +4563,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carregador-portatil-20000mah-turbo-kaidi-visor-led-original-cinza",
     priceCents: 16500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/55551da5ac-1-37.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/55551da5ac-1-37.jpg",
     category: "Carregadores & Power Banks",
     stock: 0,
   },
@@ -3947,8 +4573,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-ring-light-luz-portatil-de-bolsa-celular-video-foto-pro-branco",
     priceCents: 3300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e1920d718e-6-31.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e1920d718e-6-31.jpg",
     category: "Ring Light & Suportes",
     stock: 0,
   },
@@ -3958,8 +4583,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-sem-fio-portatil-knc827-e-a-prova-dagua-cinza-escuro-5v",
     priceCents: 6400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b207282f68-6-30.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b207282f68-6-30.jpg",
     category: "Caixas de Som",
     stock: 0,
   },
@@ -3969,8 +4593,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "modem-portatil-5g-lte-wifi-com-velocidade-ate-300mbps-preto",
     priceCents: 14000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/718157961d-1-34.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/718157961d-1-34.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -3980,21 +4603,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lanterna-holofote-multifuncional-com-tripe-super-potente-amarelo-branco",
     priceCents: 12500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a7bb92d909-3-30.jpg",
-    category: "Fora de Estoque",
-    stock: -3,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a7bb92d909-3-30.jpg",
+    category: "Iluminação",
+    stock: 38,
   },
   {
     id: "cmrnvrdwy06doiudhimh03p9f",
     name: "Extensão Tomada 2 Metros Com 5 Tomadas, 4 Usb E 1 Usb Tipo C",
     slug: "extensao-tomada-2-metros-com-5-tomadas-4-usb-e-1-usb-tipo-c",
-    priceCents: 4500,
+    priceCents: 3900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e013374937-1-32.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e013374937-1-32.jpg",
     category: "Produtos diversos",
-    stock: -4,
+    stock: -6,
   },
   {
     id: "cmrnvrdko06ddiudhroykevk2",
@@ -4002,43 +4623,39 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caminhao-dino-cegonha-com-pista-maleta-pista-lancador-4-carrinhos-brinquedo-dino-truck-predador-dinotruck-vermelho",
     priceCents: 8200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7895fd8eb2-9-23.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7895fd8eb2-9-23.jpg",
     category: "Brinquedos",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvrde206d2iudhc3govycn",
-    name: "Mi Tv Box S 4k 3rd Gen 2gb 32gb Googletv Xiaomi Comando Voz Preto De Voz",
+    name: "Mi Box S 4k 3rd Gen 2gb 32gb Googletv Xiaomi Comando Voz Preto De Voz",
     slug: "mi-tv-box-s-4k-3rd-gen-2gb-32gb-googletv-xiaomi-comando-voz-preto-de-voz",
     priceCents: 48000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a2c6d7d2ad-2-28.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a2c6d7d2ad-2-28.jpg",
     category: "Fora de Estoque",
-    stock: 93,
+    stock: -1,
   },
   {
     id: "cmrnvrd6h06criudhf5g4dzzf",
-    name: 'Smartphone Xiaomi Redmi A5 Dual SIM Tela 6.88"',
+    name: "Smartphone Xiaomi Redmi A5 Dual SIM Tela 6.88\"",
     slug: "redmi-a5-dual-sim-128gb-64gb-armazenamento-4gb-3gb-ram",
     priceCents: 73500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/029e995c4c-1-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/029e995c4c-1-29.jpg",
     category: "Celulares e Smartphones",
-    stock: -5,
+    stock: -6,
   },
   {
     id: "cmrnvrczu06ciiudhskvi2p3u",
     name: "Smartphone Xiaomi Redmi 15c 128gb 4gb Ram 50mpx",
     slug: "smartphone-xiaomi-redmi-15c-128gb-4gb-ram-50mpx",
-    priceCents: 75500,
+    priceCents: 82000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a4e850b14-3-26.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a4e850b14-3-26.jpg",
     category: "Celulares e Smartphones",
-    stock: 0,
+    stock: -8,
   },
   {
     id: "cmrnvrct706c6iudhi8jwwlrx",
@@ -4046,10 +4663,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fire-stick-amazon-fire-4k-select-8gb-wi-fi-alexa-controle",
     priceCents: 25500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7435e1d00-ca-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7435e1d00-ca-1.jpg",
     category: "Media Streaming",
-    stock: -7,
+    stock: -179,
   },
   {
     id: "cmrnvrcml06buiudhrplue16f",
@@ -4057,9 +4673,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "amazon-fire-tv-stick-4k-plus-wifi6-jogue-xbox-game-pass-cor-preto-tipo-de-controle-remoto-de-voz",
     priceCents: 27800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/136ae2938e-ca.jpg",
-    category: "Media Streaming",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/136ae2938e-ca.jpg",
+    category: "Fora de Estoque",
     stock: 0,
   },
   {
@@ -4068,10 +4683,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "detector-de-camera-escondida-e-rastreador-gps-sinal",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c1c135febe-4-23.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c1c135febe-4-23.jpg",
     category: "Produtos diversos",
-    stock: -21,
+    stock: -53,
   },
   {
     id: "cmrnvrca706b8iudh2y5u1s1k",
@@ -4079,8 +4693,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-usb-wi-fi-t2u-nano-tp-link-ac600-archer-dual-band",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec8301090f-1-24.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec8301090f-1-24.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -4090,10 +4703,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-processador-de-alimentos-portatil-laminas-aco-inox-bege",
     priceCents: 17500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/348d031754-1-23.jpg",
-    category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/348d031754-1-23.jpg",
+    category: "Fora de Estoque",
+    stock: -2,
   },
   {
     id: "cmrnvrbxp06aniudheqq4vezp",
@@ -4101,8 +4713,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "placa-sinalizadora-cuidado-piso-molhado-cavalete-amarela",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ec185f79e-2-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ec185f79e-2-21.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -4112,8 +4723,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "torneira-eletrica-de-bancada-4000w-110v-ou-220v-cromado",
     priceCents: 11800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00ed555ffc-Gemini_Generated_Image_4nlpdh4nlpdh4nlp.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00ed555ffc-Gemini_Generated_Image_4nlpdh4nlpdh4nlp.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4121,10 +4731,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvrbl806a1iudh9h9lssw0",
     name: "Moedor De Café Em Grãos Manual Com Mecanismo Em Cerâmica",
     slug: "moedor-de-cafe-em-graos-manual-com-mecanismo-em-ceramica",
-    priceCents: 4400,
+    priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/49030489b8-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/49030489b8-1.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -4134,8 +4743,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "organizador-geladeira-maquiagem-giratorio-armario-multiuso-incolor",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/71d049a002-5-17.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/71d049a002-5-17.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4145,10 +4753,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "positivo-p38-dual-sim-64-mb-preto-128-mb-ram",
     priceCents: 15000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e96a8d71f5-2-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e96a8d71f5-2-19.jpg",
     category: "Celulares e Smartphones",
-    stock: -5,
+    stock: -6,
   },
   {
     id: "cmrnvrb230694iudhvh3h0t1p",
@@ -4156,8 +4763,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-cesto-p-fritura-servir-porcoes-quentes-batata-frita",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/04bd493563-9-13.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/04bd493563-9-13.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -4165,12 +4771,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvravt068tiudhleg2gffa",
     name: "Suporte Papel Higiênico Adesivo Elegante Parede Celular",
     slug: "suporte-papel-higienico-adesivo-elegante-parede-celular",
-    priceCents: 4100,
+    priceCents: 3100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/53b1bfeec9-5-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/53b1bfeec9-5-14.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 2,
+    stock: 50,
   },
   {
     id: "cmrnvrapk068jiudhaly8bvtz",
@@ -4178,8 +4783,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "formas-de-gelo-papinha-bebe-tempero-silicone-21-cubos-bege",
     priceCents: 3300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c71bc42dad-3-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c71bc42dad-3-16.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -4189,8 +4793,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "medidor-digital-de-ph-umidade-do-solo-temperatura-terra-luz-solar-plantas-luminosidade",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/940fb92ffd-8-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/940fb92ffd-8-12.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -4200,8 +4803,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mascara-facial-termica-quente-fria-relaxante-em-veludo-e-gel",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fdeefa750f-1-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fdeefa750f-1-14.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
   },
@@ -4209,12 +4811,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvra6e067miudhyvdhd9gt",
     name: "Placa De Captura 4k Usb 3.0 Hd 60 Fps Full Hd 1080p",
     slug: "placa-de-captura-4k-usb-3-0-hd-60-fps-full-hd-1080p",
-    priceCents: 6500,
+    priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7367dac8cf-1-13.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7367dac8cf-1-13.jpg",
     category: "Informática",
-    stock: -26,
+    stock: -71,
   },
   {
     id: "cmrnvr9yh067ciudht3jvzg5j",
@@ -4222,10 +4823,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bandeira-do-brasil-pequena-carro-barata-promocao",
     priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb23ab035f-5-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb23ab035f-5-12.jpg",
     category: "Copa do Mundo",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvr9s00671iudhvs9fu1me",
@@ -4233,10 +4833,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "medidor-de-pressao-arterial-aferidor-cardiaco-pulso-com-voz-cor-branco",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c05cd058f4-3-12.jpg",
-    category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c05cd058f4-3-12.jpg",
+    category: "Fora de Estoque",
+    stock: -1,
   },
   {
     id: "cmrnvr9lq066qiudhgli6p5l7",
@@ -4244,8 +4843,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pistola-succao-eletrica-bomvink-bom-9570-650w-800ml",
     priceCents: 13500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa50bba430-2-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa50bba430-2-11.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -4255,10 +4853,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "impressora-termica-bluetooth-mini-etiquetas-adesiva-portatil-branco-127-220v",
     priceCents: 13000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d24e733de9-1-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d24e733de9-1-9.jpg",
     category: "Informática",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvr98y0664iudhal932u3o",
@@ -4266,10 +4863,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-smartwatch-s11-serie-11-47mm-chatgpt-gps-nfc-whatspp",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f2b31d2d31-1-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f2b31d2d31-1-8.jpg",
     category: "Relogios e Smartwatchs",
-    stock: -19,
+    stock: -24,
   },
   {
     id: "cmrnvr92p065tiudhsshd54ic",
@@ -4277,8 +4873,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-banheiro-moderno-bambu-com-6-pecas-lixeira-tampa-fechada-cor-preto-2",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/93c675045b-1-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/93c675045b-1-7.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4288,8 +4883,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sapateira-organizadora-3-andares-empilhavel-dobravel-caixa",
     priceCents: 9590,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9e343dcf49-5-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9e343dcf49-5-7.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
   },
@@ -4299,8 +4893,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-6-caixas-organizadora-guardar-sapato-tenis-sapateira",
     priceCents: 15500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92631a3a9f-8-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92631a3a9f-8-5.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -4310,9 +4903,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ducha-higienica-chuveirinho-de-banheiro-aco-inox-120cm",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ff15dbb171-8-4.jpg",
-    category: "Casa e Utensílios Domésticos",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ff15dbb171-8-4.jpg",
+    category: "Fora de Estoque",
     stock: -3,
   },
   {
@@ -4321,10 +4913,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "torneira-banheiro-lavabo-metal-1-4-de-volta-bancada-pia",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ac9f46c318-4-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ac9f46c318-4-4.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -14,
   },
   {
     id: "cmrnvr87b064biudhgsm5h96z",
@@ -4332,8 +4923,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "moedor-eletrico-sal-e-pimenta-2-em-1-duplo-usb-recarregavel",
     priceCents: 6900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a935f23030-5-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a935f23030-5-3.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -4343,10 +4933,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "balanca-digital-alimento-com-bandeja-ate-5kg-branca-capacidade-maxima-5-kg-cor-branco",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a143d3df03-5-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a143d3df03-5-2.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    stock: -3,
   },
   {
     id: "cmrnvr7ut063qiudhreibwxak",
@@ -4354,10 +4943,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-animais-selvagens-de-borracha-brinquedo-wild-animal",
     priceCents: 2200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8558e01bac-2-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8558e01bac-2-1.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvr7ok063fiudhz5djt4m0",
@@ -4365,10 +4953,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "boneco-articulado-dummy13-impressao-3d-varias-cores",
     priceCents: 2400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a6630c4221-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a6630c4221-2.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvr7id0638iudhiadovyly",
@@ -4376,8 +4963,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "abridor-de-garrafas-formato-tampa-com-ima-do-brasil-83g-7cm-dourado",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/69e6409b76-1-62.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/69e6409b76-1-62.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -4385,12 +4971,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvr7bn062xiudhoqelranx",
     name: "Mini Liquidificador Portátil Tomate MAZ-007 6 Lâminas Vidro Usb Branco",
     slug: "mini-liquidificador-portatil-tomate-maz-007-6-laminas-vidro-usb-branco",
-    priceCents: 7500,
+    priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/65deb12ea2-5-49.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/65deb12ea2-5-49.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvr75e062kiudhjs6h73uq",
@@ -4398,8 +4983,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mochila-pre-escolar-infantil-capivara-passeio-creches-bolsa",
     priceCents: 5150,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/77b1bb3e50-1-63.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/77b1bb3e50-1-63.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -4409,8 +4993,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pendrive-adata-c906-32gb-2-0-liso-preto",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1f4e3d6dd0-2-55.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1f4e3d6dd0-2-55.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4420,8 +5003,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "dispenser-de-parede-para-sabonete-liquido-350ml",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b1488c2806-1-58.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b1488c2806-1-58.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -2,
   },
@@ -4431,8 +5013,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "organizador-geladeira-hermetico-com-2-divisorias",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/64f359bcd4-1-57.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/64f359bcd4-1-57.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -4442,8 +5023,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "conjunto-2-potes-hermetico-vidro-370ml-640ml-marmita-fitness-resistente-a-variacao-de-temperatura",
     priceCents: 5100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bfba4a0c68-2-52.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bfba4a0c68-2-52.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -4453,10 +5033,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "temporizador-cronometro-magnetico-rotatorio-digital-cozinha-academia-contador-regressivo",
     priceCents: 3900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c8a6031a38-1-56.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c8a6031a38-1-56.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvr64e0612iudhrvu3yvpq",
@@ -4464,8 +5043,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "porta-tempero-giratorio-inox-16-potes-vidro-bazar-bom-cor-rose",
     priceCents: 8800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c39f122283-5-44.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c39f122283-5-44.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4475,10 +5053,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "escorredor-organizador-de-talheres-inox-suporte-porta-faca-inox",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2ebf251363-1-54.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2ebf251363-1-54.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvr5sg060giudhvmhr19w8",
@@ -4486,8 +5063,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chaleira-de-vidro-com-infusor-de-cha-bule-jarra-500ml-vidro",
     priceCents: 2900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5d22cf6bc5-1-53.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5d22cf6bc5-1-53.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4497,8 +5073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-banheiro-moderno-bambu-com-6-pecas-lixeira-tampa-fechada-cor-preto",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/24b57a7767-1-52.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/24b57a7767-1-52.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4506,10 +5081,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvr5g205zuiudh1lv20smr",
     name: "Porta Tempero E Condimento Magnético Em Inox 04 Potes C/ Imã",
     slug: "porta-tempero-e-condimento-magnetico-em-inox-04-potes-c-ima",
-    priceCents: 4350,
+    priceCents: 2900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7794cca243-8-31.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7794cca243-8-31.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -4519,8 +5093,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fruteira-de-mesa-metal-mdf",
     priceCents: 4050,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fd0967f2bf-2-5.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fd0967f2bf-2-5.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -4528,12 +5101,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvr53p05zdiudhi8i3gc60",
     name: "Campainha Olho Mágico Digital 2.4 Visão Noturna E Foto 320p Cor Preto",
     slug: "campainha-olho-magico-digital-2-4-visao-noturna-e-foto-320p-cor-preto",
-    priceCents: 17500,
+    priceCents: 16900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec3bf46af2-1-50.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec3bf46af2-1-50.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -4,
+    stock: -13,
   },
   {
     id: "cmrnvr4xj05z3iudhl6x9ef7g",
@@ -4541,8 +5113,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-de-talheres-inox-16-pecas-jantar-decoracao-inox",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/16468f1453-1-49.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/16468f1453-1-49.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4550,10 +5121,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvr4rb05ytiudhmiwrs6kc",
     name: "Pote Hermético Vidro C/ Tampa Colher Bambu",
     slug: "pote-hermetico-vidro-c-tampa-colher-bambu",
-    priceCents: 3300,
+    priceCents: 2300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb830b560d-2-43.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb830b560d-2-43.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -4563,8 +5133,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "spray-borrifador-pulverizador-de-azeite-culinario-200-ml-para-cozinha-sua-comida-com-um-toque-especial",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7851852c03-9-23.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7851852c03-9-23.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -4574,10 +5143,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "dispenser-de-sal-e-especiarias-hamburgueria",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b216eec5a7-1-47.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b216eec5a7-1-47.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -6,
   },
   {
     id: "cmrnvr48a05y1iudhac4ongu4",
@@ -4585,8 +5153,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "barbeador-eletrico-xiaomi-s200",
     priceCents: 15500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/943a85479d-1-46.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/943a85479d-1-46.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4596,10 +5163,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-de-video-seguranca-ezviz-h8c-wi-fi-360o-com-resolucao-2mp-branco",
     priceCents: 28500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f6996e465e-1-45.jpg",
-    category: "Câmeras",
-    stock: -1,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f6996e465e-1-45.jpg",
+    category: "Fora de Estoque",
+    stock: -6,
   },
   {
     id: "cmrnvr3vg05xfiudh6h3767lw",
@@ -4607,8 +5173,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fogao-cooktop-eletrica-fogareiro-portatil-1000w-1-boca-mesa-viagem-camping-queimadores-acampamento",
     priceCents: 6800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f856a8f4c0-2-39.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f856a8f4c0-2-39.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -4618,32 +5183,29 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lanterna-pendente-luz-led-extensao-mecanico-emergencia-12v",
     priceCents: 4150,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/763209e2eb-2-38.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/763209e2eb-2-38.jpg",
     category: "Iluminação",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvr3im05wuiudhkxcdh1cc",
     name: "Tablet Infantil 7 Polegadas Android 6gb Ram 128gb Kids Wifi",
     slug: "tablet-infantil-7-polegadas-android-8gb-ram-128gb-kids-wifi",
-    priceCents: 27900,
+    priceCents: 28900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82b9ce285e-2-37.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82b9ce285e-2-37.jpg",
     category: "Celulares e Smartphones",
-    stock: 0,
+    stock: 47,
   },
   {
     id: "cmrnvr3by05wiiudhg0afod1t",
     name: "Roteador Portátil 4G LTE Wi-Fi Neoxtek SIM Card 150Mbps Bateria 20h",
     slug: "roteador-portatil-4g-lte-wi-fi-neoxtek-sim-card-150mbps-bateria-20h",
-    priceCents: 8500,
+    priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/feba3d857b-1-41.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/feba3d857b-1-41.jpg",
     category: "Informática",
-    stock: 98,
+    stock: 68,
   },
   {
     id: "cmrnvr35t05w7iudhf52p8s31",
@@ -4651,8 +5213,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-led-tela-luz-escrivaninha-leitura-lampada",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/337a02d8c6-4-31.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/337a02d8c6-4-31.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4662,8 +5223,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "broche-bandeira-do-brasil-eventos-pin-em-metal",
     priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7751596aa-4-30.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7751596aa-4-30.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4673,8 +5233,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cordoes-engate-rapido-brasil-p-cracha-e-chave-de-moto",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec07999fce-WhatsApp-Image-2026-01-24-at-19.50.49.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ec07999fce-WhatsApp-Image-2026-01-24-at-19.50.49.jpeg",
     category: "Copa do Mundo",
     stock: 0,
   },
@@ -4684,8 +5243,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mao-inflavel-gigante-do-brasi",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/663ea6f52f-4-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/663ea6f52f-4-29.jpg",
     category: "Copa do Mundo",
     stock: 0,
   },
@@ -4695,8 +5253,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bandeira-do-brasil-mastro-patriota-brasileiro",
     priceCents: 1850,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/11b235e683-2-31.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/11b235e683-2-31.jpg",
     category: "Copa do Mundo",
     stock: 18,
   },
@@ -4706,8 +5263,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cachecol-taimes-brasil-verde-poliester-com-franjas",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/12fe148177-1-35.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/12fe148177-1-35.jpg",
     category: "Copa do Mundo",
     stock: 16,
   },
@@ -4717,10 +5273,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bandeira-do-brasil-grande-para-bastao-poliester",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3554601cc0-7-24.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3554601cc0-7-24.jpg",
     category: "Copa do Mundo",
-    stock: 19,
+    stock: 18,
   },
   {
     id: "cmrnvr1y505uiiudhekzq8189",
@@ -4728,10 +5283,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pulseiras-unissex-torcedor-brasil-copa-6-cm",
     priceCents: 1200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/055b71a1f3-7-23.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/055b71a1f3-7-23.jpg",
     category: "Copa do Mundo",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvr1rx05uciudhze7g24ur",
@@ -4739,8 +5293,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maozinha-bate-palma-torcida-verde-e-amarelo-unid",
     priceCents: 2250,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44683455c3-1-32.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44683455c3-1-32.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4750,8 +5303,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mochila-militar-tatica-impermeavel-reforcada-bolsa-grande-viagem-assault-resistente",
     priceCents: 10700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/89a3f49a01-6-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/89a3f49a01-6-21.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4761,8 +5313,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mochila-escolar-infantil-bolsa-capivara-impermeavel-kawaii",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a0cd8dc25-1-30.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a0cd8dc25-1-30.jpg",
     category: "Papelaria",
     stock: 0,
   },
@@ -4772,10 +5323,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-de-tabuleiro-magnetico-c-20-esferas-infantil-logica",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8df0656441-1-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8df0656441-1-29.jpg",
     category: "Brinquedos",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvr12w05thiudhwvex9b8a",
@@ -4783,8 +5333,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ventilador-automotivo-triplo-com-ajuste-carro-caminhao-usb",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/38ac158568-7-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/38ac158568-7-21.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4794,10 +5343,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fonte-de-alimentacao-bivolt-10a-12v-p-cftv-cameras-led",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6d0ecc5d22-4-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6d0ecc5d22-4-21.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -11,
   },
   {
     id: "cmrnvr0qe05swiudhwp44giwm",
@@ -4805,8 +5353,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "transformador-de-voltagem-2000va-bivolt-110-220v-bom-9303",
     priceCents: 19500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/758bdf4e8d-6-17.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/758bdf4e8d-6-17.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4816,8 +5363,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-estojo-escolar-completo-para-volta-as-aulas-material-escolar",
     priceCents: 7700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fc46199964-WhatsApp-Image-2026-01-15-at-19.15.48.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fc46199964-WhatsApp-Image-2026-01-15-at-19.15.48.jpeg",
     category: "Papelaria",
     stock: 0,
   },
@@ -4827,8 +5373,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "rastreador-por-gps-veicular-automotivo-moto-via-satelite-branco-america-do-sul",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/20ef15e8ca-1-24.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/20ef15e8ca-1-24.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4838,8 +5383,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-de-maquilhagem-para-criancas-brinquedos-de-faz-de-conta",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/964bdc6c9a-6-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/964bdc6c9a-6-16.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4849,8 +5393,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-2-placas-de-sinalizacao-monitoramento-por-cameras-de-seguranca-ps",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7cb0262d3-1-22.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7cb0262d3-1-22.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -4860,8 +5403,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-placas-banheiro-masculino-feminino-wc-sanitario",
     priceCents: 2250,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8cf8abb32f-6-15.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8cf8abb32f-6-15.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -4871,8 +5413,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "placa-de-proibido-estacionar-kit-2-unidades",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4c877893e0-2-17.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4c877893e0-2-17.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -4882,10 +5423,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-cabeleireiro-barbeiro-tesoura-fio-navalha-profissional",
     priceCents: 6100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/59c3629e09-1-19.jpg",
-    category: "Beleza e Cuidado Pessoal",
-    stock: -1,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/59c3629e09-1-19.jpg",
+    category: "Fora de Estoque",
+    stock: -5,
   },
   {
     id: "cmrnvqzcm05qziudh28e762aw",
@@ -4893,10 +5433,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pasta-sanfonada-a4-colors-12-divisorias-plastica-documentos",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6226044e13-1-18.jpg",
-    category: "Papelaria",
-    stock: -2,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6226044e13-1-18.jpg",
+    category: "Fora de Estoque",
+    stock: -7,
   },
   {
     id: "cmrnvqz6h05qoiudh33cwpygk",
@@ -4904,10 +5443,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pasta-organizadora-documentos-600-folhas-a4-expansivel-preto",
     priceCents: 5100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0ab9771454-9-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0ab9771454-9-14.jpg",
     category: "Papelaria",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvqz0b05qjiudhj5yvo2zl",
@@ -4915,20 +5453,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mochila-multifuncional-capivara-para-meninas-rosa-e-multicolorida",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/965d496c40-WhatsApp-Image-2026-01-13-at-11.25.59.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/965d496c40-WhatsApp-Image-2026-01-13-at-11.25.59.jpeg",
     category: "Fora de Estoque",
-    stock: 0,
-  },
-  {
-    id: "cmrnvqyu505q7iudh70fh06lc",
-    name: "Kit Papelaria Capivara Diy Scrapbook, Journal E Stickers",
-    slug: "kit-papelaria-capivara-diy-scrapbook-journal-e-stickers",
-    priceCents: 4399,
-    compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/528a486a92-1-16.jpg",
-    category: "Papelaria",
     stock: 0,
   },
   {
@@ -4937,10 +5463,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caneta-apagavel-apaga-facil-magic-08mm-azul-ou-preto",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2d1ac1c78a-1-15.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2d1ac1c78a-1-15.jpg",
     category: "Papelaria",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvqyho05poiudhu6gwfz84",
@@ -4948,8 +5473,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "calculadora-eletronica-capaz-de-funcionar-sem-fonte-externa-color",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8db62718c9-1-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8db62718c9-1-14.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -4959,10 +5483,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "papel-para-impressora-portatil-cor-branco",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c42151eab6-6-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c42151eab6-6-11.jpg",
     category: "Informática",
-    stock: 97,
+    stock: 93,
   },
   {
     id: "cmrnvqy5a05p3iudhx1irfndj",
@@ -4970,10 +5493,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-impressora-fotografica-colorida-bluetooth-2x3-polegadas-branco",
     priceCents: 43500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/11bc7a2bd8-2-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/11bc7a2bd8-2-9.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -4,
   },
   {
     id: "cmrnvqxyz05otiudh9n07fjyx",
@@ -4981,10 +5503,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caneta-stylus-universal-alta-precisao-para-tablet-android-ios-branco",
     priceCents: 3100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b58bb6f5c6-1-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b58bb6f5c6-1-10.jpg",
     category: "Informática",
-    stock: 0,
+    stock: -6,
   },
   {
     id: "cmrnvqxso05ojiudhwurd2zi3",
@@ -4992,8 +5513,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ventilador-de-coluna-ajustavel-piso-turbo-eco-silencioso",
     priceCents: 14500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/27c30e04ea-1-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/27c30e04ea-1-9.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5003,8 +5523,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "transmissor-extensor-hdmi-sem-fio-wireless-preto-1080p",
     priceCents: 36500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c981488c60-7-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c981488c60-7-8.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5014,8 +5533,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chaveiro-teste-identificador-tensao-voltagem-110-220v",
     priceCents: 1500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/65692de347-1-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/65692de347-1-7.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5025,10 +5543,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luminaria-para-barraca-lampada-led-80w-grande-bateria-epilha-branca-127-220v",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f5f2c3fadd-1-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f5f2c3fadd-1-1.webp",
     category: "Iluminação",
-    stock: -2,
+    stock: -4,
   },
   {
     id: "cmrnvqx3f05ndiudhgis56zmb",
@@ -5036,10 +5553,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-de-parede-grande-led-digital-p-academia-hospital-preto-preto",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/520fb1e266-9-5.jpg",
-    category: "Produtos diversos",
-    stock: -5,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/520fb1e266-9-5.jpg",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cmrnvqwx805n0iudhfmtuwh8b",
@@ -5047,8 +5563,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mochila-capivara-escolar-mochila-kawaii-carpincho4-cadernobolsas-mochilas-escolar",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/19beca0a6e-6-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/19beca0a6e-6-1.webp",
     category: "Papelaria",
     stock: 0,
   },
@@ -5058,8 +5573,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-de-rodinhas-ajustavel-para-geladeira-fogao-freezer",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8da6b6bfa2-9-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8da6b6bfa2-9-4.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -5069,10 +5583,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sanduiche-brinquedo-lanchonete-educativa-monta-e-desmonta",
     priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3bc6a0eb4e-4-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3bc6a0eb4e-4-3.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvqweg05m6iudhixwnoenl",
@@ -5080,21 +5593,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-com-microfone-tipo-edx-pro-dj-gamer-ligacao-p2",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7b026c88fc-1-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7b026c88fc-1-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
   {
     id: "cmrnvqw8805lviudh20lu3ckk",
-    name: "Ventilador de Mão Portátil Portátil de Alta Velocidade, Resfriamento de Gelo fã Dobrável Com Luz para Viagens Ao Ar Livre Interno (Branco)",
+    name: "Ventilador de Mão Portátil Portátil de Alta Velocidade, Resfriamento de Gelo fã Dobrável Com Luz para Viagens",
     slug: "ventilador-de-mao-portatil-portatil-de-alta-velocidade-resfriamento-de-gelo-fa-dobravel-com-luz-para-viagens-ao-ar-livre-interno-branco",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/289815d3c6-4-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/289815d3c6-4-2.jpg",
     category: "Umidificadores & Ventiladores",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvqw2105lkiudhrm8xosu6",
@@ -5102,8 +5613,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-ventilador-portatil-de-mao-e-mesa-carregamento-usb",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/12c38b802b-1-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/12c38b802b-1-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5113,8 +5623,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-digital-24-polegadas-8x-zoom-50-mp-foto-recarregavel",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5bfbe68ddf-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5bfbe68ddf-6.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5124,8 +5633,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jesus-cristo-de-pelucia-e-animado-que-respira-luz",
     priceCents: 6900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f104e93eff-1-30.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f104e93eff-1-30.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5135,8 +5643,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-super-espada-giroscopio-com-lancador-de-beyblades-1-beyblade-piao-veloz-brinquedo",
     priceCents: 4300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c6aabc515f-7-25.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c6aabc515f-7-25.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5146,10 +5653,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ganchos-para-levantamento-de-peso-e-alcas-de-pulso",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb62b0ffd5-8-22.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb62b0ffd5-8-22.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvqv6r05k7iudh3z6fqc5u",
@@ -5157,8 +5663,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-astronauta-material-escolar-infantil-completo-fundamental-masculino-menino",
     priceCents: 19800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2b05c682cd-bluu.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2b05c682cd-bluu.jpeg",
     category: "Papelaria",
     stock: 0,
   },
@@ -5168,8 +5673,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-ursinho-material-escolar-infantil-completo-fundamental-feminino-menina",
     priceCents: 22300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/550780685f-rosa.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/550780685f-rosa.jpeg",
     category: "Papelaria",
     stock: 0,
   },
@@ -5179,8 +5683,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-azul-material-escolar-completo-ensino-medio-fundamental-masculino-menino",
     priceCents: 18300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/59147d9b6a-KK.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/59147d9b6a-KK.jpeg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5190,8 +5693,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "boneca-bailarina-fada-com-asas-articulada-30cm-e-acessorios",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8ba1c536b-5-4.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8ba1c536b-5-4.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5201,8 +5703,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-de-agulha-c-26-1-passador-de-linhas-id-9221-idea",
     priceCents: 1750,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8579664ffc-2-24.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8579664ffc-2-24.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5212,10 +5713,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "raquete-mata-mosquitos-eletrica-luminaria-armadilha-luz-uv",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/109e4b9c69-7-22.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/109e4b9c69-7-22.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvqu4t05j0iudhzoahskbu",
@@ -5223,8 +5723,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "headset-gamer-anc-cancelamento-ativo-bluetooth-imenso-892-cor-preto",
     priceCents: 16000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d283cccece-4a-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d283cccece-4a-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5234,10 +5733,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "headphone-bluetooth-imenso-806-cancelamento-de-ruido-anc-cor-preto",
     priceCents: 9600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/66f560efd2-1-24.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/66f560efd2-1-24.jpg",
     category: "Fora de Estoque",
-    stock: 48,
+    stock: 47,
   },
   {
     id: "cmrnvqtsl05ieiudhwgfnu2yp",
@@ -5245,10 +5743,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "rastreador-gps-moto-carro-caminhao-a-prova-dagua",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a874f7c64-5-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a874f7c64-5-21.jpg",
     category: "Fones de Ouvido",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvqtme05i3iudh6niy7k2x",
@@ -5256,8 +5753,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-sem-fio-hrebo-bluetooth-premium-eb-300",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c97b1ea936-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c97b1ea936-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5267,8 +5763,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-hrebos-musicas-chamadas-bluethooth-eb-400",
     priceCents: 4400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/97af3ac412-7-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/97af3ac412-7-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5278,10 +5773,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-maquina-de-lavar-roupas-intimas-portatil",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e210845c3d-1-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e210845c3d-1-2.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -5,
+    stock: -6,
   },
   {
     id: "cmrnvqt3i05h7iudh6adfz592",
@@ -5289,8 +5783,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-ping-pong-com-2-raquetes-e-3-bolinhas-tenis-de-mesa-preto-com-vermelho-madeira",
     priceCents: 4100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6892d6c3f-1-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6892d6c3f-1-3.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -5300,10 +5793,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "rede-de-ping-pong-retratil-ate-168cm-rede-tenis-de-mesa-ja-cor-preto-e-vermelho",
     priceCents: 6300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/75efde6c03-2a.jpg",
-    category: "Produtos diversos",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/75efde6c03-2a.jpg",
+    category: "Fora de Estoque",
+    stock: -1,
   },
   {
     id: "cmrnvqsr505gliudh5ropkav4",
@@ -5311,8 +5803,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cotoveleira-epicondilite-protetor-cotovelo-ajustavel-tensor",
     priceCents: 3420,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/14197f0d98-1-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/14197f0d98-1-5.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -5322,10 +5813,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ombreira-ortopedica-suporte-para-ombro-compressao-preto-unico",
     priceCents: 4250,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bf414757d3-5-5.jpg",
-    category: "Fora de Estoque",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bf414757d3-5-5.jpg",
+    category: "Beleza e Cuidado Pessoal",
+    stock: 50,
   },
   {
     id: "cmrnvqseo05fziudht4uh5evw",
@@ -5333,10 +5823,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cotoveleira-esportiva-de-compressao-com-faixa-oasis",
     priceCents: 2820,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cac55f0c13-1-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cac55f0c13-1-6.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvqs8a05foiudhve1dmo2o",
@@ -5344,8 +5833,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "munhequeira-esportiva-com-fecho-oasis-oif-7407",
     priceCents: 2680,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b1032b287c-3-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b1032b287c-3-4.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -5355,8 +5843,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "munhequeira-alta-compressao-tendinite-protetor-punho-tensor",
     priceCents: 3320,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5749009c77-2-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5749009c77-2-7.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -5366,8 +5853,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "munhequeira-compressao-ajustavel-punho-elastica-esporte-cor-verde",
     priceCents: 3080,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92d91d05bb-1-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92d91d05bb-1-9.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -5377,8 +5863,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luva-de-academia-meio-dedo-crossfit-musculacao-unissex-preta-preto-lisa-unico",
     priceCents: 3580,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00c6f2718b-1-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00c6f2718b-1-10.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5388,8 +5873,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "munhequeira-ajustavel-de-compressao-auxiliando-na-circulacao-preto-unico-ajustavel",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f0eb1d2ca-7-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f0eb1d2ca-7-11.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -5399,8 +5883,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-material-escolar-completo-menina-feminino-ensino-medio-infantil-luxo-com-bolsa-termica",
     priceCents: 28800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e3ab4099b5-24-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e3ab4099b5-24-2.jpg",
     category: "Mais vendidos",
     stock: 0,
   },
@@ -5410,8 +5893,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-material-escolar-completo-universitario-ensino-medio-masculino-menino",
     priceCents: 17400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/273cd9d3a6-24-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/273cd9d3a6-24-4.jpg",
     category: "Mais vendidos",
     stock: 0,
   },
@@ -5421,8 +5903,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-material-escolar-capivara-completo-personalizado-capybara",
     priceCents: 20800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/285d37c7f6-aq.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/285d37c7f6-aq.jpg",
     category: "Mais vendidos",
     stock: 0,
   },
@@ -5430,11 +5911,10 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvqqti05dsiudh587ujd9y",
     name: "Smartwatch Smartwatch Amazfit Bip 6 Amoled 1,97 Gps Bluetooth Calls 5 Atm preto",
     slug: "smartwatch-smartwatch-amazfit-bip-6-amoled-197-gps-bluetooth-calls-5-atm-preto",
-    priceCents: 54500,
+    priceCents: 55500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0709981659-1-12.jpg",
-    category: "Fora de Estoque",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0709981659-1-12.jpg",
+    category: "Relogios e Smartwatchs",
     stock: 50,
   },
   {
@@ -5443,8 +5923,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "318654",
     priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61f04adc95-4-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61f04adc95-4-8.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -5454,8 +5933,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-instantanea-fujifilm-instax-kit-instax-mini-12-10-films-bolsa-lilas",
     priceCents: 60000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/490202a7b7-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/490202a7b7-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5463,12 +5941,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvqqaf05cuiudhufzdx4a4",
     name: "Repetidor Xiaomi Mi Wi-Fi Range Extender Pro CN R03 preto",
     slug: "repetidor-xiaomi-mi-wi-fi-range-extender-pro-cn-r03-preto",
-    priceCents: 9800,
+    priceCents: 9200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/975ae31312-2-14.jpg",
-    category: "Fora de Estoque",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/975ae31312-2-14.jpg",
+    category: "Informática",
+    stock: 49,
   },
   {
     id: "cmrnvqq4105cjiudhd2bjuyjw",
@@ -5476,8 +5953,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "multimidia-mp10-1din-android-auto-carplay-bluetooth-tela-9-polegadas-e-entrada-para-camera-de-re",
     priceCents: 31500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2c3225d913-6-15.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2c3225d913-6-15.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5487,10 +5963,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-p-famila-amigos-stop-3-0-eletronico-3-modos-9-players",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/68df5d0cd1-2-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/68df5d0cd1-2-16.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvqpro05byiudhc5llr3kc",
@@ -5498,8 +5973,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "leitor-de-cartao-tipo-c-de-encaixe-dock-usb",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aa6562127a-3-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aa6562127a-3-12.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -5509,10 +5983,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "temporizador-rotativo-cubo-cube-timer",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a4bddc66d9-1-17.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a4bddc66d9-1-17.jpg",
     category: "Fora de Estoque",
-    stock: 0,
+    stock: 4,
   },
   {
     id: "cmrnvqpf505bciudhndcdzyao",
@@ -5520,8 +5993,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "conjunto-pista-de-carrinhos-quebra-cabeca-estacao-de-onibus-com-luz-e-musica-e-2-carrinhos",
     priceCents: 11000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf40e979d7-1-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf40e979d7-1-19.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5531,8 +6003,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-dancante-foguete-dancante-recarregavel-boneca-musi",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b8a0f7d427-1-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b8a0f7d427-1-21.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5542,8 +6013,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-polvo-fujao-giratorio-sensorial-dancante-luz-e-som",
     priceCents: 5300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c9e3653285-6-22.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c9e3653285-6-22.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5553,8 +6023,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mochila-masculina-alca-reforcada-casual-lisa-preto",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/29a94bfbde-4-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/29a94bfbde-4-11.jpg",
     category: "Papelaria",
     stock: 0,
   },
@@ -5564,8 +6033,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mochila-capivara-impermeavel-escolar-grande",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a21d1c3e4d-1-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a21d1c3e4d-1-14.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5575,10 +6043,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "estojo-100-pens-box-transparente-com-divisoria-elastico",
     priceCents: 4200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/df0f0d6712-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/df0f0d6712-1.webp",
     category: "Papelaria",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvqod7059oiudhuycmh5lx",
@@ -5586,8 +6053,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "estojo-escolar-triplo-3-divisorias-nylon-impermeavel",
     priceCents: 1800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf2b889242-5-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf2b889242-5-12.jpg",
     category: "Papelaria",
     stock: 0,
   },
@@ -5597,8 +6063,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chave-de-fenda-philips-isolada-eletricista-6-pecas-ima-magnetica",
     priceCents: 3300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ab84477f5c-1-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ab84477f5c-1-12.jpg",
     category: "Ferramentas",
     stock: -6,
   },
@@ -5608,8 +6073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "conjunto-de-ponteiras-para-martelete-3-pecas",
     priceCents: 4100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd8516b651-5-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd8516b651-5-10.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -5619,10 +6083,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-ferramentas-rede-informatica-testador-de-cabo-lan-alicate-crimpar-rj45-decapador",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b0995e3051-8-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b0995e3051-8-6.jpg",
     category: "Ferramentas",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvqnoa058hiudhm0y88z1h",
@@ -5630,8 +6093,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "instalador-hidraulico-ferramenta-profissional-pia-torneira-cor-vermelho",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d131d57ba-1-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d131d57ba-1-10.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -5641,10 +6103,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chave-de-roda-cruz-profissional-universal-17x19x21x23-mm-17-19-21-23",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0367eaba60-2-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0367eaba60-2-8.jpg",
     category: "Ferramentas",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvqnby057viudh82rjidr5",
@@ -5652,8 +6113,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bomba-ar-encher-pneu-bicicleta-moto-carro-pedal-alta-pressao-cor-azul",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5de7d4a21-2-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e5de7d4a21-2-7.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -5663,8 +6123,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-88-blocos-magneticos-de-montar-construcao-brinquedo-educativo-magnetic-toys",
     priceCents: 11000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f0f603a309-1-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f0f603a309-1-6.jpg",
     category: "Fora de Estoque",
     stock: 3,
   },
@@ -5674,8 +6133,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-119-blocos-magneticos-de-montar-construcao-brinquedo-educativo-magnetic-toys",
     priceCents: 12500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bbd1149521-2-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bbd1149521-2-6.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5685,10 +6143,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "auxiliar-de-partida-bomba-compressor-calibrador-de-ar-pneu-preto",
     priceCents: 19000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9290ffd845-6-3.jpg",
-    category: "Ferramentas",
-    stock: -2,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9290ffd845-6-3.jpg",
+    category: "Fora de Estoque",
+    stock: 99,
   },
   {
     id: "cmrnvqmmv056siudhlh37yc2y",
@@ -5696,8 +6153,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "raquete-eletrica-led-usb-inseto-dp-839",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2dd08a87dd-5-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2dd08a87dd-5-4.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -5705,10 +6161,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvqmgp056iiudhp0zp6esc",
     name: "Ventilador de Mesa Elgin Breeze Air Preto 40cm 7 Pás 127v",
     slug: "ventilador-de-mesa-elgin-breeze-air-preto-40cm-7-pas",
-    priceCents: 14500,
+    priceCents: 13900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/122a6f1a9a-1-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/122a6f1a9a-1-3.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -5718,10 +6173,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tomada-inteligente-wi-fi-16a-bivolt-smart-plug-com-monitor-de-consumo-automacao-residencial",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f93c839817-1-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f93c839817-1-2.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -14,
   },
   {
     id: "cmrnvqm3u0560iudhp9cawl9c",
@@ -5729,10 +6183,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "organizador-porta-talheres-gaveta-para-cozinha-com-extensor-cor-preto",
     priceCents: 6150,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ea8b07204a-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ea8b07204a-8.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -6,
   },
   {
     id: "cmrnvqlxq055siudh6e32gb8r",
@@ -5740,10 +6193,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "toalheiro-duplo-banheiro-70cm-aco-inox-preto-fosco",
     priceCents: 9200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0decd3b65a-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0decd3b65a-2.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    stock: -15,
   },
   {
     id: "cmrnvqlrl055hiudh1mtmv43m",
@@ -5751,10 +6203,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chuveiro-portatil-recarregavel-camping-ducha-a-prova-dagua",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35f56834c9-1-49.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35f56834c9-1-49.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -6,
+    stock: 0,
   },
   {
     id: "cmrnvqlle0554iudh4anh8pid",
@@ -5762,10 +6213,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bolas-de-natal-decoracao-arvore-cor-dourado-escamado",
     priceCents: 1700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/817b8c6556-00.webp",
-    category: "Mais vendidos",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/817b8c6556-00.webp",
+    category: "Produto de Natal",
+    stock: -2,
   },
   {
     id: "cmrnvqlf4054tiudhzu4skmfc",
@@ -5773,10 +6223,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caminhao-bate-volta-coletor-de-lixo-com-som-e-luzes-4d",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/867a583eda-7-36.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/867a583eda-7-36.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvql2i054iiudhnv9g99wr",
@@ -5784,8 +6233,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "massageador-pescoco-almofada-cervical-recarregavel-alivio",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7afa07717e-1-46.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7afa07717e-1-46.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5795,8 +6243,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pilhas-baterias-675-auditivas-rayovac",
     priceCents: 2600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b5673916e2-7-34.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b5673916e2-7-34.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -5806,9 +6253,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cascata-natal-decoracao-luz-3-metros-120-leds-area-externa-e-interna",
     priceCents: 5800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d2ae498f1b-capa.jpg",
-    category: "Mais vendidos",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d2ae498f1b-capa.jpg",
+    category: "Produto de Natal",
     stock: 0,
   },
   {
@@ -5817,8 +6263,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mouse-gamer-redragon-hana-rgb-preto-sensor-paw3104-7200-dpi-preto",
     priceCents: 15500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b17540333-1-44.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b17540333-1-44.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -5828,10 +6273,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "microfone-tomate-mt-2205-dinamico-caixa-cor-preto",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e9939d794c-2-45.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e9939d794c-2-45.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvqk7d0536iudhxb6728qj",
@@ -5839,8 +6283,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-remoto-compativel-com-tv-samsung-4k-smart-le-7680-1",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2216e989d8-6-38.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2216e989d8-6-38.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5850,8 +6293,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-remoto-compativel-smart-tv-samsung-4k-lelong-7714",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/463d25d7e3-4-35.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/463d25d7e3-4-35.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5861,8 +6303,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "microfone-infantil-recarregavel-sons-luz-musica-e-historias-cor-amarelo",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c8fa3c8318-1-41.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c8fa3c8318-1-41.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -5872,10 +6313,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-soprador-ar-secador-turbo-jet-fan-poderosa-velocidade",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d15411eac0-1-40.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d15411eac0-1-40.jpg",
     category: "Produtos diversos",
-    stock: -3,
+    stock: -12,
   },
   {
     id: "cmrnvqji10521iudhhuw5e60e",
@@ -5883,8 +6323,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cubo-magico-2-em-1-1x3x3-e-hand-spinner-fidget-puzzle-preto",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c61af4bfd-3-36.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c61af4bfd-3-36.jpg",
     category: "Brinquedos",
     stock: 0,
   },
@@ -5894,10 +6333,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cubo-magico-2x2x2-mo-yu-profissional-interativo-8861-estrutura-colorida",
     priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b19eead996-2-41.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b19eead996-2-41.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvqj69051fiudh8zbhr9qt",
@@ -5905,8 +6343,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cubo-magico-cubico-do-3x3x3-pecas-toys-3x3",
     priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/94ac866f9a-1-37.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/94ac866f9a-1-37.jpg",
     category: "Brinquedos",
     stock: 0,
   },
@@ -5916,10 +6353,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cubo-magico-3x3x3-mf3-moyu-profissional-original",
     priceCents: 2200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/74e72a3a92-1-36.jpg",
-    category: "Brinquedos",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/74e72a3a92-1-36.jpg",
+    category: "Fora de Estoque",
+    stock: -1,
   },
   {
     id: "cmrnvqitr050uiudh7fw3f40q",
@@ -5927,10 +6363,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cubo-magico-profissional-pyraminx-triangulo-megamix-estrutura-stickerless",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a313c811fb-6-31.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a313c811fb-6-31.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvqinl050jiudh572gwb08",
@@ -5938,10 +6373,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cubo-magico-profissional-mastermorphix-3x3-moyu",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b2fc10cea-4-28.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b2fc10cea-4-28.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvqihi0508iudhkde5m5w2",
@@ -5949,8 +6383,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cubo-magico-pyraminx-piramide-triangulo-profissional-3x3x3",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c24e3302db-5-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c24e3302db-5-29.jpg",
     category: "Brinquedos",
     stock: 0,
   },
@@ -5960,10 +6393,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-2-raquetes-velcro-bola-esporte-infantil-pais-filhos-diversao",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/afa266136f-10-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/afa266136f-10-1.webp",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvqi5604zliudhqv3gn7qi",
@@ -5971,10 +6403,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "massageador-eletrico-portatil-para-couro-cabeludo-e-pet",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b0cb8f3d1c-1-32.jpg",
-    category: "Beleza e Cuidado Pessoal",
-    stock: 49,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b0cb8f3d1c-1-32.jpg",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cmrnvqhys04zciudhdgzg04cm",
@@ -5982,21 +6413,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "detector-de-metais-manual-portatil-com-bateria-recarregavel-sensor-scanner-profissional-cor-preto-b-maxr",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b37c711718-7.jgp_.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b37c711718-7.jgp_.webp",
     category: "Produtos diversos",
     stock: 0,
   },
   {
     id: "cmrnvqhsi04z2iudh06meyc0x",
-    name: "Soprador De Ar Portátil Super Turbo Cor Preto",
+    name: "Soprador De Ar Portátil Super Turbo Tomate",
     slug: "soprador-de-ar-portatil-super-turbo-tomate-mxb-103-cor-preto",
-    priceCents: 11000,
+    priceCents: 13900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/286f25484e-2-34.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/286f25484e-2-34.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvqhmu04ysiudh3n2car5d",
@@ -6004,10 +6433,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luz-de-trabalho-magnetica-recarregavel-portatil-para-acampam-cor-amarelo",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/49b34a4548-3-28.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/49b34a4548-3-28.jpg",
     category: "Iluminação",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvqhgr04yiiudhkl6dzrsg",
@@ -6015,10 +6443,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "splitter-hdmi-1x8-4k-distribuidor-de-sinal-para-tvs-monitor",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/20030b8f35-6-25.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/20030b8f35-6-25.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvqham04y7iudh2h36ngia",
@@ -6026,8 +6453,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "dispenser-porta-cereais-redondo-giratorio-360-alimentos-pote",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4e56a1c602-1-28.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4e56a1c602-1-28.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6037,8 +6463,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "hub-adaptador-usb-3-0-7-em-1-turbo-botoes-individuais",
     priceCents: 11000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2a94bf17d7-4-6.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2a94bf17d7-4-6.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6048,8 +6473,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "blocos-de-montar-minifigura-trem-natal-papai-noel-brinquedo",
     priceCents: 9400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cd15766fc8-2-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cd15766fc8-2-29.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6059,8 +6483,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "arvore-de-natal-pinheiro-verde-180-cm-de-altura-wincy-natal",
     priceCents: 7490,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/48f8897dfe-6-22.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/48f8897dfe-6-22.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6070,10 +6493,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "boneca-bicicleta-a-pilha-anda-sozinha-com-luz-e-som-infantil",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4f2c03676c-2-27.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4f2c03676c-2-27.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvqgfs04x0iudhbwa3mtbz",
@@ -6081,8 +6503,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "arvore-natal-150cm-i-500-galhos-luxo-cheia-decoracao-premium",
     priceCents: 14000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b97306078a-1-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b97306078a-1-2.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6092,10 +6513,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-stop-tapple-caca-palavras-responda-rapido-portugues",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/51a7638dcc-1-24.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/51a7638dcc-1-24.jpg",
     category: "Fora de Estoque",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvqg3904wiiudhhq7qqe05",
@@ -6103,21 +6523,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carrinho-controle-remoto-tanque-guerra-bolinha-gel-novidade-verde",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cc1f6920dc-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cc1f6920dc-2.webp",
     category: "Brinquedos",
-    stock: -1,
+    stock: -5,
   },
   {
     id: "cmrnvqfx604w7iudhgkyq5ss1",
-    name: "Molde Forma Dupla Para Fazer Hambúrguer Cor Prateado",
+    name: "Molde Dupla Forma  Para Fazer Hambúrguer Cor Prateado",
     slug: "molde-forma-dupla-para-fazer-hamburguer-cor-prateado",
     priceCents: 6300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e755b08e93-9-13.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e755b08e93-9-13.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvqfqw04vwiudhvzkixxs1",
@@ -6125,10 +6543,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bomba-tira-leite-eletrica-3-modos-e-9-niveis-de-intensidade",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f7d3629980-3-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f7d3629980-3-19.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvqfki04vkiudh3et3fiuj",
@@ -6136,8 +6553,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ventilador-portatil-mini-de-mao-mesa-recarregavel-usb-led",
     priceCents: 3100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5fc4be6702-10-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5fc4be6702-10-6.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -6147,8 +6563,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luz-led-de-video-72leds-fotografia-professional",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7ecbca146b-1-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7ecbca146b-1-19.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6158,8 +6573,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "impressora-de-etiquetas-adesivas-incrivel-branco",
     priceCents: 39500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc91bb571e-1-18.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc91bb571e-1-18.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -6169,8 +6583,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "velociracer-brinquedo-simulador-de-corrida-de-carros-volante",
     priceCents: 16500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4e780bace8-1-17.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4e780bace8-1-17.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6180,8 +6593,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "volantes-simulador-bebe-infantil-interativo-som-luz-ventosa",
     priceCents: 11900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c5e3b5913-7-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c5e3b5913-7-10.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6191,8 +6603,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tapete-atividade-para-bebes-recem-nascidos-com-piano-musical-cor-rosa",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fe6b903201-2-18.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fe6b903201-2-18.jpg",
     category: "Brinquedos",
     stock: 0,
   },
@@ -6202,10 +6613,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "arminha-pistola-lanca-agua-infantil-potente-arma-lancador",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/36bd23f700-1-15.jpg",
-    category: "Brinquedos",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/36bd23f700-1-15.jpg",
+    category: "Fora de Estoque",
+    stock: -2,
   },
   {
     id: "cmrnvqed204tjiudh7hzkl37b",
@@ -6213,8 +6623,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "drone-2-4ghz-camera-4k-full-hd-gps-sensor-obstaculo-dobravel",
     priceCents: 15000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/583cde44be-4-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/583cde44be-4-9.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6224,10 +6633,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "inova-drone-dual-camera-wrj-126164k-4k-full-hd-com-gps-sensor-obstaculos-dobravel-cor-prata",
     priceCents: 22000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/061912a633-1-13.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/061912a633-1-13.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -8,
   },
   {
     id: "cmrnvqe0h04sziudh64cby90k",
@@ -6235,10 +6643,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "312701",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82fc658f12-2-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82fc658f12-2-14.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -5,
   },
   {
     id: "cmrnvqdu704sriudh1y9rple9",
@@ -6246,19 +6653,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-crocodilo-jacare-dente-morde-dedo-divertido",
     priceCents: 3300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a21e4c7fd-6-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a21e4c7fd-6-6.jpg",
     category: "Brinquedos",
     stock: 0,
   },
   {
-    id: "cmrnvqdo000seiudhn5983mue",
+    id: "cmrnvqdo004seiudhn5983mue",
     name: "Brinquedo Educativo Infantil Montessori Formas Puzzle Madeira",
     slug: "brinquedo-educativo-infantil-montessori-formas-puzzle-madeira",
     priceCents: 2750,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb46d72500-12.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb46d72500-12.webp",
     category: "Brinquedos",
     stock: 0,
   },
@@ -6268,8 +6673,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-educativo-infantil-montessori-tetris-e-jogo-da-velha-puzzle-madeira",
     priceCents: 2750,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e96cc4e5cf-3-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e96cc4e5cf-3-9.jpg",
     category: "Brinquedos",
     stock: 0,
   },
@@ -6279,8 +6683,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedos-educativos-montessori-madeira-quebra-cabeca-e-numeros",
     priceCents: 2750,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f6836f51de-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f6836f51de-11.jpg",
     category: "Brinquedos",
     stock: 0,
   },
@@ -6290,8 +6693,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-educativo-infantil-montessori-abc-puzzle-madeira",
     priceCents: 2750,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/93a80d5244-18.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/93a80d5244-18.jpg",
     category: "Brinquedos",
     stock: 0,
   },
@@ -6301,8 +6703,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-educativo-aramado-menina-menino-montessoriano",
     priceCents: 2750,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31525838dd-5-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31525838dd-5-6.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6312,8 +6713,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-de-tabuleiro-de-quebra-cabeca-montessori-com-reconhecimento-de-formas",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a206fd783-1-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a206fd783-1-7.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6323,8 +6723,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "quadro-educativo-madeira-pedagogico-encaixe-quebra-cabeca",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f960884567-7-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f960884567-7-4.jpg",
     category: "Brinquedos",
     stock: 0,
   },
@@ -6334,8 +6733,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tabuleiro-em-madeira-blocos-didaticos-pedagogico",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99b770bd83-5-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99b770bd83-5-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6345,8 +6743,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "diverbloc-brinquedo-educativo-blocos-de-montar-colorido-quantidade-de-pecas-51-versao-do-personagem-mini-craft",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d25bc927d1-4-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d25bc927d1-4-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6356,8 +6753,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cadeira-gamer-giratoria-vg-reclinavel-estofado-couro",
     priceCents: 51000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a586a4af51-2-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a586a4af51-2-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6367,8 +6763,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-classificacao-em-forma-de-madeira",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6b53fd3747-7-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6b53fd3747-7-2.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6378,10 +6773,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tripe-estabilizador-com-rastreamento-facial-camera-e-celular",
     priceCents: 14500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1bcb1bf81d-6-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1bcb1bf81d-6-2.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -7,
   },
   {
     id: "cmrnvqbkh04p1iudhaya09iz0",
@@ -6389,8 +6783,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "compativel-com-o-controlador-de-carregamento-switch2-tns-3177",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/41bcf65250-3-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/41bcf65250-3-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6400,8 +6793,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "blush-stick-facial-em-bastao-dreamy-cheeks-ruby-rose-tom-da-maquiagem",
     priceCents: 1200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/622a7e5532-LC.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/622a7e5532-LC.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6411,8 +6803,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "arvore-natalina-pinheiro-dourado-pra-vila-natalina-de-30cm",
     priceCents: 2300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99cc01f690-A.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99cc01f690-A.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6422,10 +6813,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "coibeu-torre-de-tomadas-branca-941-9-tomadas-4-usb-1-type-c-cabo-2m-protecao-contra-sobrecarga",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ceb2aed235-2.jpg",
-    category: "Fora de Estoque",
-    stock: -2,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ceb2aed235-2.jpg",
+    category: "Informática",
+    stock: 46,
   },
   {
     id: "cmrnvqavp04nwiudh7urmh57y",
@@ -6433,10 +6823,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "arvore-de-natal-iluminada-luminosa-que-brilha-e-pisca-cristal-decoracao-do-lar-acrilico-transparente-25cm-15cm-a-pilha",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/259c970d7f-589.jpg",
-    category: "Mais vendidos",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/259c970d7f-589.jpg",
+    category: "Produto de Natal",
+    stock: -1,
   },
   {
     id: "cmrnvqapg04npiudha28166he",
@@ -6444,8 +6833,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-gamer-led-rgb-p2-usb-para-pc",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d472c2e61b-Prancheta-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d472c2e61b-Prancheta-4.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6455,8 +6843,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "colete-cinta-corretor-postural-arruma-postura-costas-coluna",
     priceCents: 2850,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c4dd46e160-1-55.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c4dd46e160-1-55.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6466,10 +6853,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "estrela-dourada-topo-arvore-natalino-18x14-5cm-enfeite-natalino",
     priceCents: 800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c363567f46-4-39.jpg",
-    category: "Fora de Estoque",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c363567f46-4-39.jpg",
+    category: "Produto de Natal",
+    stock: 300,
   },
   {
     id: "cmrnvqa6204mxiudh56mdjlcn",
@@ -6477,8 +6863,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ferro-de-passar-a-vapor-easy-pass-elgin-1-200w-5-temp",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fac1f62a14-3-12.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fac1f62a14-3-12.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6488,8 +6873,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "rastreador-veicular-monitora-multi-funcao-gsm-gps-gprs",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb61621452-1-53.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb61621452-1-53.jpg",
     category: "Produtos diversos",
     stock: -2,
   },
@@ -6499,10 +6883,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "barbeador-eletrico-2-em-1-aparador-de-pelo-ergonomico-usb-2h-cor-verdecaracteristicas-do-produto-funcao-principal-barbeador-e-sem-fio-sim-marca-daling-quantidade-de-pentes-1-sistema-de-ba",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/33135d367a-7-26.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/33135d367a-7-26.jpg",
     category: "Fora de Estoque",
-    stock: 5,
+    stock: 4,
   },
   {
     id: "cmrnvq9ng04m8iudhjokb4oyj",
@@ -6510,8 +6893,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tela-monitor-espelhamento-camera-traseira",
     priceCents: 18500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/995de5a05e-1-51.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/995de5a05e-1-51.jpg",
     category: "Fora de Estoque",
     stock: 1,
   },
@@ -6521,21 +6903,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "telefone-gondola-com-fio-intelbras-tc-20w",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f29f491584-2-43.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f29f491584-2-43.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: -1,
   },
   {
     id: "cmrnvq9av04loiudh8sj56iyw",
-    name: "Câmera De Segurança Wifi Smart Camera BM-IP173 Ip Dual Camera Com Resolução 1080p Branco/preto",
-    slug: "camera-de-seguranca-wifi-smart-camera-bm-ip173-ip-dual-camera-com-resolucao-1080p-branco-preto",
-    priceCents: 13500,
+    name: "Câmera De Segurança Wifi Smart Camera Ip Dual Camera Com Resolução 1080p Branco/preto",
+    slug: "camera-de-seguranca-wifi-smart-camera-ip-dual-camera-com-resolucao-1080p-branco-preto",
+    priceCents: 12900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/25049e7833-9-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/25049e7833-9-16.jpg",
     category: "Câmeras",
-    stock: -1,
+    stock: -5,
   },
   {
     id: "cmrnvq94o04leiudhg0r5362a",
@@ -6543,10 +6923,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "impressora-termica-203-dpi-150mm-s-mdk-008-bivolt-110-220v-cor-preto",
     priceCents: 51500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3ba4a56ed5-1-48.jpg",
-    category: "Informática",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3ba4a56ed5-1-48.jpg",
+    category: "Fora de Estoque",
+    stock: -1,
   },
   {
     id: "cmrnvq8yc04l1iudhnwfx7vbh",
@@ -6554,8 +6933,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "climatizador-portatil-fan-branco-com-controle-remoto",
     priceCents: 24500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/95fe14326a-1-47.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/95fe14326a-1-47.jpg",
     category: "Umidificadores & Ventiladores",
     stock: 0,
   },
@@ -6565,8 +6943,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sanduicheira-eletrica-grande-grill-profissional-lanche-grelha-carne-linguica-1400w-110v-coibeu-antiaderente-inox-cor-preto",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb3e899a9d-12-3.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb3e899a9d-12-3.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6576,8 +6953,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "varal-de-roupa-retratil-articulado-dobravel-vertical-c-roda-cor-azul",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5ddd334dbb-1-45.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5ddd334dbb-1-45.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6587,8 +6963,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "escorredor-de-pia-rack-aco-inoxidavel-65cm-organizador-louca",
     priceCents: 14200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/955b64811f-6-28.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/955b64811f-6-28.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -6598,10 +6973,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ferro-de-passar-roupas-seco-antiaderente-elgin-cor-branco",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7ac1044d9-2-36.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7ac1044d9-2-36.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvq82f04jsiudhq5qf2b57",
@@ -6609,9 +6983,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "roteador-huawei-wifi-be3-wifi-7-3-6-gpbs-dual-band-wi-fi-7-visualizacao-de-diagnostico-wifi-controle-parental-branco",
     priceCents: 27500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d2dd9fb2e7-8-19.jpg",
-    category: "Informática",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d2dd9fb2e7-8-19.jpg",
+    category: "Fora de Estoque",
     stock: 0,
   },
   {
@@ -6620,10 +6993,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-de-seguranca-p11-intax-wifi-6-mp-4k-lente-dupla-vigilancia",
     priceCents: 15500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ff2228a83-a.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ff2228a83-a.jpg",
     category: "Câmeras",
-    stock: 0,
+    stock: -8,
   },
   {
     id: "cmrnvq7px04j8iudhjkm9gm2h",
@@ -6631,8 +7003,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "decoracao-de-natal-cordao-com-bolas-brilhantes-ouro-140m-1-unidade-cromus",
     priceCents: 2200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d79079d1cf-2-11.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d79079d1cf-2-11.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6642,8 +7013,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bandeja-travessa-oval-decorada-natal-30cmx22cmx5cm",
     priceCents: 750,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a40a89d278-2-33.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a40a89d278-2-33.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6653,8 +7023,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bandeja-retangular-estampa-natal-30x21cm-prato-borda-dourada",
     priceCents: 990,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/919bcd3888-11-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/919bcd3888-11-2.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6664,8 +7033,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "enfeite-de-arvore-de-natal-ponteira-aramada-de-estrela-23cm-15cm-dourada",
     priceCents: 2970,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/62715305ae-112.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/62715305ae-112.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6675,8 +7043,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sacola-brilhante-impressa-a-laser-armazenamento-ecologico-com-alca-reforcada-festiva-natal-presente",
     priceCents: 690,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ceca1da0b4-11-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ceca1da0b4-11-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6686,8 +7053,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bola-enfeite-para-arvore-de-natal-hiperfesta-8cm-6un-cor-dourado",
     priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ca3dcbabed-2-31.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ca3dcbabed-2-31.jpg",
     category: "Mais vendidos",
     stock: 0,
   },
@@ -6697,8 +7063,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "vela-led-cristal-transparente-5cm-decoracao-casamento-amarela-chama-artificial-realista-brilhosa-luminosa-natal-mesa-posta",
     priceCents: 450,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/558f6ae388-Imagem-do-WhatsApp-de-2025-09-15-as-20.58.49_ab50aa3a.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/558f6ae388-Imagem-do-WhatsApp-de-2025-09-15-as-20.58.49_ab50aa3a.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6708,8 +7073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "vela-decorativa-amarela-chama-artificial-realista-brilhosa-luminosa-natal-mesa-posta",
     priceCents: 580,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/04e7eb955b-12-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/04e7eb955b-12-1.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6719,8 +7083,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "vela-artificial-brilhosa-luminosa-17cm-decoracao-natal-natalina-mesa-posta-pilha",
     priceCents: 1500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/760a8e11ea-12.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/760a8e11ea-12.jpeg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6730,8 +7093,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "animal-de-pelucia-de-rena-personagens-de-veados-festivos-com-chifres-brinquedo-para-criancas-decoracao-de-natal-pequenos-brinquedos-de-pelucia-25-cm",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/614f7845ec-2-8.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/614f7845ec-2-8.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6741,10 +7103,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-arvore-pinheiro-florarte-30cm-25cm-20cm-natal-nevada-lembrancinha-festa-natalina-decoracao-enfeite-mesa-empresarial",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/52fe7fda22-4-23.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/52fe7fda22-4-23.jpg",
     category: "Mais vendidos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvq5s704h8iudhx89jp6mx",
@@ -6752,8 +7113,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "gorro-papai-ou-mamae-noel-natal-vermelho-de-veludo",
     priceCents: 600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/16f81c8488-11.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/16f81c8488-11.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6763,8 +7123,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-de-seguranca-externa-360-wi-fi-tp-link-full-hd-tapo-c510w-2k",
     priceCents: 30500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/333ebd25af-1-33.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/333ebd25af-1-33.jpg",
     category: "Câmeras",
     stock: 0,
   },
@@ -6774,9 +7133,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "aparelho-de-som-bebe-ruido-branco-utero-dormir-ninar-sono",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/328a18c21a-1-32.jpg",
-    category: "Casa e Utensílios Domésticos",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/328a18c21a-1-32.jpg",
+    category: "Fora de Estoque",
     stock: 0,
   },
   {
@@ -6785,10 +7143,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pisca-pisca-100led-com-8-funcoes-10-metros-127v",
     priceCents: 1470,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/911c921d0e-AD.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/911c921d0e-AD.webp",
     category: "Mais vendidos",
-    stock: 0,
+    stock: -4,
   },
   {
     id: "cmrnvq52y04gbiudhorhgzhf0",
@@ -6796,19 +7153,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "12-bolas-arvore-natal-vazada-arabesco-gliter-vermelha-dourada-gold-5-cm",
     priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bfa586315-3-27.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bfa586315-3-27.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
   {
     id: "cmrnvq4ww04g7iudh90icjtq5",
     name: "Bola Luxo de natal ouro texturizada trabalhada detalhada 8 cm marca Cromus natalina com detalhes",
-    slug: "bola-luxo-de-natal-ouro-texturizada-trabalha-8-cm-marca-cromus-natalina",
+    slug: "bola-luxo-de-natal-ouro-texturizada-trabalhada-detalha-8-cm-marca-cromus-natalina",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/40391c7655-ssz.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/40391c7655-ssz.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6818,8 +7173,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "festao-aramado-grosso-flexivel-natal-luxo-260cm-galhos-varal-26-metros",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8d44c294de-g-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8d44c294de-g-1.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6829,8 +7183,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "festao-verde-5-metros-natal-cheio-grosso-fosco",
     priceCents: 2200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc909edf5b-7-5.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc909edf5b-7-5.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6840,8 +7193,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cascata-240-led-43-metros-natal-pisca-pisca-luz-decoracao",
     priceCents: 5100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/db36243643-j.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/db36243643-j.webp",
     category: "Mais vendidos",
     stock: 0,
   },
@@ -6851,8 +7203,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cascata-100-led-23-metros-natal-luz-fixa-e-funcao-decoracao-cor-das-luzes-branco-quente-e-frio",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7843794a0f-12.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7843794a0f-12.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6862,8 +7213,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "arvore-de-natal-150m-marca-wincy",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ffbb62c4e8-2-5.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ffbb62c4e8-2-5.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6873,8 +7223,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-25-bola-arvore-natal-5cm-arabesco-linha-luxo-glamour",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d0089627f-2-24.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d0089627f-2-24.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6884,8 +7233,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ponteira-para-arvore-floco-de-neve-20cm-com-glitter-vermelha",
     priceCents: 1500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d4421dcd8b-1-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d4421dcd8b-1-1.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6895,8 +7243,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "guirlanda-natalina-decorada-flores-laco-30cm-natal-cor-verde-escuro",
     priceCents: 3100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a325ba9f8f-2-23.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a325ba9f8f-2-23.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6906,8 +7253,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "festao-enfeite-de-natal-decoracao-festa-com-ou-sem-neve",
     priceCents: 1800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8f9422a629-1-25.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8f9422a629-1-25.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6917,10 +7263,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-12-bolas-de-natal-mista-5cm-prata-decoracao-arvore",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc3a337124-4-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc3a337124-4-21.jpg",
     category: "Mais vendidos",
-    stock: 0,
+    stock: 50,
   },
   {
     id: "cmrnvq31004doiudh1ietr3y0",
@@ -6928,8 +7273,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bolas-de-natal-vermelha-3cm-16-und-decoracao-enfeite",
     priceCents: 2200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d70f608487-6-20.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d70f608487-6-20.jpg",
     category: "Mais vendidos",
     stock: 0,
   },
@@ -6939,8 +7283,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "abafador-de-ruidos-tipo-concha-cor-amarelo",
     priceCents: 3100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/95578ea50b-7-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/95578ea50b-7-14.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -6950,8 +7293,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ralo-click-10x10-inteligente-pop-up-inox-oculto-invisivel-para-banheiro-e-cozinhas-acabamento-premium",
     priceCents: 3700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9e026edfa6-1-20.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9e026edfa6-1-20.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -6961,10 +7303,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carregador-veicular-turbo-120w-4-em-1-cabo-lightning-tipo-c",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/af5fbaaa5b-5-17.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/af5fbaaa5b-5-17.jpg",
     category: "Carregadores & Power Banks",
-    stock: -5,
+    stock: -6,
   },
   {
     id: "cmrnvq2bx04ciiudhewyhsllp",
@@ -6972,21 +7313,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "aparelho-medidor-profissional-pressao-arterial-braco-smart-cor-multicolor",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5b5d390571-6-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5b5d390571-6-16.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvq25r04c7iudhgc8atvre",
     name: "Chaleira Elétrica Onistek 1,8 Litros Prata",
     slug: "chaleira-eletrica-onistek-18-litros-prata",
-    priceCents: 6000,
+    priceCents: 4900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/957f112cea-5-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/957f112cea-5-16.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvq1zl04bziudhu5cgdrw2",
@@ -6994,10 +7333,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chaleira-jarra-bule-eletrica-transparente-vidro-temperado-onistek",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2c3c2fec6b-1-15.jpg",
-    category: "Fora de Estoque",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2c3c2fec6b-1-15.jpg",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
   },
   {
     id: "cmrnvq1ti04bqiudh2gmw4bog",
@@ -7005,8 +7343,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "conversor-de-rede-usb-3-0-para-rj45",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00f768d5b3-5-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00f768d5b3-5-14.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -7016,8 +7353,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "conversor-adaptador-displayport-para-hdmi-4k-60ghz-com",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7283f1c716-7-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7283f1c716-7-9.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -7027,8 +7363,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "usb-3-0-para-hdmi-vga-conversor-adaptador-hd-1080p-computador",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/737d9549fb-1-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/737d9549fb-1-12.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -7038,8 +7373,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fonte-carregador-universal-8-pinos-notebook-cor-pre-cor-preto-dk-34",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2531c1af1b-1-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2531c1af1b-1-11.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7049,8 +7383,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-adaptador-internet-entrada-rj45-femea-saida-usb-tipo-c-lumi",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/71ee00873b-6-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/71ee00873b-6-9.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -7060,8 +7393,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "case-ssd-m2-nvme-tipo-c-usb-3-1-fy-879",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/51ed2eb8cc-1-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/51ed2eb8cc-1-9.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -7071,10 +7403,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "case-ssd-m-2-nvme-e-sata-para-usb-3-1-e-type-c-fy-859",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/944e14c0c4-5-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/944e14c0c4-5-8.jpg",
     category: "Informática",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvq0mo049yiudhinth10tj",
@@ -7082,9 +7413,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "case-ssd-m-2-nvme-e-sata-para-usb-3-1-e-type-c-fy-855",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ff46783d60-6-7.jpg",
-    category: "Informática",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ff46783d60-6-7.jpg",
+    category: "Mais vendidos",
     stock: -3,
   },
   {
@@ -7093,8 +7423,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "auto-transformador-5000va-3500w-borne-110v-ou-220v-tripolar",
     priceCents: 15500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/daaa138ced-12-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/daaa138ced-12-2.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7104,8 +7433,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tablet-xiaomi-redmi-pad-se-4gb-128gb-11-polegadas",
     priceCents: 91000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/193ccccca8-2-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/193ccccca8-2-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7115,8 +7443,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "xiaomi-sound-pocket-mdz-37-db-5w",
     priceCents: 11900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb4aad0dec-4-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb4aad0dec-4-5.jpg",
     category: "Caixas de Som",
     stock: 0,
   },
@@ -7126,8 +7453,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-bluetooth-xiaomi-30w-a-prova-dagua-preto",
     priceCents: 27500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e96947f95-6-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e96947f95-6-1.webp",
     category: "Caixas de Som",
     stock: 0,
   },
@@ -7137,10 +7463,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "xadrez-damas-gamao-tabuleiro-de-madeira-estojo-3-em-1-24x24-preto",
     priceCents: 2900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b4540c5bfe-9-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b4540c5bfe-9-1.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvpzex0484iudh4g49367l",
@@ -7148,8 +7473,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fechadura-digital-biometrica-sigma-fe20-aitek-preto",
     priceCents: 21500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6205047a75-4-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6205047a75-4-3.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -7159,10 +7483,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "despertador-digital-led-com-dimmer-e-2-alarmes-modernos-para-casa-azul-digital-branco",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ac892d0e92-1-2.jpg",
-    category: "Relogios e Smartwatchs",
-    stock: -2,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ac892d0e92-1-2.jpg",
+    category: "Fora de Estoque",
+    stock: -3,
   },
   {
     id: "cmrnvpz2p047jiudha5qia84v",
@@ -7170,10 +7493,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carregador-de-pilha-recarrecavel-4-pilhas-xbox-microfone",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/472c3475df-5-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/472c3475df-5-1.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvpywk0479iudhwyvr0bue",
@@ -7181,10 +7503,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "oculos-de-sol-oculos-de-conducao-ossea-inteligente",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/14da07da5b-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/14da07da5b-7.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvpyph046xiudhlu49iaz6",
@@ -7192,8 +7513,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "monitor-veicular-7-polegadas-ahd-para-4-cameras-c-gravacao",
     priceCents: 26500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/857aa46018-2-48.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/857aa46018-2-48.jpg",
     category: "Câmeras",
     stock: 0,
   },
@@ -7201,12 +7521,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvpyjb046niudhr8ij1uoe",
     name: "Máscara Led 7 Cores Wireless Tratamento Estética Acne",
     slug: "mascara-led-7-cores-wireless-tratamento-estetica-acne",
-    priceCents: 9500,
+    priceCents: 7900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6d30d3325-9-18.jpg",
-    category: "Fora de Estoque",
-    stock: -2,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6d30d3325-9-18.jpg",
+    category: "Beleza e Cuidado Pessoal",
+    stock: 49,
   },
   {
     id: "cmrnvpyd2046giudhrkv6i5nh",
@@ -7214,21 +7533,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "gloss-fran-by-franciny-ehlke-liphoney-peso-liquido-5g",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bff517b974-5-42.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bff517b974-5-42.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
   {
     id: "cmrnvpy6y0465iudhtqzcxtty",
-    name: "Fritadeira Elétrica Air Fryer Elgin Start Fry 3,5l Cor Preto",
+    name: "Fritadeira Elétrica Air Fryer Elgin Start Fry 3,5l 110v",
     slug: "fritadeira-eletrica-air-fryer-elgin-start-fry-35l-cor-preto",
     priceCents: 18900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2d4fc0576c-6-37.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2d4fc0576c-6-37.jpg",
     category: "Mais vendidos",
-    stock: -5,
+    stock: -16,
   },
   {
     id: "cmrnvpy0u045uiudho8945vh8",
@@ -7236,8 +7553,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tablet-atouch-x19-pro-10-1-64gb-4g-android-12-0-cor-cinza",
     priceCents: 50000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8628de461-6-9.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8628de461-6-9.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7247,8 +7563,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "xiaomi-panela-de-arroz-multifuncional-4-l-compacta-e-rapida-cozimento-de-arroz-antiaderente",
     priceCents: 40500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6394d43bd-4-44.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6394d43bd-4-44.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7256,12 +7571,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvpxoq045ciudh00ydh8qu",
     name: "Caneta Touch Xiaomi Redmi Pad Se Smart Pen Lápis / Original / PONTA ARREDONDADA",
     slug: "caneta-touch-xiaomi-redmi-pad-se-smart-pen-lapis-original",
-    priceCents: 9900,
+    priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/56ea2db954-4-43.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/56ea2db954-4-43.jpg",
     category: "Produtos diversos",
-    stock: -6,
+    stock: -11,
   },
   {
     id: "cmrnvpxii0452iudhzep9booj",
@@ -7269,8 +7583,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kids-tablet-infantil-android-13-0-7-inch-c-caneta-amiyo-a15-sistema-controle-parental-em-promocao",
     priceCents: 29000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/447bf044b7-1-50.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/447bf044b7-1-50.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7280,10 +7593,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tablet-kids-infantil-sonic-menino-menina-smart-para-criancas",
     priceCents: 27900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f8bbd04f38-1-47.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f8bbd04f38-1-47.jpg",
     category: "Fora de Estoque",
-    stock: 17,
+    stock: 0,
   },
   {
     id: "cmrnvpx62044iiudhgkgglxp4",
@@ -7291,8 +7603,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tablet-infantil-kids-crianca-mario-smart-7-polegadas-ram-8gb-256-gb-com-wifi-bluetooth-4g-5g",
     priceCents: 29000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5c0e2e1798-6-33.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5c0e2e1798-6-33.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7302,8 +7613,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-parafusadeira-eletrica-recarregavel-33-pcs-bom-9917",
     priceCents: 17000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99c81baa1d-Prancheta-3-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99c81baa1d-Prancheta-3-2.png",
     category: "Ferramentas",
     stock: 0,
   },
@@ -7313,8 +7623,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "gancho-de-armazenamento-multifuncional-portatil-aco-inoxidavel-a-prova-de-vento-calca-de-chapeu-giratoria",
     priceCents: 1500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cdb2cc8765-3-38.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cdb2cc8765-3-38.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7324,8 +7633,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "case-p-hd-externo-usb-3-0-ssd-hdd-sata-2-5-notebook-pc-ps4",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8809de2452-case-gaveta-para-hd-e-ssd-tomate-mcs-2530-6vy5t224tz.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8809de2452-case-gaveta-para-hd-e-ssd-tomate-mcs-2530-6vy5t224tz.jpg",
     category: "Informática",
     stock: 50,
   },
@@ -7335,8 +7643,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "multimidia-mp5-para-moto-carplay-android-auto-bluetooth-cor-preto",
     priceCents: 31500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6bd2bf9f7-1-43.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e6bd2bf9f7-1-43.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -7346,8 +7653,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-ferramenta-p-retornar-embolo-da-pinca-de-freio-22-pec",
     priceCents: 9600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cbb1cb2e49-Prancheta-2-17.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cbb1cb2e49-Prancheta-2-17.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7357,8 +7663,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "massageador-de-pescoco-e-rosto-led-vibracao-fototerapia-para-rejuvenescer-firmeza-anti-rugas-aparelho-redutor-de-papada",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/587d88a0f9-9-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/587d88a0f9-9-14.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
@@ -7368,21 +7673,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "localizador-smart-tag-compativel-iphone-apple-rastreador-gps",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/47f49f5577-6-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/47f49f5577-6-29.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
   {
     id: "cmrnvpvsy042niudht78a4vx9",
-    name: "Kit Stedicam Celular + 2 Iluminador MTG-3333 P/ Youtube",
-    slug: "kit-stedicam-celular-2-iluminador-mtg-3333-p-youtube",
+    name: "Kit Stedicam Celular + 2 Iluminador P/ Youtube",
+    slug: "kit-stedicam-celular-2-iluminador-p-youtube",
     priceCents: 7200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8d5ebd629-1-41.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a8d5ebd629-1-41.jpg",
     category: "Iluminação",
-    stock: 0,
+    stock: -6,
   },
   {
     id: "cmrnvpvmq042eiudh55i88bpo",
@@ -7390,8 +7693,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "microscopio-usb-digital-1600x-lente-acromatica-celular-note",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d3d56b38d3-1-40.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d3d56b38d3-1-40.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7401,10 +7703,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "balanca-digital-cozinha-alta-precisao-tigela-alimentos-5kg",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/da9c01de42-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/da9c01de42-1.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: -3,
+    stock: -4,
   },
   {
     id: "cmrnvpva9041tiudhtkns81wk",
@@ -7412,8 +7713,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "joelheira-eletrica-alivio-de-dor-infravermelho",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8de56bd39c-8-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8de56bd39c-8-21.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7423,8 +7723,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fechadura-eletronica-digital-biometrica-knup-ca609-c-camera-wi-fi",
     priceCents: 34500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8e35449bc-7-26.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8e35449bc-7-26.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -7434,10 +7733,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "manubelita-multi-processador-de-alimentos-moedor-eletrico-para-carnes",
     priceCents: 8400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4abcae5d2-5-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -19,
   },
   {
     id: "cmrnvpurw0410iudh8d2a54vp",
@@ -7445,8 +7743,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-de-rede-cat6-2-3-metros-ethernet-lan-giga-10-1000",
     priceCents: 2300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6518cecb27-5jpg.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6518cecb27-5jpg.jpg",
     category: "Informática",
     stock: -1,
   },
@@ -7456,8 +7753,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "desempenadeira-60cm-massa-corrida-tipo-inox-bomvink",
     priceCents: 4300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/880c70f2ae-1-36.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/880c70f2ae-1-36.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7467,8 +7763,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-de-broca-golden-line-para-concreto-furadeira-4-pecas",
     priceCents: 1500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9674db3d9f-Prancheta-5-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9674db3d9f-Prancheta-5-1.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7478,8 +7773,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-magnetico-celular-academia-automotivo-multiuso-ima-potente-360-portatil-removivel-com-ventosa-succao-para-mesa-parede-vidro-espelho-painel-carro",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/972d5ba0c9-1-35.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/972d5ba0c9-1-35.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -7489,8 +7783,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-de-telefone-para-carro-com-succao-magnetica-que-gira",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a442109318-1-34.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a442109318-1-34.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7500,19 +7793,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luminaria-led-meia-lua-estetica-3-cor-light-com-diamante",
     priceCents: 28500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ebcaea0844-1-33.jpg",
-    category: "Casa e Utensílios Domésticos",
-    stock: -6,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ebcaea0844-1-33.jpg",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cmrnvptl603zdiudhsw3ojaiy",
     name: "Kit Pontas Chave Fenda Ferramenta Especial Reparos Reforçado",
     slug: "kit-pontas-chave-fenda-ferramenta-especial-reparos-reforcado",
-    priceCents: 2700,
+    priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/358ef572fa-9-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/358ef572fa-9-8.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -7522,8 +7813,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lanterna-mengtes-forte-luz-recarregavel-super-brilhante",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1c7ffe87ed-2-28.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1c7ffe87ed-2-28.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7533,8 +7823,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "balanca-digital-bioimpedancia-bluetooth-corporal-aparelho-capacidade-maxima-de-180kg-app-gratuito-para-android-e-para-ios-cor-preto",
     priceCents: 4300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/12539cbd54-7-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/12539cbd54-7-21.jpg",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
@@ -7544,8 +7833,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-de-audio-p2-3-5mm-para-p2-3-5mm-tomate-mcb-037-1-metro",
     priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2ff9c7c9a2-1-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2ff9c7c9a2-1-29.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -7555,8 +7843,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chave-fenda-philips-reversivel-catraca-super-resistente",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d40e179d93-2-25.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d40e179d93-2-25.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -7566,10 +7853,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-fliperama-arcade-dobe-para-ps4-xbox-pc-e-outros-cor-preto",
     priceCents: 19500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/16f43f77db-9-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/16f43f77db-9-7.jpg",
     category: "Games",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvpsj103xsiudh8vfo08yv",
@@ -7577,8 +7863,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-beleza-maleta-dino-18-pecas-brinquedo-infantil-rosa",
     priceCents: 3700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b027c27508-1-26.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b027c27508-1-26.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7588,8 +7873,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "alicate-de-pressao-metal-aco-cromo-10-polegadas-ferramenta",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ca51943113-3-23.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ca51943113-3-23.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -7599,8 +7883,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cortador-de-vidro-antiderrapante-rosqueado",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f27c5e204-6-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f27c5e204-6-16.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7610,8 +7893,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maleta-de-ferramentas-infantil-2-em-1-dinossauro-17pcs",
     priceCents: 3700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a6a6875957-9-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a6a6875957-9-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7621,8 +7903,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "termometro-laser-infravermelho-digital-profissional-bomvink",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d60c40fbe1-4-20.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d60c40fbe1-4-20.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -7632,8 +7913,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chave-inglesa-boca-ajustavel-68mm-chave-de-aperto-grande-cor-prata",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d9da417233-3-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d9da417233-3-19.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -7643,8 +7923,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bomba-de-ar-encher-pneu-bicicleta-bike-moto-bola-boias",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/418954fb45-Prancheta-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/418954fb45-Prancheta-4.png",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -7654,8 +7933,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "echo-show-8-2a-geracao-alexa-8-13mp-preto-amazon",
     priceCents: 89900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d6bcaef20-3-18.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d6bcaef20-3-18.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7665,8 +7943,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "leitor-de-cartao-sd-usb-c-para-tf-adaptador-multiporta-3-em-1-iphone-ipad-macbook-galaxy-laptop",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/563cab50d6-2-18.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/563cab50d6-2-18.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7676,8 +7953,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-conversor-compativel-nintendo-wii-para-cabo-hdmi-1080p",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6d120cf527-8-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6d120cf527-8-8.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -7687,10 +7963,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "walk-talk-radio-comunicador-infantil-army-action-meninos",
     priceCents: 4900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c6844e307c-1-17.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c6844e307c-1-17.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -14,
   },
   {
     id: "cmrnvpqnf03v1iudhz4on28vv",
@@ -7698,8 +7973,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carrinho-bate-volta-infantil-brinquedo-c-luz-som-movimento-cor-vermelho-power-music-wagging-car",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0af494d15a-1-16.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0af494d15a-1-16.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7709,8 +7983,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "torquimetro-de-estalo-1-2-pol-2-8-a-21kg-bomvink",
     priceCents: 13500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/01c02916f6-1-15.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/01c02916f6-1-15.jpg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -7720,10 +7993,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "leitor-codigo-de-barras-fixo-usb-1d2d-qr-code-danfe-ean-cor-preto",
     priceCents: 13500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/24c97d5406-5-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/24c97d5406-5-12.jpg",
     category: "Informática",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvpq4v03ubiudh6eeif4fg",
@@ -7731,8 +8003,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-ferramentas-reparos-chave-philips-fenda-martelo-alicate",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/852f152e43-6-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/852f152e43-6-8.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7742,10 +8013,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-luminaria-de-mesa-flexivel-3-cor-led-abajur-sem-fio-com-porta-caneta-e-celular",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/15c1f4e8ff-1-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/15c1f4e8ff-1-11.jpg",
     category: "Iluminação",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvppso03tpiudhcme5rc63",
@@ -7753,8 +8023,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cordao-luz-pendente-led-c-pino-mecanico-80-leds-28-w",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/defa901253-3-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/defa901253-3-9.jpg",
     category: "Iluminação",
     stock: -2,
   },
@@ -7764,8 +8033,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chave-para-abrir-celular-com-25-pc-iphone",
     priceCents: 4680,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b9b9f8f2d8-1-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b9b9f8f2d8-1-9.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7775,8 +8043,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tripe-suporte-camera-celular-profissional-150m-aluminio-cor-preto",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/72f0c03d89-3-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/72f0c03d89-3-7.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7786,10 +8053,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-carregador-p-iphone-7-8-plus-x-xr-xs-max-11-12-13-14",
     priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b64b8f03a4-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b64b8f03a4-5.png",
     category: "Carregadores & Power Banks",
-    stock: 0,
+    stock: -15,
   },
   {
     id: "cmrnvpp4203sniudh9w6yg4r2",
@@ -7797,10 +8063,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "webcam-camera-full-hd-zoom-1080p-360-graus-video-conferencia-stream-cam-web-cam-entrada-usb-2-0-com-microfone",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1c0eb0bb48-4-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1c0eb0bb48-4-6.jpg",
     category: "Informática",
-    stock: -1,
+    stock: 0,
   },
   {
     id: "cmrnvpoy003seiudhnbzgfnm3",
@@ -7808,8 +8073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "liquidificador-500ml-com-6-laminas-mini-juicer-com-copo-tampa-e-canudo",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4794d0ff38-1-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4794d0ff38-1-6.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7819,10 +8083,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-smartwatch-xiaomi-band-10-1-72-amoled-bluetooth-5atm-resistance",
     priceCents: 27900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/65dffd7e52-specsbackground.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/65dffd7e52-specsbackground.jpg",
     category: "Relogios e Smartwatchs",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvpolr03rwiudhoxksva7b",
@@ -7830,8 +8093,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "leitor-de-codigo-de-barras-sem-fio-portatil-qr-bluetooth-usb-knup-le702",
     priceCents: 14500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7782b46a90-3-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7782b46a90-3-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7841,8 +8103,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "plug-pino-macho-reto-2-polos-latao-macico-10a-imetro",
     priceCents: 1650,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9e3eb8d929-2-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9e3eb8d929-2-5.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -7852,8 +8113,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tomada-5-femea-e-5-plugue-macho-20a",
     priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/47772a9be3-4-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/47772a9be3-4-3.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -7863,8 +8123,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "extensao-eletrica-2-3-metros-bivolt-branca-3-tomadas",
     priceCents: 2250,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0d233c4e2b-D_Q_NP_2X_891682-MLA83099538048_032025-T.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0d233c4e2b-D_Q_NP_2X_891682-MLA83099538048_032025-T.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7874,8 +8133,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-eletrico-tomada-bob-esponja-10a-para-20a",
     priceCents: 1750,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6111f93b91-1-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6111f93b91-1-2.jpg",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -7885,10 +8143,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-remoto-smart-tv-aparelho-tv-box",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5a4702b4ee-2-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5a4702b4ee-2-2.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvpnkw03qliudhcdgjmml6",
@@ -7896,8 +8153,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-remoto-para-tv-samsung-smart-hub-universal",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/723e8d91ee-3-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/723e8d91ee-3-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7907,8 +8163,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-remoto-para-smart-tv-lg",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/414794ee90-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/414794ee90-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7918,10 +8173,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-balanca-digital-tomate-mh503-alta-precisao-escala-0-1-ate-500-grama-cor-cinza",
     priceCents: 3150,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/687b937569-5-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/687b937569-5-8.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvpn2403puiudh029ioi4e",
@@ -7929,10 +8183,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cubos-benjamin-adaptador-de-tomada-10a-20a-4-entradas",
     priceCents: 1700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99f03c01dd-4-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99f03c01dd-4-9.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvpmvx03pkiudh93wkjkwj",
@@ -7940,10 +8193,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-tomada-10-e-20-amperes-bi-volt-padrao-brasileiro-110v-220v",
     priceCents: 1600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/08b9a9a34d-2-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/08b9a9a34d-2-12.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvpmpv03paiudhe73xpt4u",
@@ -7951,10 +8203,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tomada-12v-usb-5v-moto-carregador-cel-isqueiro-prova-de-agua",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5560adc910-4-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5560adc910-4-7.jpg",
     category: "Produtos diversos",
-    stock: -2,
+    stock: -12,
   },
   {
     id: "cmrnvpmjl03oziudhez4ad1g0",
@@ -7962,10 +8213,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-celular-de-pedestal-p-musico-cifra-mtg-209",
     priceCents: 2300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/171903da91-2-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/171903da91-2-10.jpg",
     category: "Celulares e Smartphones",
-    stock: -2,
+    stock: -3,
   },
   {
     id: "cmrnvpmdk03otiudhk5u396wy",
@@ -7973,8 +8223,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "acucareiro-em-aco-inox-com-colher",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b5399a2bf-capa.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b5399a2bf-capa.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7984,8 +8233,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "aquecedor-eletrico-da-articulacao-do-ombro-e-pescoco",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/79b9f9efb4-1-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/79b9f9efb4-1-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -7995,8 +8243,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fonte-para-gatos-e-caes-com-led-cor-branco",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/143304a771-ca2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/143304a771-ca2.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8006,10 +8253,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "iniciador-de-fogo-de-magnesio-de-sobrevivencia-com-raspador-ao-ar-livre-luatek",
     priceCents: 2400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a90110aae8-4-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a90110aae8-4-3.jpg",
     category: "Ferramentas",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvplon03nmiudh8uhkui3t",
@@ -8017,10 +8263,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "combo-de-chaves-conjunto-canhao-facil-d-usar",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f041b13200-ComboConjuntoDeChavesCanhoFacilDeUsarp-899626-MLB54266707025_032023.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f041b13200-ComboConjuntoDeChavesCanhoFacilDeUsarp-899626-MLB54266707025_032023.jpeg",
     category: "Ferramentas",
-    stock: 0,
+    stock: -4,
   },
   {
     id: "cmrnvplij03neiudh3bvse93w",
@@ -8028,8 +8273,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-xiaomi-smart-band-10",
     priceCents: 31000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0dda4e7323-1-40.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0dda4e7323-1-40.webp",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -8039,8 +8283,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carrinho-controle-remoto-a-bateria-recarregavel-para-menina-roxo",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ed76907702-2-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ed76907702-2-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8050,10 +8293,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-da-velha-eletronico-tic-tac-toe-touchscreen-com-3-modos",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/40ed36bea7-7-23.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/40ed36bea7-7-23.webp",
     category: "Brinquedos",
-    stock: 0,
+    stock: 49,
   },
   {
     id: "cmrnvpl0203mjiudhxq9wzr72",
@@ -8061,10 +8303,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "trava-cadeado-sml-com-alarme-sonoro-freio-a-disco-moto-bike",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c4b5197218-7-22.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c4b5197218-7-22.webp",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvpktk03mbiudhl9e055r2",
@@ -8072,8 +8313,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-manicure-tesoura-alicate-lixa-pinca-cortador-caerus",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ba6c30e732-3-32.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ba6c30e732-3-32.webp",
     category: "Maquiagem",
     stock: 0,
   },
@@ -8083,8 +8323,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "campainha-c-camera-wifi-s-fio-inteligente-interfone-c-audio-cor-branco",
     priceCents: 18500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c3e1fc7c1e-capa-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c3e1fc7c1e-capa-2.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8094,10 +8333,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-de-tomada-benjamin-bob-love-pino-chato-10a-20a-pino-macico-universal",
     priceCents: 350,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a0ecab3c16-Prancheta-6-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a0ecab3c16-Prancheta-6-2.png",
     category: "Casa e Utensílios Domésticos",
-    stock: -12,
+    stock: -31,
   },
   {
     id: "cmrnvpkao03lhiudht40fvpzq",
@@ -8105,8 +8343,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-maquina-de-selagem-termica-cinza-2-em-1-recarregavel-cor",
     priceCents: 3900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/981600b93e-1-34.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/981600b93e-1-34.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8116,10 +8353,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-2-b-tek-cinta-catraca-de-amarracao-de-carga-reforcada-5m-250kg-cor-laranja",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3392edcaae-6-19.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3392edcaae-6-19.webp",
     category: "Ferramentas",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvpjyh03kyiudhnffnsste",
@@ -8127,10 +8363,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-receptor-bluetooth-usb-musica-p2-chamada-som-carro",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/901ffa5604-Prancheta-6-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/901ffa5604-Prancheta-6-1.png",
     category: "Informática",
-    stock: -1,
+    stock: -8,
   },
   {
     id: "cmrnvpjsf03ksiudhwe8z9dsz",
@@ -8138,8 +8373,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-coaxial-cftv-flexivel-2-vias-80-malha-100m",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4e770f4c4-1-32.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4e770f4c4-1-32.webp",
     category: "Fora de Estoque",
     stock: 2,
   },
@@ -8149,8 +8383,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-de-re-com-sensor-estacionamento-embutido-integrado",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bba1098b0c-4-29.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bba1098b0c-4-29.webp",
     category: "Câmeras",
     stock: 0,
   },
@@ -8160,21 +8393,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-re-estacionamento-visao-noturna-colorida-prova-dagua",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/097fbca861-4-28.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/097fbca861-4-28.webp",
     category: "Câmeras",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvpja403jziudhac53imfe",
-    name: "Rastreador Camera Gps Detector Localizador K18 Fy-990 Cor Pr",
+    name: "Rastreador Camera Gps Detector Localizador K18 Fy-990",
     slug: "rastreador-camera-gps-detector-localizador-k18-fy-990-cor-pr",
     priceCents: 12200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44064e137a-Prancheta-7.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44064e137a-Prancheta-7.png",
     category: "Produtos diversos",
-    stock: -6,
+    stock: -16,
   },
   {
     id: "cmrnvpj3u03jriudh9mwe9a62",
@@ -8182,8 +8413,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "helicoptero-maluco-policia-infantil-bate-volta-luz-e-musicas",
     priceCents: 4300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/505d18309e-6-16.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/505d18309e-6-16.webp",
     category: "Brinquedos",
     stock: 0,
   },
@@ -8193,10 +8423,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-bluetooth-de-conducao-ossea-bluetooth-v5-3-on-tws2",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/96cf30f22a-6-15.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/96cf30f22a-6-15.webp",
     category: "Fones de Ouvido",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvpirs03jdiudhga0vywg9",
@@ -8204,8 +8433,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fonte-universal-bivolt-1000ma-18w-1-5-3-4-5-6-7-5-9-12v-flex",
     priceCents: 4200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/26c6893760-3-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/26c6893760-3-1.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -8215,8 +8443,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-remoto-copiador-duplicador433-garagem-portao-kapbom-ka-1168-4-botoes",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/01c8c1b60a-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/01c8c1b60a-5.png",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -8226,10 +8453,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-aparador-eletrico-sobrancelhas-buco-caneta-depiladora-cor-preto-pilha",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6574d319a5-4-24.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6574d319a5-4-24.webp",
     category: "Salão & Barbearia",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvpi8y03imiudhre9l8ltw",
@@ -8237,10 +8463,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caneta-detectora-de-tensao-corrente-eletrica-teste-sonoro",
     priceCents: 2300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf7686161e-5-22.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf7686161e-5-22.webp",
     category: "Ferramentas",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvpi2t03ibiudhycfzjuzj",
@@ -8248,8 +8473,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chave-de-roda-telescopica-17x19x21x23mm-alongavel-universal",
     priceCents: 5750,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/994bf3381c-6-12.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/994bf3381c-6-12.webp",
     category: "Ferramentas",
     stock: 0,
   },
@@ -8259,8 +8483,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "gaita-de-boca-diatonica-harmonica-bee-azul-24-furos-em-do",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/858ff4efa7-1-24.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/858ff4efa7-1-24.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8270,8 +8493,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "som-de-automotivo-com-bluetooth-lehmox-ley-1854",
     priceCents: 7800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61950c50b7-1-23.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61950c50b7-1-23.webp",
     category: "Caixas de Som",
     stock: 0,
   },
@@ -8281,8 +8503,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "som-radio-automotivo-bluetooth-60w-knup-kp-c30bh",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d350db34cd-2-21.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d350db34cd-2-21.webp",
     category: "Caixas de Som",
     stock: 0,
   },
@@ -8292,8 +8513,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carregador-duplo-com-fio-para-baterias-pilhas-li-ion-recarregaveis-carga-rapida",
     priceCents: 2600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/19b9cf3c4b-2-20.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/19b9cf3c4b-2-20.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8303,8 +8523,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chapinha-prancha-alisadora-profissional-de-alta-qualidade-32w-tomate-mse-2800",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f43e33eed2-1-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f43e33eed2-1-2.png",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
@@ -8314,8 +8533,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "transformador-tomada-110v-para-220v-e-220v-para-110v-100w",
     priceCents: 3600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b2683c651c-4-18-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b2683c651c-4-18-1.webp",
     category: "Informática",
     stock: 0,
   },
@@ -8325,8 +8543,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "led-de-rolagem-de-janelas-de-carro-lampada-de-olho-colorida-flexivel-de-tela-macia",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2e494a19b8-capa2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2e494a19b8-capa2.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -8336,10 +8553,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "conjunto-de-aquarela-com-12-cores-conjunto-profissional",
     priceCents: 5300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ef395fef2b-1a.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ef395fef2b-1a.png",
     category: "Fora de Estoque",
-    stock: 49,
+    stock: 31,
   },
   {
     id: "cmrnvpgk303gfiudht28x1ipg",
@@ -8347,19 +8563,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-impressora-portatil-bluetooth-80mm-android-usb-cor-preto-dyj-001",
     priceCents: 35500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6fc15ed143-1-17.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6fc15ed143-1-17.webp",
     category: "Informática",
     stock: 0,
   },
   {
     id: "cmrnvpgdy03g4iudh7udh04z7",
-    name: "Endoscópio Industrial Micro Câmera 0.8mm Sonda 5m/10m Inspeção",
+    name: "Endoscópio Industrial Micro Câmera 0.8mm Sonda 10m Inspeção",
     slug: "endoscopio-industrial-micro-camera-0-8mm-sonda-5m-10m-inspecao",
-    priceCents: 21500,
+    priceCents: 19900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5af360d88c-2-14.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5af360d88c-2-14.webp",
     category: "Ferramentas",
     stock: 0,
   },
@@ -8369,10 +8583,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-camera-portatil-hd-1080p-do-projeto-grampo-traseiro-wifi-visualizacao-remota-gravadores-de-video",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6bbdafc234-1-15.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6bbdafc234-1-15.webp",
     category: "Câmeras",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvpg1k03foiudhv3l75jvp",
@@ -8380,8 +8593,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "domino-profissional-preto-e-branco-12mm-de-espessura",
     priceCents: 7700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/84b1e4de85-1-13.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/84b1e4de85-1-13.webp",
     category: "Brinquedos",
     stock: -1,
   },
@@ -8391,8 +8603,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "compressor-ar-veicular-digital-portatil-calibrador-pneu-luatek-lkd-212",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5c406fb60a-ca.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5c406fb60a-ca.webp",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -8402,8 +8613,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "interruptor-touch-wifi-inteligente-4-tecla-alexa-google-siri",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d1a0ca5189-1-12.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d1a0ca5189-1-12.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -8413,19 +8623,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ewelink-inteligente-interruptor-de-controle-remoto-sem-fio-modulo-universal",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/34159af762-1-11.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/34159af762-1-11.webp",
     category: "Ferramentas",
     stock: 0,
   },
   {
     id: "cmrnvpfdb03eriudhp012tgxv",
-    name: "Tablet E1035 Touch/teclado/capa 6gb Ram 128gb 10.1 Estudo + Mouse",
+    name: "Tablet E1035 Touch/teclado/capa 10.1 Estudo + Mouse",
     slug: "tablet-e1038-touch-teclado-capa-6gb-ram-128gb-10-1-estudo",
     priceCents: 49900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ef3c48d591-capa2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ef3c48d591-capa2.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8435,10 +8643,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tablet-infantil-a16-com-capa-de-7-polegadas-64-gb-e-4-gb-de-ram-android-parental-control-wifi-gps-kids-space",
     priceCents: 28500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45faeb8a94-capa.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45faeb8a94-capa.webp",
     category: "Informática",
-    stock: -11,
+    stock: -94,
   },
   {
     id: "cmrnvpf0j03ediudhc06ygj74",
@@ -8446,8 +8653,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "grampeador-de-metal-super-resistente-alta-qualidade-ate-25-folhas-le-6010",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/076fa4209c-3-7.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/076fa4209c-3-7.webp",
     category: "Ferramentas",
     stock: 0,
   },
@@ -8457,10 +8663,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mixer-misturador-leite-cafe-capuccino-shake-rapido-e-facil-cor-branco",
     priceCents: 3700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5e1d128868-4-7.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5e1d128868-4-7.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: -4,
+    stock: -12,
   },
   {
     id: "cmrnvpeo903dsiudhja5lvkyn",
@@ -8468,8 +8673,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "gerador-fonte-alimentacao-bateria-litio-100w-110v-portatil",
     priceCents: 58500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8ba1303a9c-1-6.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8ba1303a9c-1-6.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8479,8 +8683,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ratoeiras-adesivas-cola-pega-rato-pragas",
     priceCents: 1850,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d22bc15adf-5-4.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d22bc15adf-5-4.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8490,8 +8693,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "roteador-wireless-multimodo-300-mbps-n300-tl-wr829n-branco-tp-link",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/af80707cc1-2-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/af80707cc1-2-2.webp",
     category: "Informática",
     stock: -1,
   },
@@ -8501,21 +8703,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "repetidor-de-sinal-wi-fi-n-300mb-tl-wa855re-cor-branco-tp-link",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7388a6687-cap.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7388a6687-cap.jpg",
     category: "Informática",
     stock: 0,
   },
   {
     id: "cmrnvpdzh03cviudhc9pse288",
-    name: "Lanterna Recarregável Led Lampião Solar Camping Pesca Cor Preto",
+    name: "Lanterna Recarregável Led Lampião Solar Camping Pesca",
     slug: "lanterna-recarregavel-led-lampiao-solar-camping-pesca-cor-preto",
     priceCents: 3700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2cc3cd0abf-1-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2cc3cd0abf-1-11.jpg",
     category: "Iluminação",
-    stock: 0,
+    stock: -9,
   },
   {
     id: "cmrnvpdt703cmiudhu6eo2eqk",
@@ -8523,8 +8723,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-bluetooth-auxiliar-subwoofer-pc-notebook-usb-p2",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b59f8e31d-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b59f8e31d-2.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8534,10 +8733,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "filtro-de-linha-5-tomadas-sem-fio-portatil-c-fusivel",
     priceCents: 2200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/270b1e08fe-1-42.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/270b1e08fe-1-42.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -15,
   },
   {
     id: "cmrnvpdgx03c6iudh5qcekmz2",
@@ -8545,43 +8743,39 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "inversor-de-potencia-para-carro-12v-24v-110v-220v-4-usb-200w",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2e24f01c99-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2e24f01c99-1.png",
     category: "Produtos diversos",
-    stock: -17,
+    stock: -32,
   },
   {
     id: "cmrnvpdav03bwiudhjggw1ucp",
     name: "Massageador Novo de Pescoço Relaxante Portátil",
     slug: "massageador-novo-de-pescoco-relaxante-portatil",
-    priceCents: 9900,
+    priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/17c63d59e7-1-40.webp",
-    category: "Produtos diversos",
-    stock: -1,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/17c63d59e7-1-40.webp",
+    category: "Beleza e Cuidado Pessoal",
+    stock: -6,
   },
   {
     id: "cmrnvpd4r03bqiudhgu8293r6",
     name: "Kit Limpa Lente Cleaner Limpeza Dvd/cd/blu-ray/game",
     slug: "kit-limpa-lente-cleaner-limpeza-dvd-cd-blu-ray-game",
-    priceCents: 2000,
+    priceCents: 900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ed43731e9a-Design-sem-nome.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ed43731e9a-Design-sem-nome.png",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -12,
   },
   {
     id: "cmrnvpcyo03bhiudhw35gz14m",
-    name: 'Porta Retrato Digital 10" 1280x800, exiba Momentos Especiais',
+    name: "Porta Retrato Digital 10\" 1280x800, exiba Momentos Especiais",
     slug: "porta-retrato-digital-10-1280x800-exiba-momentos-especiais",
     priceCents: 35500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4915722e52-1-38.webp",
-    category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4915722e52-1-38.webp",
+    category: "Fora de Estoque",
+    stock: -3,
   },
   {
     id: "cmrnvpcsi03baiudhb7d1tn62",
@@ -8589,8 +8783,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-abridor-vinho-automatico-a-pilha-com-acessorios-cor-prata",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/189b4f1630-1-37.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/189b4f1630-1-37.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8600,8 +8793,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chaleira-eletrica-dobravel-silicone-600ml-cor-branco-110v",
     priceCents: 5900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9cf9977581-1-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9cf9977581-1-9.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8611,8 +8803,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedos-montessori-de-labirinto-magnetico",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a709aca403-6-26.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a709aca403-6-26.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8622,8 +8813,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carrinho-formula-1-controle-profissional-com-luzes-e-fumaca-cor-branco-personagem-f1-art-brink",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c0c68b3ff7-1-34.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c0c68b3ff7-1-34.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8633,8 +8823,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-de-celular-moto-impermeavel-carregador-usb-6-3-pol",
     priceCents: 3700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/943ba4bb84-3-34.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/943ba4bb84-3-34.webp",
     category: "Ring Light & Suportes",
     stock: 50,
   },
@@ -8644,8 +8833,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "base-carregador-dock-2-baterias-para-controle-xbox-one-knup",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d5c552088-3-33.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d5c552088-3-33.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8655,8 +8843,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "case-usb-3-0-para-hd-sata-3-5-xt-2049-xtrad",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f2d4870cc5-1-31.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f2d4870cc5-1-31.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8666,8 +8853,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-localizador-testador-de-cabos-caneta-indutiva-zumbidor",
     priceCents: 12500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/28c1e16a92-7-15.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/28c1e16a92-7-15.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8677,8 +8863,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luz-noturna-led-tomada-infantil-bebe-mini-abajur",
     priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/190fd82b57-1-29.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/190fd82b57-1-29.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8688,10 +8873,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "macarico-mini-portatil-recarregavel-ultra-chama-1000-graus",
     priceCents: 2250,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a9793f99ac-1-28.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a9793f99ac-1-28.webp",
     category: "Ferramentas",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvpb2j038xiudhqoxq42ga",
@@ -8699,8 +8883,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-case-capa-celular-a-prova-dagua-gps-p-moto-bike-le-030d",
     priceCents: 2900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e125511128-1-27.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e125511128-1-27.webp",
     category: "Celulares e Smartphones",
     stock: 0,
   },
@@ -8710,8 +8893,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-celular-moto-bike-capa-prova-dagua-67-universal",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/80ddbb41d9-5-18.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/80ddbb41d9-5-18.webp",
     category: "Celulares e Smartphones",
     stock: 0,
   },
@@ -8721,8 +8903,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-aquario-recarregavel-por-usb-aquario-multifuncional-duravel-para-decoracao-de-quarto-preto",
     priceCents: 12000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92eeb54b11-6-18.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92eeb54b11-6-18.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8732,21 +8913,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mouse-sem-fio-vertical-ergonomico-gamer-recarregavel-2-4-usb-cor-preto",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2f30cd8cb0-1-23.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2f30cd8cb0-1-23.webp",
     category: "Informática",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvpae0037xiudhekxx9lyz",
-    name: "Máquina Seladora À Vacuo Empacotadora Automatica 90w Luatek Cor Preto 127V",
+    name: "Máquina Seladora À Vacuo Empacotadora Automatica",
     slug: "maquina-seladora-a-vacuo-empacotadora-automatica-90w-luatek-cor-preto-127v",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ad5e48b21e-3-24.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ad5e48b21e-3-24.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvpa0r037ciudh7j12opnw",
@@ -8754,8 +8933,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-smartwatch-amazfit-bip-5-a2215-preto-com-alexa-gps",
     priceCents: 37000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/987a75c7db-bra.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/987a75c7db-bra.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8765,21 +8943,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "switch-8-portas-gigabit-rede-10-100-1000mbps-hub-rj45-bivolt",
     priceCents: 9600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/775c457211-1-19.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/775c457211-1-19.webp",
     category: "Informática",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvp9og036wiudhan68013y",
     name: "Suporte Luminária Ring Light De Celular P/ Lives Fotos Vídeo Bivolt",
     slug: "suporte-luminaria-ring-light-de-celular-p-lives-fotos-video-estrutura-preto-luz-branco-quente-branco-frio-127-220v",
-    priceCents: 9300,
+    priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/48c1148b0a-ring.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/48c1148b0a-ring.png",
     category: "Ring Light & Suportes",
-    stock: 0,
+    stock: -11,
   },
   {
     id: "cmrnvp9id036qiudhsewr3tdt",
@@ -8787,10 +8963,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fechadura-digital-para-porta-de-vidro-com-senha-e-biometria-adicionar-aos-favoritos",
     priceCents: 34500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/12758f1c05-1-17.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a7d18b9c12-3-19.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvp9c8036jiudhxtzvwnib",
@@ -8798,8 +8973,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tela-de-toque-portatil-de-1026-carplay",
     priceCents: 32500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2039ecdae9-capa-6.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2039ecdae9-capa-6.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8809,8 +8983,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "central-multimidia-universal-2din-7p-android-12-wifi-camera",
     priceCents: 34500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8251c7e40d-5-11.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8251c7e40d-5-11.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8820,10 +8993,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tripe-profissional-b-max-bmg-69-camera-celular-13m",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d137418aaf-2-13.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d137418aaf-2-13.webp",
     category: "Media Streaming",
-    stock: -4,
+    stock: -6,
   },
   {
     id: "cmrnvp8tp0361iudh74ov26pw",
@@ -8831,21 +9003,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-celular-carro-veicular-para-brisa-painel-gps-tomate-mtg-258",
     priceCents: 2650,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/429d4cc700-4-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/429d4cc700-4-10.jpg",
     category: "Fora de Estoque",
-    stock: 5,
+    stock: 4,
   },
   {
     id: "cmrnvp8nk035qiudhn8qane2t",
     name: "Depilador Elétrico Aparador Sobrancelhas Rosto Buço",
     slug: "depilador-eletrico-aparador-sobrancelhas-rosto-buco",
-    priceCents: 3000,
+    priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6b0ddd73a9-2-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6b0ddd73a9-2-6.jpg",
     category: "Salão & Barbearia",
-    stock: 0,
+    stock: 50,
   },
   {
     id: "cmrnvp8he035fiudhrzfhb9e8",
@@ -8853,8 +9023,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "auxiliar-de-partida-acionador-carro-10800mah-12v-chupeta-usb",
     priceCents: 19000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2e02caba8-capa-4.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2e02caba8-capa-4.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8864,8 +9033,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-ponto-relogio-biometrico-digital-eletronico-empresa",
     priceCents: 17200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9632107ed6-1-11.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9632107ed6-1-11.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8875,8 +9043,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "aneng-bt-171-12volts-aparelho-teste-de-bateria-profissional",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7ed8833dbf-3-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7ed8833dbf-3-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8886,8 +9053,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "hmaston-ej-s8-fone-de-ouvido-bluetooth-sem-fio-gamer-sport-microfone-tws",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/afe7d6676a-5-7.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/afe7d6676a-5-7.webp",
     category: "Fones de Ouvido",
     stock: 0,
   },
@@ -8897,8 +9063,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caneca-com-aquecimento-termostatico-caneca-de-ceramica",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/09a8e90e78-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/09a8e90e78-10.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8908,8 +9073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chave-de-fenda-catraca-xiaomi-com-16-ponteiras-preto",
     priceCents: 15500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c8cb7d7d6-6-12.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c8cb7d7d6-6-12.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8919,8 +9083,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-aquecedor-portatil-eletrico-127-220v-controle-visor-cor-preto-127-220v",
     priceCents: 11900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4bedd7bd3e-capa-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4bedd7bd3e-capa-2.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8930,8 +9093,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-barco-lancha-controle-remoto-para-piscinas-e-lago",
     priceCents: 8300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/777be9e7ea-1-9.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/777be9e7ea-1-9.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8941,10 +9103,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-bluetooth-relogio-digital-despertador-led",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4ee02f2434-capa-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4ee02f2434-capa-1.jpg",
     category: "Caixas de Som",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvp6xx0331iudhvj0z6nxe",
@@ -8952,8 +9113,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "shake-gloss-vivai",
     priceCents: 2130,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7236c6e288-2-7.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7236c6e288-2-7.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
@@ -8961,12 +9121,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvp6rt032siudhomu74e3r",
     name: "Caneta Terapêutica Acupuntura Elétrica Estimula Pontos Fisio Cor Prateado PilhasAA",
     slug: "caneta-terapeutica-acupuntura-eletrica-estimula-pontos-fisio-cor-prateado-pilhasaa",
-    priceCents: 3500,
+    priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b98c9fd20f-1-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b98c9fd20f-1-2.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -4,
+    stock: -16,
   },
   {
     id: "cmrnvp6lq032iiudhja7gypmp",
@@ -8974,8 +9133,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-03-esponjas-redondas-para-maquiagem-sabrina-sato",
     priceCents: 1840,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d070a96075-ca2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d070a96075-ca2.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8985,8 +9143,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pote-de-argila-facial-capilarcorporal-100g-blue-moon-tipo-de-pele-oleosa",
     priceCents: 1950,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b79d0066d5-dourada.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b79d0066d5-dourada.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -8996,8 +9153,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "esponja-limpeza-facial-escova-massageadora-esfoliante-2-em-1",
     priceCents: 2030,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/33eb4bc7d0-7-3.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/33eb4bc7d0-7-3.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9007,8 +9163,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "massageador-de-pe-pernas-panturrilhas-massagem-shiatsu-cor-preto-110v",
     priceCents: 12500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/36b3bf83f2-8.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/36b3bf83f2-8.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9018,8 +9173,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mixer-portatil-branco-batedor-recarregavel-misturador-ovos-bebidas",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d83a0ce60d-capa-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d83a0ce60d-capa-1.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9029,10 +9183,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-ar-condicionado-climatizador-sala-quarto-escritorio",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf9383dc84-capa.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf9383dc84-capa.jpg",
     category: "Umidificadores & Ventiladores",
-    stock: -3,
+    stock: -6,
   },
   {
     id: "cmrnvp5ld030wiudh8935nrrv",
@@ -9040,10 +9193,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-cofre-eletronico-digital-marca-lorben-cofrinho-infantil-com-senha-entrada-automatica-de-notas-luzes-led-e-sons-compativel-com-moedas-e-cedulas-feito-em-plastico-absmini-cofre-eletro",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f239da2592-2-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f239da2592-2-2.webp",
     category: "Brinquedos",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvp5f3030piudhraft93db",
@@ -9051,8 +9203,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sabonete-facial-mousse-feels-mood-revitalizante-ruby-rose",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/86825b7929-whatsapp-image-2024-03-07-at-15-42-00-cuzqeos55v2.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/86825b7929-whatsapp-image-2024-03-07-at-15-42-00-cuzqeos55v2.jpeg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9062,8 +9213,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sabonete-facial-uva-rr44012-melu",
     priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/039c9fec32-12.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/039c9fec32-12.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9073,8 +9223,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "barbeador-360-eletrico-5-laminas-barba-cabelo-recarregavel",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/70f46ed229-2-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/70f46ed229-2-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9084,8 +9233,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "holofote-led-super-brilhante-com-tripe-e-usb",
     priceCents: 11000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3663b9e733-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3663b9e733-1.jpg",
     category: "Iluminação",
     stock: 0,
   },
@@ -9095,8 +9243,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-de-ferramentas-8em1-com-lanterna-led-e-7-chave-de-fenda",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92caa682ed-capa.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92caa682ed-capa.webp",
     category: "Ferramentas",
     stock: 0,
   },
@@ -9106,8 +9253,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-memo-ak66-gamepad-4-gatilhos-p-freefire-e-pubg",
     priceCents: 2200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f42d538751-Prancheta-2-14.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f42d538751-Prancheta-2-14.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9117,10 +9263,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-sem-fio-bluetooth-para-capacete-de-motocicleta-com-microfone",
     priceCents: 7100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/038cc32bbf-Prancheta-2-13.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/038cc32bbf-Prancheta-2-13.png",
     category: "Fones de Ouvido",
-    stock: -2,
+    stock: -5,
   },
   {
     id: "cmrnvp48202z5iudh9n2seifi",
@@ -9128,10 +9273,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carregador-bateria-12v-ate-100-amperes-carro-moto-caminhao",
     priceCents: 8200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bf6f998b3c-Prancheta-4-9.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bf6f998b3c-Prancheta-4-9.png",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvp42002yyiudhe0at8dl9",
@@ -9139,8 +9283,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "b-massageador-de-joelho-aquecido-vibracao-5-marchas",
     priceCents: 7700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c930a21da3-Prancheta-3-9.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c930a21da3-Prancheta-3-9.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9150,21 +9293,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mouse-recarregavel-sem-fio-wireless-2-4ghz-led",
     priceCents: 2400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/50121b2ec0-Prancheta-2-8.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/50121b2ec0-Prancheta-2-8.png",
     category: "Informática",
-    stock: 0,
+    stock: -4,
   },
   {
     id: "cmrnvp3pt02ymiudhgjf8lgvw",
     name: "Coador Filtro de Café em Aço Inox .- Não usa Papel!",
     slug: "coador-filtro-de-cafe-em-aco-inox-nao-usa-papel",
-    priceCents: 3600,
+    priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b245c2d74-Prancheta-3-6.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b245c2d74-Prancheta-3-6.png",
     category: "Casa e Utensílios Domésticos",
-    stock: 100,
+    stock: 99,
   },
   {
     id: "cmrnvp3jr02yfiudhv0org1n7",
@@ -9172,8 +9313,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "passadeira-a-vapor-nlxs-a-vapor-0514aa-1350w-cor-azul-e-branco-127v",
     priceCents: 22100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fe8accb697-Prancheta-3-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fe8accb697-Prancheta-3-5.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9183,8 +9323,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "aquario-de-mesa-com-luminaria-led",
     priceCents: 8600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c2790ca73-1-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c2790ca73-1-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9194,8 +9333,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-de-cozinhar-ovos-a-vapor-cozimento-facil-e-saudavel",
     priceCents: 4600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/467420a639-Prancheta-5-3.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/467420a639-Prancheta-5-3.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9205,8 +9343,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caderno-capibara-capivara-32-folhas-bloco-de-notas-anotacoes-capa-que-brilha",
     priceCents: 1800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cdc6745d0b-c3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cdc6745d0b-c3.jpg",
     category: "Papelaria",
     stock: 0,
   },
@@ -9216,8 +9353,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pelucia-zebra-20cm-bicho-decoracao-infantil-selva-safari",
     priceCents: 4600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f286f3ee95-z1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f286f3ee95-z1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9227,10 +9363,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "canetinha-acrilica-a-prova-dwaterproof-agua-cores-marcador-acrilico-desenho-pintura-marcadores-canetas-pintura-diy-artesanato",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/88e57b7c9f-c2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/88e57b7c9f-c2.jpg",
     category: "Papelaria",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvp2jh02xdiudh8nk87p6h",
@@ -9238,8 +9373,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "guarda-roupa-arara-cabideiro-para-roupa-triplo-cabides",
     priceCents: 9800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/22a5f2941e-13.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/22a5f2941e-13.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9249,8 +9383,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sapateira-prime-armario-organizador-dobravel-com-ziper-10-niveis-cor-preto",
     priceCents: 6900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/033b2f6b60-sa5.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/033b2f6b60-sa5.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9260,8 +9393,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mesa-som-lelong-7-canais-bluetooth-usb-c-equalizador-le-709-microfone-condensador-tomate-mt-1026-c-braco-articulado-de-mesa",
     priceCents: 51600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/afe14ef539-Prancheta-4-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/afe14ef539-Prancheta-4-2.png",
     category: "Caixas de Som",
     stock: 40,
   },
@@ -9271,8 +9403,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "locao-corporal-melu-creme-buttercream",
     priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8e5f71ea85-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8e5f71ea85-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9282,8 +9413,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sabonete-liquido-mao-e-corpo-250-ml-melu-by-ruby-rose",
     priceCents: 2190,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d4899bdb83-s.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d4899bdb83-s.webp",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
@@ -9293,8 +9423,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-c-7-pinceis-profissionais-diamond-macrilan-ed003-cor-branco",
     priceCents: 7100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9fdd1e8eaf-Prancheta-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9fdd1e8eaf-Prancheta-1-1.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9304,8 +9433,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sabonete-facial-mousse-beautyloo-150ml-tutti-frutti",
     priceCents: 1300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4def4b759a-Prancheta-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4def4b759a-Prancheta-1.png",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
@@ -9315,8 +9443,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "agua-micelar-maxlove-revitalizante-todo-tipo-de-pele-dia-noite",
     priceCents: 950,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d700467fd-Prancheta-1-62.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7d700467fd-Prancheta-1-62.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9326,8 +9453,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "paleta-de-sombras-divino-poder-mk1345-dapop",
     priceCents: 2150,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8120d01432-Prancheta-4-49.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8120d01432-Prancheta-4-49.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9337,10 +9463,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "capivara-que-pula-e-faz-som",
     priceCents: 2200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/354b66abb0-1-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/354b66abb0-1-2.png",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvp0p502vgiudhl5eka1v1",
@@ -9348,8 +9473,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "estojo-de-armazenamento-anticolisao-para-portal-ps5",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bc67714fb7-Prancheta-1-60.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bc67714fb7-Prancheta-1-60.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9357,12 +9481,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvp0j202v5iudhtha2r6zm",
     name: "Mini Projetor Portátil Hy300 1080p Full Hd Android Cinema Bt",
     slug: "mini-projetor-portatil-hy300-1080p-full-hd-android-cinema-bt",
-    priceCents: 19800,
+    priceCents: 17000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/97d7f362d5-Prancheta-2-57.png",
-    category: "Informática",
-    stock: -1,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/97d7f362d5-Prancheta-2-57.png",
+    category: "Iluminação",
+    stock: -8,
   },
   {
     id: "cmrnvp0cy02uyiudht0b63sff",
@@ -9370,10 +9493,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquininha-barba-pezinho-para-cortar-cabelo-panasonic-er389k",
     priceCents: 17500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b6e8e85481-Prancheta-1-58.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b6e8e85481-Prancheta-1-58.png",
     category: "Salão & Barbearia",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvp06e02utiudhzgvmzwvo",
@@ -9381,8 +9503,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-smartwatch-xiaomi-redmi-watch-5-lite-gps-caixa-branco-pulseira-preto-bisel-preto-desenho-da-pulseira-milanese",
     priceCents: 31000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c38f347953-Prancheta-3-55.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c38f347953-Prancheta-3-55.png",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -9392,10 +9513,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fire-tv-4k-max-16gb-alexa-controle-de-voz",
     priceCents: 36900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e423b442c-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e423b442c-1-1.png",
     category: "Media Streaming",
-    stock: -4,
+    stock: -46,
   },
   {
     id: "cmrnvozua02ueiudhjjdz630j",
@@ -9403,8 +9523,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "paleta-de-sombra-28-cores-vivai-maquiagem-cores-lindas-pincel-incluso",
     priceCents: 1700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0da06c9f28-Prancheta-4-44.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0da06c9f28-Prancheta-4-44.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9414,10 +9533,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "rimel-mascara-de-cilios-preto-glam-vivai-unidade",
     priceCents: 1400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82b7391401-Prancheta-3-53.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/82b7391401-Prancheta-3-53.png",
     category: "Beleza e Cuidado Pessoal",
-    stock: -1,
+    stock: 0,
   },
   {
     id: "cmrnvozhk02u2iudhkp0lgqo1",
@@ -9425,8 +9543,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "paleta-de-contorno-matte-vivai-1058-1-8-unidade",
     priceCents: 1590,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a3f38cefd5-Prancheta-3-52.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a3f38cefd5-Prancheta-3-52.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9436,8 +9553,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "creme-firmador-q-bum-bum-poran-145g-renda-se-ao-melhor-cuidado-para-sua-pele",
     priceCents: 1650,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2566fbc778-Prancheta-1-52.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2566fbc778-Prancheta-1-52.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9447,20 +9563,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "quarteto-de-blush-pb2045-playboy",
     priceCents: 950,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4d1b497193-Prancheta-1-50.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4d1b497193-Prancheta-1-50.png",
     category: "Fora de Estoque",
-    stock: 0,
-  },
-  {
-    id: "cmrnvoyzb02tmiudhtvyuo48y",
-    name: "Paleta De Sombras Hbe2201 Radiant Eyes Ruby Rose",
-    slug: "paleta-de-sombras-cherry-boom-dapop",
-    priceCents: 2500,
-    compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/91597eb887-Prancheta-1-49.png",
-    category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
   {
@@ -9469,8 +9573,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lenco-facial-demaquilante-feels-mood-ruby-rose",
     priceCents: 1400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dbac11d3c8-Prancheta-4-42.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dbac11d3c8-Prancheta-4-42.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9478,21 +9581,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvoyn602t8iudhn2bono0c",
     name: "Ventilador De Coluna Silencioso 3 Pás 3 Velocidades",
     slug: "ventilador-de-coluna-silencioso-3-pas-3-velocidades",
-    priceCents: 24900,
+    priceCents: 16900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/505327a815-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/505327a815-1.png",
     category: "Umidificadores & Ventiladores",
     stock: 0,
   },
   {
     id: "cmrnvoyh602t0iudhj5fqvu7q",
-    name: "Máscara Para Cílios A Prova D'Água 2X1 17g",
+    name: "Máscara Para Cílios A Prova D’Água 2X1 17g",
     slug: "mascara-para-cilios-a-prova-dagua-2x1-17g",
     priceCents: 1400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ba62ca2ec9-Prancheta-4-41.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ba62ca2ec9-Prancheta-4-41.png",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
@@ -9502,8 +9603,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "paleta-de-sombras-basic-fall-hbf527-ruby-rose-copia",
     priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9033bf2aa6-Prancheta-4-40.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9033bf2aa6-Prancheta-4-40.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9513,8 +9613,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "paleta-de-sombras-basic-fall-hbf527-ruby-rose",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d95694a755-Prancheta-2-43.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d95694a755-Prancheta-2-43.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9524,8 +9623,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "stitch-pelucia-que-respira-acende-e-toca-musica",
     priceCents: 9400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f4575d732-ss.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f4575d732-ss.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9535,8 +9633,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caneta-brush-pen-60-cores-canetinha-ponta-fina-e-ponta-pincel",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/27d2b80bb5-d.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/27d2b80bb5-d.webp",
     category: "Papelaria",
     stock: 0,
   },
@@ -9546,10 +9643,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "barbeador-eletrico-portatil-para-homens-preto-umido-e-seco",
     priceCents: 2600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d11d528ad2-Prancheta-5-32.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d11d528ad2-Prancheta-5-32.png",
     category: "Salão & Barbearia",
-    stock: -4,
+    stock: -83,
   },
   {
     id: "cmrnvoxgh02s1iudh8f32c3d3",
@@ -9557,8 +9653,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "canetinha-triangular-ponta-dupla-hidrografica-pote-24-cores-tinta-colorido-exterior-branco",
     priceCents: 5400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c4804c73f4-2-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c4804c73f4-2-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9568,8 +9663,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cozy-and-fluffy-bluish-livro-de-colorir",
     priceCents: 5100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/de890feb8b-Prancheta-1-42.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/de890feb8b-Prancheta-1-42.png",
     category: "Brinquedos",
     stock: 2,
   },
@@ -9579,10 +9673,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "aparelho-lanterna-tatica-auto-defesa-928",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bdb9466ce0-Prancheta-1-41.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bdb9466ce0-Prancheta-1-41.png",
     category: "Ferramentas",
-    stock: 0,
+    stock: -11,
   },
   {
     id: "cmrnvowyd02rliudherwn25bd",
@@ -9590,8 +9683,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-de-facas-9-pecas-profissional-aco-inoxidavel-para-churrasco-e-cozinha-que-bom",
     priceCents: 12700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/40e6722506-Prancheta-1-40.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/40e6722506-Prancheta-1-40.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9601,8 +9693,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "blocos-montar-magnetico-educativo-bolas-bastoes-brinquedo",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9330d64201-Prancheta-1-38.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9330d64201-Prancheta-1-38.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9612,8 +9703,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bolsa-transparente-impermeavel-com-2-necessaires-praia-academia",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/73392e31e8-1-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/73392e31e8-1-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9623,8 +9713,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "livro-cozy-biblical-para-desenhar-estilo-livro-comfy-e-cozy",
     priceCents: 1800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0209fea492-1-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0209fea492-1-2.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9634,10 +9723,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "capivara-de-pelucia-toca-musica-respira-e-acende",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ee0f3267df-1-3.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ee0f3267df-1-3.png",
     category: "Brinquedos",
-    stock: 5,
+    stock: 0,
   },
   {
     id: "cmrnvow3p02qfiudhzw9wvb7l",
@@ -9645,8 +9733,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "marmita-fitness-ecologica-lunch-box-900ml-3-divisorias-com-talher-lancheira",
     priceCents: 1800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dff41a6288-MAAA.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dff41a6288-MAAA.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9656,8 +9743,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "filtros-para-cafeteira-gotejador-de-filtro-de-cafe",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e4ed5959e7-Prancheta-1-36.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e4ed5959e7-Prancheta-1-36.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9667,8 +9753,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caneta-hidrografica-fine-line-ponta-porosa-fina-0-4-mm-kit-12-24-36-48-cores",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/76213912f6-1111.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/76213912f6-1111.jpg",
     category: "Papelaria",
     stock: 0,
   },
@@ -9678,8 +9763,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "gravador-de-voz-digital-mt-556-8gb-de-memoria-tela-lcd-mp3-player-wma-17620-minutos-de-gravacao",
     priceCents: 8700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ac0efcb6c-Prancheta-4-30.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ac0efcb6c-Prancheta-4-30.png",
     category: "Informática",
     stock: 0,
   },
@@ -9689,8 +9773,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "conjunto-de-facas-com-cepo-6-pecas-just-home-collection",
     priceCents: 12700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/196e72ae39-Prancheta-3-34.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/196e72ae39-Prancheta-3-34.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9700,8 +9783,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smartwatch-xiaomi-mi-band-9-pro-1-62-gps-caixa-preto",
     priceCents: 42000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0f113eb7fa-Prancheta-5-23.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0f113eb7fa-Prancheta-5-23.png",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -9711,8 +9793,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-secador-e-chapinha-philco-bivolt",
     priceCents: 17500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a07a153c4-Prancheta-1-33.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0a07a153c4-Prancheta-1-33.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9722,8 +9803,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "prancha-chapinha-alisa-e-faz-cachos-2-em-1-move-liss-bivolt",
     priceCents: 7700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b0946895a5-Prancheta-2-31.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b0946895a5-Prancheta-2-31.png",
     category: "Beleza e Cuidado Pessoal",
     stock: 0,
   },
@@ -9733,10 +9813,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chaveador-switch-hub-hdmi-4k-3d-bidirecional-hub-2x1-e-1x2",
     priceCents: 5700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45b4f42bbf-Prancheta-1-30.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45b4f42bbf-Prancheta-1-30.png",
     category: "Informática",
-    stock: 0,
+    stock: -6,
   },
   {
     id: "cmrnvoujk02ooiudh8a7k59vz",
@@ -9744,8 +9823,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chaleira-eletrica-automotivo-residencial-portatil-cor-preto-e-inox-12v-carro-110-casa",
     priceCents: 9200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/77cdd8b89f-Prancheta-2-26.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/77cdd8b89f-Prancheta-2-26.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9753,12 +9831,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvoudi02ohiudh5i7nnq4m",
     name: "Mini Impressora Portatil Bluetooth Térmica 58mm Android/ios",
     slug: "mini-impressora-portatil-bluetooth-termica-58mm-android-ios",
-    priceCents: 11500,
+    priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a6b9881a42-Prancheta-2-24.png",
-    category: "Fora de Estoque",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a6b9881a42-Prancheta-2-24.png",
+    category: "Informática",
+    stock: 50,
   },
   {
     id: "cmrnvou7w02oaiudhebk9wv4k",
@@ -9766,8 +9843,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-placa-de-pintura-magnetica-desenho-com-contas",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/78f83e263f-Prancheta-1-24.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/78f83e263f-Prancheta-1-24.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9777,8 +9853,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "jogo-de-facas-7-pecas-profissional-aco-inoxidavel-para-churrasco-e-cozinha-faca",
     priceCents: 12700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7e81bc7a8c-Prancheta-4-18.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7e81bc7a8c-Prancheta-4-18.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -9786,12 +9861,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvotvt02nviudhgjvuet2h",
     name: "Nebulizador Ultra-Sônico De Ar Comprimido Inalador De Névoa Salina De Baixo Ruído Uso Adulto / Infantil",
     slug: "nebulizador-ultra-sonico-de-ar-comprimido-inalador-de-nevoa-salina-de-baixo-ruido-uso-adulto-infantil",
-    priceCents: 7200,
+    priceCents: 5900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5b0052ce97-Prancheta-4-17.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5b0052ce97-Prancheta-4-17.png",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvotpp02noiudhxteqjsri",
@@ -9799,8 +9873,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-bluetooth-5-3-sem-fio-hmaston-6h-duracao",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e46091006c-Prancheta-2-20.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e46091006c-Prancheta-2-20.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9810,8 +9883,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smartwatch-hw9-ultra-max-series-9-2023-tela-amoled-gps-laranja",
     priceCents: 11900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d08134cbd0-Prancheta-1-19.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d08134cbd0-Prancheta-1-19.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9821,8 +9893,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "livro-de-colorir-bobbie-goods-capa-dura-50-paginas-de-desenhos-em-folha-a5-180-gr-boobie-goods",
     priceCents: 1700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/190140ba36-Prancheta-1-18.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/190140ba36-Prancheta-1-18.png",
     category: "Papelaria",
     stock: 0,
   },
@@ -9832,8 +9903,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-carretel-mangueira-portatil-irrigar-jardim-lavar-carro",
     priceCents: 12700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/baf78a67d5-Prancheta-1-17.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/baf78a67d5-Prancheta-1-17.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9843,10 +9913,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "anemometro-climatico-proster-gm816a-medidor-de-temperatura-do-vento",
     priceCents: 6300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/55c0158949-Prancheta-1-13.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/55c0158949-Prancheta-1-13.png",
     category: "Ferramentas",
-    stock: -2,
+    stock: -4,
   },
   {
     id: "cmrnvosv502muiudhwp5b2bet",
@@ -9854,8 +9923,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-teclado-wireless-ultra-fino-mouse-capa-protetora-cor-do-mouse",
     priceCents: 6200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c110a34f3c-Prancheta-2-12.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c110a34f3c-Prancheta-2-12.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9865,8 +9933,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "xiaomi-mi-band-7-pro-original-global-pulseira-pelicula-3d",
     priceCents: 30700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b4eab6e24-Prancheta-3-11.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b4eab6e24-Prancheta-3-11.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9874,12 +9941,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvosc702mjiudh0nvria2d",
     name: "Paquímetro Digital 150mm Fibra Carbono Estojo 2 Baterias",
     slug: "chave-ferramenta-bicicleta-10-em-1-startools-de-8mm-a-17mm-aco-pratico-resistente",
-    priceCents: 3600,
+    priceCents: 2600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/020047a8d5-Prancheta-1-10.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788526670152-13009a86.webp",
     category: "Ferramentas",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvos6402meiudhqsy1csnh",
@@ -9887,8 +9953,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pedra-de-afiar-amolar-dupla-face-profissional-fertak-8",
     priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b76a48eeb7-Prancheta-2-7.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b76a48eeb7-Prancheta-2-7.png",
     category: "Ferramentas",
     stock: 0,
   },
@@ -9898,8 +9963,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pulverizador-spray-portatil-profissional-3-bicos-2-bateria",
     priceCents: 25700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f732387e3b-Prancheta-2-6.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f732387e3b-Prancheta-2-6.png",
     category: "Ferramentas",
     stock: 0,
   },
@@ -9909,8 +9973,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pistola-de-pino-fixacao-prego-acao-direta-finca-pinos",
     priceCents: 12200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9d81954ef8-Prancheta-2-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9d81954ef8-Prancheta-2-5.png",
     category: "Ferramentas",
     stock: 0,
   },
@@ -9920,8 +9983,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-mini-retifica-completa-128-acessorios-c-maleta-cor-azul",
     priceCents: 16700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9a6b2bcff7-Prancheta-1-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9a6b2bcff7-Prancheta-1-4.png",
     category: "Ferramentas",
     stock: 0,
   },
@@ -9931,8 +9993,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "limpador-a-vapor-portatil-1050w",
     priceCents: 14700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6069c19c2d-Prancheta-1-3.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6069c19c2d-Prancheta-1-3.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -9942,8 +10003,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-chave-eletrica-de-precisao-profissional-usb-30-bits",
     priceCents: 13700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5cbd2b9202-Prancheta-1-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5cbd2b9202-Prancheta-1-2.png",
     category: "Ferramentas",
     stock: 0,
   },
@@ -9953,41 +10013,37 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "machadinha-de-aco-multiuso-c-pe-de-cabra-alavanca-martelo",
     priceCents: 2900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf6a98df5f-Prancheta-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf6a98df5f-Prancheta-1-1.png",
     category: "Ferramentas",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvor0302l3iudhx6dlwxnu",
     name: "Afiador de Facas e Tesouras 4-em-1 Premium Aço Inox Base Antiderrapante",
     slug: "afiador-de-facas-e-tesouras-4-em-1-premium-aco-inox-base-antiderrapante-ergonomica-afiacao-de-precisao-amolador-manual",
-    priceCents: 2300,
+    priceCents: 1500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/41ba7cb637-Prancheta-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/41ba7cb637-Prancheta-4.png",
     category: "Ferramentas",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvoqnf02ktiudhsizl9z2p",
-    name: "Fire TV Stick Wi-Fi 5 HD com 8GB HDMI",
+    name: "Fire TV Stick Wi-Fi 6 HD com 8GB HDMI",
     slug: "media-player-amazon-fire-tv-stick-hd-2024-com-8gb-hdmi-wi-fi-5",
     priceCents: 22800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf85b28038-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf85b28038-1.jpg",
     category: "Media Streaming",
-    stock: -1,
+    stock: -6,
   },
   {
     id: "cmrnvoqhb02kmiudhlhomsue3",
     name: "Redmi Watch 5 Active Hyperos",
     slug: "redmi-watch-5-active-hyperos-turbo-flex-pulseira-preto",
-    priceCents: 21000,
+    priceCents: 19900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bcd64a8ca-Prancheta-1-13.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bcd64a8ca-Prancheta-1-13.png",
     category: "Relogios e Smartwatchs",
     stock: -1,
   },
@@ -9997,8 +10053,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-jbl-wave-buds-bluetooth-true-wireless",
     priceCents: 28000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2cc4a833db-Prancheta-1-12.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2cc4a833db-Prancheta-1-12.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10008,8 +10063,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "repetidor-de-sinal-wi-fi-tp-link-tl-wa855re-300mbps-2-antenas",
     priceCents: 11000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/63fe93d593-Prancheta-1-11.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/63fe93d593-Prancheta-1-11.png",
     category: "Informática",
     stock: 0,
   },
@@ -10019,8 +10073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-bluetooth-5-3-haylou-x1-neo-modo-jogo-cor-preto",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d6dce89a49-Prancheta-1-10.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d6dce89a49-Prancheta-1-10.png",
     category: "Fones de Ouvido",
     stock: 0,
   },
@@ -10030,10 +10083,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "redmi-buds-6-play-bluetooth-5-4-tws",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/84525cbab8-Prancheta-1-9.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/84525cbab8-Prancheta-1-9.png",
     category: "Fones de Ouvido",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvopmo02jmiudhm9yhnznk",
@@ -10041,8 +10093,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-xiaomi-poco-pods-sem-fio-bluetooth",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/69ff9b6546-Prancheta-2-8.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/69ff9b6546-Prancheta-2-8.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10050,12 +10101,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvopg802jeiudh1otwcblo",
     name: "Ssd M.2 Nvme Pci-e Gen 4.0 500gb Kingston Nv3 Ssnv3s/500g",
     slug: "ssd-m-2-nvme-pci-e-gen-4-0-500gb-kingston-nv3-ssnv3s-500g-velocidade-de-leitura-ate-5000-mb-s-e-gravacao-ate-3000-mb-s-formato-m-2-2280-cor-azu",
-    priceCents: 67000,
+    priceCents: 64000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b24e9f2d00-Prancheta-1-7.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b24e9f2d00-Prancheta-1-7.png",
     category: "Informática",
-    stock: -1,
+    stock: -5,
   },
   {
     id: "cmrnvopa002j7iudh9q3zwvyy",
@@ -10063,10 +10113,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "webcam-logitech-c270-hd-720p-com-microfone-camera-video-web-cam-c-270",
     priceCents: 14200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92abbe2655-Prancheta-1-6.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92abbe2655-Prancheta-1-6.png",
     category: "Informática",
-    stock: 0,
+    stock: -7,
   },
   {
     id: "cmrnvop3z02j0iudhbe9x8sww",
@@ -10074,30 +10123,27 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carregador-de-tomada-turbo-120w-potencia-e-velocidade-tipo-c",
     priceCents: 4900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/622e9a796b-Prancheta-1-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/622e9a796b-Prancheta-1-5.png",
     category: "Carregadores & Power Banks",
-    stock: -2,
+    stock: 0,
   },
   {
     id: "cmrnvooxy02iuiudhrcxbicju",
     name: "Mouse Sem Fio E-1300pro Bluetooth Rgb 2.4ghz Silencioso Cor V8",
     slug: "mouse-sem-fio-e-1300pro-bluetooth-rgb-2-4ghz-silencioso-cor-v8",
-    priceCents: 3900,
+    priceCents: 2200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ea5433c7a1-Prancheta-2-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ea5433c7a1-Prancheta-2-4.png",
     category: "Informática",
-    stock: -1,
+    stock: -5,
   },
   {
     id: "cmrnvoort02iniudhzocg53e4",
     name: "Extensão Tomada De Torre 9tomadas 4usb 2type-c Preto",
     slug: "extensao-tomada-de-torre-9tomadas-4usb-2type-c-preto",
-    priceCents: 16900,
+    priceCents: 15500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a5d9012f1a-Prancheta-1-3.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a5d9012f1a-Prancheta-1-3.png",
     category: "Informática",
     stock: 0,
   },
@@ -10107,8 +10153,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bateria-de-controle-recarregavel-compativel-com-xbox-series",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2dc4da4e71-Prancheta-1-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2dc4da4e71-Prancheta-1-2.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10118,8 +10163,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ventilador-de-resfriamento-cooler-led-para-ps5-dobe",
     priceCents: 5700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/698661c791-Prancheta-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/698661c791-Prancheta-1-1.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10129,8 +10173,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cafeteira-eletrica-bbg-70620",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c64c84a313-Prancheta-1-17.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c64c84a313-Prancheta-1-17.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10140,8 +10183,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caminhao-carretinha-leva-carros-dinossauro-com-carrinhos-cor-verde",
     priceCents: 6100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3c373099fc-Prancheta-5-31.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3c373099fc-Prancheta-5-31.png",
     category: "Fora de Estoque",
     stock: 1,
   },
@@ -10151,21 +10193,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caneta-marcador-para-colorir-desenho-professional-pontas-duplas-codificados-por-cores-seguranca-garantida-caixa-de-bonus-marcadores-artisticos-de-arte-para-estudantes-adultos-artistas-desenho-colo",
     priceCents: 4400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f71d524c35-Prancheta-1-32.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f71d524c35-Prancheta-1-32.png",
     category: "Papelaria",
-    stock: -3,
+    stock: -6,
   },
   {
     id: "cmrnvonr202hjiudh4kwg2k1i",
-    name: "Câmera Xiaomi C200 Visão Noturna",
+    name: "Câmera Xiaomi C201 Visão Noturna",
     slug: "camera-xiaomi-c200-visao-noturna",
-    priceCents: 22500,
+    priceCents: 15500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b9ec491607-Prancheta-1-31.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b9ec491607-Prancheta-1-31.png",
     category: "Câmeras",
-    stock: 0,
+    stock: 95,
   },
   {
     id: "cmrnvonky02hciudhtemv73z5",
@@ -10173,19 +10213,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "benjamim-adaptador-universal-tomada-usb-tipo-c-filtro-linha",
     priceCents: 4300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f892684721-Prancheta-1-30.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f892684721-Prancheta-1-30.png",
     category: "Fora de Estoque",
     stock: 0,
   },
   {
     id: "cmrnvonfd02h6iudhuukvjkbx",
-    name: 'Tablet Amazon Fire HD 8 12TH Gen 32GB/2GB Ram de 8" 2MP/2MP',
+    name: "Tablet Amazon Fire HD 8 12TH Gen 32GB/2GB Ram de 8\" 2MP/2MP",
     slug: "tablet-amazon-fire-hd-8-12th-gen-2022-32gb-2gb-ram-de-8-2mp-2mp",
     priceCents: 56600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/76014fced8-Prancheta-3-26.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/76014fced8-Prancheta-3-26.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10195,8 +10233,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mouse-comfort-plus-m280-para-pc-escritorio-e-uso-domestico",
     priceCents: 9100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc051acdd9-Prancheta-1-28.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc051acdd9-Prancheta-1-28.png",
     category: "Fora de Estoque",
     stock: 100,
   },
@@ -10206,8 +10243,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pistola-vaporizadora-higienizadora-de-casa-lavagem-pesada",
     priceCents: 15100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9322e7d597-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9322e7d597-5.png",
     category: "Ferramentas",
     stock: 0,
   },
@@ -10217,10 +10253,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-maleta-de-ferramentas-infantil-22-pecas-brinquedo-com-chave-de-fenda-martelo-bancadinha-para-meninos-e-meninas",
     priceCents: 4600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4e8ffd3218-Prancheta-5-23.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4e8ffd3218-Prancheta-5-23.png",
     category: "Brinquedos",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvomq102gciudhn2za96fp",
@@ -10228,8 +10263,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "compresso-car-air-pump-czk-digital-calibrador-de-pneu-carro-bike-moto-sem-fio-cor-preto-74",
     priceCents: 7500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a502923853-Prancheta-1-23.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a502923853-Prancheta-1-23.png",
     category: "Produtos diversos",
     stock: -1,
   },
@@ -10239,10 +10273,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-churrasco-aco-inox-10pc-com-estojo",
     priceCents: 6600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9356da77b9-06a7e356ad27317e0d56cc6f695000dc.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9356da77b9-06a7e356ad27317e0d56cc6f695000dc.png",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvomdt02fziudhkz5kl3eb",
@@ -10250,8 +10283,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-seguranca-cftv-jortan-960p-ahd-infravermelho-1-3-m",
     priceCents: 12100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/deea8b8804-Prancheta-5-22.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/deea8b8804-Prancheta-5-22.png",
     category: "Câmeras",
     stock: 0,
   },
@@ -10261,10 +10293,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-over-ear-sem-fio-sony-wh-ch520-yy2958-preto",
     priceCents: 29900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f263c61ceb-Prancheta-2-19.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f263c61ceb-Prancheta-2-19.png",
     category: "Fones de Ouvido",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvom1h02fliudheibz6zfy",
@@ -10272,8 +10303,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "radio-portatil-de-bolso-philips-series-1000-pilha-r1506",
     priceCents: 13100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99f5eca3f7-Prancheta-2-18-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99f5eca3f7-Prancheta-2-18-1.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10283,8 +10313,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "echo-auto-2-alexa-assistente-digital-smart-no-carro",
     priceCents: 29600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/432931cbce-Prancheta-1-18.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/432931cbce-Prancheta-1-18.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10294,10 +10323,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "novo-echo-spot-com-alexa-2024-despertador-inteligente-com-som-vibrante-cor-preta",
     priceCents: 41900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e30f22f5b-Prancheta-2-15.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e30f22f5b-Prancheta-2-15.png",
     category: "Produtos diversos",
-    stock: 2,
+    stock: 35,
   },
   {
     id: "cmrnvolj502eyiudhm25m6hu4",
@@ -10305,8 +10333,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-jbl-clip-5-bluetooth-preto",
     priceCents: 37100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e5af6060d-caixa-de-som-bluetooth-jbl-clip-5_1031866.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e5af6060d-caixa-de-som-bluetooth-jbl-clip-5_1031866.webp",
     category: "Caixas de Som",
     stock: 0,
   },
@@ -10316,8 +10343,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "xiaomi-smart-band-9-active-monitoramento-saude-5atm-preto-desenho-da-pulseira-lisa",
     priceCents: 16500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/62c500189e-Prancheta-1-13.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/62c500189e-Prancheta-1-13.png",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -10325,12 +10351,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvol7f02ekiudhob2zbzup",
     name: "Luz Led De Preenchimento Rgb Camera + Suporte Cel Notebook",
     slug: "luz-led-de-preenchimento-rgb-camera-suporte-cel-notebook",
-    priceCents: 4700,
+    priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3fe7e47cc6-Prancheta-1-10.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3fe7e47cc6-Prancheta-1-10.png",
     category: "Iluminação",
-    stock: -1,
+    stock: -13,
   },
   {
     id: "cmrnvol1b02ediudhbvjtfkkp",
@@ -10338,8 +10363,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-veicular-para-celular-retrovisor-36",
     priceCents: 3100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/70dd033254-Prancheta-4-9.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/70dd033254-Prancheta-4-9.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10349,8 +10373,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-de-seguranca-wifi-energia-solar-ou-bateria-full-hd",
     priceCents: 18500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5395d22e14-Prancheta-1-8.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5395d22e14-Prancheta-1-8.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10360,10 +10383,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pegador-de-madeira-de-metal-1716-huina-com-movimentos-150",
     priceCents: 7400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fd271f8aba-Prancheta-5-7.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fd271f8aba-Prancheta-5-7.png",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvokio02dsiudhxqgcqvmg",
@@ -10371,8 +10393,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-gamepad-bluetooth-5-0-p-celular-android-ios-bsp-d3",
     priceCents: 7900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e52555c033-Prancheta-1-6.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e52555c033-Prancheta-1-6.png",
     category: "Games",
     stock: 0,
   },
@@ -10382,8 +10403,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carrinho-controle-remoto-com-camera-wifi-carro-recarregavel-cor-gradiente",
     priceCents: 20200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4f2b20216-Prancheta-2-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4f2b20216-Prancheta-2-5.png",
     category: "Brinquedos",
     stock: -1,
   },
@@ -10393,8 +10413,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carrinho-controle-remoto-tanque-bolinhas-de-gel-ninho-boy",
     priceCents: 9200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/259d5ae435-Prancheta-1-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/259d5ae435-Prancheta-1-4.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10404,10 +10423,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "alarme-moto-com-partida-remota-controle-sistema-antifurto",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a56c47c22c-Prancheta-1-3.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a56c47c22c-Prancheta-1-3.png",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -5,
   },
   {
     id: "cmrnvojtx02d0iudh53lh4jrm",
@@ -10415,10 +10433,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "gimbal-suporte-celular-360-reconhecimento-facial-lancamento",
     priceCents: 9800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7a7de52fab-Prancheta-1-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7a7de52fab-Prancheta-1-2.png",
     category: "Fora de Estoque",
-    stock: 0,
+    stock: 4,
   },
   {
     id: "cmrnvojns02ctiudhn2x6gi09",
@@ -10426,8 +10443,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "alarme-sem-fio-residencial-sensor-sirene-2-controles",
     priceCents: 4200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9148002e67-Prancheta-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9148002e67-Prancheta-5.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -10437,8 +10453,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bola-magica-ufo-voadora-transforma-em-disco-ball-com-led-top",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6d6702de53-Prancheta-1-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6d6702de53-Prancheta-1-4.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10448,8 +10463,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carregador-de-carro-carregador-usb-c-4-em-1",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3cdba399dc-Prancheta-1-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3cdba399dc-Prancheta-1-2.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10459,8 +10473,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-smartwatch-5g-ultra-3-feminino-e-masculino",
     priceCents: 33500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ccf48f4114-Prancheta-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ccf48f4114-Prancheta-1.png",
     category: "Celulares e Smartphones",
     stock: 0,
   },
@@ -10470,8 +10483,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "apoio-protecao-cabeca-seguranca-infantil-adulto-viagem-carro",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35bad5695d-Prancheta-1-26.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35bad5695d-Prancheta-1-26.png",
     category: "Ring Light & Suportes",
     stock: 0,
   },
@@ -10481,8 +10493,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tela-monitor-lcd-10-1-hdmi-vga-av",
     priceCents: 33000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0acc403b05-Prancheta-2-22.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0acc403b05-Prancheta-2-22.png",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -10492,8 +10503,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "frigideira-antiaderente-inducao-3-em-1-ovo-hamburguer-3-partes-marqs-home",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a59f2fb7d-Prancheta-1-24.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a59f2fb7d-Prancheta-1-24.png",
     category: "Promoções do Mês",
     stock: 0,
   },
@@ -10503,10 +10513,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "modulo-de-luz-fria-led-adesivo-de-brilho-para-capacete",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7da4642ceb-Prancheta-4-20.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7da4642ceb-Prancheta-4-20.png",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvoib402b8iudhaobjpldv",
@@ -10514,8 +10523,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "teclado-flexivel-dk-14-conexao-usb-alfa-numerico",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e026c2f1e2-Prancheta-1-21.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e026c2f1e2-Prancheta-1-21.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10523,12 +10531,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvoi5202b1iudhf595vzoa",
     name: "Lâmpada Led Wifi Inteligente NovaDigital 15w + 3w Rgb Colorida Smart Alexa",
     slug: "lampada-led-rgb",
-    priceCents: 4500,
+    priceCents: 3700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37c1b267cd-3-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37c1b267cd-3-2.webp",
     category: "Iluminação",
-    stock: 1,
+    stock: 98,
   },
   {
     id: "cmrnvohyz02auiudhtdaltw5n",
@@ -10536,8 +10543,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luminaria-espeto-3w-solar-jardim-4-leds-rgb-colorido-gramado",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8fb371516c-Prancheta-1-20.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8fb371516c-Prancheta-1-20.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10547,8 +10553,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-power-bank-carga-rapida-sem-fio-5000-mah-knc-8885",
     priceCents: 5600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92968d969d-Prancheta-1-19.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/92968d969d-Prancheta-1-19.png",
     category: "Fora de Estoque",
     stock: -4,
   },
@@ -10558,10 +10563,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carregador-por-inducao-portatil-power-bank-magnetico",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/85dcbcfb22-Prancheta-3-14.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/85dcbcfb22-Prancheta-3-14.png",
     category: "Carregadores & Power Banks",
-    stock: -1,
+    stock: -5,
   },
   {
     id: "cmrnvohfs02a9iudhnupjm7wx",
@@ -10569,10 +10573,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "balanca-digital-bioimpedancia-profissional-180kg",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/081fae2cfa-Prancheta-1-17.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/081fae2cfa-Prancheta-1-17.png",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvoh9o02a2iudh19gkk3lc",
@@ -10580,10 +10583,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luminaria-suspensa-vintage-luzes-suspensas-rusticas-soquete-de-teto-para-viver-luminaria-rustica",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0f99aecb99-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0f99aecb99-1-1.png",
     category: "Iluminação",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvoh3c029viudh7ptbe9zz",
@@ -10591,8 +10593,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "painel-plafon-led-borda-infinita-38w",
     priceCents: 4100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c7b20a0fd9-Prancheta-1-16.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c7b20a0fd9-Prancheta-1-16.png",
     category: "Iluminação",
     stock: 0,
   },
@@ -10602,8 +10603,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luminaria-solar-led-luz-automatica-sensor-de-presenca-forte",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9412d4ef34-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9412d4ef34-1.webp",
     category: "Iluminação",
     stock: 0,
   },
@@ -10613,8 +10613,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "metralhadora-ak47-arma-de-agua-eletrica-automatica-orbe",
     priceCents: 7600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a9795575b-Prancheta-1-11.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a9795575b-Prancheta-1-11.png",
     category: "Brinquedos",
     stock: 0,
   },
@@ -10622,12 +10621,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvogkz029biudhzwwem2ho",
     name: "Spa Facial Vapor De Ozônio Capilar Limpeza Profunda Da Pele",
     slug: "spa-facial-vapor-de-ozonio-capilar-limpeza-profunda-da-pele",
-    priceCents: 11000,
+    priceCents: 10500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/016aab7323-Prancheta-1-7.png",
-    category: "Beleza e Cuidado Pessoal",
-    stock: -11,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/016aab7323-Prancheta-1-7.png",
+    category: "Fora de Estoque",
+    stock: 0,
   },
   {
     id: "cmrnvogew0296iudhhp05ln3y",
@@ -10635,10 +10633,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "frigideira-japonesa-tamagoyaki-para-omelettes-aluminum-fryin",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ae61ef4ea7-1.jpg",
-    category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ae61ef4ea7-1.jpg",
+    category: "Fora de Estoque",
+    stock: -1,
   },
   {
     id: "cmrnvog8o028ziudhmdh96hq9",
@@ -10646,10 +10643,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lampada-bluetooth-luz-rgb-musica-caixinha-som-c-controle",
     priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/24e2f7aed5-Prancheta-2-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/24e2f7aed5-Prancheta-2-2.png",
     category: "Iluminação",
-    stock: -2,
+    stock: -3,
   },
   {
     id: "cmrnvog2j028siudh94y1rpag",
@@ -10657,10 +10653,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-de-corte-pro-transparente-hair-clipper-lt-808-kit",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e47094dcf4-Prancheta-2-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e47094dcf4-Prancheta-2-1.png",
     category: "Salão & Barbearia",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvofwh028kiudhy3bqakzr",
@@ -10668,8 +10663,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carregador-turbo-tipo-c-67w-xiaomi",
     priceCents: 4900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/85f2d6dc77-12.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/85f2d6dc77-12.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10679,8 +10673,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-2-metros-para-iphone-15-15-plus-15-pro-15-pro-max",
     priceCents: 3600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bf6e986b6-1-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bf6e986b6-1-11.jpg",
     category: "Carregadores & Power Banks",
     stock: 0,
   },
@@ -10690,10 +10683,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carrinho-controle-remoto-a-prova-dagua-anfibio-stunt-car",
     priceCents: 13700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31a8c07673-1-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31a8c07673-1-8.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -5,
   },
   {
     id: "cmrnvofdr027yiudhtpnpo3h7",
@@ -10701,8 +10693,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carrinho-tanque-de-guerra-controle-remoto-recarregavel-r-c-cor-verde",
     priceCents: 8800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/27c2d83fd0-5-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/27c2d83fd0-5-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10712,10 +10703,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carrinho-controle-remoto-carro-grande-4x4-recarregavel-big",
     priceCents: 7300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/79c16ef442-1-4.jpg",
-    category: "Brinquedos",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/79c16ef442-1-4.jpg",
+    category: "Fora de Estoque",
+    stock: -4,
   },
   {
     id: "cmrnvof1j027iiudh46czdgtu",
@@ -10723,8 +10713,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-bateria-infantil-musical-world-de-plastico-jazz-drum",
     priceCents: 6900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eca4773478-1-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eca4773478-1-3.jpg",
     category: "Brinquedos",
     stock: -1,
   },
@@ -10734,8 +10723,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedos-interativos-do-jogo-de-futebol-do-mesa-pebolim",
     priceCents: 4300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b63dd0747a-1-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b63dd0747a-1-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10745,8 +10733,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "intercomunicador-fone-e-microfone-portaria-loterica-guarita",
     priceCents: 17500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/38c08e4d1c-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/38c08e4d1c-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10754,12 +10741,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvoeit026ziudhgkc1h69k",
     name: "Lâmpada Led Bulbo Luz Emergência 48w 6000mah Usb Recarrega",
     slug: "lampada-led-bulbo-luz-emergencia-48w-6000mah-usb-recarrega",
-    priceCents: 5500,
+    priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a7c972439a-1-7.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a7c972439a-1-7.png",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -4,
   },
   {
     id: "cmrnvoecl026oiudhpotamh1z",
@@ -10767,8 +10753,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "secador-de-pelo-escova-pente-pet-tosa-profissional-portatil",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e51f29feb-1-6.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e51f29feb-1-6.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10778,10 +10763,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "baby-monitor-vb603-baba-eletronica-com-monitor-110v-220v-color-blanco",
     priceCents: 26800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cfbfdeabba-1-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cfbfdeabba-1-5.png",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvoe0e0263iudh3u8b0s9i",
@@ -10789,10 +10773,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ventilador-recarregavel-silencioso-dobravel-portatil-sem-fio-pas-19cm-frequencia-7200mah-110v-220v-ming",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9df5b27ca3-1-24.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9df5b27ca3-1-24.jpg",
     category: "Fora de Estoque",
-    stock: 0,
+    stock: 1,
   },
   {
     id: "cmrnvodu8025uiudhy6s2yom6",
@@ -10800,8 +10783,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "campainha-c-camera-wifi-sem-fio-inteligente-interfone-audio-branca",
     priceCents: 6100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf28c0415f-1-21.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cf28c0415f-1-21.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10811,8 +10793,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smartwatch-redmi-watch-4",
     priceCents: 53500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4ea85a00f4-1-19.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4ea85a00f4-1-19.jpg",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -10822,8 +10803,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "xiaomi-mi-band-9",
     priceCents: 23700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7f5d7bffe-1-18.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7f5d7bffe-1-18.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10833,8 +10813,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caminhao-maquina-brinquedo-criancas-empilhadeira-articulado",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4e6c76eb15-1-15.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4e6c76eb15-1-15.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10844,8 +10823,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carro-controle-remoto-de-plastico-speed-viatura-4-funcoes",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a1584e520c-1-14.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a1584e520c-1-14.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10855,10 +10833,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "depilador-profissional-a-laser-ipl-600-000-flash-5-niveis",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c82407f0d-1-11.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c82407f0d-1-11.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -10,
+    stock: -23,
   },
   {
     id: "cmrnvocrr024biudh5138dx9g",
@@ -10866,10 +10843,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smartwatch-hw68-series-8-ultra-mini-41mm-nfc",
     priceCents: 9400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9aa438e839-Design-sem-nome-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9aa438e839-Design-sem-nome-1.jpg",
     category: "Relogios e Smartwatchs",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvoclm0241iudhjultswet",
@@ -10877,10 +10853,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-smartwatch-hw9-ultra-2",
     priceCents: 11000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/72a549a992-1-9.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/72a549a992-1-9.jpg",
     category: "Relogios e Smartwatchs",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvocez023piudhh45afbmf",
@@ -10888,10 +10863,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "dvr-automotivo-camera-frontal-interna-re-grava-imagem-e-som",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eb112bb5c7-2-8.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eb112bb5c7-2-8.jpg",
     category: "Câmeras",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvoc8t023giudhc17el3gz",
@@ -10899,8 +10873,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mesa-bilhar-sinuca-infantil-portatil-snooker-kit-completo",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b80d44a1b0-2-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b80d44a1b0-2-4.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10910,10 +10883,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-remoto-vr-multifuncional-sem-fio-de-oculos",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8fb708572a-2-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8fb708572a-2-4.jpg",
     category: "Informática",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvobw8022wiudhfitjblv3",
@@ -10921,10 +10893,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-veicular-automotiva-gravacao-full-hd-frontal-re-lcd-4",
     priceCents: 9200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f9bbac22b7-10.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f9bbac22b7-10.jpg",
     category: "Câmeras",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvobq6022miudh4ra8quia",
@@ -10932,8 +10903,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "panela-frigideira-28cm-antiaderente-de-ceramica-premium",
     priceCents: 6800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dfb33d2670-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dfb33d2670-7.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -10941,12 +10911,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvobk3022diudh2gt44rqa",
     name: "Mouse Vertical S/ Fio (wireless E Bluetooth) 2400dpi",
     slug: "mouse-vertical-s-fio-wireless-e-bluetooth-2400dpi",
-    priceCents: 4600,
+    priceCents: 3900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6dede0d5e0-br-11134207-7r98o-m0aprvxct03h73.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6dede0d5e0-br-11134207-7r98o-m0aprvxct03h73.jpeg",
     category: "Informática",
-    stock: -3,
+    stock: -5,
   },
   {
     id: "cmrnvobdz0222iudhqh0il7hu",
@@ -10954,10 +10923,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fire-tv-stick-4k-ultra-hd-com-alexa-wi-fi-6",
     priceCents: 26500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b2622e457e-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b2622e457e-1-1.png",
     category: "Media Streaming",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvob7a021riudh8gtn3xrb",
@@ -10965,10 +10933,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "oculos-de-realidade-virtual-360o-vr-shinecon-3d",
     priceCents: 7900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd0f77aae8-1-7.png",
-    category: "Fora de Estoque",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd0f77aae8-1-7.png",
+    category: "Produtos diversos",
+    stock: -4,
   },
   {
     id: "cmrnvob1a021giudhp9tvx99u",
@@ -10976,8 +10943,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "escova-de-dentes-eletrica-recarregavel-com-refil",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ebcd202f2-1-6.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ebcd202f2-1-6.png",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -10987,8 +10953,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "gravador-externo-de-cd-e-dvd-tipo-c-usb-3-0-externo-tomate-mtm-1025",
     priceCents: 6400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/823bab1c0e-1-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/823bab1c0e-1-5.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -10998,8 +10963,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tabua-inteligente-para-descongelar-rapido-para-carnes-aves-peixes",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a5f60bc79c-1-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a5f60bc79c-1-4.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -11009,8 +10973,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "chaleira-jarra-eletrica-inox-prateada-110v-2litros",
     priceCents: 7900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f6833b3f1b-1-3.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f6833b3f1b-1-3.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11020,21 +10983,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "moedor-de-cafe-eletrico-moinho-de-cafe-automatico-graos-usb",
     priceCents: 7900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4c206ebd3d-3-11.png",
-    category: "Fora de Estoque",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4c206ebd3d-3-11.png",
+    category: "Casa e Utensílios Domésticos",
+    stock: 37,
   },
   {
     id: "cmrnvoa5w01zziudhzierlbho",
     name: "Bola Flutuante Hover Ball Futebol Led Hoverball Criança Luz",
     slug: "bola-flutuante-hover-ball-futebol-led-hoverball-crianca-luz",
-    priceCents: 3000,
+    priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3d2c6c5ecf-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3d2c6c5ecf-1.png",
     category: "Brinquedos",
-    stock: 0,
+    stock: -11,
   },
   {
     id: "cmrnvo9z001zpiudhs085kurz",
@@ -11042,8 +11003,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "arma-agua-eletrica-automatica-2-pente-carregavel-lancamento",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d8f900985a-111-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d8f900985a-111-1.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11053,8 +11013,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "escova-lavagem-rotativa-giratoria-automatica-para-limpeza",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0e9e858dda-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0e9e858dda-1-1.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -11062,23 +11021,21 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvo9m501yuiudh3ii651bs",
     name: "Escova De Limpeza Elétrica P/ Casa Multiuso Sem Fio Portátil 9 em 1",
     slug: "escova-de-limpeza-eletrica-p-casa-multiuso-sem-fio-portatil",
-    priceCents: 7990,
+    priceCents: 6200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c16ad7ee15-1.png",
-    category: "Promoções do Mês",
-    stock: -52,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c16ad7ee15-1.png",
+    category: "Fora de Estoque",
+    stock: 98,
   },
   {
     id: "cmrnvo9g001ykiudhju3tdta4",
     name: "Kit Ferro Solda + Tubete Estanho Com Resina E Sugador Solda",
     slug: "kit-ferro-solda-tubete-estanho-com-resina-e-sugador-solda",
-    priceCents: 7000,
+    priceCents: 5900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7b20d43a74-capa-8.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7b20d43a74-capa-8.png",
     category: "Ferramentas",
-    stock: -2,
+    stock: 50,
   },
   {
     id: "cmrnvo99q01ybiudhzsvf3ccf",
@@ -11086,10 +11043,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-benjamin-t-articulado-pino-plug-3-saida-10a-tomada",
     priceCents: 900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4970ece263-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4970ece263-1.png",
     category: "Casa e Utensílios Domésticos",
-    stock: -4,
+    stock: -17,
   },
   {
     id: "cmrnvo93m01y0iudhd0nen5k8",
@@ -11097,10 +11053,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "patocaminhao-de-resgate-brinquedo-escalada-com-luzes-musica",
     priceCents: 5400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3032a95870-CAPA-7.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3032a95870-CAPA-7.png",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvo8xj01xriudh4f29yelz",
@@ -11108,8 +11063,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "calculadora-financeira-hp-12c-engenharia-contas-130-funcoes",
     priceCents: 22000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5fc4204eb1-CAPA-6.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5fc4204eb1-CAPA-6.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11119,8 +11073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "echo-auto-amazon-alexa-para-carro-caminhao-e-onibus-bluetooth",
     priceCents: 23500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fe91ab29fc-CAPA-3.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fe91ab29fc-CAPA-3.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11130,8 +11083,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "google-chromecast-ga03131-us-4a-geracao-de-voz-hd-8gb-branco-com-1-5gb-de-memoria-ram",
     priceCents: 37000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/496b4cd31a-main_0_.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/496b4cd31a-main_0_.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11141,10 +11093,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "marmita-eletrica-veicular-12v-bivolt-aquecedor-de-alimentos",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/16d4d1493a-capa-1.png",
-    category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/16d4d1493a-capa-1.png",
+    category: "Fora de Estoque",
+    stock: -2,
   },
   {
     id: "cmrnvo88x01wuiudh3s62uzl8",
@@ -11152,10 +11103,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mixer-de-audio-externo-live-sound-card-celular-tablet-e-pc",
     priceCents: 9300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/090bc5c1fb-capa-2.png",
-    category: "Produtos diversos",
-    stock: -1,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/090bc5c1fb-capa-2.png",
+    category: "Fora de Estoque",
+    stock: -3,
   },
   {
     id: "cmrnvo82q01wniudhcxyrz1ca",
@@ -11163,10 +11113,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maleta-kit-ferramenta-bike-c-44-pecas-mtb-speed-profissional",
     priceCents: 15000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f7f9bdd7f3-capa.png",
-    category: "Ferramentas",
-    stock: -1,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f7f9bdd7f3-capa.png",
+    category: "Fora de Estoque",
+    stock: -2,
   },
   {
     id: "cmrnvo7wo01waiudh3qz2g178",
@@ -11174,10 +11123,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-som-com-microfone-infantil-caixinha-bluetooth-sem-fio",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/55b3995cc3-1-6.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/55b3995cc3-1-6.png",
     category: "Caixas de Som",
-    stock: -2,
+    stock: -13,
   },
   {
     id: "cmrnvo7qd01w1iudh90qc7y7p",
@@ -11185,8 +11133,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "microfone-profissional-lapela-headset-s-fio-alcance-30-a-50m",
     priceCents: 12500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/580f1a9414-1-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/580f1a9414-1-4.png",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -11196,8 +11143,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cobras-de-brinquedo-plasticas-kit-8-und-bichos",
     priceCents: 950,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/049f34adce-CAPA-7.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/049f34adce-CAPA-7.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11207,8 +11153,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-de-boxe-musical-inteligente-montada-na-parede-de-cor-preta",
     priceCents: 31000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ff23c2d469-capa-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ff23c2d469-capa-5.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11218,10 +11163,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-para-depilar-pelos-do-corpo-e-intimos-kemei-km-1910",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aca7d30265-1-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aca7d30265-1-2.png",
     category: "Salão & Barbearia",
-    stock: -3,
+    stock: -8,
   },
   {
     id: "cmrnvo71y01v1iudh458f95rh",
@@ -11229,8 +11173,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-impressora-termica-58mm-p-celular-pc-ou-notebook",
     priceCents: 11900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3d9cf2880f-CAPA-3.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3d9cf2880f-CAPA-3.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11240,8 +11183,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-secador-de-cabelo-profissional-portatil-viagem-1200w",
     priceCents: 3550,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b8a67eb2d-capa-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b8a67eb2d-capa-1.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11251,10 +11193,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "acendedor-de-fogao-eletrico-churrasqueira-vela-recarregavel",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c90abb6330-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c90abb6330-1-1.png",
     category: "Ferramentas",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvo6ib01u7iudhmbjq6au6",
@@ -11262,8 +11203,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lixadeira-politriz-sem-fio-12v-portatil",
     priceCents: 21500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/10aaf466cb-CAPA.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/10aaf466cb-CAPA.png",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -11273,8 +11213,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pulverizador-de-mangueira-de-bico-de-alta-pressao-esguicho",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a7c23a5ffe-CAPA-25.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a7c23a5ffe-CAPA-25.png",
     category: "Casa e Utensílios Domésticos",
     stock: 50,
   },
@@ -11284,8 +11223,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-hdtv-usb-3-1-4k-compativel-com-c-to-para-android-phone",
     priceCents: 3300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4908c70f4d-CAPA-21.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4908c70f4d-CAPA-21.png",
     category: "Informática",
     stock: 0,
   },
@@ -11295,8 +11233,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "base-suporte-refrigeracao-oivo-ps5-com-estacao-de-carregador",
     priceCents: 15300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/483105005d-CAPA-19.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/483105005d-CAPA-19.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11306,10 +11243,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-usb-3-0-para-hdmi-x-vga-windows",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9268893a55-1-6.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9268893a55-1-6.png",
     category: "Informática",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvo5nf01syiudhq1fqpb2n",
@@ -11317,8 +11253,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "crepeira-pratica-crepe-hot-dog-preta-e-inox-6-cavidades",
     priceCents: 10800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dcef76b37d-1-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dcef76b37d-1-5.png",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -11328,8 +11263,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-conjunto-utensilios-cozinha-silicone-faca-tabua-19-pcs",
     priceCents: 9200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/88a9b90c93-capa-14.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/88a9b90c93-capa-14.png",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -11337,12 +11271,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvo5b801sfiudhlpkh6hsg",
     name: "Carregador Usb Rápido Com Porta Qc3.0 40w Estação De Carrega",
     slug: "carregador-usb-rapido-com-porta-qc3-0-40w-estacao-de-carrega",
-    priceCents: 9600,
+    priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8d0036758-3-15.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8d0036758-3-15.png",
     category: "Carregadores & Power Banks",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvo55401s5iudhg2t7q03c",
@@ -11350,10 +11283,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-maquina-tosa-pets-cachorro-tosar-caes-gatos-profissional",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/677df56011-1-7.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/677df56011-1-7.png",
     category: "Salão & Barbearia",
-    stock: 0,
+    stock: -4,
   },
   {
     id: "cmrnvo4z101rwiudhg0r6ugll",
@@ -11361,8 +11293,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "limpeza-de-vidro-da-pia-da-cozinhachave-automatica-garrafa",
     priceCents: 2600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/749f9f8ca2-CAPA-13.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/749f9f8ca2-CAPA-13.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11372,8 +11303,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "profissional-hvlp-pistola-de-pintura-kit-600ml-1-4mm",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/811e9f7d6e-Design-sem-nome.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/811e9f7d6e-Design-sem-nome.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11383,8 +11313,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "prancheta-magnetica-infantil-estimula-aprendizagem",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/34a66d966f-CAPA-11.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/34a66d966f-CAPA-11.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11394,10 +11323,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-jbl-go-4-bluetooth-4-2-w-rms-lancamento-2024",
     priceCents: 24500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2bf7863297-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2bf7863297-1-1.png",
     category: "Caixas de Som",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvo4a901qwiudh4agmeb5p",
@@ -11405,8 +11333,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-bolinho-chuva-cafe-pao-cupcake-empada-pao-de-queijo",
     priceCents: 9300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1d19890daa-1-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1d19890daa-1-4.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11416,10 +11343,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "torre-3-tomada-de-mesa-retratil-bivolt-de-embutir-bancada",
     priceCents: 13500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/10038b8e42-capa-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/10038b8e42-capa-4.png",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvo3y501qiiudh7130rzv8",
@@ -11427,21 +11353,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "vaporizador-potente-para-passar-roupa-no-cabide-vapor-quente",
     priceCents: 8300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00de1f3d43-capa-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/00de1f3d43-capa-2.png",
     category: "Casa e Utensílios Domésticos",
-    stock: 2,
+    stock: -5,
   },
   {
     id: "cmrnvo3rl01q7iudh2feldg0r",
     name: "Câmera Infantil Criança Digital Fotográfica e Filma",
     slug: "camera-infantil-crianca-digital-fotografica-fotografa-filma-cor-rosa",
-    priceCents: 6000,
+    priceCents: 4900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/913663cddf-capa.png",
-    category: "Câmeras",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/913663cddf-capa.png",
+    category: "Brinquedos",
+    stock: -10,
   },
   {
     id: "cmrnvo3l701q2iudh3ppk44tr",
@@ -11449,19 +11373,17 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ventilador-de-mesa-portatil-diametro-23cm-tufao",
     priceCents: 9100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/39f334cc88-capa-17.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/39f334cc88-capa-17.png",
     category: "Umidificadores & Ventiladores",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvo3f101priudhcki0mq2c",
     name: "Maquina Cozinhar Ovos Rápido E Prático Prepara Até 7 Und",
     slug: "caldeira-a-vapor-eletrica-para-ovos-cozidos-bivolt",
-    priceCents: 4700,
+    priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c16f2e84e-CAPA-18.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c16f2e84e-CAPA-18.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -11471,21 +11393,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-teclado-touch-dobravel-bluetooth-para-celular",
     priceCents: 14000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31f297e2b9-1-8.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31f297e2b9-1-8.png",
     category: "Informática",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvo32v01paiudhcmg5nzpp",
     name: "Mini Teclado Sem Fio Bluetooth Universal Dobrável Portátil",
     slug: "mini-teclado-sem-fio-bluetooth-universal-dobravel-portatil",
-    priceCents: 7000,
+    priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f7f365413-Design-sem-nome-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f7f365413-Design-sem-nome-1.png",
     category: "Informática",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvo2ws01p3iudhfzhkke6y",
@@ -11493,10 +11413,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "remocao-de-atrasos-e-reclamacoes-e-mediacoes-mercado-livre",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35da6fb564-1-6.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/35da6fb564-1-6.png",
     category: "Mais vendidos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvo2ql01ouiudh9z4nd1jt",
@@ -11504,8 +11423,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-de-impressao-instantanea-para-criancas-com-impressora",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cea0575c46-Capa-15.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cea0575c46-Capa-15.png",
     category: "Câmeras",
     stock: 0,
   },
@@ -11515,10 +11433,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-tomada-universal-para-viagem-internacional-110v-220v",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cabf7191fd-CAPA-11.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cabf7191fd-CAPA-11.png",
     category: "Casa e Utensílios Domésticos",
-    stock: -3,
+    stock: -9,
   },
   {
     id: "cmrnvo2eb01o9iudh3d1gx6zg",
@@ -11526,8 +11443,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "aspirador-portatil-anti-acaro-esterilizacao-luz-uv-sem-fio",
     priceCents: 18900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/26bd7e341f-CAPA-10.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/26bd7e341f-CAPA-10.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11537,8 +11453,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "seladora-de-embalagem-a-vacuo-portatil-de-alimentos-bivolt",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/db1200c0b0-capa-8.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/db1200c0b0-capa-8.png",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -11548,8 +11463,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-lanterna-chaveiro-portatil-usb-abridor-garrafas",
     priceCents: 1500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cc7c831220-61vg2btBt-L._AC_SL1500_.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cc7c831220-61vg2btBt-L._AC_SL1500_.jpg",
     category: "Iluminação",
     stock: 0,
   },
@@ -11557,10 +11471,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvo1w301neiudhzx6k0082",
     name: "Anemômetro Digital Portátil Paraglider Kite Drone",
     slug: "secador-profissional-110v-com-2-velocidades-tomate-mse-2600a-copia",
-    priceCents: 7500,
+    priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/293fbc8870-CAPA-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/293fbc8870-CAPA-5.png",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -11570,8 +11483,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "secador-profissional-110v-com-2-velocidades-tomate-mse-2600a",
     priceCents: 8200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5d944e474a-CAPA-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5d944e474a-CAPA-4.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11581,8 +11493,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "detector-localizador-cc308-de-cameras-escutas-grampos-oculto",
     priceCents: 5400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b9114b24e9-1-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b9114b24e9-1-5.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11592,8 +11503,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-impressora-termica-portatil-sem-fio-bt-200dpi-escolar",
     priceCents: 5800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5f7514bc5d-1-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5f7514bc5d-1-4.png",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -11601,12 +11511,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvo17i01mbiudhjl29yekx",
     name: "Mini Ventilador De Teto De 3 modos Lâmpada Led Silenciosa Moderna",
     slug: "ventilador-de-teto-de-3-modos-lampada-led-silenciosa-moderna",
-    priceCents: 7400,
+    priceCents: 4900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/06640156cd-6-3.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/06640156cd-6-3.png",
     category: "Casa e Utensílios Domésticos",
-    stock: 1,
+    stock: 49,
   },
   {
     id: "cmrnvo11e01m5iudhajsx82tf",
@@ -11614,10 +11523,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lanterna-lampiao-7044c-recarregavel-45-leds-8w-iluminacao",
     priceCents: 5300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a40677f55e-1-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a40677f55e-1-2.png",
     category: "Iluminação",
-    stock: -3,
+    stock: -19,
   },
   {
     id: "cmrnvo0uv01lxiudh5onvg8k4",
@@ -11625,8 +11533,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lixa-eletrica-esfoliador-p-pes-calos-recarregavel-3-in-1",
     priceCents: 5300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a0718bf4b2-capa.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a0718bf4b2-capa.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11636,10 +11543,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-magnetico-dobravel-de-360-para-celular-para-carro",
     priceCents: 1700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d0491b94f6-capa-3.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d0491b94f6-capa-3.png",
     category: "Fora de Estoque",
-    stock: 100,
+    stock: 98,
   },
   {
     id: "cmrnvo0i801lbiudhbvk34vjf",
@@ -11647,8 +11553,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-esportivo-xiaomi-smart-band-8-active-global",
     priceCents: 18600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/436ffdd33b-2-13.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/436ffdd33b-2-13.png",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -11658,8 +11563,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tela-monitor-digital-lcd-7-colorida-hdmi-vga-av",
     priceCents: 22900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d34dc0dc28-1-11.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d34dc0dc28-1-11.png",
     category: "Informática",
     stock: 0,
   },
@@ -11669,8 +11573,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sonar-fetal-doppler-batimentos-cardiacos-ultrassom-bebe-led",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3bf2197957-doppler-fetal-portatil-rosa-63f685b4113e5-large1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3bf2197957-doppler-fetal-portatil-rosa-63f685b4113e5-large1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11680,8 +11583,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-neckband-sem-fio-sony-wi-c100",
     priceCents: 17300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/85c284017c-5-10.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/85c284017c-5-10.png",
     category: "Fones de Ouvido",
     stock: 0,
   },
@@ -11691,8 +11593,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lava-jato-de-alta-pressao-recarregavel-portatil-sem-fio",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/193687eaed-5-9.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/193687eaed-5-9.png",
     category: "Ferramentas",
     stock: 0,
   },
@@ -11702,8 +11603,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lixeira-inteligente-eletrica-cozinha-cesto-lixo-abre-sensor",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a06e94d507-1-8.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a06e94d507-1-8.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11713,8 +11613,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-forma-de-fazer-donuts-1200w-rosquinha-eletrica-donuts",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b592d07bd7-4-6.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b592d07bd7-4-6.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11724,8 +11623,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-de-vlogg-filmagem-microfone-tripe-luz-live-profissional",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/94a4ac41ea-6-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/94a4ac41ea-6-5.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11733,10 +11631,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvnz5901j1iudhqf583zbv",
     name: "Ventilador portátil Carro Duplo Cabeça Ventilador",
     slug: "ventilador-portatil-carro-duplo-cabeca-ventilador-12v-24v-usb-720",
-    priceCents: 4900,
+    priceCents: 3900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5462d8c292-8-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5462d8c292-8-2.png",
     category: "Umidificadores & Ventiladores",
     stock: 0,
   },
@@ -11746,10 +11643,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bastao-de-luz-preenchimento-rgb-fotografico-3000k-6000k",
     priceCents: 8300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/879711abc8-4-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/879711abc8-4-2.png",
     category: "Iluminação",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvnyst01ihiudh5qfmd5k6",
@@ -11757,8 +11653,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-de-fazer-bolos-antiaderente-compacta-mini-bolo-cake-eletrica",
     priceCents: 7900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7f57bb24d9-6-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7f57bb24d9-6-2.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11768,8 +11663,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-maquina-de-lavar-e-secar-portatil-11-dobravel-bivolt",
     priceCents: 16000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/abde5fc498-8.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/abde5fc498-8.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11779,8 +11673,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sanduicheira-eletrica-chapa-misto-quente-gourmet-750w-110v",
     priceCents: 7200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2930ec9fed-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2930ec9fed-2.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11790,8 +11683,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "novo-google-chromecast-4-c-google-tv-4k-8gb-100-original",
     priceCents: 36000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/496b4cd31a-main_0_.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/496b4cd31a-main_0_.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11801,32 +11693,29 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caranguejo-fujao-brinquedo-sr-joe-toca-musica-sensor-bebe",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f15933ee87-Caranguejo-Fujao-Brinquedo-Sr-Joe-Toca-Musica-Sensor-Bebe.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f15933ee87-Caranguejo-Fujao-Brinquedo-Sr-Joe-Toca-Musica-Sensor-Bebe.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnxy501heiudhbcf2jke2",
     name: "Levantador Movedor Suporte Transportador Moveis Com Rodinhas",
     slug: "levantador-movedor-suporte-transportador-moveis-com-rodinhas",
-    priceCents: 3500,
+    priceCents: 2900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a5bcd60486-Levantador-Movedor-Suporte-Transportador-Moveis-Com-Rodinhas-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a5bcd60486-Levantador-Movedor-Suporte-Transportador-Moveis-Com-Rodinhas-4.jpg",
     category: "Ferramentas",
     stock: -4,
   },
   {
     id: "cmrnvnxrd01h6iudhdmnlsbnh",
-    name: "Ventilador Portátil grande de mesa Umidificador Climatizador Led Água e Gelo 3 Velocidades Led",
+    name: "Ventilador Portátil grande de mesa Umidificador Climatizador Led Água e Gelo 3 Velocidades Led",
     slug: "ventilador-portatil-grande-de-mesa-umidificador-climatizador-led-agua-e-gelo-3-velocidades-led",
     priceCents: 5300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/94b201941a-capa.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/94b201941a-capa.png",
     category: "Umidificadores & Ventiladores",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvnxl501gsiudhkxchwst4",
@@ -11834,8 +11723,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "repetidor-sinal-wi-fi-tp-link-re200-ac750-dual-band-2-4-5ghz-cor-branco-110v-220v",
     priceCents: 14000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ddc7365760-8-4.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ddc7365760-8-4.webp",
     category: "Informática",
     stock: -3,
   },
@@ -11845,10 +11733,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cachorro-brinquedo-de-pelucia-pula-anda-late-da-cambalhota",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b51452fe02-1-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b51452fe02-1-1.jpg",
     category: "Brinquedos",
-    stock: -3,
+    stock: -10,
   },
   {
     id: "cmrnvnx8w01g2iudh8ob1o9m0",
@@ -11856,10 +11743,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luminaria-lampada-led-spot-sem-fio-portatil-controle-remoto",
     priceCents: 2600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9b8a9bd971-12-2.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9b8a9bd971-12-2.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnx2u01fniudh71mjjjj4",
@@ -11867,8 +11753,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "xiaomi-mi-tv-stick-controle-de-voz-4k",
     priceCents: 30500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6a7aebcc92-Xiaomi-Mi-Stick-Tv-4k-Controle-De-Voz-8gb-2gb-De-Memoria-Ram.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6a7aebcc92-Xiaomi-Mi-Stick-Tv-4k-Controle-De-Voz-8gb-2gb-De-Memoria-Ram.jpg",
     category: "Media Streaming",
     stock: 0,
   },
@@ -11878,8 +11763,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-sem-fio-bluetooth-mario-bros-menino-menina",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8c585b08f5-3.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8c585b08f5-3.webp",
     category: "Fora de Estoque",
     stock: -3,
   },
@@ -11887,23 +11771,21 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvnwqn01esiudh6wi23vi2",
     name: "Caneta 3d Impressora Profissional 12v Com Filamentos",
     slug: "caneta-3d-impressora-profissional-12v-com-filamentos-fonte",
-    priceCents: 5200,
+    priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6255aa06b7-8-Copia-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6255aa06b7-8-Copia-1.jpg",
     category: "Papelaria",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvnwkf01efiudh5hb0s74m",
     name: "Ventilador Com Luz Led, 3- Lâmpada Moderna Para Smart E2",
     slug: "ventilador-com-luz-led-3-lampada-moderna-para-smart-e2",
-    priceCents: 6300,
+    priceCents: 4900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dbf28a11b2-7-11.jpg",
-    category: "Fora de Estoque",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dbf28a11b2-7-11.jpg",
+    category: "Umidificadores & Ventiladores",
+    stock: 50,
   },
   {
     id: "cmrnvnwea01dziudhreoxuy9x",
@@ -11911,8 +11793,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luva-lanca-teia-homem-aranha-brinquedo-presente-meninos-top",
     priceCents: 2300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a58f6b4f8-14-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3a58f6b4f8-14-1.webp",
     category: "Brinquedos",
     stock: 0,
   },
@@ -11922,8 +11803,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "echo-pop-smart-speaker-amazon-cores-azul-lilas-branca",
     priceCents: 33500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d14560429e-9-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d14560429e-9-7.jpg",
     category: "Caixas de Som",
     stock: 0,
   },
@@ -11933,8 +11813,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-bluetooth-gamer-futurista-em-metal-kaapbom-ka-896",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/39fec58c50-CAPA.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/39fec58c50-CAPA.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11944,8 +11823,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-bluetooth-game-ka-791-cor-azul-ou-verde",
     priceCents: 6500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ffdb046070-11-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ffdb046070-11-2.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11955,8 +11833,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tomada-inteligente-wifi-smart-home-coibeu-cor-branco",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/170d3b2682-8-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/170d3b2682-8-6.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11966,8 +11843,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "umidificador-difusor-de-ar-agua-anti-gravidade-800ml",
     priceCents: 14000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eb89495515-12-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eb89495515-12-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11977,8 +11853,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-maquina-de-costura-reta-countertech-fh-sm202-portatil-branca-110v-220v",
     priceCents: 8300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/86081b97d3-17-Copia.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/86081b97d3-17-Copia.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -11988,8 +11863,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-bluetooth-5-1-a-prova-dagua-y80-gamer-ipx-4",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9192e7ba4d-2.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9192e7ba4d-2.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -11999,8 +11873,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pelucia-antialergica-baby-e-decoracao-girafinha-bebe-de-40cm",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/416f897060-1-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/416f897060-1-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12010,10 +11883,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lanterna-searchlight-holofote-led-portatil-para-acampar",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/743ca3dec0-8-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/743ca3dec0-8-1.jpg",
     category: "Iluminação",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvnupd01a6iudhqz6bknty",
@@ -12021,10 +11893,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pisca-pisca-led-luz-de-natal-100-leds-8-funcoes-9-metros-branco-led-e-colorido",
     priceCents: 1300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3c1c0f0626-8.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3c1c0f0626-8.webp",
     category: "Mais vendidos",
-    stock: 0,
+    stock: -7,
   },
   {
     id: "cmrnvnuiq019oiudhm34afl6w",
@@ -12032,8 +11903,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "dispenser-automatico-pasta-de-dente-suporte-de-escovas-uv",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b4c9242e39-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b4c9242e39-7.jpg",
     category: "Promoções do Mês",
     stock: 0,
   },
@@ -12043,10 +11913,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "projetor-astronauta-lua-galaxia-infantil-abajur-led-menino",
     priceCents: 8300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6aa68d18be-ProjetorGalxiaAstronautaGalaxyLightsEstrelas-754935-MLB70234636222_072023.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6aa68d18be-ProjetorGalxiaAstronautaGalaxyLightsEstrelas-754935-MLB70234636222_072023.jpeg",
     category: "Brinquedos",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvnu01018uiudhsk2pvvbx",
@@ -12054,30 +11923,27 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-colheres-silicones-12-pecas-copo-suporte",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c4b57eb94-12-10.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c4b57eb94-12-10.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvntty018giudh48r9muol",
     name: "Babá Eletrônica Câmera Wifi Sem Fio Visão Noturna Microfone",
     slug: "baba-eletronica-camera-wifi-sem-fio-visao-noturna-microfone",
-    priceCents: 8000,
+    priceCents: 6900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8e4d59414-1-6.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e8e4d59414-1-6.jpg",
     category: "Câmeras",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvntns0181iudhom40wt1m",
     name: "Suporte Tv Led Lcd Tri-articulado 32 39 40 42 43 48 50 55",
     slug: "suporte-tv-led-lcd-tri-articulado-32-39-40-42-43-48-50-55",
-    priceCents: 6300,
+    priceCents: 5900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/abb6c2690c-14-3.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/abb6c2690c-14-3.webp",
     category: "Ring Light & Suportes",
     stock: -2,
   },
@@ -12087,8 +11953,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "headset-gamer-knup-fone-para-xbox-ps4-celular-android-iphone",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aca1c2dbbf-8-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aca1c2dbbf-8-4.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12098,10 +11963,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-conversor-digital-aquario-de-tv-full-hd-dtv-9000",
     priceCents: 8700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/26d5944254-4-3.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/26d5944254-4-3.webp",
     category: "Media Streaming",
-    stock: 0,
+    stock: -4,
   },
   {
     id: "cmrnvnt400170iudhbmg5526j",
@@ -12109,10 +11973,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luminaria-de-mesa-g-speaker-smart-station-bluetooth-c-som-cor-branco",
     priceCents: 7200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b79d869fa-capa-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b79d869fa-capa-1.png",
     category: "Caixas de Som",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvnsxu016iiudh4u8lx2o5",
@@ -12120,8 +11983,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-de-tv-led-lcd-14-84-polegadas-todas-televisao-fixo",
     priceCents: 1300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9775f5f57b-capa.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9775f5f57b-capa.jpeg",
     category: "Ring Light & Suportes",
     stock: 18,
   },
@@ -12131,10 +11993,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bastao-tripe-bluetooth-mini-360o-pau-de-selfie-3em-1-celular",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2281cef04-BastoTripMiniPauDeSelfieBluetoothem-951709-MLB45132467872_032021.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2281cef04-BastoTripMiniPauDeSelfieBluetoothem-951709-MLB45132467872_032021.jpeg",
     category: "Ring Light & Suportes",
-    stock: -2,
+    stock: -8,
   },
   {
     id: "cmrnvnslr015viudhu3g4cx6f",
@@ -12142,10 +12003,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "papa-bolinhas-limpa-roupas-tira-pelos-eletrico-recarregavel",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dfb4d16337-PapaBolinhasLimpaRoupasTiraPelosEltricoRec-667077-MLB70048854591_062023-1.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dfb4d16337-PapaBolinhasLimpaRoupasTiraPelosEltricoRec-667077-MLB70048854591_062023-1.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvnsfo015hiudhoddiz24h",
@@ -12153,10 +12013,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "moedor-eletric-triturador-de-cereais-graos-cevada-e-feijao",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f81078d31a-0-MoedorTrituradorDeCafGroswEltricoInox.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f81078d31a-0-MoedorTrituradorDeCafGroswEltricoInox.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -6,
+    stock: -12,
   },
   {
     id: "cmrnvns9m0155iudhf7e47s3u",
@@ -12164,10 +12023,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-cortador-de-alimentos-250-ml-eletrico-a-prova-dagua",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cbebc4f812-capa.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cbebc4f812-capa.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvns3e014qiudhs0n7o0j7",
@@ -12175,8 +12033,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "difusor-aromatizador-chamas-umidificador-ar-oleos-essenciais",
     priceCents: 5300,
     compareAtPriceCents: null,
-    image:
-      "https://c7drop.com.br/wp-content/uploads/2023/06/0-DifusorAromatizadorUmidificadorArAromaleoEf.jpeg",
+    image: "https://c7drop.com.br/wp-content/uploads/2023/06/0-DifusorAromatizadorUmidificadorArAromaleoEf.jpeg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12186,8 +12043,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "garrafa-de-agua-squeeze-galao-2l-litros-motivacional-academia-kit-3-garrafas-colorida-antivazamento",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/89a958c5ce-5180TStGVrL._AC_SL1200_.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/89a958c5ce-5180TStGVrL._AC_SL1200_.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12195,12 +12051,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvnrrc0146iudhnnodo67d",
     name: "Kit 10 Animais Da Fazenda Safari Zoo Pequenos De Borracha",
     slug: "kit-10-animais-da-fazenda-safari-zoo-pequenos-de-borracha",
-    priceCents: 990,
+    priceCents: 1100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9a5d081df4-2-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9a5d081df4-2-2.webp",
     category: "Brinquedos",
-    stock: -120,
+    stock: -375,
   },
   {
     id: "cmrnvnrl80140iudhy7weck1r",
@@ -12208,10 +12063,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-kit-com-12-mini-animais-da-selva",
     priceCents: 1500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ceb5a099d8-3-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ceb5a099d8-3-1.webp",
     category: "Brinquedos",
-    stock: -31,
+    stock: -51,
   },
   {
     id: "cmrnvnrf2013siudhz93a3qtc",
@@ -12219,8 +12073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-bluetooth-wireless-kaidi-kd-829-a-prova-dagua",
     priceCents: 18500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0e04ffaaf5-capa.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0e04ffaaf5-capa.png",
     category: "Caixas de Som",
     stock: 0,
   },
@@ -12230,8 +12083,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pulseira-loop-alpine-para-smartwatch-watch-ultra",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5f12c706a9-3-6.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5f12c706a9-3-6.webp",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -12239,12 +12091,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvnr2y0134iudh4treg1bv",
     name: "Aspirador Portátil Automotivo Premium Potente Recarregável",
     slug: "aspirador-portatil-potente-automotivo-premium-recarregavel",
-    priceCents: 2400,
+    priceCents: 1999,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/75f1416e32-AspiradorPorttilAutomotivoPotenteRecarregvel-833424-MLB52275247199_112022.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/75f1416e32-AspiradorPorttilAutomotivoPotenteRecarregvel-833424-MLB52275247199_112022.jpeg",
     category: "Promoções do Mês",
-    stock: -8,
+    stock: -58,
   },
   {
     id: "cmrnvnqwu012viudh1gdden7o",
@@ -12252,8 +12103,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "modelador-ondulador-de-cachos-automatico-sem-fio-portatil-nf",
     priceCents: 8300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e2ea22f967-8-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e2ea22f967-8-1.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12263,8 +12113,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mop-de-limpeza-triangulo-ajustavel-giratorio-360-esfregao",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7afe464f3b-0-MopDeLimpezaTringuloAjustvelGiratrio.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7afe464f3b-0-MopDeLimpezaTringuloAjustvelGiratrio.jpeg",
     category: "Fora de Estoque",
     stock: -1,
   },
@@ -12274,10 +12123,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-ferro-portatil-para-viagem-bivolt-110v-220v-24h",
     priceCents: 5200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b17a136f0-0-MiniMquinaPorttilFerroDePassarRoupaVapor.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0b17a136f0-0-MiniMquinaPorttilFerroDePassarRoupaVapor.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnqdp011tiudhrnp524kb",
@@ -12285,8 +12133,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "espremedor-eletrico-portatil-turbo-sucos-400ml-recarregave",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/483dc8e9db-3-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/483dc8e9db-3-2.webp",
     category: "Casa e Utensílios Domésticos",
     stock: 0,
   },
@@ -12296,8 +12143,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "babyliss-modelador-de-cachos-ondas-grosso-25mm-bivolt-180oc",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d620f2a39c-4.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d620f2a39c-4.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12307,8 +12153,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "curso-liberdade-sem-estoque-dropshipping",
     priceCents: 49600,
     compareAtPriceCents: 129700,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0f77ddd8fb-Design-sem-nome.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0f77ddd8fb-Design-sem-nome.jpg",
     category: "Anúncios em Massa",
     stock: 0,
   },
@@ -12318,10 +12163,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "repelente-mata-mosquito-led-uv-eletrico-pernilongo-insetos",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3c42f284ad-Choque-el-trico-l-mpada-assassino-do-mosquito-recarreg-vel-usb-levou-voar-repelente-anti-inseto.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3c42f284ad-Choque-el-trico-l-mpada-assassino-do-mosquito-recarreg-vel-usb-levou-voar-repelente-anti-inseto.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnppf010tiudhub97fxr0",
@@ -12329,10 +12173,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cadeado-com-alarme-sonoro-anti-furto-com-sirene",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a1afbd8948-cad-luatek-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a1afbd8948-cad-luatek-1.jpg",
     category: "Ferramentas",
-    stock: 0,
+    stock: -15,
   },
   {
     id: "cmrnvnpjf010miudh2utwbf2a",
@@ -12340,8 +12183,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "placa-carro-led-de-aplicativo-uber-botao-liga-desliga",
     priceCents: 1700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b990d6669-6-5.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3b990d6669-6-5.webp",
     category: "Iluminação",
     stock: 0,
   },
@@ -12351,10 +12193,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lanterna-tatica-led-880000w-militar-longo-alcance-t6-usb",
     priceCents: 1900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c5a7daa8d-0-LanternaTticawLongoAlcancePotenteRecar.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c5a7daa8d-0-LanternaTticawLongoAlcancePotenteRecar.jpeg",
     category: "Iluminação",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvnp6p00zxiudhzo4l0lq9",
@@ -12362,10 +12203,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lanterna-de-cabeca-led-recarregavel-fita-ajustavel-usb",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/79ebed91e9-0-FarolLanternaDeCabeaLedSuperForteResistent.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/79ebed91e9-0-FarolLanternaDeCabeaLedSuperForteResistent.jpeg",
     category: "Iluminação",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnp0l00zliudh154ulmqx",
@@ -12373,8 +12213,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "afiador-amolador-de-facas-e-tesouras-3-in-1-profissional",
     priceCents: 1700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60240a8b0a-AfiadorAmoladorDeFacasETesourasInProfis-635518-MLB53834318229_022023.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60240a8b0a-AfiadorAmoladorDeFacasETesourasInProfis-635518-MLB53834318229_022023.jpeg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -12384,10 +12223,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fita-sutia-levanta-seios-peito-adesivo-discreto-boob-tape-up",
     priceCents: 1600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/de9bf7f555-WhatsApp-Image-2023-02-10-at-13.59.16.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/de9bf7f555-WhatsApp-Image-2023-02-10-at-13.59.16.jpeg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -3,
+    stock: -8,
   },
   {
     id: "cmrnvnooh00z4iudhfphpr6rc",
@@ -12395,10 +12233,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fire-tv-stick-4k-com-controle-remoto-por-voz-com-alexa",
     priceCents: 29900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb92d6c31b-61so63LPWqL._AC_SL1500_.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb92d6c31b-61so63LPWqL._AC_SL1500_.jpg",
     category: "Media Streaming",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnohq00yxiudhzgzj63k2",
@@ -12406,10 +12243,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "amazon-echo-dot-5th-gen-com-assistente-virtual-alexa",
     priceCents: 39000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3450091448-1-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3450091448-1-1.webp",
     category: "Caixas de Som",
-    stock: -59,
+    stock: -169,
   },
   {
     id: "cmrnvnobq00ypiudh41wlmuhv",
@@ -12417,10 +12253,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lixador-para-pes-eletrico-e-removedor-de-calos-portatil",
     priceCents: 2300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a4ba405fe0-1-6.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a4ba405fe0-1-6.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvno5m00yciudhjlfooirz",
@@ -12428,8 +12263,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fatiador-moedor-de-legumes-multifuncional-sem-fio-eletrico",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a4f25b880c-3-ProcessadorEltricoCortadorEFatiadorDeLegume.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a4f25b880c-3-ProcessadorEltricoCortadorEFatiadorDeLegume.jpeg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12439,10 +12273,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bichinho-virtual-tamagochi-168-animais-brinquedo-retro",
     priceCents: 1600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b869ec0597-t.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b869ec0597-t.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -6,
   },
   {
     id: "cmrnvnntb00xxiudhf961dpso",
@@ -12450,10 +12283,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lixadeira-caneta-rosa-motor-unha-eletrica-profissional",
     priceCents: 3600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/73c80d4ef7-2-6.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/73c80d4ef7-2-6.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvnnn700xpiudh8k85c1wk",
@@ -12461,8 +12293,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "positivo-p28-dual-sim-24-mb-preto-32-mb-ram",
     priceCents: 12000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2573ac9b3a-TelefoneCelularBaratogTelaGrandeHomologado-707902-MLB54195964273_032023.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2573ac9b3a-TelefoneCelularBaratogTelaGrandeHomologado-707902-MLB54195964273_032023.jpeg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12472,10 +12303,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "depilador-removedor-de-pelos-corporal-yes-finish-touch-light",
     priceCents: 2200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e08717deb-3-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e08717deb-3-2.webp",
     category: "Salão & Barbearia",
-    stock: -1,
+    stock: -14,
   },
   {
     id: "cmrnvnnb500x7iudheh330ozz",
@@ -12483,10 +12313,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-de-barbear-eletrica-turbo-3-laminas-recarregavel",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/95d3f51ec9-4-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/95d3f51ec9-4-1.webp",
     category: "Salão & Barbearia",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnn4y00wziudhdqbpcy55",
@@ -12494,8 +12323,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smartwatch-w68-ultra-series-8-nfc-tela-20-original-lacrado",
     priceCents: 11500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/abbbd263dc-capa.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/abbbd263dc-capa.jpeg",
     category: "Relogios e Smartwatchs",
     stock: 0,
   },
@@ -12505,8 +12333,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ebook-aprenda-a-vender-hoje",
     priceCents: 4999,
     compareAtPriceCents: 19900,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a12572430b-Copia-de-Cem-Tecnologias-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a12572430b-Copia-de-Cem-Tecnologias-1.jpg",
     category: "Anúncios em Massa",
     stock: 0,
   },
@@ -12516,10 +12343,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "abridor-de-garrafa-saca-rolhas-vinho-eletrico-automatico-kit",
     priceCents: 5600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e11280b109-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e11280b109-1.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    stock: 49,
   },
   {
     id: "cmrnvnmmh00waiudh2yr07it0",
@@ -12527,10 +12353,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "hand-grip-com-mola-ajustavel-de-forca-10-a-60kg-fisioterapia",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/75ed1f427c-2-2.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/75ed1f427c-2-2.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvnmgd00w2iudhcmk551ga",
@@ -12538,8 +12363,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "marmita-eletrica-automatica-com-divisoria-110v-lancheira-portatil-eletric-lunch-box-3-em-1-grid-plate",
     priceCents: 8900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8ac61acf8b-1-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8ac61acf8b-1-3.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12549,10 +12373,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "157276",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e3431cabee-2-3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e3431cabee-2-3.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnm3w00veiudh5h6ciw0m",
@@ -12560,10 +12383,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-ip-lampada-wifi-full-hd-visao-noturna",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e54708099-4-3.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e54708099-4-3.webp",
     category: "Câmeras",
-    stock: 0,
+    stock: -4,
   },
   {
     id: "cmrnvnlxp00v6iudhlb9gnkc5",
@@ -12571,10 +12393,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-tosa-pet-kemei-km-1991-profissional-s-fio-bivol",
     priceCents: 9300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2aeccaec2-1-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2aeccaec2-1-1.jpg",
     category: "Salão & Barbearia",
-    stock: -1,
+    stock: -49,
   },
   {
     id: "cmrnvnlri00uziudh6957ebna",
@@ -12582,10 +12403,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-cortar-mini-cabelo-bebe-crianca-portatil-kemei-1319-cor-branco",
     priceCents: 7000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/594b2a56d9-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/594b2a56d9-1-1.png",
     category: "Salão & Barbearia",
-    stock: 50,
+    stock: 43,
   },
   {
     id: "cmrnvnllc00uniudhdwbipbb7",
@@ -12593,10 +12413,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-eletrica-masculina-recarregavel-de-cortar-cabelo-e-barbear-vintage",
     priceCents: 1300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60bfbcb305-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60bfbcb305-1.png",
     category: "Salão & Barbearia",
-    stock: -11,
+    stock: -49,
   },
   {
     id: "cmrnvnlf800ufiudhb9qeaji5",
@@ -12604,8 +12423,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caminhao-de-bombeiro-a-pilha-com-movimento-sirene-e-luzes",
     priceCents: 3700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45b8030acf-6-7.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45b8030acf-6-7.webp",
     category: "Brinquedos",
     stock: -5,
   },
@@ -12615,10 +12433,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-4-beyblade-metal-led-2-lancadores-arena-novidade",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e06dc814ab-1-22.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e06dc814ab-1-22.webp",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnl3000tviudh7fgio0q8",
@@ -12626,10 +12443,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "teclado-infantil-rosa-com-microfone-musical-resistente",
     priceCents: 4900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/670ea02be4-5-PianoTecladoMusicalInfantilMicrofoneEducativo.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/670ea02be4-5-PianoTecladoMusicalInfantilMicrofoneEducativo.jpeg",
     category: "Brinquedos",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvnkwt00thiudh44tox4js",
@@ -12637,10 +12453,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-infantil-torta-na-cara-brincadeira-familia-jogo",
     priceCents: 4650,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5c4caf02ee-0-JogoTipoPieFaceBrinquedoTortaNaCaraTop.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5c4caf02ee-0-JogoTipoPieFaceBrinquedoTortaNaCaraTop.jpeg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnkqf00tbiudh1qd9fu55",
@@ -12648,8 +12463,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caneta-esferografica-que-apaga-tinta-azul-ponta-0-8-unidade-ou-caixa-12un",
     priceCents: 800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/df010757db-1-18.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/df010757db-1-18.webp",
     category: "Papelaria",
     stock: 0,
   },
@@ -12659,10 +12473,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-infantil-jogo-de-pescar-pega-peixe-pesca-maluca",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/58ae20165a-1-14.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/58ae20165a-1-14.webp",
     category: "Brinquedos",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvnke700syiudhr1wqtsu6",
@@ -12670,8 +12483,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kemei-km-700h-eletrica-display-de-led-corta-barba-cabelo",
     priceCents: 11000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d9ba7f7a25-capa.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d9ba7f7a25-capa.jpg",
     category: "Salão & Barbearia",
     stock: 0,
   },
@@ -12681,8 +12493,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smart-tomada-inteligente-com-2-entrada-usb-wi-fi",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/115d503125-3-7.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/115d503125-3-7.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12692,10 +12503,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luminaria-lampada-spot-sensor-presenca-inducao-inteligente",
     priceCents: 1800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e4d6e9f101-1-5.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e4d6e9f101-1-5.webp",
     category: "Iluminação",
-    stock: -8,
+    stock: -13,
   },
   {
     id: "cmrnvnjw000sbiudh0uauky79",
@@ -12703,10 +12513,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "irrigador-oral-eletrico-jato-dagua-limpador-dental-e-bucal",
     priceCents: 3300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e078efd6f0-0-IrrigadorOralWaterpikPortatilBivoltUsbLinha.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e078efd6f0-0-IrrigadorOralWaterpikPortatilBivoltUsbLinha.jpeg",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvnjpz00s5iudhse0hvye2",
@@ -12714,8 +12523,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "compressor-de-ar-portatil-xiaomi-mi-pump-bomba-de-ar-bivolt",
     priceCents: 31000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/76f5ab0609-1-35.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/76f5ab0609-1-35.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12723,12 +12531,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvnjjn00s1iudhqszetg2i",
     name: "Kit 12 brinquedo Dino - Mini Dinossauros Jurassic Park",
     slug: "kit-12-brinquedo-dino-mini-dinossauros-jurassic-park",
-    priceCents: 1600,
+    priceCents: 999,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b646d80d7b-dino.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b646d80d7b-dino.jpeg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -9,
   },
   {
     id: "cmrnvnjdl00rwiudhjd4yny9i",
@@ -12736,8 +12543,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-chaves-16-pecas-para-celular-iphone-android-notebook",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d9261a0a3c-chave.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d9261a0a3c-chave.jpeg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -12747,8 +12553,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "tomada-parede-entradas-usb-carregador-universal-dispositivo",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61803b2b5d-2-12.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61803b2b5d-2-12.webp",
     category: "Carregadores & Power Banks",
     stock: -1,
   },
@@ -12758,10 +12563,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "testador-teste-crimpagem-cabo-rede-lan-rj45-rj11",
     priceCents: 2300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b83098022-1-12.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b83098022-1-12.webp",
     category: "Ferramentas",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnivd00rhiudh60958pkn",
@@ -12769,8 +12573,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-2-1-controle-bass-com-botao-on-off",
     priceCents: 6200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7e2be0f01-caixa-de-som-c-subwoofer-2-1-knup-12w-rms-kp-7023_14268.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e7e2be0f01-caixa-de-som-c-subwoofer-2-1-knup-12w-rms-kp-7023_14268.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12780,10 +12583,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lousa-magica-tela-lcd-tablet-infantil-de-escrever-e-desenhar-wk-7",
     priceCents: 2600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5c721c63a7-0-KitCUniLousaMgicaTabletInfantilPol.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5c721c63a7-0-KitCUniLousaMgicaTabletInfantilPol.jpeg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvniiw00qtiudh97zh9tlr",
@@ -12791,10 +12593,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquininha-tira-pelo-nariz-e-orelha",
     priceCents: 1700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c22968fecf-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c22968fecf-1-1.png",
     category: "Salão & Barbearia",
-    stock: -2,
+    stock: -15,
   },
   {
     id: "cmrnvnicp00qoiudhf4aqemyq",
@@ -12802,10 +12603,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "conjunto-de-chave-canhao-40pc-portatil-luatek-lwj-138",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0268c24b50-1651153767533.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0268c24b50-1651153767533.png",
     category: "Ferramentas",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvni6g00qliudhwhnlxi48",
@@ -12813,10 +12613,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "anuncios-em-massa-shopee",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce3d926294-4-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce3d926294-4-1.png",
     category: "Anúncios em Massa",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvni0d00qaiudhebhqdx9v",
@@ -12824,10 +12623,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-via-bluetooth-tws-e10-a-prova-dagua-com-nf-e",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/59d6c7ad6e-Capa.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/59d6c7ad6e-Capa.jpeg",
     category: "Fones de Ouvido",
-    stock: -2,
+    stock: -15,
   },
   {
     id: "cmrnvnhub00pyiudhzkb33brl",
@@ -12835,8 +12633,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "plano-premium",
     priceCents: 19999,
     compareAtPriceCents: 39900,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8424bba050-isso-ai-3.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8424bba050-isso-ai-3.png",
     category: "Anúncios em Massa",
     stock: 0,
   },
@@ -12846,10 +12643,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "95981",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/69a26f5aa1-16.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/69a26f5aa1-16.webp",
     category: "Games",
-    stock: 99,
+    stock: 93,
   },
   {
     id: "cmrnvnhi600pfiudh7ibukp1d",
@@ -12857,8 +12653,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "game-pad-manete-freefire-5-em-1-controle-para-celular-pubg",
     priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e730de1e5e-4ec95c5cb8e87468d226c8e8631a106c.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e730de1e5e-4ec95c5cb8e87468d226c8e8631a106c.jpeg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12868,10 +12663,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-manicure-masculino-feminino-estojo-12-pecas-aco-inox",
     priceCents: 2700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb5eb3010e-kittt.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb5eb3010e-kittt.jpeg",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -4,
   },
   {
     id: "cmrnvnh6100p6iudhzigknqve",
@@ -12879,20 +12673,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-adaptador-p-iphone-para-p2-audio-auxiliar-fone",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0d8b8537ce-caboo.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0d8b8537ce-caboo.webp",
     category: "Carregadores & Power Banks",
-    stock: 0,
-  },
-  {
-    id: "cmrnvngzq00p1iudhcusuimuy",
-    name: "Luz Frontal p/ Bike LA-20",
-    slug: "luz-frontal-p-bike-la-20",
-    priceCents: 4000,
-    compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2f9d6698d9-bb.webp",
-    category: "Iluminação",
     stock: 0,
   },
   {
@@ -12901,8 +12683,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "multimetro-medidor-analogico-profissional-le-944",
     priceCents: 4100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bb21e9c7da-mn.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bb21e9c7da-mn.jpeg",
     category: "Ferramentas",
     stock: 0,
   },
@@ -12912,8 +12693,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "umidificador-de-ar-lua-le-2324",
     priceCents: 6200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d8ca35bf26-lll.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d8ca35bf26-lll.webp",
     category: "Umidificadores & Ventiladores",
     stock: 0,
   },
@@ -12923,8 +12703,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "iluminador-ring-light-led-14-polegadas-completo-com-tripe",
     priceCents: 16000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4f2b70e082-Iluminador-Ring-Light-Led-14-polegadas-Completo-com-tripe-1.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4f2b70e082-Iluminador-Ring-Light-Led-14-polegadas-Completo-com-tripe-1.jpeg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -12934,8 +12713,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "adaptador-p3-x-p2-fone-e-microfone-cores-sortidas",
     priceCents: 650,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d8651b77a2-p2-p3.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d8651b77a2-p2-p3.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -12943,12 +12721,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvng5d00oeiudhkngcf0gy",
     name: "Suporte De Alumínio Ajustável/Regulável Para Notebook E Macbook Escritório",
     slug: "suporte-de-aluminio-ajustavel-regulavel-para-notebook-e-macbook-escritorio",
-    priceCents: 5799,
+    priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc529d326f-capa.png",
-    category: "Fora de Estoque",
-    stock: 0,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc529d326f-capa.png",
+    category: "Ring Light & Suportes",
+    stock: 50,
   },
   {
     id: "cmrnvnfz800o9iudhcitrm4mc",
@@ -12956,10 +12733,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "barbeador-eletrico-barba-aparador-portatil-recarregavel-kemei-km-5700",
     priceCents: 6800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4f83fa522-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4f83fa522-1.jpg",
     category: "Salão & Barbearia",
-    stock: -1,
+    stock: -5,
   },
   {
     id: "cmrnvnft400o3iudh3fv6x22l",
@@ -12967,10 +12743,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lampada-de-mesa-dobravel-kts-666",
     priceCents: 2800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b3ea31fcc3-htsss.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b3ea31fcc3-htsss.webp",
     category: "Iluminação",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnfn100nviudhv9y3qip6",
@@ -12978,10 +12753,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "massageador-eletrico-profissional-muscular-pistola-original",
     priceCents: 4700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fc79733f4f-1-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fc79733f4f-1-1.png",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvnfgv00nliudhr2e3ny8u",
@@ -12989,10 +12763,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-xufeng-surf-prova-dagua-esportivo-original",
     priceCents: 4300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1852f2910c-7.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1852f2910c-7.png",
     category: "Relogios e Smartwatchs",
-    stock: -5,
+    stock: -16,
   },
   {
     id: "cmrnvnfau00niiudhnaent614",
@@ -13000,10 +12773,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "nivel-laser-profissional-trena-level-pro3-estagios-nivelador",
     priceCents: 3300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44000f7329-nivel-laser-kkkk.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44000f7329-nivel-laser-kkkk.jpeg",
     category: "Ferramentas",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnf4s00nfiudh5jr6e016",
@@ -13011,8 +12783,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "anuncios-em-massa-todos-os-produtos-da-cem-tecnologias",
     priceCents: 29900,
     compareAtPriceCents: 69900,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce3d926294-4-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce3d926294-4-1.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -13022,8 +12793,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "sony-gravador-de-voz-digital-icd-px240",
     priceCents: 28900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/024dd3c2b8-3-GravadorDigitalSonyPxudioVozgbOriginal.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/024dd3c2b8-3-GravadorDigitalSonyPxudioVozgbOriginal.jpeg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -13033,10 +12803,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "luminaria-energia-solar-parede-100-led-sensor-3-funcoes",
     priceCents: 2600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a55912f8af-72a822e7cdf685c4580086e99910b195.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a55912f8af-72a822e7cdf685c4580086e99910b195.jpg",
     category: "Iluminação",
-    stock: 0,
+    stock: -14,
   },
   {
     id: "cmrnvnem000mriudh4t8xb2b0",
@@ -13044,8 +12813,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-adaptador-type-c-otg-usb-mobile-phone-s-k07",
     priceCents: 700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/428f7fb113-cabo_adaptador_type_c_otg_usb_mobile_phone_s_k07_1519_2_2dbd0a1f8d4d6d11c942f5121bc4cae7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/428f7fb113-cabo_adaptador_type_c_otg_usb_mobile_phone_s_k07_1519_2_2dbd0a1f8d4d6d11c942f5121bc4cae7.jpg",
     category: "Produtos diversos",
     stock: 0,
   },
@@ -13055,10 +12823,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "hub-usb-7-portas-2-0-hd-extensor-pen-drive-hd",
     priceCents: 1500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bfa7e8a914-hub_7_portas_regua_usb_2_0_hi_speed_500gb_3133_1_20181228145950.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/bfa7e8a914-hub_7_portas_regua_usb_2_0_hi_speed_500gb_3133_1_20181228145950.jpg",
     category: "Informática",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvne9q00miiudhtkcyr7yc",
@@ -13066,8 +12833,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "anuncios-em-massa-amazon",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce3d926294-4-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce3d926294-4-1.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -13077,10 +12843,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-ventilador-portatil-recarregavel-com-suporte-de-mao-lelong-le-79",
     priceCents: 1950,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0e4300525c-capa-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0e4300525c-capa-1.jpg",
     category: "Umidificadores & Ventiladores",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvndx200lyiudh2njmftcw",
@@ -13088,10 +12853,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bomba-eletrica-filtro-bebedouro-de-garrafoes-galao-d-agua",
     priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5615ce508f-1-BombaEltricaGarrafesBebedouroGaloDguaCo.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5615ce508f-1-BombaEltricaGarrafesBebedouroGaloDguaCo.jpeg",
     category: "Promoções do Mês",
-    stock: 0,
+    stock: -6,
   },
   {
     id: "cmrnvndqy00ljiudhzjz9xxd4",
@@ -13099,10 +12863,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-chapinha-de-bolsa",
     priceCents: 1800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6e6105413f-12-33.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6e6105413f-12-33.webp",
     category: "Salão & Barbearia",
-    stock: -10,
+    stock: -21,
   },
   {
     id: "cmrnvndka00l2iudhczpp66mw",
@@ -13110,10 +12873,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "capa-bolsa-p-celulares-a-prova-d-agua-impermeavel-universal",
     priceCents: 600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd2d07828b-8-42.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd2d07828b-8-42.jpg",
     category: "Produtos diversos",
-    stock: -7,
+    stock: -23,
   },
   {
     id: "cmrnvnde700kziudh2li2wsnf",
@@ -13121,8 +12883,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "anuncios-em-massa-mercado-livre",
     priceCents: 9900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce3d926294-4-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce3d926294-4-1.png",
     category: "Anúncios em Massa",
     stock: 0,
   },
@@ -13132,10 +12893,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "skin-roller-system-540-needles",
     priceCents: 1800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/98f279ab33-3-68.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/98f279ab33-3-68.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: -1,
+    stock: -69,
   },
   {
     id: "cmrnvnd1p00k7iudh7xzy1l0o",
@@ -13143,10 +12903,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "suporte-veicular-universal-para-celular-it-blue-le-027-2-em-1",
     priceCents: 1700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd5bf89801-11-44.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd5bf89801-11-44.webp",
     category: "Ring Light & Suportes",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvncv300jviudhqfdml0kv",
@@ -13154,10 +12913,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "raquete-eletrica-recarregavel-mata-mosquito-dengue-insetos",
     priceCents: 2300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb47aabb59-8-61.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb47aabb59-8-61.webp",
     category: "Ferramentas",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvncp200joiudhof2nsh4u",
@@ -13165,8 +12923,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-tripe-ajustavel-wireless-para-fotos-e-videos-p40-stand",
     priceCents: 3300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f9a97e532d-1-61.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f9a97e532d-1-61.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -13176,10 +12933,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lousa-magica-tela-lcd-infantil-tablet-desenhar-anotacoes",
     priceCents: 1800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ca6b47d438-1-47.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ca6b47d438-1-47.jpg",
     category: "Brinquedos",
-    stock: -4,
+    stock: -5,
   },
   {
     id: "cmrnvncc800j3iudh6eplbzue",
@@ -13187,9 +12943,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cabo-hdmi-alta-resolucao-hd-novo-original",
     priceCents: 4000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8946330f23-2-56.webp",
-    category: "Carregadores & Power Banks",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8946330f23-2-56.webp",
+    category: "Fora de Estoque",
     stock: 0,
   },
   {
@@ -13198,21 +12953,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "lanterna-tatica-militar-zoom-recarregavel-x900",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/401bb74a85-5-49.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/401bb74a85-5-49.webp",
     category: "Iluminação",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnbzu00i9iudhlu8n0y1p",
-    name: "Lanterna Profissional Tática Led 990000w C/ Bateria - Cn",
+    name: "Lanterna Profissional Tática Led 980000w C/ Bateria - Cn",
     slug: "lanterna-tatica-led-super-forte-com-zoom-l-40-dex",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99a8558f18-1-3.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/99a8558f18-1-3.png",
     category: "Iluminação",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvnbtq00huiudhe0zi74h5",
@@ -13220,10 +12973,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "radio-relogio-digital-fm-despertador-duplo-alarme-bivolt",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c7f8a4952e-18-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c7f8a4952e-18-1.jpg",
     category: "Relogios e Smartwatchs",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvnbnh00heiudhklr5jt54",
@@ -13231,10 +12983,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-over-ear-sony-zx-series-mdr-zx110",
     priceCents: 9100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ac293a5d6-8-50.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ac293a5d6-8-50.webp",
     category: "Fones de Ouvido",
-    stock: -1,
+    stock: -7,
   },
   {
     id: "cmrnvnbhc00h2iudh8nt28itw",
@@ -13242,8 +12993,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mi-box-s-xiaomi-ultra-hd-hdr-4k-hdmi-usb-wifi-versao-global",
     priceCents: 35000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6700ce9c63-capa-7-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6700ce9c63-capa-7-5.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -13253,8 +13003,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "hd-externo-disco-rigido-seagate",
     priceCents: 95000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9c3fff35cd-61qCa2MnA3L._AC_SL1000_.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9c3fff35cd-61qCa2MnA3L._AC_SL1000_.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -13264,21 +13013,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "monitor-lcd-7-polegadas-tft-color-pillow",
     priceCents: 11400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b55485699-4-43.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8b55485699-4-43.webp",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvnayw00fxiudhnhfdx8lz",
-    name: "Barbeador e cortador de cabelo 3 em 1 Kemei KM-6776 Bivolt",
-    slug: "aparelho-de-barbear-3-em-1-kemei-shaver-bivolt-km-6776",
+    name: "Barbeador e cortador de cabelo 3 em 1 Kemei KM-6558 Bivolt",
+    slug: "aparelho-de-barbear-3-em-1-kemei-shaver-bivolt-km-6558",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8685cb04ab-0-BarbeadorEltricoMaquinaDeBarbearAparelhoBar.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8685cb04ab-0-BarbeadorEltricoMaquinaDeBarbearAparelhoBar.jpeg",
     category: "Salão & Barbearia",
-    stock: -28,
+    stock: -68,
   },
   {
     id: "cmrnvnaso00fkiudhxiwkenxo",
@@ -13286,8 +13033,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixinha-som-bluetooth-tws-metal-amplificada-3w-mini-speaker",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c83f38232-1-47.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c83f38232-1-47.webp",
     category: "Caixas de Som",
     stock: 0,
   },
@@ -13297,8 +13043,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "copo-termico-tipo-stan-473ml-com-tampa-e-abridor",
     priceCents: 3200,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6543abc5ac-5-CopoTrmicoCtampaAbridorCervejaOriginalm.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6543abc5ac-5-CopoTrmicoCtampaAbridorCervejaOriginalm.jpeg",
     category: "Garrafas, Copos e Canecas",
     stock: 0,
   },
@@ -13308,8 +13053,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "arandela-luminaria-30-led-energia-solar-sensor-de-presenca",
     priceCents: 2300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/26e7dd858d-0-LuminriaLedSensorDePresenaArandelaLuzS.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/26e7dd858d-0-LuminriaLedSensorDePresenaArandelaLuzS.jpeg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -13319,10 +13063,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-sem-fio-apresentador-de-slides-com-laser",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c455e9e28-Sem-titulo-7.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c455e9e28-Sem-titulo-7.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvna3x00e6iudhmyg1xf2d",
@@ -13330,8 +13073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-3-in-1-nova-barba-cabelo-corta-e-nariz-nhc-2011",
     priceCents: 3300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31e3fefc50-4-42.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31e3fefc50-4-42.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -13341,8 +13083,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-gamer-headset-knup-kp-491-profissional-ps4-pc-xbox-one",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4842294eb0-capa-1.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4842294eb0-capa-1.png",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -13352,10 +13093,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "oculos-de-realidade-virtual-vr-box",
     priceCents: 5500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0223a406c9-8-45.webp",
-    category: "Produtos diversos",
-    stock: -3,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0223a406c9-8-45.webp",
+    category: "Fora de Estoque",
+    stock: 1,
   },
   {
     id: "cmrnvn9lg00d2iudhjs31sgpc",
@@ -13363,21 +13103,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "maquina-de-barba-e-cabelo-trimmer",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce7ff0c75f-7-29.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ce7ff0c75f-7-29.jpg",
     category: "Salão & Barbearia",
-    stock: -2,
+    stock: -3,
   },
   {
     id: "cmrnvn9fe00cpiudhsfj517sk",
     name: "Mini Processador De Alimentos Bivolt Moedor Elétrico S/fio",
     slug: "mini-multiprocessador-de-alimentos-eletrico",
-    priceCents: 3500,
+    priceCents: 2000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7022247d59-0-MiniProcessadorEltricoTrituradorLegumesSFi.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7022247d59-0-MiniProcessadorEltricoTrituradorLegumesSFi.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -3,
+    stock: -11,
   },
   {
     id: "cmrnvn99e00cciudhb8cqhpt4",
@@ -13385,10 +13123,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "carrinho-controle-remoto-maluco-gira-360o-luzes",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c496b453e0-8-26.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c496b453e0-8-26.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvn93800byiudhjkkf30w7",
@@ -13396,10 +13133,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caminhao-transformers-optimus-prime",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/98561cd0dc-10-36.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/98561cd0dc-10-36.webp",
     category: "Brinquedos",
-    stock: -1,
+    stock: -24,
   },
   {
     id: "cmrnvn8wm00briudhcei5xpoc",
@@ -13407,10 +13143,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "f1-carrinho-controle-remoto-corrida-formula-1-deluxe",
     priceCents: 4500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1165956953-f3a6cff0aa58432382f1df3070aaab80-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1165956953-f3a6cff0aa58432382f1df3070aaab80-1.jpg",
     category: "Brinquedos",
-    stock: -1,
+    stock: -3,
   },
   {
     id: "cmrnvn8qk00bhiudhrrhz4ng8",
@@ -13418,10 +13153,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "campainha-sem-fio-doorbell-resistente-chuva-50-metros-lancamento",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a68ec27b52-3-39.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a68ec27b52-3-39.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    stock: -4,
   },
   {
     id: "cmrnvn8ki00b7iudh1wyk1km9",
@@ -13429,10 +13163,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "kit-6-animais-de-borracha-farm-set",
     priceCents: 2100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e8e7c2a43-4-34.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e8e7c2a43-4-34.webp",
     category: "Brinquedos",
-    stock: -1,
+    stock: -4,
   },
   {
     id: "cmrnvn8ef00aviudh4hu7zjvj",
@@ -13440,8 +13173,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "brinquedo-stunt-trycicle-infantil-com-rotacao-musica-e-luz",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1935ea354f-11-31.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1935ea354f-11-31.webp",
     category: "Brinquedos",
     stock: 0,
   },
@@ -13451,10 +13183,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cactos-dancante-e-falante-toca-musica-repete-a-fala-e-danca",
     priceCents: 3000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/49df8d1846-t-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/49df8d1846-t-4.jpg",
     category: "Brinquedos",
-    stock: -3,
+    stock: -9,
   },
   {
     id: "cmrnvn82300a3iudhz9g75c7v",
@@ -13462,8 +13193,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-bluetooth-novo-led-c-suporte-potente-kts1236",
     priceCents: 6400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e0b0614674-CaixaDeSomCaixinhaBluetoothPorttilPotenteU-955701-MLB69663564869_052023.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e0b0614674-CaixaDeSomCaixinhaBluetoothPorttilPotenteU-955701-MLB69663564869_052023.jpg",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -13473,10 +13203,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-caixa-de-som-portatil-speaker-ws-887",
     priceCents: 1700,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3d4d39e06d-11-15.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3d4d39e06d-11-15.jpg",
     category: "Caixas de Som",
-    stock: 0,
+    stock: -13,
   },
   {
     id: "cmrnvn7pt009aiudhklo0d651",
@@ -13484,8 +13213,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-wireless-ipega-3-em-1",
     priceCents: 9950,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f5609ebf28-0-ControleCelularJoystickBluetoothPcPsPsAnd.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f5609ebf28-0-ControleCelularJoystickBluetoothPcPsPsAnd.jpg",
     category: "Games",
     stock: 0,
   },
@@ -13495,10 +13223,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "fone-de-ouvido-cat-wireless-bluetooth-com-led-p33m",
     priceCents: 4800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/197008a9bb-3-FoneOuvidoGatinhaBluetoothLedOrelhaGatoCria.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/197008a9bb-3-FoneOuvidoGatinhaBluetoothLedOrelhaGatoCria.jpeg",
     category: "Fones de Ouvido",
-    stock: -7,
+    stock: -13,
   },
   {
     id: "cmrnvn7cj008iiudhpo7nyoz0",
@@ -13506,10 +13233,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "anel-luminoso-para-celular-flash-selfie-mini-ring-light",
     priceCents: 999,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/28f50f388f-1-36.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/28f50f388f-1-36.webp",
     category: "Ring Light & Suportes",
-    stock: 18,
+    stock: 13,
   },
   {
     id: "cmrnvn76f0087iudhaxxeizgv",
@@ -13517,10 +13243,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "camera-ip-speed-dome-durawell-full-hd-1080p-wifi",
     priceCents: 9500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/58261b9a84-1-5.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/58261b9a84-1-5.png",
     category: "Câmeras",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvn70a0082iudh0vn4yy5z",
@@ -13528,10 +13253,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-balanca-digital-lcd-alta-precisao-portatil-com-bandeja",
     priceCents: 3100,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2dc94080f5-667844_635854295881055365-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2dc94080f5-667844_635854295881055365-1.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -8,
   },
   {
     id: "cmrnvn6tv007qiudh5o1i4n0c",
@@ -13539,10 +13263,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "amplificador-megafone-microfone-kit-completo-professores-k15",
     priceCents: 5000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/840fd7933f-10916017973c4ff017b.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/840fd7933f-10916017973c4ff017b.jpg",
     category: "Produtos diversos",
-    stock: -2,
+    stock: -11,
   },
   {
     id: "cmrnvn6nq007ciudh8yc3o2pc",
@@ -13550,10 +13273,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "radio-comunicador-walk-baofeng-777s",
     priceCents: 9600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/54cd019c8a-5-29.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/54cd019c8a-5-29.webp",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -4,
   },
   {
     id: "cmrnvn6hl0070iudhmsf841ys",
@@ -13561,10 +13283,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "balanca-cozinha-digital-10-kg-cozinha-inteligente",
     priceCents: 2500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c5063f5ba5-0-BalanaDigitalDePrecisoCozinhakgNutrio.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c5063f5ba5-0-BalanaDigitalDePrecisoCozinhakgNutrio.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvn6ay006kiudhblxv12mk",
@@ -13572,8 +13293,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-teclado-controle-s-fio-touch-led",
     priceCents: 3500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2de60ccd21-13-5.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2de60ccd21-13-5.jpg",
     category: "Informática",
     stock: 0,
   },
@@ -13583,10 +13303,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "controle-para-celular-wireless-android-ios-al-g7",
     priceCents: 5400,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9105a9dac6-6-18.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9105a9dac6-6-18.jpg",
     category: "Games",
-    stock: -1,
+    stock: -5,
   },
   {
     id: "cmrnvn5yu005tiudhrzrfee5c",
@@ -13594,10 +13313,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "microfone-karaoke-bluetooth-2-alto-falant-usb-ws-858",
     priceCents: 4300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d550e4977d-capa.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d550e4977d-capa.jpeg",
     category: "Produtos diversos",
-    stock: -4,
+    stock: -6,
   },
   {
     id: "cmrnvn5sp005hiudhutok81ya",
@@ -13605,21 +13323,19 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mouse-hmaston-sem-fio-wireless-bateria-recarregavel-silencioso",
     priceCents: 3900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37295f0f55-1-4.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37295f0f55-1-4.png",
     category: "Fora de Estoque",
     stock: 0,
   },
   {
     id: "cmrnvn5lx0057iudhu2c5ueof",
-    name: "Amazon Echo Show 5 3ª Geração Alexa Lançamento Originalbox",
+    name: "Amazon Echo Show 5 3ª Geração Alexa Lançamento",
     slug: "alexa-echo-show-5-smart-speaker",
-    priceCents: 51000,
+    priceCents: 58500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d699bc7680-1-7.png",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d699bc7680-1-7.png",
     category: "Fora de Estoque",
-    stock: 0,
+    stock: 22,
   },
   {
     id: "cmrnvn5ft004viudhvpivn9c1",
@@ -13627,8 +13343,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ssd-kingston-disco-solido-interno",
     priceCents: 88000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/96aec8f5c7-7-28.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/96aec8f5c7-7-28.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -13638,8 +13353,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "relogio-smartwatch-x8",
     priceCents: 9850,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/81653f7826-1b-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/81653f7826-1b-1.webp",
     category: "Relogios e Smartwatchs",
     stock: -1,
   },
@@ -13647,12 +13361,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvn5310048iudh7b0b4enr",
     name: "Amazon Fire TV Stick Lite de voz Full HD 8GB",
     slug: "amazon-fire-tv-stick-lite-de-voz-full-hd-8gb-preto-com-1gb-de-memoria-ram",
-    priceCents: 22500,
+    priceCents: 23900,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/120948dd30-bb559d0faf4250d7319958704204bede.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/120948dd30-bb559d0faf4250d7319958704204bede.jpeg",
     category: "Media Streaming",
-    stock: -2,
+    stock: -10,
   },
   {
     id: "cmrnvn4wx003viudhs2votc4z",
@@ -13660,10 +13373,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "xiaomi-mi-tv-stick-full-hd-versao-global",
     priceCents: 28500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8c21ad97a3-0-XiaomiMiTvStickMdzaaDeVozFullHdgbPr.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8c21ad97a3-0-XiaomiMiTvStickMdzaaDeVozFullHdgbPr.jpeg",
     category: "Produtos diversos",
-    stock: -32,
+    stock: 0,
   },
   {
     id: "cmrnvn4qu003jiudh07nxztgt",
@@ -13671,10 +13383,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "mini-liquidificador-portatil-juice-shake-cup-usb-380m",
     priceCents: 2300,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/392b9ac81e-MiniLiquidificadorPorttilShakeSucoJuiceCup-792431-MLB53456753600_012023.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/392b9ac81e-MiniLiquidificadorPorttilShakeSucoJuiceCup-792431-MLB53456753600_012023.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -7,
+    stock: -18,
   },
   {
     id: "cmrnvn4k80038iudhp4fn7tdq",
@@ -13682,10 +13393,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "cartao-de-memoria-micro-sandisk-ultra",
     priceCents: 6000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eee0d0c863-8118csCTRuL._AC_SL1500_-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eee0d0c863-8118csCTRuL._AC_SL1500_-1.jpg",
     category: "Informática",
-    stock: 0,
+    stock: -2,
   },
   {
     id: "cmrnvn4dj002xiudh72zbtfde",
@@ -13693,10 +13403,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "smartwatch-d20-pro-novo-atualizado-com-foto",
     priceCents: 3800,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d43616140a-1-16.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d43616140a-1-16.webp",
     category: "Relogios e Smartwatchs",
-    stock: -4,
+    stock: -6,
   },
   {
     id: "cmrnvn47b002oiudhgp9a6jps",
@@ -13704,10 +13413,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "pendrive-sandisk-cruzer-blade-2-0",
     priceCents: 8500,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4340413447-9-4.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4340413447-9-4.jpg",
     category: "Informática",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvn4160028iudhkoe77ruj",
@@ -13715,10 +13423,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "ring-light-completo-iluminador-portatil-10-polegadas-tripe-2-metros",
     priceCents: 8000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/43a3eda1ab-11-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/43a3eda1ab-11-1.jpg",
     category: "Ring Light & Suportes",
-    stock: -1,
+    stock: -2,
   },
   {
     id: "cmrnvn3u9001wiudhabi2brxy",
@@ -13726,10 +13433,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "bateria-externa-power-bank-10000mah-pineng-universal-pn-951",
     priceCents: 5999,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b19f72c1a2-13-1.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b19f72c1a2-13-1.webp",
     category: "Carregadores & Power Banks",
-    stock: 0,
+    stock: -1,
   },
   {
     id: "cmrnvn3nq001liudhpepgwts7",
@@ -13737,10 +13443,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-portatil-wireless-bluetooth-kimiso-1180-1186-5w-tf-usb-fm-bt",
     priceCents: 3399,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/359f31f70c-7-5.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/359f31f70c-7-5.webp",
     category: "Caixas de Som",
-    stock: 0,
+    stock: -3,
   },
   {
     id: "cmrnvn3ho001aiudhr1likfr1",
@@ -13748,10 +13453,9 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixinha-de-som-q3-bluetooth-canhao-com-suporte-para-celular",
     priceCents: 3600,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2729a840f7-0-CaixinhaDeSomPortatilQBluetoothMpPenDriv.jpeg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2729a840f7-0-CaixinhaDeSomPortatilQBluetoothMpPenDriv.jpeg",
     category: "Caixas de Som",
-    stock: -3,
+    stock: 45,
   },
   {
     id: "cmrnvn3bn0010iudhbwtsc4dc",
@@ -13759,8 +13463,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "barbeador-kemei-km-700b-cabelo-profissional-eletrico",
     priceCents: 9000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/088a751c34-8.webp",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/088a751c34-8.webp",
     category: "Fora de Estoque",
     stock: 0,
   },
@@ -13770,9 +13473,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     slug: "caixa-de-som-boombox-bluetooth-portatil",
     priceCents: 22000,
     compareAtPriceCents: null,
-    image:
-      "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e94d067fa-71p7JN9q-pL._AC_SL1000_-1.jpg",
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e94d067fa-71p7JN9q-pL._AC_SL1000_-1.jpg",
     category: "Caixas de Som",
-    stock: -15,
+    stock: -34,
   },
 ];
