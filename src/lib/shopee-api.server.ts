@@ -212,9 +212,15 @@ export async function callShopeeApi<T = unknown>(
     // então intercepta aqui uma vez só e já cobre os 5+ endpoints
     // diferentes que podiam devolver isso, em vez de repetir a checagem em
     // cada função que chama a API.
-    if (json.error === "error_kyc_auth") {
+    // 20/10/2026: a Shopee também devolve a mesma trava como
+    // "product.error_busi" + "shop is BR local shop and KYC not pass".
+    if (
+      json.error === "error_kyc_auth" ||
+      /kyc/i.test(String(json.message ?? "")) ||
+      /kyc/i.test(String(json.debug_message ?? ""))
+    ) {
       throw new Error(
-        "Sua loja Shopee ainda não completou o cadastro de vendedor exigido pela própria Shopee (verificação de identidade + dados bancários). Acesse o Seller Center (seller.shopee.com.br), finalize o cadastro em Minha Loja > Informações da Loja, e tente publicar de novo — isso não é algo que dá pra pular por aqui.",
+        "Sua loja Shopee ainda não completou o cadastro de vendedor (verificação de identidade) exigido pela própria Shopee.",
       );
     }
     throw new Error(`[Shopee] ${path} falhou: ${JSON.stringify(json)}`);

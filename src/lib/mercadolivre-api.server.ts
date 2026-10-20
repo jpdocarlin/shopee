@@ -324,7 +324,7 @@ export type MercadoLivreAttribute = {
   id: string;
   name: string;
   value_type: string;
-  tags?: { required?: boolean; catalog_required?: boolean };
+  tags?: { required?: boolean; catalog_required?: boolean; conditional_required?: boolean };
   values?: Array<{ id: string; name: string }>;
 };
 
@@ -352,13 +352,38 @@ export async function getCategoryAttributes(
 export function buildMandatoryAttributeList(
   attributes: MercadoLivreAttribute[],
 ): Array<{ id: string; value_name?: string; value_id?: string }> {
-  return attributes
-    .filter((attr) => attr.tags?.required)
+  const list: Array<{ id: string; value_name?: string; value_id?: string }> = attributes
+    .filter((attr) => attr.tags?.required && attr.id !== "GTIN")
     .map((attr) => {
       const firstValue = attr.values?.[0];
       if (firstValue) return { id: attr.id, value_id: firstValue.id, value_name: firstValue.name };
       return { id: attr.id, value_name: "Não informado" };
     });
+
+  // 20/10/2026: várias categorias (ex.: Mouse Pads, MLB1716) exigem GTIN
+  // (código de barras/EAN). Os produtos do fornecedor não têm, e o ML aceita
+  // no lugar o atributo EMPTY_GTIN_REASON ("o produto não tem código").
+  const gtin = attributes.find((a) => a.id === "GTIN");
+  const emptyReason = attributes.find((a) => a.id === "EMPTY_GTIN_REASON");
+  if (gtin && (gtin.tags?.required || gtin.tags?.conditional_required) && emptyReason) {
+    list.push(emptyGtinReason(emptyReason));
+  }
+  return list;
+}
+
+export function emptyGtinReason(attr?: MercadoLivreAttribute): {
+  id: string;
+  value_id?: string;
+  value_name?: string;
+} {
+  const values = attr?.values ?? [];
+  const pick =
+    values.find((v) => /n[aã]o (tem|possui).*c[oó]digo|sem c[oó]digo|cadastrad/i.test(v.name)) ??
+    values.find((v) => !/kit|pack|artesan/i.test(v.name)) ??
+    values[0];
+  return pick
+    ? { id: "EMPTY_GTIN_REASON", value_id: pick.id, value_name: pick.name }
+    : { id: "EMPTY_GTIN_REASON", value_id: "17055160" };
 }
 
 export type PublishMercadoLivreProductInput = {

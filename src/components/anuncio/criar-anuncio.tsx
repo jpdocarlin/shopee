@@ -97,7 +97,7 @@ function c7dropToDemoProduct(
 // pra mostrar um link direto pro Seller Center — sem isso a pessoa via só o
 // texto e precisava lembrar/pesquisar o site sozinha.
 function isShopeeKycError(message: string): boolean {
-  return /cadastro de vendedor/i.test(message);
+  return /cadastro de vendedor|kyc|verifica[cç][aã]o de identidade/i.test(message);
 }
 
 // Explica por que o botão "Publicar" está travado (antes ele só ficava
@@ -1080,23 +1080,7 @@ export function CriarAnuncio() {
                     </div>
 
                     {categoriesError && (
-                      <div className="flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-[12px] text-destructive">
-                        <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
-                        <div className="space-y-1.5">
-                          <p>{categoriesError}</p>
-                          {isShopeeKycError(categoriesError) && (
-                            <a
-                              href="https://seller.shopee.com.br"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 font-medium underline underline-offset-2"
-                            >
-                              Abrir Seller Center da Shopee
-                              <ExternalLink className="size-3" />
-                            </a>
-                          )}
-                        </div>
-                      </div>
+                      <PublishErrorBox marketplace="shopee" error={categoriesError} />
                     )}
 
                     {publishApiError && (

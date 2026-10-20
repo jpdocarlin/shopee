@@ -29,6 +29,27 @@ const COMMON_RULES = (label: string): Rule[] => [
   },
 ];
 
+// Travas de CONTA/LOJA no marketplace (não são erro do Shoppfy). Valem
+// mesmo quando o servidor já mandou uma mensagem em português, porque o
+// cliente precisa do passo a passo pra destravar.
+const SHOPEE_ACCOUNT_RULES: Rule[] = [
+  {
+    test: /kyc|cadastro de vendedor|verifica[cç][aã]o de identidade|identity verif/i,
+    reason:
+      "A própria Shopee bloqueou a criação de produtos na sua loja porque a verificação de identidade (KYC) da loja ainda não foi aprovada. Isso não é erro do Shoppfy: enquanto a Shopee não aprovar, nenhum produto pode ser criado, nem pelo Shoppfy nem direto no app.",
+    fix: "1) Abra o Seller Center (seller.shopee.com.br) ou o app da Shopee na área do vendedor. 2) Procure o aviso de verificação de identidade / cadastro do vendedor e envie o que ela pedir (documento, selfie e dados bancários). 3) Espere a Shopee aprovar — costuma levar de 1 a 3 dias úteis. 4) Depois de aprovado, volte aqui e clique em Publicar de novo.",
+  },
+];
+
+const ML_ACCOUNT_RULES: Rule[] = [
+  {
+    test: /restri[cç][aã]o pra anunciar|seller\.unable_to_list|restrictions_coliving|unable to list/i,
+    reason:
+      "O próprio Mercado Livre bloqueou sua conta de criar anúncios novos (cadastro incompleto, verificação de identidade pendente ou alguma restrição). Isso não é erro do Shoppfy.",
+    fix: "1) Abra o app do Mercado Livre. 2) Veja os avisos da sua conta (sino de notificações e Minha conta) e conclua o que ele pedir — verificação de identidade, dados pessoais ou de faturamento. 3) Depois que a restrição sair, volte aqui e clique em Publicar de novo.",
+  },
+];
+
 const SHOPEE_RULES: Rule[] = [
   {
     test: /error_auth|invalid.?access.?token|access_token|shop_no_linked|no linked|token.*expired|expired.*token/i,
@@ -140,6 +161,12 @@ const ML_RULES: Rule[] = [
     fix: "Tente publicar de novo. Se continuar, escolha outro produto (as fotos desse podem estar com problema no fornecedor).",
   },
   {
+    test: /GTIN|EAN|c[oó]digo de barras/i,
+    reason:
+      "Essa categoria do Mercado Livre pede o código de barras (GTIN/EAN) do produto, e o produto do catálogo não tem um.",
+    fix: "Clique em Publicar de novo: o sistema informa automaticamente ao Mercado Livre que o produto não tem código de barras. Se o erro repetir, escolha outro produto do catálogo.",
+  },
+  {
     test: /missing_required|attribute/i,
     reason:
       "Essa categoria do Mercado Livre exige informações extras do produto (como marca ou modelo) que o catálogo não tem.",
@@ -180,6 +207,17 @@ export function explainPublishError(
 ): PublishErrorExplanation {
   const label = marketplace === "shopee" ? "Shopee" : "Mercado Livre";
 
+  const accountHit = (marketplace === "shopee" ? SHOPEE_ACCOUNT_RULES : ML_ACCOUNT_RULES).find(
+    (r) => r.test.test(raw),
+  );
+  if (accountHit) {
+    return {
+      reason: accountHit.reason,
+      fix: accountHit.fix,
+      technical: isAlreadyFriendly(raw) ? undefined : raw,
+    };
+  }
+
   if (isAlreadyFriendly(raw)) {
     return { reason: raw, fix: "" };
   }
@@ -192,8 +230,8 @@ export function explainPublishError(
   }
 
   return {
-    reason: `A ${label} recusou o anúncio por um motivo que o sistema ainda não reconhece automaticamente.`,
-    fix: "Tente publicar de novo. Se continuar, mande um print desta mensagem (com o detalhe técnico aberto) pro suporte.",
+    reason: `A ${label} recusou esse anúncio. Normalmente é uma regra da própria ${label} pra esse produto ou pra sua conta, não um erro do Shoppfy.`,
+    fix: `1) Clique em Publicar de novo. 2) Se repetir, abra ${marketplace === "shopee" ? "o Seller Center da Shopee" : "o app do Mercado Livre"} e veja se tem algum aviso ou pendência na sua conta. 3) Se estiver tudo certo lá, escolha outro produto do catálogo e mande print desta mensagem (com o detalhe técnico aberto) no Atendimento do Shoppfy.`,
     technical: raw,
   };
 }

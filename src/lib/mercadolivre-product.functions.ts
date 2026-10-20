@@ -16,7 +16,8 @@ export const predictMercadoLivreCategory = createServerFn({ method: "GET" })
   .validator((data: { title: string }) => data)
   .middleware([requireSupabaseAuth])
   .handler(async ({ context, data }) => {
-    const { getValidMercadoLivreAccessToken } = await import("@/lib/mercadolivre-connection.server");
+    const { getValidMercadoLivreAccessToken } =
+      await import("@/lib/mercadolivre-connection.server");
     const { predictCategory } = await import("@/lib/mercadolivre-api.server");
 
     const { accessToken } = await getValidMercadoLivreAccessToken(context.userId);
@@ -40,10 +41,10 @@ export const publishMercadoLivreProduct = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .validator((data: PublishInput) => data)
   .handler(async ({ context, data }) => {
-    const { getValidMercadoLivreAccessToken } = await import("@/lib/mercadolivre-connection.server");
-    const { getCategoryAttributes, buildMandatoryAttributeList, publishProduct } = await import(
-      "@/lib/mercadolivre-api.server"
-    );
+    const { getValidMercadoLivreAccessToken } =
+      await import("@/lib/mercadolivre-connection.server");
+    const { getCategoryAttributes, buildMandatoryAttributeList, emptyGtinReason, publishProduct } =
+      await import("@/lib/mercadolivre-api.server");
     const { getC7DropGalleryImages } = await import("@/lib/c7drop-images.server");
 
     const { accessToken } = await getValidMercadoLivreAccessToken(context.userId);
@@ -66,16 +67,28 @@ export const publishMercadoLivreProduct = createServerFn({ method: "POST" })
       // categoria pode não ter atributos obrigatórios — segue sem eles.
     }
 
-    const result = await publishProduct({
-      accessToken,
-      categoryId: data.categoryId,
-      itemName: data.itemName,
-      description: data.description,
-      priceReais: data.priceReais,
-      stock: data.stock,
-      imageUrls,
-      attributeList,
-    });
+    const publish = (attrs: typeof attributeList) =>
+      publishProduct({
+        accessToken,
+        categoryId: data.categoryId,
+        itemName: data.itemName,
+        description: data.description,
+        priceReais: data.priceReais,
+        stock: data.stock,
+        imageUrls,
+        attributeList: attrs,
+      });
+
+    let result: Awaited<ReturnType<typeof publishProduct>>;
+    try {
+      result = await publish(attributeList);
+    } catch (err) {
+      // Categoria pediu GTIN (código de barras) e a lista de atributos não
+      // trouxe o EMPTY_GTIN_REASON: tenta de novo informando "sem código".
+      const msg = err instanceof Error ? err.message : String(err);
+      if (!/GTIN/i.test(msg) || attributeList.some((a) => a.id === "EMPTY_GTIN_REASON")) throw err;
+      result = await publish([...attributeList, emptyGtinReason()]);
+    }
 
     return { itemId: result.itemId, permalink: result.permalink };
   });
