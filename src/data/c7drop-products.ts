@@ -600,7 +600,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788268540502-23a3d6cd.webp",
     category: "Fones de Ouvido",
-    stock: 36,
+    stock: 35,
     manageStock: true,
   },
   {
@@ -1678,7 +1678,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784947276864-08521120.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -1953,7 +1953,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0524adc809-8-54.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 57,
+    stock: 56,
     manageStock: true,
   },
   {
@@ -2877,7 +2877,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7a568a1bf2-1-25.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -5935,7 +5935,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7cb0262d3-1-22.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -6287,7 +6287,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/109e4b9c69-7-22.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -7277,7 +7277,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/36bd23f700-1-15.jpg",
     category: "Brinquedos",
-    stock: 50,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -7299,7 +7299,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/061912a633-1-13.jpg",
     category: "Brinquedos",
-    stock: -8,
+    stock: -9,
     manageStock: false,
   },
   {
