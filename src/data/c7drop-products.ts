@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-10-20 — 1353 produtos, na ordem retornada pela API
+// Snapshot de 2026-10-21 — 1353 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -655,7 +655,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788355737322-fa2d2bc6.webp",
     category: "Relogios e Smartwatchs",
-    stock: 45,
+    stock: 44,
     manageStock: true,
   },
   {
@@ -952,7 +952,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787844432689-b34b4f23.webp",
     category: "Informática",
-    stock: 45,
+    stock: 42,
     manageStock: true,
   },
   {
@@ -2272,7 +2272,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/53e66bbe23-2-63.jpg",
     category: "Ferramentas",
-    stock: -1,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -6298,7 +6298,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb62b0ffd5-8-22.jpg",
     category: "Produtos diversos",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -7046,7 +7046,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b19eead996-2-41.jpg",
     category: "Brinquedos",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -7354,7 +7354,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/36bd23f700-1-15.jpg",
     category: "Brinquedos",
-    stock: 48,
+    stock: 44,
     manageStock: true,
   },
   {
@@ -8377,7 +8377,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2d4fc0576c-6-37.jpg",
     category: "Mais vendidos",
-    stock: -17,
+    stock: -19,
     manageStock: false,
   },
   {
@@ -12744,7 +12744,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/06640156cd-6-3.png",
     category: "Casa e Utensílios Domésticos",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -13129,7 +13129,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9192e7ba4d-2.png",
     category: "Fones de Ouvido",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -13305,7 +13305,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cbebc4f812-capa.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -14801,7 +14801,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/392b9ac81e-MiniLiquidificadorPorttilShakeSucoJuiceCup-792431-MLB53456753600_012023.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -19,
+    stock: -20,
     manageStock: false,
   },
   {
