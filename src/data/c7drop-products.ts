@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-10-21 — 1354 produtos, na ordem retornada pela API
+// Snapshot de 2026-10-21 — 1359 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -20,6 +20,61 @@ export type C7DropProduct = {
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
+  {
+    id: "cmvikh1pm0007429va4lztkwa",
+    name: "Fone de ouvido Haylou Airfree OW03 Sem Fio Bluetooth 5.4 Microfone Duplo Preto",
+    slug: "fone-de-ouvido-haylou-airfree-ow03-sem-fio-bluetooth-5-4-microfone-duplo-preto",
+    priceCents: 9400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792614214693-08a191a1.webp",
+    category: "Fones de Ouvido",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmvijfc4v000cl3hl67n388es",
+    name: "Lanterna Forte Recarregável 2000+ Metro 1000 Lúmens",
+    slug: "lanterna-forte-recarregavel-2000-metro-1000-lumens",
+    priceCents: 9400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792612252752-5e4ee44c.webp",
+    category: "Iluminação",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmviiehrx003mk1m20mdw08re",
+    name: "Led Camera Celular Foto Video Luz De Preenchimento Rgb Usb Estrutura Preto",
+    slug: "led-camera-celular-foto-video-luz-de-preenchimento-rgb-usb-estrutura-preto",
+    priceCents: 6400,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792610625389-b8bdbf42.webp",
+    category: "Produtos diversos",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmvihh2nc003w13i0ja7zyj0m",
+    name: "Case Hd Slim Externo Ssd Hdd Pc Note Ps4e5 Usb 3.0 Sata 2.5",
+    slug: "case-hd-slim-externo-ssd-hdd-pc-note-ps4e5-usb-3-0-sata-2-5",
+    priceCents: 2200,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792609248595-34773688.webp",
+    category: "Informática",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmvig262h0004mkvgo6yonzhv",
+    name: "Adaptador USB-C para HDMI 4K Cinza Compatível com MHL e DP Alt Mode",
+    slug: "adaptador-usb-c-para-hdmi-4k-cinza-compativel-com-mhl-e-dp-alt-mode",
+    priceCents: 2600,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792606677169-371f2499.webp",
+    category: "Produtos diversos",
+    stock: 50,
+    manageStock: true,
+  },
   {
     id: "cmvi7krzu0003lu3gc5v4j0ax",
     name: "Adaptador Receptor Bluetooth Usb Carro Musica Chamada S/fio",
@@ -347,7 +402,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791290442082-4bb76c43.webp",
     category: "Brinquedos",
-    stock: 0,
+    stock: -2,
     manageStock: true,
   },
   {
@@ -2283,7 +2338,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/53e66bbe23-2-63.jpg",
     category: "Ferramentas",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -4219,7 +4274,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ea76a2adce-image_944b8583.png",
     category: "Casa e Utensílios Domésticos",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -5187,7 +5242,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a2c6d7d2ad-2-28.jpg",
     category: "Fora de Estoque",
-    stock: 2,
+    stock: 1,
     manageStock: true,
   },
   {
@@ -5220,7 +5275,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7435e1d00-ca-1.jpg",
     category: "Media Streaming",
-    stock: -180,
+    stock: -181,
     manageStock: false,
   },
   {
@@ -7783,7 +7838,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ff2228a83-a.jpg",
     category: "Câmeras",
-    stock: -8,
+    stock: -9,
     manageStock: false,
   },
   {
@@ -10698,7 +10753,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d11d528ad2-Prancheta-5-32.png",
     category: "Salão & Barbearia",
-    stock: -84,
+    stock: -85,
     manageStock: false,
   },
   {
@@ -11237,7 +11292,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ea5433c7a1-Prancheta-2-4.png",
     category: "Informática",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -11809,8 +11864,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e47094dcf4-Prancheta-2-1.png",
     category: "Salão & Barbearia",
-    stock: -2,
-    manageStock: false,
+    stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvofwh028kiudhy3bqakzr",
@@ -13305,7 +13360,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f81078d31a-0-MoedorTrituradorDeCafGroswEltricoInox.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -12,
+    stock: -13,
     manageStock: false,
   },
   {
@@ -13547,7 +13602,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cb92d6c31b-61so63LPWqL._AC_SL1500_.jpg",
     category: "Media Streaming",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -13844,7 +13899,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e4d6e9f101-1-5.webp",
     category: "Iluminação",
-    stock: -13,
+    stock: -16,
     manageStock: false,
   },
   {
@@ -14273,7 +14328,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/98f279ab33-3-68.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: -71,
+    stock: -73,
     manageStock: false,
   },
   {
@@ -14493,7 +14548,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0223a406c9-8-45.webp",
     category: "Fora de Estoque",
-    stock: 0,
+    stock: -1,
     manageStock: true,
   },
   {
@@ -14646,8 +14701,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     priceCents: 999,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/28f50f388f-1-36.webp",
-    category: "Ring Light & Suportes",
-    stock: 11,
+    category: "Fora de Estoque",
+    stock: 0,
     manageStock: true,
   },
   {
