@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-10-21 — 1353 produtos, na ordem retornada pela API
+// Snapshot de 2026-10-21 — 1354 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -20,6 +20,17 @@ export type C7DropProduct = {
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
+  {
+    id: "cmvi7krzu0003lu3gc5v4j0ax",
+    name: "Adaptador Receptor Bluetooth Usb Carro Musica Chamada S/fio",
+    slug: "adaptador-receptor-bluetooth-usb-carro-musica-chamada-s-fio",
+    priceCents: 2900,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792592450680-7e62cbab.webp",
+    category: "Produtos diversos",
+    stock: 50,
+    manageStock: true,
+  },
   {
     id: "cmvh6m5nt0012evclcuaa7ft9",
     name: "Fone de Ouvido Sem Fio Bluetooth 5.4 Agold pro Fn BT5 Hifi",
@@ -259,7 +270,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791421689025-6ad0efd4.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 43,
+    stock: 0,
     manageStock: true,
   },
   {
@@ -336,7 +347,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791290442082-4bb76c43.webp",
     category: "Brinquedos",
-    stock: 5,
+    stock: 0,
     manageStock: true,
   },
   {
@@ -594,7 +605,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
   },
   {
     id: "cmtlhcp5u0004p83gvvoo9b82",
-    name: "Kit Ferro de Solda 60w Profissional Completo Ajustavel Completo Eletrônica 127v",
+    name: "Kit Ferro de Solda Com Multímetro 60w Profissional Completo Ajustavel Completo Eletrônica 127v",
     slug: "kit-ferro-de-solda-60w-profissional-completo-ajustavel-completo-eletronica",
     priceCents: 7200,
     compareAtPriceCents: null,
@@ -996,7 +1007,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787752659203-b3f687a2.webp",
     category: "Produtos diversos",
-    stock: 48,
+    stock: 47,
     manageStock: true,
   },
   {
@@ -1645,7 +1656,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785203850223-a7af12ab.webp",
     category: "Informática",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -1993,7 +2004,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmruuukl50036fz7h2irq7g6k",
     name: "Câmera solar 4G ao ar livre, bateria embutida, lente dupla, segurança 2K",
     slug: "camera-solar-wifi-bateria-embutida-seguranca-2k-painel-solar-cctv",
-    priceCents: 26000,
+    priceCents: 25900,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784664512339-f34ee13f.webp",
     category: "Câmeras",
@@ -2624,7 +2635,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cd9d40ed41-3-20.jpg",
     category: "Celulares e Smartphones",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -2730,7 +2741,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvsgem082hiudhbyvnxv4k",
     name: "Descascador Elétrico De Alimentos Alhos Legumes E Frutas",
     slug: "descascador-eletrico-de-alimentos-alhos-legumes-e-frutas",
-    priceCents: 7000,
+    priceCents: 5200,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fa86f54ffa-1-16.jpg",
     category: "Casa e Utensílios Domésticos",
@@ -2932,7 +2943,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61366e5208-1-27.jpg",
     category: "Produtos diversos",
-    stock: -12,
+    stock: -13,
     manageStock: false,
   },
   {
@@ -4340,7 +4351,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2e51751d27-2-41.jpg",
     category: "Produtos diversos",
-    stock: -23,
+    stock: -26,
     manageStock: false,
   },
   {
@@ -5308,7 +5319,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e96a8d71f5-2-19.jpg",
     category: "Celulares e Smartphones",
-    stock: -9,
+    stock: -10,
     manageStock: false,
   },
   {
@@ -5517,7 +5528,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/8558e01bac-2-1.jpg",
     category: "Brinquedos",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -7526,7 +7537,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvqbqr04pciudh8augxe2w",
     name: "Tripé Estabilizador Com Rastreamento Facial Câmera E Celular",
     slug: "tripe-estabilizador-com-rastreamento-facial-camera-e-celular",
-    priceCents: 14500,
+    priceCents: 12500,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1bcb1bf81d-6-2.jpg",
     category: "Produtos diversos",
@@ -9587,7 +9598,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45faeb8a94-capa.webp",
     category: "Informática",
-    stock: -96,
+    stock: -98,
     manageStock: false,
   },
   {
@@ -9686,7 +9697,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/270b1e08fe-1-42.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: -16,
+    stock: -17,
     manageStock: false,
   },
   {
@@ -11915,7 +11926,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvoe6g026eiudhs0hn7k4h",
     name: "Baby Monitor Vb603 Baba Eletrônica Com Monitor 110v/220v Color Blanco",
     slug: "baby-monitor-vb603-baba-eletronica-com-monitor-110v-220v-color-blanco",
-    priceCents: 26800,
+    priceCents: 23900,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cfbfdeabba-1-5.png",
     category: "Casa e Utensílios Domésticos",
@@ -12227,7 +12238,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4970ece263-1.png",
     category: "Casa e Utensílios Domésticos",
-    stock: -17,
+    stock: -18,
     manageStock: false,
   },
   {
@@ -12326,7 +12337,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/580f1a9414-1-4.png",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -13547,7 +13558,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3450091448-1-1.webp",
     category: "Caixas de Som",
-    stock: -177,
+    stock: -185,
     manageStock: false,
   },
   {
@@ -13580,7 +13591,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b869ec0597-t.jpg",
     category: "Brinquedos",
-    stock: -7,
+    stock: -8,
     manageStock: false,
   },
   {
@@ -14306,7 +14317,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ca6b47d438-1-47.jpg",
     category: "Brinquedos",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -14504,7 +14515,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7022247d59-0-MiniProcessadorEltricoTrituradorLegumesSFi.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -11,
+    stock: -12,
     manageStock: false,
   },
   {
@@ -14669,7 +14680,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/840fd7933f-10916017973c4ff017b.jpg",
     category: "Produtos diversos",
-    stock: -11,
+    stock: -12,
     manageStock: false,
   },
   {
@@ -14779,7 +14790,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/120948dd30-bb559d0faf4250d7319958704204bede.jpeg",
     category: "Media Streaming",
-    stock: -11,
+    stock: -12,
     manageStock: false,
   },
   {
@@ -14812,7 +14823,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eee0d0c863-8118csCTRuL._AC_SL1500_-1.jpg",
     category: "Informática",
-    stock: -2,
+    stock: -32,
     manageStock: false,
   },
   {
