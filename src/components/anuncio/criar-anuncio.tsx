@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import {
   AlertTriangle,
@@ -27,6 +27,7 @@ import { requestExtensionPublish } from "@/lib/extension-bridge";
 import { calcPricing, suggestPrice } from "@/lib/marketplace-fees";
 import { generateListing } from "@/lib/gemini-text.functions";
 import { getShopeeStatus } from "@/lib/shopee.functions";
+import { checkC7DropPrice } from "@/lib/c7drop-price.functions";
 import {
   getShopeeCategories,
   recommendShopeeCategory,
@@ -298,6 +299,8 @@ export function CriarAnuncio() {
 
   // Preço
   const [costInput, setCostInput] = useState("");
+  const [c7PriceNotice, setC7PriceNotice] = useState<string | null>(null);
+  const latestSelectedIdRef = useRef<string | null>(null);
   const [priceInput, setPriceInput] = useState("");
   const [customMarginInput, setCustomMarginInput] = useState("");
 
@@ -360,6 +363,7 @@ export function CriarAnuncio() {
   const runMlStatus = useServerFn(getMercadoLivreStatus);
   const runMlPredictCategory = useServerFn(predictMercadoLivreCategory);
   const runMlPublish = useServerFn(publishMercadoLivreProduct);
+  const runCheckC7DropPrice = useServerFn(checkC7DropPrice);
 
   useEffect(() => {
     runShopeeStatus()
@@ -457,6 +461,41 @@ export function CriarAnuncio() {
     setSelected(product);
     // O preço do catálogo é o que você paga no fornecedor — vira o custo.
     setCostInput((product.priceCents / 100).toFixed(2).replace(".", ","));
+    setC7PriceNotice(null);
+    latestSelectedIdRef.current = product.id;
+    // 22/10/2026: produto da C7Drop confere o preço de Dropshipping AO VIVO
+    // (o catálogo pode estar algumas horas atrasado e a C7Drop reajusta ao
+    // longo do dia) — o custo e a margem sugerida usam o valor de agora.
+    if (product.id.startsWith("c7drop-")) {
+      const productId = product.id.replace("c7drop-", "");
+      runCheckC7DropPrice({ data: { productId } })
+        .then((live) => {
+          if (latestSelectedIdRef.current !== product.id) return;
+          setSelected((prev) =>
+            prev?.id === product.id ? { ...prev, priceCents: live.priceCents } : prev,
+          );
+          if (!live.available) {
+            setC7PriceNotice(
+              "Atenção: esse produto esgotou na C7Drop agora. Escolha outro produto.",
+            );
+          } else if (live.priceCents !== product.priceCents) {
+            setCostInput((live.priceCents / 100).toFixed(2).replace(".", ","));
+            setPriceInput("");
+            setC7PriceNotice(
+              `Preço atualizado com a C7Drop agora: ${formatBRL(live.priceCents)} ` +
+                `(a lista mostrava ${formatBRL(product.priceCents)}).`,
+            );
+          }
+        })
+        .catch((err) => {
+          if (latestSelectedIdRef.current !== product.id) return;
+          setC7PriceNotice(
+            err instanceof Error
+              ? err.message
+              : "Não conseguimos confirmar o preço atual na C7Drop. Confira antes de publicar.",
+          );
+        });
+    }
     setPriceInput("");
     setListing(null);
     setListingError(null);
@@ -790,6 +829,11 @@ export function CriarAnuncio() {
               O frete fica por conta de quem compra — não entra na sua conta. Já incluímos{" "}
               {formatBRL(PACKAGING_FEE_CENTS)} de embalagem em cima do seu custo.
             </p>
+            {c7PriceNotice && (
+              <p className="mt-2 rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-[12px] text-amber-500">
+                {c7PriceNotice}
+              </p>
+            )}
 
             <div className="mt-3 flex flex-wrap items-center gap-2">
               <span className="text-[12px] text-muted-foreground">Sugerir preço com lucro de</span>

@@ -7,6 +7,10 @@
 // profiles/settings no resto do app.
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import {
+  submitFulfillmentRequest,
+  type SubmitFulfillmentResult,
+} from "@/lib/c7drop-price.functions";
 
 export type FulfillmentRequest = Database["public"]["Tables"]["fulfillment_requests"]["Row"];
 export type FulfillmentStatus = Database["public"]["Enums"]["fulfillment_status"];
@@ -42,6 +46,12 @@ async function uploadAttachment(
   return path;
 }
 
+// 22/10/2026: o custo não vem mais livre do formulário. Os anexos sobem
+// direto (RLS do bucket), mas o pedido é gravado pela server function
+// submitFulfillmentRequest, que confere o preço de Dropshipping AO VIVO na
+// C7Drop e recusa se o valor pago ficou abaixo dele (preço subiu) — antes o
+// revendedor podia pagar o preço velho/mais barato e a diferença saía do
+// bolso do dono. Ver src/lib/c7drop-price.server.ts.
 export async function createFulfillmentRequest(params: {
   userId: string;
   submitterName: string;
@@ -49,43 +59,33 @@ export async function createFulfillmentRequest(params: {
   submitterPhone: string;
   submitterPersonType: PersonType;
   submitterDocument: string;
-  productName: string;
   productId: string;
-  productImageUrl: string;
   costCents: number;
   labelFile: File;
   proofFile: File;
   notes?: string;
-}): Promise<FulfillmentRequest> {
+}): Promise<SubmitFulfillmentResult> {
   const requestId = crypto.randomUUID();
   const [labelPath, proofPath] = await Promise.all([
     uploadAttachment(params.userId, requestId, "label", params.labelFile),
     uploadAttachment(params.userId, requestId, "proof", params.proofFile),
   ]);
 
-  const { data, error } = await supabase
-    .from("fulfillment_requests")
-    .insert({
-      id: requestId,
-      user_id: params.userId,
-      submitter_name: params.submitterName,
-      submitter_email: params.submitterEmail,
-      submitter_phone: params.submitterPhone,
-      submitter_person_type: params.submitterPersonType,
-      submitter_document: params.submitterDocument,
-      product_name: params.productName,
-      product_id: params.productId,
-      product_image_url: params.productImageUrl,
-      cost_cents: params.costCents,
-      label_path: labelPath,
-      proof_path: proofPath,
-      notes: params.notes?.trim() || null,
-    })
-    .select()
-    .single();
-
-  if (error) throw error;
-  return data;
+  return submitFulfillmentRequest({
+    data: {
+      requestId,
+      submitterName: params.submitterName,
+      submitterEmail: params.submitterEmail,
+      submitterPhone: params.submitterPhone,
+      submitterPersonType: params.submitterPersonType,
+      submitterDocument: params.submitterDocument,
+      productId: params.productId,
+      expectedCostCents: params.costCents,
+      labelPath,
+      proofPath,
+      notes: params.notes,
+    },
+  });
 }
 
 // Sem filtro por user_id no SELECT: a RLS decide sozinha se a conta vê só

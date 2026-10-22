@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { AlertTriangle, Loader2, Package, Paperclip, Receipt, Send, UserRound } from "lucide-react";
 import { toast } from "sonner";
 
@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { useAuthStore } from "@/stores/auth-store";
 import { createFulfillmentRequest, PERSON_TYPE_LABEL, type PersonType } from "@/lib/fulfillment";
 import { notifyNewFulfillmentRequest } from "@/lib/push.functions";
+import { checkC7DropPrice } from "@/lib/c7drop-price.functions";
 import { formatBRL } from "@/lib/format";
 import { convertImageToPdf } from "@/lib/image-to-pdf";
 import { PixPayment } from "@/components/pedidos/pix-payment";
@@ -121,8 +122,47 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Preço de Dropshipping conferido AO VIVO na C7Drop quando escolhe o
+  // produto (o catálogo da lista pode estar algumas horas atrasado).
+  const [priceChecking, setPriceChecking] = useState(false);
+  const [priceError, setPriceError] = useState<string | null>(null);
+  const [priceNotice, setPriceNotice] = useState<string | null>(null);
+  // Só a resposta do ÚLTIMO produto escolhido vale (se trocar rápido de
+  // produto, a consulta anterior pode voltar depois).
+  const latestPickRef = useRef<string | null>(null);
 
   const costCents = parseMoney(costInput);
+
+  const pickProduct = async (picked: C7DropProduct | null) => {
+    setProduct(picked);
+    setPriceError(null);
+    setPriceNotice(null);
+    setCostInput("");
+    latestPickRef.current = picked?.id ?? null;
+    if (!picked) {
+      setPriceChecking(false);
+      return;
+    }
+    setPriceChecking(true);
+    try {
+      const live = await checkC7DropPrice({ data: { productId: picked.id } });
+      if (latestPickRef.current !== picked.id) return;
+      if (!live.available) {
+        setProduct(null);
+        setPriceError("Esse produto esgotou na C7Drop. Escolha outro produto.");
+        return;
+      }
+      setCostInput(centsToDecimalInput(live.priceCents));
+    } catch (err) {
+      if (latestPickRef.current !== picked.id) return;
+      setProduct(null);
+      setPriceError(
+        err instanceof Error ? err.message : "Não conseguimos confirmar o preço agora.",
+      );
+    } finally {
+      if (latestPickRef.current === picked.id) setPriceChecking(false);
+    }
+  };
   const userId = session?.user.id ?? profile?.id;
   const canSubmit =
     Boolean(userId) &&
@@ -133,6 +173,7 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
     document.trim().length > 0 &&
     Boolean(product) &&
     costCents > 0 &&
+    !priceChecking &&
     Boolean(labelFile) &&
     Boolean(proofFile) &&
     !submitting;
@@ -151,14 +192,27 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
         submitterPhone: phone.trim(),
         submitterPersonType: personType,
         submitterDocument: document.trim(),
-        productName: product.name,
         productId: product.id,
-        productImageUrl: product.image,
         costCents,
         labelFile,
         proofFile,
         notes,
       });
+      if (!created.ok) {
+        if (created.reason === "sold_out") {
+          setError("Esse produto esgotou na C7Drop agora. O pedido não foi registrado.");
+        } else {
+          const diff = created.priceCents - costCents;
+          setCostInput(centsToDecimalInput(created.priceCents));
+          setProofFile(null);
+          setPriceNotice(
+            `O preço desse produto na C7Drop subiu agora para ${formatBRL(created.priceCents)}. ` +
+              `Mande a diferença de ${formatBRL(diff)} no PIX e anexe o comprovante de novo ` +
+              `(pode ser um comprovante com os dois PIX). O pedido ainda não foi registrado.`,
+          );
+        }
+        return;
+      }
       // Avisa a conta de pedidos no celular (push). Não trava o envio se falhar.
       void notifyNewFulfillmentRequest({ data: { requestId: created.id } }).catch((err) =>
         console.error("[PedidoForm] falha ao notificar pedido novo:", err),
@@ -171,6 +225,7 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
       setNotes("");
       setLabelFile(null);
       setProofFile(null);
+      setPriceNotice(null);
       onCreated();
     } catch (err) {
       console.error("[PedidoForm] falha ao enviar pedido:", err);
@@ -298,31 +353,40 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
             <ProductAutocomplete
               id="produto"
               selected={product}
-              onSelect={(picked) => {
-                setProduct(picked);
-                setCostInput(picked ? centsToDecimalInput(picked.priceCents) : "");
-              }}
+              onSelect={(picked) => void pickProduct(picked)}
               placeholder="Digite o nome do produto que você vendeu…"
               className="h-9 text-[13px]"
             />
             <p className="mt-1 text-[11px] text-muted-foreground">
-              Escolha na lista o mesmo produto que você anunciou — o custo é preenchido sozinho.
+              Escolha na lista o mesmo produto que você anunciou — o custo é preenchido sozinho com
+              o preço atual da C7Drop.
             </p>
+            {priceError && <p className="mt-1 text-[11.5px] text-destructive">{priceError}</p>}
           </div>
           <div>
             <label className="mb-1.5 block text-[12px] text-muted-foreground" htmlFor="custo">
               Custo do produto (sem a sua margem)
             </label>
+            {/* Só leitura: o custo é o preço de Dropshipping confirmado agora na
+                C7Drop — o revendedor não digita (antes digitava e às vezes pagava
+                menos do que a C7Drop cobra). */}
             <Input
               id="custo"
               inputMode="decimal"
-              value={costInput}
-              onChange={(e) => setCostInput(e.target.value)}
-              placeholder="0,00"
-              className="h-9 text-[13px]"
+              value={priceChecking ? "Conferindo preço na C7Drop…" : costInput}
+              readOnly
+              placeholder="Escolha o produto"
+              className="h-9 cursor-not-allowed text-[13px]"
             />
           </div>
         </div>
+
+        {priceNotice && (
+          <div className="flex items-start gap-2.5 rounded-lg border border-destructive/40 bg-destructive/10 px-4 py-3.5 text-[13px] text-destructive">
+            <AlertTriangle className="mt-0.5 size-4 shrink-0" />
+            <p>{priceNotice}</p>
+          </div>
+        )}
 
         {costCents > 0 && (
           <div className="flex items-start gap-2.5 rounded-lg border border-amber-500/40 bg-amber-500/10 px-4 py-3.5 text-[13px] text-amber-500">

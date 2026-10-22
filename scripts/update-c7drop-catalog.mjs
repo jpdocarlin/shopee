@@ -2,6 +2,14 @@
 // Roda sozinho pelo GitHub Actions (.github/workflows/c7drop-catalog.yml);
 // também dá pra rodar na mão: `node scripts/update-c7drop-catalog.mjs`.
 //
+// PREÇO: a C7Drop tem 3 tabelas por produto (Grupo VIP, Atacado e
+// Dropshipping). O `price` da listagem é o mais barato (≈ Grupo VIP), mas o
+// Shoppfy compra na tabela DROPSHIPPING — por isso o script abre a página de
+// cada produto (/api/products/{slug}) e grava o preço de Dropshipping. Antes
+// (até 22/10/2026) gravava o `price` da listagem e o catálogo ficava ~R$ 6
+// abaixo do que a C7Drop cobra de verdade. A regra de leitura da tabela está
+// duplicada em src/lib/c7drop-price.server.ts — mexeu aqui, mexa lá.
+//
 // Segurança: se a API falhar, mudar de formato ou devolver bem menos produtos
 // que o arquivo atual, o script aborta SEM tocar no arquivo (exit 1).
 // Se nada mudou, também não reescreve (o workflow então não faz commit).
@@ -10,6 +18,8 @@ import { fileURLToPath } from "node:url";
 
 const FILE = fileURLToPath(new URL("../src/data/c7drop-products.ts", import.meta.url));
 const API = process.env.C7DROP_API ?? "https://www.c7drop.com.br/api/products";
+const CONCURRENCY = 12;
+const MAX_DETAIL_FAILURES = 0.01; // aborta se mais de 1% das páginas de produto falharem
 const MARKER = "export const C7DROP_PRODUCTS: C7DropProduct[] = [\n";
 const MIN_RATIO = 0.7; // aborta se vier menos de 70% dos produtos atuais
 
@@ -31,11 +41,44 @@ async function getJson(url, tries = 3) {
   }
 }
 
+// Preço da tabela Dropshipping (em reais, como a API devolve). Em alguns
+// produtos a C7Drop cadastrou o preço no `value` da variação (ex.: "110") e
+// deixou `price` vazio. Com várias variações (cores) usa o MAIOR preço, pra
+// nunca cobrar do revendedor menos do que a C7Drop cobra.
+function dropshippingPrice(detail) {
+  const prices = [];
+  for (const v of detail?.variants ?? []) {
+    if (v?.tier !== "DROPSHIPPING") continue;
+    if (typeof v.price === "number" && v.price > 0) prices.push(v.price);
+    else if (typeof v.value === "string" && /^\d+([.,]\d+)?$/.test(v.value.trim())) {
+      prices.push(Number(v.value.trim().replace(",", ".")));
+    }
+  }
+  return prices.length ? Math.max(...prices) : null;
+}
+
+async function mapLimit(items, limit, fn) {
+  const out = new Array(items.length);
+  let next = 0;
+  await Promise.all(
+    Array.from({ length: limit }, async () => {
+      while (next < items.length) {
+        const i = next++;
+        out[i] = await fn(items[i], i);
+      }
+    }),
+  );
+  return out;
+}
+
 function readCurrent() {
   const src = readFileSync(FILE, "utf8");
   const i = src.indexOf(MARKER);
   if (i < 0) fail("não achei o array C7DROP_PRODUCTS no arquivo atual");
-  const body = src.slice(i + MARKER.length - 2).trim().replace(/;\s*$/, "");
+  const body = src
+    .slice(i + MARKER.length - 2)
+    .trim()
+    .replace(/;\s*$/, "");
   // O corpo é um literal de objetos JS gerado por este mesmo script.
   const products = new Function(`return ${body};`)();
   return { src, header: src.slice(0, i), products };
@@ -68,7 +111,9 @@ if (!Array.isArray(first?.products) || !Number.isInteger(first?.totalPages)) {
 }
 const pages = [first];
 for (let p = 2; p <= first.totalPages; p++) {
-  pages.push(await getJson(`${API}?page=${p}&limit=50&sort=relevance`).catch((e) => fail(e.message)));
+  pages.push(
+    await getJson(`${API}?page=${p}&limit=50&sort=relevance`).catch((e) => fail(e.message)),
+  );
 }
 const raw = pages.flatMap((pg) => pg.products ?? []);
 
@@ -102,26 +147,65 @@ const ratios = raw
   .filter((p) => oldById.has(p.id) && p.price > 0)
   .map((p) => oldById.get(p.id).priceCents / p.price)
   .sort((a, b) => a - b);
-if (ratios.length < 20) fail("poucos produtos em comum com o arquivo atual pra conferir a unidade do preço");
+if (ratios.length < 20)
+  fail("poucos produtos em comum com o arquivo atual pra conferir a unidade do preço");
 const median = ratios[Math.floor(ratios.length / 2)];
 let factor;
-if (median > 80 && median < 120) factor = 100; // API em reais
-else if (median > 0.8 && median < 1.2) factor = 1; // API em centavos
+if (median > 80 && median < 120)
+  factor = 100; // API em reais
+else if (median > 0.8 && median < 1.2)
+  factor = 1; // API em centavos
 else fail(`não deu pra saber a unidade do preço (razão mediana ${median.toFixed(2)})`);
 
-const products = raw.map((p) => ({
-  id: p.id,
-  name: p.name,
-  slug: p.slug,
-  priceCents: Math.round(p.price * factor),
-  compareAtPriceCents: p.compareAtPrice === null ? null : Math.round(p.compareAtPrice * factor),
-  image: p.image,
-  category: p.categories[0]?.name || "Outros",
-  stock: p.stock,
-  manageStock: p.manageStock,
-}));
+// 4. Preço de Dropshipping de cada produto (página do produto).
+const details = await mapLimit(raw, CONCURRENCY, async (p) => {
+  try {
+    const d = await getJson(`${API}/${encodeURIComponent(p.slug)}`);
+    return d?.id === p.id ? d : null;
+  } catch {
+    return null;
+  }
+});
+const failed = details.filter((d) => d === null).length;
+if (failed > raw.length * MAX_DETAIL_FAILURES) {
+  fail(`${failed} de ${raw.length} páginas de produto falharam`);
+}
+let noTier = 0;
+let keptOld = 0;
+const dsPrice = raw.map((p, i) => {
+  const ds = details[i] ? dropshippingPrice(details[i]) : null;
+  if (ds !== null) return Math.round(ds * factor);
+  // Página do produto falhou: mantém o preço de Dropshipping que já estava
+  // no arquivo (rodada seguinte corrige). Produto novo sem página: fica de fora.
+  if (!details[i]) {
+    const old = oldById.get(p.id);
+    if (old) {
+      keptOld++;
+      return old.priceCents;
+    }
+    return null;
+  }
+  // Produto sem tabela Dropshipping cadastrada: usa o preço da listagem.
+  noTier++;
+  return Math.round(p.price * factor);
+});
 
-// 4. Só reescreve se os dados mudaram.
+const products = raw
+  .map((p, i) => ({ p, priceCents: dsPrice[i] }))
+  .filter((x) => x.priceCents !== null)
+  .map(({ p, priceCents }) => ({
+    id: p.id,
+    name: p.name,
+    slug: p.slug,
+    priceCents,
+    compareAtPriceCents: p.compareAtPrice === null ? null : Math.round(p.compareAtPrice * factor),
+    image: p.image,
+    category: p.categories[0]?.name || "Outros",
+    stock: p.stock,
+    manageStock: p.manageStock,
+  }));
+
+// 5. Só reescreve se os dados mudaram.
 const oldBody = format("", current.products);
 const newBody = format("", products);
 if (oldBody === newBody) {
@@ -140,8 +224,21 @@ const newIds = new Set(products.map((p) => p.id));
 const added = products.filter((p) => !oldById.has(p.id)).length;
 const removed = current.products.filter((p) => !newIds.has(p.id)).length;
 const soldOut = (list) =>
-  list.filter((p) => p.category !== "Fora de Estoque" && p.category !== "Anúncios em Massa" && p.manageStock && p.stock <= 0).length;
+  list.filter(
+    (p) =>
+      p.category !== "Fora de Estoque" &&
+      p.category !== "Anúncios em Massa" &&
+      p.manageStock &&
+      p.stock <= 0,
+  ).length;
 console.log(
   `Atualizado: ${current.products.length} → ${products.length} produtos ` +
     `(+${added} novos, -${removed} removidos). Esgotados visíveis: ${soldOut(current.products)} → ${soldOut(products)}.`,
+);
+const priceChanged = products.filter(
+  (p) => oldById.has(p.id) && oldById.get(p.id).priceCents !== p.priceCents,
+).length;
+console.log(
+  `Preços (Dropshipping) alterados: ${priceChanged}. Sem tabela Dropshipping: ${noTier}. ` +
+    `Página do produto falhou (manteve preço anterior): ${keptOld}.`,
 );
