@@ -7,6 +7,7 @@ import {
   Receipt,
   ShieldCheck,
   Headset,
+  Smartphone,
   type LucideIcon,
 } from "lucide-react";
 
@@ -100,6 +101,12 @@ export const navigation: NavGroup[] = [
     id: "sistema",
     label: "Sistema",
     items: [
+      {
+        label: "Aplicativo no celular",
+        to: "/aplicativo",
+        icon: Smartphone,
+        description: "Coloque o Shoppfy na tela inicial e receba as novidades do catálogo",
+      },
       {
         label: "Integrações",
         to: "/integracoes",

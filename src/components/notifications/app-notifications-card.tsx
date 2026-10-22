@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import {
   Bell,
   BellOff,
@@ -124,7 +125,11 @@ function AndroidSteps() {
   );
 }
 
-export function AppNotificationsCard() {
+// variant="card": cartão do Dashboard (fecha, some quando já está ativo).
+// variant="page": bloco da página "Aplicativo no celular" (sempre aparece,
+// mostra o status e o botão de teste; o passo a passo fica na própria página).
+export function AppNotificationsCard({ variant = "card" }: { variant?: "card" | "page" }) {
+  const isPage = variant === "page";
   const [platform, setPlatform] = useState<Platform>("desktop");
   const [tab, setTab] = useState<"ios" | "android">("ios");
   const [standalone, setStandalone] = useState(false);
@@ -223,26 +228,44 @@ export function AppNotificationsCard() {
     setDismissed(true);
   };
 
-  if (status === "checking" || status === "on" || dismissed) return null;
+  const handleTest = async () => {
+    setBusy(true);
+    try {
+      const { sent } = await sendTestPush();
+      if (sent > 0) toast.success("Notificação de teste enviada");
+      else toast.error("Nenhum aparelho recebeu — toque em Ativar de novo.");
+    } catch (err) {
+      toast.error("Não deu pra enviar o teste", {
+        description: err instanceof Error ? err.message : undefined,
+      });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  if (status === "checking") return null;
+  if (!isPage && (status === "on" || dismissed)) return null;
 
   const mobile = platform !== "desktop";
   // iPhone só recebe notificação com o Shoppfy instalado na tela inicial.
   const needsInstall = platform === "ios" ? !standalone : false;
-  const showSteps = !standalone; // mostra o passo a passo de instalação em qualquer navegador
+  const showSteps = !standalone && !isPage; // na página o passo a passo é maior e fica fora
   const canEnableHere = status === "off" && !needsInstall;
 
   return (
     <div className="surface-card relative overflow-hidden p-5">
       <div className="pointer-events-none absolute -right-16 -top-20 size-52 rounded-full bg-brand/10 blur-3xl" />
-      <button
-        type="button"
-        onClick={handleDismiss}
-        className="absolute right-3 top-3 grid size-7 place-items-center rounded-md text-muted-foreground hover:bg-surface-hover hover:text-foreground"
-        aria-label="Fechar"
-        title="Agora não"
-      >
-        <X className="size-4" />
-      </button>
+      {!isPage && (
+        <button
+          type="button"
+          onClick={handleDismiss}
+          className="absolute right-3 top-3 grid size-7 place-items-center rounded-md text-muted-foreground hover:bg-surface-hover hover:text-foreground"
+          aria-label="Fechar"
+          title="Agora não"
+        >
+          <X className="size-4" />
+        </button>
+      )}
 
       <div className="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="flex items-start gap-3 pr-8">
@@ -255,7 +278,9 @@ export function AppNotificationsCard() {
           </div>
           <div className="space-y-1">
             <p className="text-[14px] font-semibold text-foreground">
-              Receba as novidades do catálogo no celular
+              {status === "on"
+                ? "Notificações ativas neste aparelho"
+                : "Receba as novidades do catálogo no celular"}
             </p>
             <p className="text-[12.5px] text-muted-foreground">
               Produto novo, preço que baixou, reajuste de preço, produto que esgotou ou voltou ao
@@ -287,6 +312,17 @@ export function AppNotificationsCard() {
             <Button variant="outline" onClick={() => void handleInstall()} className="gap-2">
               <Download className="size-4" />
               Instalar app
+            </Button>
+          )}
+          {status === "on" && (
+            <Button
+              variant="outline"
+              onClick={() => void handleTest()}
+              disabled={busy}
+              className="gap-2"
+            >
+              {busy ? <Loader2 className="size-4 animate-spin" /> : <BellRing className="size-4" />}
+              Enviar teste
             </Button>
           )}
           {canEnableHere && (
@@ -325,6 +361,12 @@ export function AppNotificationsCard() {
             </div>
           </div>
           {tab === "ios" ? <IosSteps /> : <AndroidSteps />}
+          <Link
+            to="/aplicativo"
+            className="mt-3 inline-block text-[12px] font-medium text-brand underline underline-offset-2"
+          >
+            Ver o passo a passo completo
+          </Link>
         </div>
       )}
 
