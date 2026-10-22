@@ -27,6 +27,7 @@ jobs:
         run: node scripts/update-c7drop-catalog.mjs
 
       - name: Commit e push (só se mudou)
+        id: push
         run: |
           if git diff --quiet -- src/data/c7drop-products.ts; then
             echo "Nada mudou."
@@ -38,3 +39,17 @@ jobs:
           git commit -m "chore(c7drop): catálogo atualizado automaticamente"
           git pull --rebase origin main
           git push origin HEAD:main
+          echo "changed=1" >> "$GITHUB_OUTPUT"
+
+      # Depois do deploy novo na Vercel, manda as notificações de novidade do
+      # catálogo (produto novo, preço, estoque) pros clientes. O endpoint é
+      # idempotente: cada versão do catálogo é avisada uma vez só. Também roda
+      # quando nada mudou, pra cobrir algum aviso que tenha falhado antes.
+      - name: Avisar clientes das mudanças (push)
+        if: always()
+        run: |
+          if [ "${{ steps.push.outputs.changed }}" = "1" ]; then sleep 300; fi
+          for i in 1 2 3; do
+            if curl -fsS --max-time 60 https://www.shoppfy.online/api/cron/catalog-notify; then break; fi
+            sleep 60
+          done
