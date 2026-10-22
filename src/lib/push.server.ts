@@ -1,4 +1,5 @@
-// Server-only: notificação push (Web Push) pros aparelhos da conta de pedidos.
+// Server-only: notificação push (Web Push) — pedidos/atendimento pro dono e
+// novidades do catálogo pra todos os clientes.
 //
 // As chaves VAPID são geradas uma única vez pelo próprio servidor e ficam em
 // public.push_config (tabela sem policies: só o service role lê). Assim não
@@ -76,31 +77,78 @@ export async function sendToPedidosAdmins(payload: PushPayload): Promise<{ sent:
     .select("id, endpoint, p256dh, auth")
     .in("user_id", userIds);
   if (subsError) throw subsError;
-  if (!subs || subs.length === 0) return { sent: 0 };
+  return sendToSubscriptions(subs ?? [], payload, "high");
+}
 
+type SubRow = { id: string; endpoint: string; p256dh: string; auth: string };
+
+// Envia pra uma lista de aparelhos. Aparelho que a Apple/Google diz que não
+// existe mais (404/410) sai da lista.
+async function sendToSubscriptions(
+  subs: SubRow[],
+  payload: PushPayload,
+  urgency: "normal" | "high" = "normal",
+): Promise<{ sent: number }> {
+  if (subs.length === 0) return { sent: 0 };
   const keys = await getVapidKeys();
   webpush.setVapidDetails("https://www.shoppfy.online", keys.publicKey, keys.privateKey);
 
   const body = JSON.stringify(payload);
   let sent = 0;
-  await Promise.all(
-    subs.map(async (sub) => {
-      try {
-        await webpush.sendNotification(
-          { endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth } },
-          body,
-          { TTL: 60 * 60 * 24, urgency: "high" },
-        );
-        sent++;
-      } catch (err) {
-        const status = (err as { statusCode?: number }).statusCode;
-        if (status === 404 || status === 410) {
-          await supabaseAdmin.from("push_subscriptions").delete().eq("id", sub.id);
-        } else {
-          console.error("[push] falha ao enviar:", status, (err as Error).message);
+  // Em lotes, pra não abrir centenas de conexões de uma vez.
+  for (let i = 0; i < subs.length; i += 50) {
+    await Promise.all(
+      subs.slice(i, i + 50).map(async (sub) => {
+        try {
+          await webpush.sendNotification(
+            { endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth } },
+            body,
+            { TTL: 60 * 60 * 24, urgency },
+          );
+          sent++;
+        } catch (err) {
+          const status = (err as { statusCode?: number }).statusCode;
+          if (status === 404 || status === 410) {
+            await supabaseAdmin.from("push_subscriptions").delete().eq("id", sub.id);
+          } else {
+            console.error("[push] falha ao enviar:", status, (err as Error).message);
+          }
         }
-      }
-    }),
-  );
+      }),
+    );
+  }
   return { sent };
+}
+
+// Aparelhos de um usuário só (botão "Enviar teste").
+export async function sendToUser(userId: string, payload: PushPayload): Promise<{ sent: number }> {
+  const { data, error } = await supabaseAdmin
+    .from("push_subscriptions")
+    .select("id, endpoint, p256dh, auth")
+    .eq("user_id", userId);
+  if (error) throw error;
+  return sendToSubscriptions(data ?? [], payload);
+}
+
+// Todos os clientes com notificação ativa (novidades do catálogo). Quem está
+// com acesso bloqueado (parou de pagar) não recebe.
+export async function sendToAllCustomers(payload: PushPayload): Promise<{ sent: number }> {
+  const { data: subs, error } = await supabaseAdmin
+    .from("push_subscriptions")
+    .select("id, endpoint, p256dh, auth, user_id");
+  if (error) throw error;
+  if (!subs || subs.length === 0) return { sent: 0 };
+
+  const userIds = [...new Set(subs.map((s) => s.user_id))];
+  const { data: blocked } = await supabaseAdmin
+    .from("profiles")
+    .select("id")
+    .in("id", userIds)
+    .not("access_blocked_at", "is", null)
+    .lte("access_blocked_at", new Date().toISOString());
+  const blockedIds = new Set((blocked ?? []).map((b) => b.id));
+  return sendToSubscriptions(
+    subs.filter((s) => !blockedIds.has(s.user_id)),
+    payload,
+  );
 }

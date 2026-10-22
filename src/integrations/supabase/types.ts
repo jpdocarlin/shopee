@@ -1294,6 +1294,51 @@ export type Database = {
         };
         Relationships: [];
       };
+      catalog_notify_state: {
+        Row: {
+          catalog_version: string | null;
+          id: number;
+          last_run_at: string | null;
+          last_summary: Json | null;
+        };
+        Insert: {
+          catalog_version?: string | null;
+          id?: number;
+          last_run_at?: string | null;
+          last_summary?: Json | null;
+        };
+        Update: {
+          catalog_version?: string | null;
+          id?: number;
+          last_run_at?: string | null;
+          last_summary?: Json | null;
+        };
+        Relationships: [];
+      };
+      catalog_snapshot: {
+        Row: {
+          in_stock: boolean;
+          name: string;
+          price_cents: number;
+          product_id: string;
+          updated_at: string;
+        };
+        Insert: {
+          in_stock: boolean;
+          name: string;
+          price_cents: number;
+          product_id: string;
+          updated_at?: string;
+        };
+        Update: {
+          in_stock?: boolean;
+          name?: string;
+          price_cents?: number;
+          product_id?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       push_config: {
         Row: {
           created_at: string;

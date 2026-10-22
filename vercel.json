@@ -43,5 +43,11 @@
       "destination": "/atendimento",
       "permanent": false
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/catalog-notify",
+      "schedule": "*/10 * * * *"
+    }
   ]
 }

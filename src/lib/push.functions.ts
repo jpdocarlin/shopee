@@ -1,8 +1,10 @@
 // Notificação push de pedido novo (PWA na tela inicial do iPhone / navegador).
 //
-// SECURITY: tudo exige sessão (requireSupabaseAuth). Só a conta com a role
-// pedidos_admin consegue registrar aparelho; o disparo confere que o pedido é
-// de quem chamou, é recente e ainda não foi notificado (uma vez por pedido).
+// SECURITY: tudo exige sessão (requireSupabaseAuth). Qualquer cliente registra
+// o próprio aparelho (novidades do catálogo); aviso de pedido/atendimento só vai
+// pra quem tem a role pedidos_admin (filtrado em push.server). O disparo de
+// pedido confere que o pedido é de quem chamou, é recente e ainda não foi
+// notificado (uma vez por pedido).
 import { createServerFn } from "@tanstack/react-start";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
@@ -36,10 +38,6 @@ export const savePushSubscription = createServerFn({ method: "POST" })
     return data;
   })
   .handler(async ({ context, data }) => {
-    const { userHasRole } = await import("@/lib/push.server");
-    if (!(await userHasRole(context.userId, "pedidos_admin"))) {
-      throw new Error("Só a conta de pedidos recebe essas notificações.");
-    }
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { error } = await supabaseAdmin.from("push_subscriptions").upsert(
       {
@@ -55,18 +53,16 @@ export const savePushSubscription = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
-// Botão "Enviar teste" — confirma na hora que o aparelho recebe.
+// Botão "Enviar teste" — confirma na hora que o aparelho recebe (só os
+// aparelhos de quem clicou).
 export const sendTestPush = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { userHasRole, sendToPedidosAdmins } = await import("@/lib/push.server");
-    if (!(await userHasRole(context.userId, "pedidos_admin"))) {
-      throw new Error("Só a conta de pedidos recebe essas notificações.");
-    }
-    return sendToPedidosAdmins({
+    const { sendToUser } = await import("@/lib/push.server");
+    return sendToUser(context.userId, {
       title: "Notificações ativadas ✅",
-      body: "É assim que vai chegar cada pedido novo.",
-      url: "/pedidos-admin",
+      body: "É assim que vão chegar as novidades do Shoppfy.",
+      url: "/",
       tag: "teste",
     });
   });
