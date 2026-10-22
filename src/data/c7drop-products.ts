@@ -2481,7 +2481,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/aa37379955-5-33.jpg",
     category: "Ferramentas",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -5242,7 +5242,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a2c6d7d2ad-2-28.jpg",
     category: "Fora de Estoque",
-    stock: 1,
+    stock: 0,
     manageStock: true,
   },
   {
@@ -5297,7 +5297,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c1c135febe-4-23.jpg",
     category: "Produtos diversos",
-    stock: -55,
+    stock: -56,
     manageStock: false,
   },
   {
