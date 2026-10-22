@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-10-21 — 1359 produtos, na ordem retornada pela API
+// Snapshot de 2026-10-22 — 1359 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -402,7 +402,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791290442082-4bb76c43.webp",
     category: "Brinquedos",
-    stock: -2,
+    stock: -6,
     manageStock: true,
   },
   {
@@ -952,7 +952,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787921191547-1e29114d.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -5869,7 +5869,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/feba3d857b-1-41.jpg",
     category: "Informática",
-    stock: 67,
+    stock: 66,
     manageStock: true,
   },
   {
@@ -7112,7 +7112,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b19eead996-2-41.jpg",
     category: "Brinquedos",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -9389,7 +9389,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/44064e137a-Prancheta-7.png",
     category: "Produtos diversos",
-    stock: -16,
+    stock: -17,
     manageStock: false,
   },
   {
@@ -11292,7 +11292,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ea5433c7a1-Prancheta-2-4.png",
     category: "Informática",
-    stock: -6,
+    stock: -8,
     manageStock: false,
   },
   {
@@ -14878,7 +14878,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eee0d0c863-8118csCTRuL._AC_SL1500_-1.jpg",
     category: "Informática",
-    stock: -32,
+    stock: -33,
     manageStock: false,
   },
   {
