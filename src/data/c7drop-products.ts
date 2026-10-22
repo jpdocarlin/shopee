@@ -154,7 +154,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
   },
   {
     id: "cmvh17jc30006ugu6488a82dn",
-    name: "Bola Bomba De Banho Bicho Surpresa Bath Bomb Gift Oceanos",
+    name: "Bola Bomba De Banho Bicho Surpresa Bath Bomb Gift Oceanos Unidade",
     slug: "12-bola-bomba-de-banho-bicho-surpresa-bath-bomb-gift-oceanos",
     priceCents: 1200,
     compareAtPriceCents: null,
@@ -396,13 +396,13 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
   },
   {
     id: "cmuwoek1z0002gda8d746en4f",
-    name: "Squishy Brilhante Dumpling Pãozinho Baozi Glitter",
+    name: "Squishy Bolinha Médio Garra Colorido Slow Rising para Crianças",
     slug: "squishy-brilhante-dumpling-paozinho-baozi-glitter",
     priceCents: 2400,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1791290442082-4bb76c43.webp",
     category: "Brinquedos",
-    stock: -6,
+    stock: 100,
     manageStock: true,
   },
   {
@@ -1161,7 +1161,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787353500160-b44da186.webp",
     category: "Produto de Natal",
-    stock: 50,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -1271,7 +1271,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786712948248-8a18016d.webp",
     category: "Produtos diversos",
-    stock: 46,
+    stock: 45,
     manageStock: true,
   },
   {
@@ -3581,7 +3581,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f3786f4024-1-26.jpg",
     category: "Caixas de Som",
-    stock: -33,
+    stock: -34,
     manageStock: false,
   },
   {
@@ -5275,7 +5275,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7435e1d00-ca-1.jpg",
     category: "Media Streaming",
-    stock: -184,
+    stock: -186,
     manageStock: false,
   },
   {
@@ -5374,7 +5374,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/e96a8d71f5-2-19.jpg",
     category: "Celulares e Smartphones",
-    stock: -10,
+    stock: -11,
     manageStock: false,
   },
   {
@@ -8571,7 +8571,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvpw560438iudhmrzxb1ny",
     name: "Massageador De Rosto e Pescoço  LED Vibração Fototerapia Para Rejuvenescer",
     slug: "massageador-de-pescoco-e-rosto-led-vibracao-fototerapia-para-rejuvenescer-firmeza-anti-rugas-aparelho-redutor-de-papada",
-    priceCents: 5000,
+    priceCents: 2500,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/587d88a0f9-9-14.jpg",
     category: "Beleza e Cuidado Pessoal",
@@ -9169,7 +9169,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/5560adc910-4-7.jpg",
     category: "Produtos diversos",
-    stock: -12,
+    stock: -14,
     manageStock: false,
   },
   {
@@ -9763,7 +9763,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2e24f01c99-1.png",
     category: "Produtos diversos",
-    stock: -33,
+    stock: -34,
     manageStock: false,
   },
   {
@@ -10610,7 +10610,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3e423b442c-1-1.png",
     category: "Media Streaming",
-    stock: -48,
+    stock: -49,
     manageStock: false,
   },
   {
@@ -11193,7 +11193,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9bcd64a8ca-Prancheta-1-13.png",
     category: "Relogios e Smartwatchs",
-    stock: -1,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -11897,7 +11897,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/31a8c07673-1-8.jpg",
     category: "Brinquedos",
-    stock: -6,
+    stock: -8,
     manageStock: false,
   },
   {
@@ -11963,7 +11963,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a7c972439a-1-7.png",
     category: "Casa e Utensílios Domésticos",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -12062,7 +12062,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6c82407f0d-1-11.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -24,
+    stock: -25,
     manageStock: false,
   },
   {
@@ -12667,8 +12667,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0c16f2e84e-CAPA-18.png",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
-    manageStock: false,
+    stock: 0,
+    manageStock: true,
   },
   {
     id: "cmrnvo38x01pjiudhsk5sa6cf",
@@ -12685,7 +12685,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvo32v01paiudhcmg5nzpp",
     name: "Mini Teclado Sem Fio Bluetooth Universal Dobrável Portátil",
     slug: "mini-teclado-sem-fio-bluetooth-universal-dobravel-portatil",
-    priceCents: 4500,
+    priceCents: 5500,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3f7f365413-Design-sem-nome-1.png",
     category: "Informática",
@@ -13239,7 +13239,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b4c9242e39-7.jpg",
     category: "Promoções do Mês",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -13536,7 +13536,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a1afbd8948-cad-luatek-1.jpg",
     category: "Ferramentas",
-    stock: -15,
+    stock: -16,
     manageStock: false,
   },
   {
@@ -13613,7 +13613,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3450091448-1-1.webp",
     category: "Caixas de Som",
-    stock: -185,
+    stock: -188,
     manageStock: false,
   },
   {
@@ -13998,7 +13998,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c22968fecf-1-1.png",
     category: "Salão & Barbearia",
-    stock: -17,
+    stock: -18,
     manageStock: false,
   },
   {
@@ -14295,7 +14295,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/6e6105413f-12-33.webp",
     category: "Salão & Barbearia",
-    stock: -22,
+    stock: -23,
     manageStock: false,
   },
   {
@@ -14691,7 +14691,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/197008a9bb-3-FoneOuvidoGatinhaBluetoothLedOrelhaGatoCria.jpeg",
     category: "Fones de Ouvido",
-    stock: -13,
+    stock: -14,
     manageStock: false,
   },
   {
@@ -14812,7 +14812,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d699bc7680-1-7.png",
     category: "Fora de Estoque",
-    stock: 22,
+    stock: 21,
     manageStock: true,
   },
   {
@@ -14845,7 +14845,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/120948dd30-bb559d0faf4250d7319958704204bede.jpeg",
     category: "Media Streaming",
-    stock: -12,
+    stock: -15,
     manageStock: false,
   },
   {
@@ -14878,7 +14878,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eee0d0c863-8118csCTRuL._AC_SL1500_-1.jpg",
     category: "Informática",
-    stock: -50,
+    stock: -53,
     manageStock: false,
   },
   {
