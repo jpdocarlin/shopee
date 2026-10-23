@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-10-22 — 1362 produtos, na ordem retornada pela API
+// Snapshot de 2026-10-23 — 1364 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -20,6 +20,28 @@ export type C7DropProduct = {
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
+  {
+    id: "cmvk7kozv000iwwww95s1hu6o",
+    name: "Tablet M9 Android 13 8gb Ram",
+    slug: "tablet-m9-android-13-8gb-ram",
+    priceCents: 60600,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792713549649-1a871bf3.webp",
+    category: "Produtos diversos",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmvk6erfb000p12nsrn21wgud",
+    name: "Suporte Ventosa Starlink Mini Veicular Carro Vidro Case Teto",
+    slug: "suporte-ventosa-starlink-mini-veicular-carro-vidro-case-teto",
+    priceCents: 6500,
+    compareAtPriceCents: null,
+    image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1792711595595-cdfeee2c.webp",
+    category: "Produtos diversos",
+    stock: 50,
+    manageStock: true,
+  },
   {
     id: "cmvk5irun000m5lz0cyucksuu",
     name: "Capa De Silicone Para Starlink Mini À Prova D'água",
@@ -490,7 +512,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790200812352-97f997d8.webp",
     category: "Fones de Ouvido",
-    stock: 44,
+    stock: 43,
     manageStock: true,
   },
   {
@@ -743,7 +765,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788356901045-cfbf08bf.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 44,
+    stock: 42,
     manageStock: true,
   },
   {
@@ -1051,7 +1073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787844432689-b34b4f23.webp",
     category: "Informática",
-    stock: 41,
+    stock: 40,
     manageStock: true,
   },
   {
@@ -1744,7 +1766,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785203850223-a7af12ab.webp",
     category: "Informática",
-    stock: 48,
+    stock: 46,
     manageStock: true,
   },
   {
@@ -4743,7 +4765,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvrm1b06qqiudhoc89wg1l",
     name: "Relógio Digital De Mesa A Pilhas Preto Despertador Led Grande Data Temperatura Ideal Quarto Escritório",
     slug: "relogio-digital-de-mesa-a-pilhas-preto-despertador-led-grande-data-temperatura-ideal-quarto-escritorio",
-    priceCents: 2800,
+    priceCents: 3500,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/37dda9113c-3-11.jpg",
     category: "Casa e Utensílios Domésticos",
@@ -5308,7 +5330,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7435e1d00-ca-1.jpg",
     category: "Media Streaming",
-    stock: -188,
+    stock: -190,
     manageStock: false,
   },
   {
@@ -5473,7 +5495,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7367dac8cf-1-13.jpg",
     category: "Informática",
-    stock: -71,
+    stock: -72,
     manageStock: false,
   },
   {
@@ -5627,7 +5649,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/a6630c4221-2.jpg",
     category: "Brinquedos",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -8509,7 +8531,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/56ea2db954-4-43.jpg",
     category: "Produtos diversos",
-    stock: -11,
+    stock: -12,
     manageStock: false,
   },
   {
@@ -8685,7 +8707,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -21,
+    stock: -22,
     manageStock: false,
   },
   {
@@ -14581,7 +14603,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0223a406c9-8-45.webp",
     category: "Fora de Estoque",
-    stock: 4,
+    stock: 3,
     manageStock: true,
   },
   {
