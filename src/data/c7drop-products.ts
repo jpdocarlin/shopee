@@ -479,7 +479,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1790897741615-9668cc80.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 44,
+    stock: 0,
     manageStock: true,
   },
   {
@@ -1051,7 +1051,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787857879084-2b4c2d59.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 39,
+    stock: 38,
     manageStock: true,
   },
   {
@@ -1315,7 +1315,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786714615248-c942bae0.webp",
     category: "Brinquedos",
-    stock: 33,
+    stock: 50,
     manageStock: true,
   },
   {
@@ -1777,7 +1777,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1785196704285-41dbab3a.webp",
     category: "Informática",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -1920,7 +1920,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784935631385-8531a44f.webp",
     category: "Brinquedos",
-    stock: 38,
+    stock: 37,
     manageStock: true,
   },
   {
@@ -2103,7 +2103,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmruwkgcx0002mbhgdn1hagcr",
     name: "Smartwatch Haylou Solar Ultra Preto 1,6 Sport Silicone Gps Preto Mesh Cinza-escuro",
     slug: "smartwatch-haylou-solar-ultra-preto-1-6-sport-silicone-gps-preto-mesh-cinza-escuro",
-    priceCents: 28100,
+    priceCents: 29900,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1784653034990-33cd3188.webp",
     category: "Relogios e Smartwatchs",
@@ -2151,7 +2151,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/0524adc809-8-54.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 56,
+    stock: 55,
     manageStock: true,
   },
   {
@@ -2745,7 +2745,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/cd9d40ed41-3-20.jpg",
     category: "Celulares e Smartphones",
-    stock: -7,
+    stock: -9,
     manageStock: false,
   },
   {
@@ -4736,7 +4736,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4376abdfa8-1-21.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -5330,7 +5330,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d7435e1d00-ca-1.jpg",
     category: "Media Streaming",
-    stock: -190,
+    stock: -195,
     manageStock: false,
   },
   {
@@ -5517,7 +5517,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c05cd058f4-3-12.jpg",
     category: "Fora de Estoque",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -5924,7 +5924,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/feba3d857b-1-41.jpg",
     category: "Informática",
-    stock: 66,
+    stock: 64,
     manageStock: true,
   },
   {
@@ -7761,7 +7761,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/fb61621452-1-53.jpg",
     category: "Produtos diversos",
-    stock: -2,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -8190,7 +8190,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dc3a337124-4-21.jpg",
     category: "Mais vendidos",
-    stock: 50,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -8443,7 +8443,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/472c3475df-5-1.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -9818,7 +9818,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/2e24f01c99-1.png",
     category: "Produtos diversos",
-    stock: -35,
+    stock: -36,
     manageStock: false,
   },
   {
@@ -9840,7 +9840,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/ed43731e9a-Design-sem-nome.png",
     category: "Produtos diversos",
-    stock: -13,
+    stock: -15,
     manageStock: false,
   },
   {
@@ -11512,7 +11512,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/deea8b8804-Prancheta-5-22.png",
     category: "Câmeras",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -12234,7 +12234,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvob1a021giudhp9tvx99u",
     name: "Escova De Dentes Elétrica Recarregável com Refil",
     slug: "escova-de-dentes-eletrica-recarregavel-com-refil",
-    priceCents: 3500,
+    priceCents: 2900,
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1ebcd202f2-1-6.png",
     category: "Produtos diversos",
@@ -12326,7 +12326,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c16ad7ee15-1.png",
     category: "Fora de Estoque",
-    stock: 93,
+    stock: 92,
     manageStock: true,
   },
   {
@@ -13613,7 +13613,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/7c5a7daa8d-0-LanternaTticawLongoAlcancePotenteRecar.jpeg",
     category: "Iluminação",
-    stock: -3,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -13668,7 +13668,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3450091448-1-1.webp",
     category: "Caixas de Som",
-    stock: -188,
+    stock: -190,
     manageStock: false,
   },
   {
@@ -13701,7 +13701,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/b869ec0597-t.jpg",
     category: "Brinquedos",
-    stock: -9,
+    stock: -11,
     manageStock: false,
   },
   {
@@ -13844,7 +13844,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/594b2a56d9-1-1.png",
     category: "Salão & Barbearia",
-    stock: 43,
+    stock: 42,
     manageStock: true,
   },
   {
@@ -13855,7 +13855,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60bfbcb305-1.png",
     category: "Salão & Barbearia",
-    stock: -49,
+    stock: -50,
     manageStock: false,
   },
   {
@@ -14933,7 +14933,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/eee0d0c863-8118csCTRuL._AC_SL1500_-1.jpg",
     category: "Informática",
-    stock: -53,
+    stock: -68,
     manageStock: false,
   },
   {
@@ -15021,7 +15021,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/1e94d067fa-71p7JN9q-pL._AC_SL1000_-1.jpg",
     category: "Caixas de Som",
-    stock: -35,
+    stock: -36,
     manageStock: false,
   },
 ];
