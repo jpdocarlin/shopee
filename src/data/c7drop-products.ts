@@ -1623,7 +1623,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1786019142682-e1425ae5.webp",
     category: "Media Streaming",
-    stock: 0,
+    stock: -1,
     manageStock: true,
   },
   {
@@ -2668,7 +2668,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/01f321a3d1-7-5.webp",
     category: "Ferramentas",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -8465,7 +8465,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/472c3475df-5-1.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -13481,7 +13481,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/9a5d081df4-2-2.webp",
     category: "Brinquedos",
-    stock: -396,
+    stock: -397,
     manageStock: false,
   },
   {
