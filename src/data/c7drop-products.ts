@@ -5044,7 +5044,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dff1306ccc-1-55.jpg",
     category: "Produtos diversos",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -10115,7 +10115,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/d137418aaf-2-13.webp",
     category: "Media Streaming",
-    stock: -6,
+    stock: -10,
     manageStock: false,
   },
   {
@@ -12315,7 +12315,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/3d2c6c5ecf-1.png",
     category: "Brinquedos",
-    stock: -13,
+    stock: -14,
     manageStock: false,
   },
   {
@@ -13877,7 +13877,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/60bfbcb305-1.png",
     category: "Salão & Barbearia",
-    stock: -50,
+    stock: -52,
     manageStock: false,
   },
   {
@@ -14383,7 +14383,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/dd2d07828b-8-42.jpg",
     category: "Produtos diversos",
-    stock: -23,
+    stock: -24,
     manageStock: false,
   },
   {
