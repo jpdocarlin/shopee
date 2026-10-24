@@ -1260,7 +1260,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1787341236332-94f9ec60.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 44,
+    stock: 43,
     manageStock: true,
   },
   {
