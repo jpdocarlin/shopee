@@ -710,7 +710,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/uploads/1788527500056-e70175e1.webp",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
     manageStock: true,
   },
   {
@@ -8256,7 +8256,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/af5fbaaa5b-5-17.jpg",
     category: "Carregadores & Power Banks",
-    stock: -7,
+    stock: -8,
     manageStock: false,
   },
   {
@@ -8729,7 +8729,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -22,
+    stock: -23,
     manageStock: false,
   },
   {
@@ -9422,7 +9422,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/901ffa5604-Prancheta-6-1.png",
     category: "Informática",
-    stock: -10,
+    stock: -11,
     manageStock: false,
   },
   {
@@ -9730,7 +9730,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45faeb8a94-capa.webp",
     category: "Informática",
-    stock: -99,
+    stock: -100,
     manageStock: false,
   },
   {
@@ -14031,7 +14031,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/61803b2b5d-2-12.webp",
     category: "Carregadores & Power Banks",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
