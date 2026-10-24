@@ -19,6 +19,7 @@
 // atributos obrigatórios diferentes) — publishProduct() abaixo cobre o caso
 // comum, mas precisa ser validado contra a "API Test Tool" do console (ou
 // contra uma chamada real em sandbox) antes de confiar 100% nele em produção.
+import { ANATEL_ATTRIBUTE, ANATEL_HOMOLOGATION_NUMBER } from "@/lib/anatel";
 import crypto from "node:crypto";
 import { ProxyAgent } from "undici";
 
@@ -448,8 +449,21 @@ export async function buildMandatoryAttributeList(
   shopId: number,
   attributes: ShopeeAttribute[],
 ): Promise<Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }>> {
-  const mandatory = attributes.filter((attr) => attr.mandatory);
   const result: Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }> = [];
+
+  // Número ANATEL: preenche sempre que a categoria tiver o campo (mesmo
+  // quando a árvore não marca como obrigatório — a validação real exige).
+  const anatelAttrs = attributes.filter((attr) => ANATEL_ATTRIBUTE.test(attr.name ?? ""));
+  for (const attr of anatelAttrs) {
+    result.push({
+      attribute_id: attr.attribute_id,
+      attribute_value_list: [{ value_id: 0, original_value_name: ANATEL_HOMOLOGATION_NUMBER }],
+    });
+  }
+
+  const mandatory = attributes.filter(
+    (attr) => attr.mandatory && !ANATEL_ATTRIBUTE.test(attr.name ?? ""),
+  );
 
   for (const attr of mandatory) {
     let candidates = attr.attribute_value_list ?? [];
@@ -731,10 +745,11 @@ export async function publishProduct(input: PublishProductInput) {
   // de validação em si (caso o nome não bata, ou já tenhamos tentado
   // preencher antes de saber que era ANATEL) — falha rápido com uma
   // mensagem clara em vez de ficar tentando de novo às cegas.
-  const UNFILLABLE_ATTRIBUTE_NAME = /registration\s*id/i;
+  // 24/10/2026: agora o campo ANATEL é preenchido com o número único
+  // autorizado (ver lib/anatel.ts). Só falha se a Shopee recusar o número.
   const anatelError = () =>
     new Error(
-      "Essa categoria da Shopee exige um número de homologação ANATEL válido pra esse produto (obrigatório pra vários eletrônicos regulados no Brasil, como microfones, carregadores e adaptadores sem fio) — não é um dado que o catálogo tem ou que dá pra preencher automaticamente. Publique manualmente informando o registro ANATEL real no Seller Center, se o produto tiver um, ou escolha um produto/categoria que não exija homologação.",
+      `A Shopee não aceitou o número de homologação ANATEL (${ANATEL_HOMOLOGATION_NUMBER}) nesse produto.`,
     );
 
   let desc = truncateAtWordBoundary(description, GENEROUS_CAP);
@@ -754,11 +769,6 @@ export async function publishProduct(input: PublishProductInput) {
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
 
-      // Rede de segurança: cobre o caso em que já tentamos preencher um
-      // atributo sem saber que era ANATEL (nome não bateu no regex acima,
-      // ou o erro vem só na validação, não no aviso de "mandatory").
-      if (/anatel/i.test(message)) throw anatelError();
-
       const descMatch = message.match(
         /description length must be between \d+ and (\d+) characters/i,
       );
@@ -769,20 +779,31 @@ export async function publishProduct(input: PublishProductInput) {
 
       const missing = parseMissingMandatoryAttributes(message);
       if (missing.length > 0) {
-        if (missing.some((m) => UNFILLABLE_ATTRIBUTE_NAME.test(m.name))) throw anatelError();
-
         const already = new Set((attrs ?? []).map((a) => a.attribute_id));
         const newOnes = missing.filter((m) => !already.has(m.id));
-        if (newOnes.length === 0) throw err; // já tentamos preencher esses — não repete em loop
+        if (newOnes.length === 0) {
+          if (/anatel/i.test(message)) throw anatelError();
+          throw err; // já tentamos preencher esses — não repete em loop
+        }
         attrs = [
           ...(attrs ?? []),
-          ...newOnes.map(({ id }) => ({
+          ...newOnes.map(({ id, name }) => ({
             attribute_id: id,
-            attribute_value_list: [{ value_id: 0, original_value_name: "Padrão" }],
+            attribute_value_list: [
+              {
+                value_id: 0,
+                original_value_name: ANATEL_ATTRIBUTE.test(name)
+                  ? ANATEL_HOMOLOGATION_NUMBER
+                  : "Padrão",
+              },
+            ],
           })),
         ];
         continue;
       }
+
+      // Número ANATEL recusado na validação (ex.: ERROR_ANATEL_ID_INCORRECT).
+      if (/anatel/i.test(message)) throw anatelError();
 
       throw err;
     }

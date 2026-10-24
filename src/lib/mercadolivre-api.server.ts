@@ -32,6 +32,8 @@
 // só pra Shopee (shopee-api.server.ts), que exige IP declarado no Go-Live.
 // Antes passava pelo proxy "por garantia", o que gastava a cota do plano e
 // derrubava o Mercado Livre junto quando a conta do QuotaGuard era suspensa.
+import { ANATEL_ATTRIBUTE, ANATEL_HOMOLOGATION_NUMBER } from "@/lib/anatel";
+
 function mlFetch(url: string, init: RequestInit = {}): Promise<Response> {
   return fetch(url, init);
 }
@@ -352,8 +354,14 @@ export async function getCategoryAttributes(
 export function buildMandatoryAttributeList(
   attributes: MercadoLivreAttribute[],
 ): Array<{ id: string; value_name?: string; value_id?: string }> {
+  // Número ANATEL: preenche sempre que a categoria tiver o campo (ver lib/anatel.ts).
+  const anatel = attributes
+    .filter((attr) => ANATEL_ATTRIBUTE.test(attr.id) || ANATEL_ATTRIBUTE.test(attr.name ?? ""))
+    .map((attr) => ({ id: attr.id, value_name: ANATEL_HOMOLOGATION_NUMBER }));
+  const anatelIds = new Set(anatel.map((a) => a.id));
+
   const list: Array<{ id: string; value_name?: string; value_id?: string }> = attributes
-    .filter((attr) => attr.tags?.required && attr.id !== "GTIN")
+    .filter((attr) => attr.tags?.required && attr.id !== "GTIN" && !anatelIds.has(attr.id))
     .map((attr) => {
       const firstValue = attr.values?.[0];
       if (firstValue) return { id: attr.id, value_id: firstValue.id, value_name: firstValue.name };
@@ -368,7 +376,7 @@ export function buildMandatoryAttributeList(
   if (gtin && (gtin.tags?.required || gtin.tags?.conditional_required) && emptyReason) {
     list.push(emptyGtinReason(emptyReason));
   }
-  return list;
+  return [...anatel, ...list];
 }
 
 export function emptyGtinReason(attr?: MercadoLivreAttribute): {

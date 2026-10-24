@@ -27,6 +27,7 @@ Sistema pra vender na Shopee e no Mercado Livre SEM ESTOQUE. O cliente escolhe p
 
 # ERROS AO PUBLICAR (o sistema já mostra "Não deu pra publicar" + "O que fazer")
 SHOPEE
+- Número de homologação ANATEL (Shopee "Registration ID" / Mercado Livre "Homologação Anatel"): o Shoppfy preenche sozinho com o número autorizado pelas plataformas. O cliente não precisa informar nada. Se a plataforma recusar, pedir pra tentar outro produto e avisar o responsável.
 - "Cadastro de vendedor incompleto" / "KYC not pass" / "verificação de identidade": é uma trava da PRÓPRIA Shopee, não erro do Shoppfy. A loja ainda não teve a verificação de identidade aprovada, então a Shopee não deixa criar nenhum produto (nem pelo app dela). O que fazer: abrir o Seller Center (seller.shopee.com.br) ou o app da Shopee na área do vendedor, enviar o que ela pedir na verificação (documento, selfie, dados bancários), esperar a aprovação (geralmente 1 a 3 dias úteis) e publicar de novo pelo Shoppfy.
 - Mercado Livre "GTIN"/"código de barras" obrigatório: o Shoppfy agora informa automaticamente que o produto não tem código de barras. Peça pro cliente clicar em Publicar de novo; se repetir, escolher outro produto do catálogo.
 - Sem canal de logística: ativar pelo menos uma transportadora em Seller Center → Envio.
