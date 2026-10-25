@@ -4758,7 +4758,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/4376abdfa8-1-21.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -9730,7 +9730,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/45faeb8a94-capa.webp",
     category: "Informática",
-    stock: -100,
+    stock: -101,
     manageStock: false,
   },
   {
@@ -13415,7 +13415,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://wfd7n2enlsvgxasp.public.blob.vercel-storage.com/produtos-imagens/c2281cef04-BastoTripMiniPauDeSelfieBluetoothem-951709-MLB45132467872_032021.jpeg",
     category: "Ring Light & Suportes",
-    stock: -8,
+    stock: -10,
     manageStock: false,
   },
   {
