@@ -446,7 +446,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1791297827062-014b0873.webp",
     category: "Produtos diversos",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -534,7 +534,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1790200812352-97f997d8.webp",
     category: "Fones de Ouvido",
-    stock: 43,
+    stock: 42,
     manageStock: true,
   },
   {
@@ -1755,7 +1755,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1785253197350-54e7bafc.webp",
     category: "Carregadores & Power Banks",
-    stock: 41,
+    stock: 40,
     manageStock: true,
   },
   {
@@ -3251,7 +3251,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/baa4c74545-1-10.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -3977,7 +3977,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/0644d8f736-1-85.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -4351,7 +4351,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/ea76a2adce-image_944b8583.png",
     category: "Casa e Utensílios Domésticos",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -4483,7 +4483,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/2e51751d27-2-41.jpg",
     category: "Produtos diversos",
-    stock: -26,
+    stock: -27,
     manageStock: false,
   },
   {
@@ -5451,7 +5451,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/e96a8d71f5-2-19.jpg",
     category: "Celulares e Smartphones",
-    stock: -15,
+    stock: -16,
     manageStock: false,
   },
   {
@@ -5946,7 +5946,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/feba3d857b-1-41.jpg",
     category: "Informática",
-    stock: 64,
+    stock: 63,
     manageStock: true,
   },
   {
@@ -6804,7 +6804,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a4bddc66d9-1-17.jpg",
     category: "Fora de Estoque",
-    stock: 2,
+    stock: 0,
     manageStock: true,
   },
   {
@@ -7189,7 +7189,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/b19eead996-2-41.jpg",
     category: "Brinquedos",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -7722,13 +7722,13 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
   },
   {
     id: "cmrnvqavp04nwiudh7urmh57y",
-    name: "Árvore De Natal Iluminada luminosa que brilha e pisca Cristal Decoração Do Lar Acrílico Transparente 15cm a Pilha",
+    name: "Árvore De Natal Iluminada luminosa que brilha e pisca Cristal Decoração Do Lar Acrílico Transparente 15cm ou 25cm  a Pilha",
     slug: "arvore-de-natal-iluminada-luminosa-que-brilha-e-pisca-cristal-decoracao-do-lar-acrilico-transparente-25cm-15cm-a-pilha",
     priceCents: 2500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/259c970d7f-589.jpg",
     category: "Produto de Natal",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -8861,7 +8861,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/16f43f77db-9-7.jpg",
     category: "Games",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -9829,7 +9829,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/270b1e08fe-1-42.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: -17,
+    stock: -18,
     manageStock: false,
   },
   {
@@ -10687,7 +10687,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3e423b442c-1-1.png",
     category: "Media Streaming",
-    stock: -49,
+    stock: -50,
     manageStock: false,
   },
   {
@@ -11783,12 +11783,12 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvoih902bfiudhg80uzhr3",
     name: "Módulo De Luz Fria Led Adesivo De Brilho Para Capacete",
     slug: "modulo-de-luz-fria-led-adesivo-de-brilho-para-capacete",
-    priceCents: 4000,
+    priceCents: 1900,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/7da4642ceb-Prancheta-4-20.png",
     category: "Produtos diversos",
-    stock: -3,
-    manageStock: false,
+    stock: 30,
+    manageStock: true,
   },
   {
     id: "cmrnvoib402b8iudhaobjpldv",
@@ -13349,7 +13349,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/e8e4d59414-1-6.jpg",
     category: "Câmeras",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -13690,7 +13690,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3450091448-1-1.webp",
     category: "Caixas de Som",
-    stock: -190,
+    stock: -193,
     manageStock: false,
   },
   {
@@ -13976,7 +13976,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/e4d6e9f101-1-5.webp",
     category: "Iluminação",
-    stock: -16,
+    stock: -17,
     manageStock: false,
   },
   {
@@ -14152,7 +14152,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/fb5eb3010e-kittt.jpeg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -4,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -14229,7 +14229,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f4f83fa522-1.jpg",
     category: "Salão & Barbearia",
-    stock: -10,
+    stock: -11,
     manageStock: false,
   },
   {
@@ -14262,7 +14262,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/1852f2910c-7.png",
     category: "Relogios e Smartwatchs",
-    stock: -16,
+    stock: -17,
     manageStock: false,
   },
   {
@@ -14405,7 +14405,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/98f279ab33-3-68.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: -74,
+    stock: -79,
     manageStock: false,
   },
   {
@@ -14768,7 +14768,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/197008a9bb-3-FoneOuvidoGatinhaBluetoothLedOrelhaGatoCria.jpeg",
     category: "Fones de Ouvido",
-    stock: -14,
+    stock: -15,
     manageStock: false,
   },
   {
@@ -14889,7 +14889,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d699bc7680-1-7.png",
     category: "Fora de Estoque",
-    stock: 21,
+    stock: 20,
     manageStock: true,
   },
   {
@@ -14955,7 +14955,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/eee0d0c863-8118csCTRuL._AC_SL1500_-1.jpg",
     category: "Informática",
-    stock: -73,
+    stock: -78,
     manageStock: false,
   },
   {
