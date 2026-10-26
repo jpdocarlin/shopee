@@ -28,12 +28,18 @@ const VISION_PREFERENCE = [
 ];
 const AUDIO_PREFERENCE = ["whisper-large-v3-turbo", "whisper-large-v3"];
 
+// A variável foi criada na Vercel como "GROO_API_KEY" (com O) e a Vercel não
+// deixa renomear segredo — aceita os dois nomes.
+function groqKey(): string | undefined {
+  return process.env.GROQ_API_KEY || process.env.GROO_API_KEY;
+}
+
 export function hasGroq(): boolean {
-  return Boolean(process.env.GROQ_API_KEY);
+  return Boolean(groqKey());
 }
 
 function key(): string {
-  const k = process.env.GROQ_API_KEY;
+  const k = groqKey();
   if (!k) throw new Error("GROQ_API_KEY não configurada.");
   return k;
 }
