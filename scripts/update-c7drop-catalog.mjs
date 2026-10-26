@@ -28,7 +28,10 @@ function fail(msg) {
   process.exit(1);
 }
 
-async function getJson(url, tries = 3) {
+// C7DROP_RETRY_SCALE só existe pra testar sem esperar (ex.: 0.001).
+const RETRY_SCALE = Number(process.env.C7DROP_RETRY_SCALE ?? 1);
+
+async function getJson(url, { tries = 3, delayMs = 2000, maxDelayMs = 30_000 } = {}) {
   for (let i = 1; ; i++) {
     try {
       const res = await fetch(url, { headers: { accept: "application/json" } });
@@ -36,7 +39,11 @@ async function getJson(url, tries = 3) {
       return await res.json();
     } catch (err) {
       if (i >= tries) throw new Error(`${url}: ${err.message}`);
-      await new Promise((r) => setTimeout(r, 2000 * i));
+      const wait = Math.min(delayMs * i, maxDelayMs) * RETRY_SCALE;
+      console.log(
+        `  ${url} falhou (${err.message}); tentando de novo em ${Math.round(wait / 1000)}s`,
+      );
+      await new Promise((r) => setTimeout(r, wait));
     }
   }
 }
@@ -105,14 +112,23 @@ function format(header, products) {
 const current = readCurrent();
 
 // 1. Coleta todas as páginas.
-const first = await getJson(`${API}?page=1&limit=50&sort=relevance`).catch((e) => fail(e.message));
+// 26/10/2026: a C7Drop já ficou fora do ar (HTTP 503) por algumas horas.
+// Em vez de desistir na hora, a primeira página espera o site voltar:
+// tenta por ~11 min (30s, 60s, 90s e depois de 2 em 2 min) antes de abortar.
+const first = await getJson(`${API}?page=1&limit=50&sort=relevance`, {
+  tries: 8,
+  delayMs: 30_000,
+  maxDelayMs: 120_000,
+}).catch((e) => fail(`C7Drop fora do ar ou recusando acesso — ${e.message}`));
 if (!Array.isArray(first?.products) || !Number.isInteger(first?.totalPages)) {
   fail("formato da resposta mudou (esperava {products: [], totalPages})");
 }
 const pages = [first];
 for (let p = 2; p <= first.totalPages; p++) {
   pages.push(
-    await getJson(`${API}?page=${p}&limit=50&sort=relevance`).catch((e) => fail(e.message)),
+    await getJson(`${API}?page=${p}&limit=50&sort=relevance`, { tries: 5, delayMs: 5000 }).catch(
+      (e) => fail(e.message),
+    ),
   );
 }
 const raw = pages.flatMap((pg) => pg.products ?? []);
