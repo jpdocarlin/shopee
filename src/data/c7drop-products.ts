@@ -292,7 +292,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1791938538903-dac442e9.webp",
     category: "Produtos diversos",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -1084,7 +1084,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787855356529-2950f74d.webp",
     category: "Produtos diversos",
-    stock: 38,
+    stock: 37,
     manageStock: true,
   },
   {
@@ -5286,7 +5286,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a7bb92d909-3-30.jpg",
     category: "Iluminação",
-    stock: 37,
+    stock: 35,
     manageStock: true,
   },
   {
@@ -8861,7 +8861,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/16f43f77db-9-7.jpg",
     category: "Games",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -9466,7 +9466,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/44064e137a-Prancheta-7.png",
     category: "Produtos diversos",
-    stock: -18,
+    stock: -19,
     manageStock: false,
   },
   {
@@ -12348,7 +12348,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/c16ad7ee15-1.png",
     category: "Fora de Estoque",
-    stock: 92,
+    stock: 91,
     manageStock: true,
   },
   {
@@ -14042,7 +14042,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/8b83098022-1-12.webp",
     category: "Ferramentas",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
