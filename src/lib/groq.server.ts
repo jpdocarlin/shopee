@@ -1,9 +1,10 @@
 // Server-only: IA gratuita (Groq — https://console.groq.com, plano free sem
-// cartão). Usada no lugar do Gemini pra texto (atendimento, anúncio,
-// histórias), transcrição de áudio e leitura de print.
+// cartão). Usada no AUTOATENDIMENTO no lugar do Gemini: respostas,
+// transcrição de áudio e leitura de print. O Criar Anúncio continua no Gemini
+// (decisão do Jp em 26/10/2026).
 //
 // 26/10/2026: o Jp pediu pra trocar o Gemini (cobrado por uso) por uma IA
-// gratuita. Quando GROQ_API_KEY existe, tudo passa primeiro pelo Groq. Se o
+// gratuita no atendimento. Quando GROQ_API_KEY existe, o bot usa o Groq. Se o
 // Groq falhar (limite diário do plano grátis, instabilidade) E ainda existir
 // GEMINI_API_KEY, quem chama cai no Gemini só naquela chamada. Pra nunca
 // gastar crédito do Google, é só apagar a GEMINI_API_KEY da Vercel.

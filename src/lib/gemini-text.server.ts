@@ -3,7 +3,6 @@
 // import dinâmico) — nunca no topo de uma rota ou de um *.functions.ts, que
 // vão pro bundle do cliente. Mesma regra do gemini-image.server.ts.
 import { formatBRL } from "@/lib/format";
-import { groqText, hasGroq } from "@/lib/groq.server";
 
 // 04/09/2026: gemini-2.5-flash parou de aceitar chamadas ("no longer
 // available to new users" — a Google migrou as chaves de API pra um novo
@@ -188,27 +187,6 @@ async function callGemini(
   minLines: number,
   clean: (raw: string) => string = cleanStory,
 ): Promise<string> {
-  // IA principal: Groq (gratuito). Gemini só como reserva — ver groq.server.ts.
-  if (hasGroq()) {
-    try {
-      const r = await groqText(prompt, { maxTokens: 1500 });
-      const text = clean(r.text);
-      if (!text) throw new Error("resposta vazia");
-      if (r.finish !== "STOP" || text.split("\n").filter(Boolean).length < minLines) {
-        console.error(`[Groq texto] texto incompleto (finish=${r.finish}):`, text);
-        throw new Error("A IA devolveu um texto incompleto.");
-      }
-      return text;
-    } catch (err) {
-      console.error("[Groq texto] falhou:", err);
-      if (!process.env.GEMINI_API_KEY) {
-        throw new Error(
-          "O gerador de texto está sobrecarregado agora (limite de uso da IA). Espere um instante e tente de novo.",
-        );
-      }
-    }
-  }
-
   const apiKey = requireApiKey();
 
   const res = await fetchGeminiWithRetry(apiKey, prompt);
