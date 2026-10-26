@@ -10,6 +10,10 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 
+import { groqText, groqTranscribe, groqVision, hasGroq } from "@/lib/groq.server";
+
+// IA principal: Groq (gratuito). Gemini só como reserva quando o Groq falha e
+// a GEMINI_API_KEY ainda existe — ver groq.server.ts.
 const MODEL = "gemini-3.6-flash";
 const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
 
@@ -81,6 +85,32 @@ async function callGemini(
     maxOutputTokens: 800,
   },
 ): Promise<string> {
+  if (hasGroq()) {
+    try {
+      const prompt = parts
+        .map((p) => p.text ?? "")
+        .filter(Boolean)
+        .join("\n");
+      const media = parts.find((p) => p.inline_data)?.inline_data;
+      if (media?.mime_type.startsWith("audio/")) {
+        return await groqTranscribe(media.data, media.mime_type);
+      }
+      const r = media
+        ? await groqVision(prompt, media.data, media.mime_type, { maxTokens: opts.maxOutputTokens })
+        : await groqText(prompt, { maxTokens: opts.maxOutputTokens, json: opts.json });
+      if (r.finish === "MAX_TOKENS") {
+        console.error(`[Support bot] Groq cortou a resposta (budget=${opts.maxOutputTokens}).`);
+      }
+      return r.text;
+    } catch (err) {
+      console.error("[Support bot] Groq falhou:", err);
+      if (!process.env.GEMINI_API_KEY) {
+        throw new Error("Não foi possível falar com a IA agora. Tente de novo em instantes.");
+      }
+      // segue pro Gemini como reserva
+    }
+  }
+
   const apiKey = requireApiKey();
   const body = JSON.stringify({
     contents: [{ parts }],
