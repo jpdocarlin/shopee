@@ -13,7 +13,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { formatBRL } from "@/lib/format";
-import type { ListingHealth, StoreReport } from "@/lib/store-health.functions";
+import type { StoreReport } from "@/lib/store-health.functions";
 import { cn } from "@/lib/utils";
 
 export type Recap = {
@@ -24,16 +24,6 @@ export type Recap = {
   revenueCents: number;
   profitCents: number;
 };
-
-const DIAG = {
-  vendendo: { label: "Vendendo", className: "bg-success/15 text-success" },
-  "visita-sem-venda": { label: "Visitas sem venda", className: "bg-warning/15 text-warning" },
-  "poucas-visitas": { label: "Poucas visitas", className: "bg-destructive/15 text-destructive" },
-  "sem-dados": { label: "Coletando dados", className: "bg-muted text-muted-foreground" },
-  ok: { label: "Ok", className: "bg-muted text-muted-foreground" },
-} as const;
-
-const ORDER = ["visita-sem-venda", "poucas-visitas", "vendendo", "sem-dados", "ok"];
 
 function Trend({ cur, prev }: { cur: number | null; prev: number | null }) {
   if (cur === null || prev === null || prev === 0) return null;
@@ -77,39 +67,6 @@ function Kpi({
   );
 }
 
-function ListingRow({ h }: { h: ListingHealth }) {
-  const d = DIAG[h.diagnosis];
-  return (
-    <div className="flex gap-3 px-4 py-3">
-      {h.imageUrl ? (
-        <img
-          src={h.imageUrl}
-          alt=""
-          loading="lazy"
-          className="size-11 shrink-0 rounded-md bg-surface-hover object-cover"
-        />
-      ) : (
-        <div className="size-11 shrink-0 rounded-md bg-surface-hover" />
-      )}
-      <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-center gap-2">
-          <p className="line-clamp-1 text-[13px] font-medium text-foreground">{h.title}</p>
-          <span className={cn("rounded-full px-2 py-0.5 text-[11px] font-medium", d.className)}>
-            {d.label}
-          </span>
-        </div>
-        <p className="text-[12px] text-muted-foreground">
-          {h.marketplace === "shopee" ? "Shopee" : "Mercado Livre"} · {h.visits ?? "—"} visitas ·{" "}
-          {h.orders} venda(s)
-          {h.photos !== null && ` · ${h.photos} foto(s)`}
-          {h.profitPerSaleCents !== null && ` · lucro ${formatBRL(h.profitPerSaleCents)}/venda`}
-        </p>
-        <p className="mt-0.5 text-[12px] text-foreground/80">{h.tip}</p>
-      </div>
-    </div>
-  );
-}
-
 export function StoreHealthPanel({
   data,
   error,
@@ -120,9 +77,6 @@ export function StoreHealthPanel({
   days: number;
 }) {
   const r = data?.report;
-  const listings = r
-    ? [...r.listings].sort((a, b) => ORDER.indexOf(a.diagnosis) - ORDER.indexOf(b.diagnosis))
-    : [];
 
   return (
     <>
@@ -237,25 +191,21 @@ export function StoreHealthPanel({
                   Nada urgente agora.
                 </p>
               ) : (
-                <ul className="space-y-1.5 px-4 py-3 text-[13px] text-foreground">
-                  {r.attention.map((a) => (
-                    <li key={a}>• {a}</li>
-                  ))}
-                </ul>
+                <>
+                  <ul className="space-y-1.5 px-4 py-3 text-[13px] text-foreground">
+                    {r.attention.map((a) => (
+                      <li key={a}>• {a}</li>
+                    ))}
+                  </ul>
+                  <Link
+                    to="/anuncios"
+                    className="block px-4 pb-3 text-[12.5px] text-brand underline underline-offset-2"
+                  >
+                    Ver em Meus anúncios
+                  </Link>
+                </>
               )}
             </div>
-          </div>
-
-          <div className="surface-card divide-y divide-border">
-            <p className="px-4 py-3 text-[14px] font-semibold text-foreground">Seus anúncios</p>
-            {listings.slice(0, 60).map((h) => (
-              <ListingRow key={h.listingId} h={h} />
-            ))}
-            {listings.length > 60 && (
-              <p className="px-4 py-3 text-[12px] text-muted-foreground">
-                Mostrando os 60 que mais precisam de atenção de {listings.length}.
-              </p>
-            )}
           </div>
 
           <div className="surface-card divide-y divide-border">
