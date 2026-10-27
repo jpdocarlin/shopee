@@ -1,26 +1,43 @@
-// Server-only: envio de e-mail transacional pelo Resend (https://resend.com),
-// via API HTTP — sem dependência nova. Precisa de RESEND_API_KEY na Vercel e
-// do domínio do remetente verificado no Resend. Sem a chave, não envia e só
-// registra no log (nada quebra pra quem chamou).
-const FROM = process.env.EMAIL_FROM || "Shoppfy <contato@shoppfy.online>";
+// Server-only: envio de e-mail transacional.
+//
+// Caminho principal (pedido do Jp, 27/10/2026): sai pelo próprio Gmail do
+// suporte, shoppfysuporte@gmail.com, via SMTP do Google com "senha de app"
+// (GMAIL_USER + GMAIL_APP_PASSWORD na Vercel). Limite do Gmail: ~500 e-mails
+// por dia — sobra pro volume de reembolsos.
+// Reserva: Resend (RESEND_API_KEY), se um dia trocar pra domínio próprio.
+// Sem nenhuma das duas configuradas, não envia e só registra no log.
+type Mail = { to: string; subject: string; html: string; text: string; replyTo?: string };
 
-export async function sendEmail(input: {
-  to: string;
-  subject: string;
-  html: string;
-  text: string;
-  replyTo?: string;
-}): Promise<{ sent: boolean }> {
-  const key = process.env.RESEND_API_KEY;
-  if (!key) {
-    console.warn("[email] RESEND_API_KEY não configurada — e-mail não enviado:", input.subject);
-    return { sent: false };
+async function sendViaGmail(input: Mail, user: string, pass: string): Promise<boolean> {
+  const nodemailer = await import("nodemailer");
+  const transport = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: { user, pass: pass.replace(/\s+/g, "") },
+  });
+  try {
+    await transport.sendMail({
+      from: `"Shoppfy Suporte" <${user}>`,
+      to: input.to,
+      subject: input.subject,
+      html: input.html,
+      text: input.text,
+      ...(input.replyTo ? { replyTo: input.replyTo } : {}),
+    });
+    return true;
+  } catch (err) {
+    console.error("[email] Gmail recusou:", err instanceof Error ? err.message : err);
+    return false;
   }
+}
+
+async function sendViaResend(input: Mail, key: string): Promise<boolean> {
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: FROM,
+      from: process.env.EMAIL_FROM || "Shoppfy <contato@shoppfy.online>",
       to: [input.to],
       subject: input.subject,
       html: input.html,
@@ -30,9 +47,22 @@ export async function sendEmail(input: {
   });
   if (!res.ok) {
     console.error("[email] Resend recusou:", res.status, (await res.text()).slice(0, 300));
-    return { sent: false };
+    return false;
   }
-  return { sent: true };
+  return true;
+}
+
+export async function sendEmail(input: Mail): Promise<{ sent: boolean }> {
+  const gmailUser = process.env.GMAIL_USER || "shoppfysuporte@gmail.com";
+  const gmailPass = process.env.GMAIL_APP_PASSWORD;
+  if (gmailPass) return { sent: await sendViaGmail(input, gmailUser, gmailPass) };
+  const resendKey = process.env.RESEND_API_KEY;
+  if (resendKey) return { sent: await sendViaResend(input, resendKey) };
+  console.warn(
+    "[email] nenhum envio configurado (GMAIL_APP_PASSWORD) — não enviado:",
+    input.subject,
+  );
+  return { sent: false };
 }
 
 const esc = (s: string) =>
