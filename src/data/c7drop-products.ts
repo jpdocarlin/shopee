@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-10-26 — 1366 produtos, na ordem retornada pela API
+// Snapshot de 2026-10-27 — 1366 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -369,7 +369,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1791585383599-b52be79a.webp",
     category: "Produto de Natal",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -688,7 +688,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788529877398-126183c7.webp",
     category: "Produtos diversos",
-    stock: 38,
+    stock: 37,
     manageStock: true,
   },
   {
@@ -1095,7 +1095,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787844432689-b34b4f23.webp",
     category: "Informática",
-    stock: 40,
+    stock: 39,
     manageStock: true,
   },
   {
@@ -3063,8 +3063,8 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     priceCents: 31600,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/18584826f1-1.jpg",
-    category: "Fora de Estoque",
-    stock: 0,
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
     manageStock: true,
   },
   {
@@ -3174,7 +3174,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3a0242b045-1-17.jpg",
     category: "Produtos diversos",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -5781,7 +5781,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/2ebf251363-1-54.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -6793,7 +6793,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/aa6562127a-3-12.jpg",
     category: "Informática",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -7552,7 +7552,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/cb46d72500-12.webp",
     category: "Brinquedos",
-    stock: 0,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -10676,7 +10676,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/c38f347953-Prancheta-3-55.png",
     category: "Relogios e Smartwatchs",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -11270,7 +11270,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/9bcd64a8ca-Prancheta-1-13.png",
     category: "Relogios e Smartwatchs",
-    stock: -4,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -11336,7 +11336,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/b24e9f2d00-Prancheta-1-7.png",
     category: "Informática",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -11809,7 +11809,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/37c1b267cd-3-2.webp",
     category: "Iluminação",
-    stock: 98,
+    stock: 96,
     manageStock: true,
   },
   {
