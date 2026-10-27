@@ -6,6 +6,8 @@
 // por dia — sobra pro volume de reembolsos.
 // Reserva: Resend (RESEND_API_KEY), se um dia trocar pra domínio próprio.
 // Sem nenhuma das duas configuradas, não envia e só registra no log.
+const SUPPORT_INBOX = "shoppfysuporte@gmail.com";
+
 type Mail = { to: string; subject: string; html: string; text: string; replyTo?: string };
 
 async function sendViaGmail(input: Mail, user: string, pass: string): Promise<boolean> {
@@ -37,12 +39,13 @@ async function sendViaResend(input: Mail, key: string): Promise<boolean> {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: process.env.EMAIL_FROM || "Shoppfy <contato@shoppfy.online>",
+      from: process.env.EMAIL_FROM || "Shoppfy Suporte <contato@shoppfy.online>",
       to: [input.to],
       subject: input.subject,
       html: input.html,
       text: input.text,
-      ...(input.replyTo ? { reply_to: input.replyTo } : {}),
+      // Respostas do cliente caem no Gmail do suporte.
+      reply_to: input.replyTo ?? SUPPORT_INBOX,
     }),
   });
   if (!res.ok) {
