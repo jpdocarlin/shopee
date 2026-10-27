@@ -512,7 +512,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1790894562975-dcc3b713.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -710,7 +710,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788527500056-e70175e1.webp",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -2,
     manageStock: true,
   },
   {
@@ -3196,7 +3196,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/eabe36e6be-1-15.jpg",
     category: "Produtos diversos",
-    stock: -15,
+    stock: -16,
     manageStock: false,
   },
   {
@@ -4285,7 +4285,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/ce4a1f4e14-1-57.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -7,
+    stock: -8,
     manageStock: false,
   },
   {
@@ -4692,7 +4692,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/358cc3e093-1-26.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -4,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -4769,7 +4769,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/23290aaaaa-ca.jpg",
     category: "Fora de Estoque",
-    stock: -5,
+    stock: 1,
     manageStock: true,
   },
   {
@@ -5352,7 +5352,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d7435e1d00-ca-1.jpg",
     category: "Media Streaming",
-    stock: -196,
+    stock: -201,
     manageStock: false,
   },
   {
@@ -5946,7 +5946,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/feba3d857b-1-41.jpg",
     category: "Informática",
-    stock: 63,
+    stock: 62,
     manageStock: true,
   },
   {
@@ -6265,7 +6265,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/11bc7a2bd8-2-9.jpg",
     category: "Produtos diversos",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -9598,7 +9598,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f43e33eed2-1-2.png",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -10258,7 +10258,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/b98c9fd20f-1-2.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -19,
+    stock: -20,
     manageStock: false,
   },
   {
@@ -12194,7 +12194,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/8fb708572a-2-4.jpg",
     category: "Informática",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -13481,7 +13481,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/9a5d081df4-2-2.webp",
     category: "Brinquedos",
-    stock: -401,
+    stock: -403,
     manageStock: false,
   },
   {
@@ -13690,7 +13690,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3450091448-1-1.webp",
     category: "Caixas de Som",
-    stock: -193,
+    stock: -194,
     manageStock: false,
   },
   {
@@ -13910,7 +13910,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/670ea02be4-5-PianoTecladoMusicalInfantilMicrofoneEducativo.jpeg",
     category: "Brinquedos",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -14130,7 +14130,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/69a26f5aa1-16.webp",
     category: "Games",
-    stock: 92,
+    stock: 91,
     manageStock: true,
   },
   {
@@ -14779,7 +14779,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/28f50f388f-1-36.webp",
     category: "Fora de Estoque",
-    stock: 0,
+    stock: 6,
     manageStock: true,
   },
   {
@@ -14867,7 +14867,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d550e4977d-capa.jpeg",
     category: "Produtos diversos",
-    stock: -6,
+    stock: -7,
     manageStock: false,
   },
   {
