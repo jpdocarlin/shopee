@@ -1465,6 +1465,66 @@ export type Database = {
         };
         Relationships: [];
       };
+      listing_daily_stats: {
+        Row: {
+          created_at: string;
+          day: string;
+          listing_id: string;
+          photo_count: number | null;
+          total_sales: number | null;
+          total_visits: number | null;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          day: string;
+          listing_id: string;
+          photo_count?: number | null;
+          total_sales?: number | null;
+          total_visits?: number | null;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          day?: string;
+          listing_id?: string;
+          photo_count?: number | null;
+          total_sales?: number | null;
+          total_visits?: number | null;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      weekly_recaps: {
+        Row: {
+          created_at: string;
+          id: string;
+          payload: Json;
+          sent_at: string | null;
+          user_id: string;
+          week_number: number;
+          week_start: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          payload: Json;
+          sent_at?: string | null;
+          user_id: string;
+          week_number: number;
+          week_start: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          payload?: Json;
+          sent_at?: string | null;
+          user_id?: string;
+          week_number?: number;
+          week_start?: string;
+        };
+        Relationships: [];
+      };
       push_config: {
         Row: {
           created_at: string;

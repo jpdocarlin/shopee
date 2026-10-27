@@ -1,3 +1,4 @@
+import type { StoreReport } from "@/lib/store-health.server";
 // Server-only: envio de e-mail transacional.
 //
 // Caminho principal (pedido do Jp, 27/10/2026): sai pelo próprio Gmail do
@@ -143,5 +144,71 @@ export function refundDoneEmail(input: { firstName: string; purchaseCode: string
 <p style="margin:0 0 20px">Se tiver qualquer dúvida, é só responder este e-mail.</p>
 <p style="margin:0;color:#71717a">Equipe Shoppfy</p>
 </td></tr></table></td></tr></table></body></html>`;
+  return { subject, html, text };
+}
+
+// Recap semanal da loja (toda segunda de manhã).
+
+export function weeklyRecapEmail(input: {
+  firstName: string;
+  weekNumber: number;
+  report: StoreReport;
+}) {
+  const r = input.report;
+  const brl = (c: number) => `R$ ${(c / 100).toFixed(2).replace(".", ",")}`;
+  const d = (day: string) => day.split("-").reverse().slice(0, 2).join("/");
+  const diff = (a: number | null, b: number | null) =>
+    a !== null && b !== null && b > 0
+      ? ` (${a >= b ? "+" : ""}${Math.round(((a - b) / b) * 100)}%)`
+      : "";
+  const subject = `Semana ${input.weekNumber} da sua loja — ${r.orders} venda(s)`;
+  const lines = [
+    `Olá, ${input.firstName}! Aqui está a semana ${input.weekNumber} da sua loja (${d(r.from)} a ${d(r.to)}).`,
+    "",
+    r.visits !== null
+      ? `Visitas: ${r.visits}${diff(r.visits, r.prevVisits)}`
+      : "Visitas: começamos a contar esta semana.",
+    `Vendas: ${r.orders} (semana anterior: ${r.prevOrders}) · ${brl(r.revenueCents)} vendidos · lucro estimado ${brl(r.profitCents)}`,
+    r.conversion !== null ? `Conversão: ${(r.conversion * 100).toFixed(1).replace(".", ",")}%` : "",
+    "",
+    r.topProducts.length
+      ? "O que vendeu:"
+      : "Nenhuma venda nesta semana — veja abaixo o que fazer.",
+    ...r.topProducts.map((p, i) => `${i + 1}. ${p.name} — ${p.qty} un.`),
+    "",
+    r.suggestions.length ? "Vale fazer:" : "",
+    ...r.suggestions.map((s) => `• ${s.title}: ${s.detail}`),
+    "",
+    r.attention.length ? "Precisa de atenção:" : "",
+    ...r.attention.map((a) => `• ${a}`),
+    "",
+    "Ver a semana completa: https://www.shoppfy.online/saude-da-loja",
+    "",
+    "Equipe Shoppfy",
+  ].filter((l, i, arr) => !(l === "" && arr[i - 1] === ""));
+  const text = lines.join("\n");
+
+  const card = (label: string, value: string) =>
+    `<td style="padding:10px;background:#fafafa;border:1px solid #e4e4e7;border-radius:8px;text-align:center"><div style="font-size:12px;color:#71717a">${label}</div><div style="font-size:18px;font-weight:bold;margin-top:4px">${value}</div></td>`;
+  const html = `<!doctype html><html><body style="margin:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;color:#18181b">
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:24px 12px"><tr><td align="center">
+<table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:12px;padding:28px">
+<tr><td style="font-size:20px;font-weight:bold;color:#ff6a00;padding-bottom:4px">Shoppfy</td></tr>
+<tr><td style="font-size:15px;line-height:22px;padding-bottom:16px">Olá, ${esc(input.firstName)}! Aqui está a <strong>semana ${input.weekNumber}</strong> da sua loja (${d(r.from)} a ${d(r.to)}).</td></tr>
+<tr><td><table width="100%" cellpadding="0" cellspacing="6"><tr>
+${card("Visitas", r.visits !== null ? `${r.visits}${diff(r.visits, r.prevVisits)}` : "—")}
+${card("Vendas", `${r.orders}`)}
+${card("Lucro estimado", brl(r.profitCents))}
+</tr></table></td></tr>
+${r.visits === null ? `<tr><td style="font-size:12px;color:#71717a;padding:6px 0 0">As visitas começam a ser contadas a partir desta semana.</td></tr>` : ""}
+<tr><td style="font-size:15px;font-weight:bold;padding:18px 0 6px">${r.topProducts.length ? "O que vendeu" : "Nenhuma venda nesta semana"}</td></tr>
+${r.topProducts.map((p, i) => `<tr><td style="font-size:14px;padding:3px 0">${i + 1}. ${esc(p.name)} — <strong>${p.qty} un.</strong></td></tr>`).join("")}
+${r.suggestions.length ? `<tr><td style="font-size:15px;font-weight:bold;padding:18px 0 6px">Vale fazer esta semana</td></tr>` : ""}
+${r.suggestions.map((s) => `<tr><td style="font-size:14px;line-height:20px;padding:6px 10px;background:#fff7ed;border-radius:8px"><strong>${esc(s.title)}</strong><br>${esc(s.detail)}</td></tr><tr><td style="height:6px"></td></tr>`).join("")}
+${r.attention.length ? `<tr><td style="font-size:15px;font-weight:bold;padding:14px 0 6px">Precisa de atenção</td></tr>` : ""}
+${r.attention.map((a) => `<tr><td style="font-size:14px;padding:3px 0">• ${esc(a)}</td></tr>`).join("")}
+<tr><td style="padding:22px 0 8px"><a href="https://www.shoppfy.online/saude-da-loja" style="display:inline-block;background:#ff6a00;color:#ffffff;text-decoration:none;font-weight:bold;padding:12px 18px;border-radius:8px">Ver a semana completa</a></td></tr>
+<tr><td style="font-size:13px;color:#71717a">Equipe Shoppfy</td></tr>
+</table></td></tr></table></body></html>`;
   return { subject, html, text };
 }

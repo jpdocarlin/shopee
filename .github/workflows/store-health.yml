@@ -1,0 +1,20 @@
+name: Saúde da loja (foto diária + recap semanal)
+
+# Reserva do cron da Vercel. Os dois endpoints são idempotentes.
+on:
+  schedule:
+    - cron: "15 6 * * *" # todo dia, 03:15 de Brasília — foto do dia
+    - cron: "15 12 * * 1" # segunda, 09:15 de Brasília — recap semanal
+  workflow_dispatch: {}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Foto do dia
+        if: github.event.schedule != '15 12 * * 1'
+        run: curl -fsS --max-time 290 https://www.shoppfy.online/api/cron/store-stats
+      - name: Recap semanal
+        if: github.event.schedule == '15 12 * * 1'
+        run: curl -fsS --max-time 290 https://www.shoppfy.online/api/cron/weekly-recap
