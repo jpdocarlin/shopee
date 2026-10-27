@@ -18,7 +18,7 @@ import {
   type EnrichedLesson,
 } from "@/lib/membros";
 
-export const Route = createFileRoute("/membros/$moduloSlug/$aulaSlug")({
+export const Route = createFileRoute("/membros/$moduloSlug_/$aulaSlug")({
   component: LessonPage,
 });
 

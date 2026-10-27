@@ -182,7 +182,7 @@ export function weeklyRecapEmail(input: {
     r.attention.length ? "Precisa de atenção:" : "",
     ...r.attention.map((a) => `• ${a}`),
     "",
-    "Ver a semana completa: https://www.shoppfy.online/saude-da-loja",
+    "Ver a semana completa: https://www.shoppfy.online/",
     "",
     "Equipe Shoppfy",
   ].filter((l, i, arr) => !(l === "" && arr[i - 1] === ""));
@@ -207,7 +207,7 @@ ${r.suggestions.length ? `<tr><td style="font-size:15px;font-weight:bold;padding
 ${r.suggestions.map((s) => `<tr><td style="font-size:14px;line-height:20px;padding:6px 10px;background:#fff7ed;border-radius:8px"><strong>${esc(s.title)}</strong><br>${esc(s.detail)}</td></tr><tr><td style="height:6px"></td></tr>`).join("")}
 ${r.attention.length ? `<tr><td style="font-size:15px;font-weight:bold;padding:14px 0 6px">Precisa de atenção</td></tr>` : ""}
 ${r.attention.map((a) => `<tr><td style="font-size:14px;padding:3px 0">• ${esc(a)}</td></tr>`).join("")}
-<tr><td style="padding:22px 0 8px"><a href="https://www.shoppfy.online/saude-da-loja" style="display:inline-block;background:#ff6a00;color:#ffffff;text-decoration:none;font-weight:bold;padding:12px 18px;border-radius:8px">Ver a semana completa</a></td></tr>
+<tr><td style="padding:22px 0 8px"><a href="https://www.shoppfy.online/" style="display:inline-block;background:#ff6a00;color:#ffffff;text-decoration:none;font-weight:bold;padding:12px 18px;border-radius:8px">Ver a semana completa</a></td></tr>
 <tr><td style="font-size:13px;color:#71717a">Equipe Shoppfy</td></tr>
 </table></td></tr></table></body></html>`;
   return { subject, html, text };

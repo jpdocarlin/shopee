@@ -9,7 +9,6 @@ import {
   Headset,
   Smartphone,
   Megaphone,
-  HeartPulse,
   MessagesSquare,
   Undo2,
   RotateCcw,
@@ -68,13 +67,6 @@ export const navigation: NavGroup[] = [
         to: "/anuncios",
         icon: Megaphone,
         description: "Preço, custo, taxa e lucro de cada anúncio; pausar e reativar",
-        badge: "Novo",
-      },
-      {
-        label: "Saúde da loja",
-        to: "/saude-da-loja",
-        icon: HeartPulse,
-        description: "Visitas, vendas, o que melhorar e o recap de cada semana",
         badge: "Novo",
       },
       {

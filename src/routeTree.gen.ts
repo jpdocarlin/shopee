@@ -12,27 +12,37 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as AtendimentoRouteImport } from './routes/atendimento'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as MembrosRouteImport } from './routes/membros'
 import { Route as ShellIndexRouteImport } from './routes/_shell.index'
+import { Route as ShellAnunciosRouteImport } from './routes/_shell.anuncios'
+import { Route as ShellAplicativoRouteImport } from './routes/_shell.aplicativo'
 import { Route as ShellAtendimentoAdminRouteImport } from './routes/_shell.atendimento-admin'
 import { Route as ShellCatalogoRouteImport } from './routes/_shell.catalogo'
 import { Route as ShellComissoesRouteImport } from './routes/_shell.comissoes'
 import { Route as ShellConfiguracoesRouteImport } from './routes/_shell.configuracoes'
 import { Route as ShellCriarAnuncioRouteImport } from './routes/_shell.criar-anuncio'
-import { Route as ShellEditorVideoRouteImport } from './routes/_shell.editor-video'
-import { Route as ShellFavoritosRouteImport } from './routes/_shell.favoritos'
-import { Route as ShellGruposDivulgacaoRouteImport } from './routes/_shell.grupos-divulgacao'
-import { Route as ShellIaRouteImport } from './routes/_shell.ia'
 import { Route as ShellIntegracoesRouteImport } from './routes/_shell.integracoes'
 import { Route as ShellMarketplaceRouteImport } from './routes/_shell.marketplace'
 import { Route as ShellMeusLinksRouteImport } from './routes/_shell.meus-links'
 import { Route as ShellPedidosRouteImport } from './routes/_shell.pedidos'
 import { Route as ShellPedidosAdminRouteImport } from './routes/_shell.pedidos-admin'
-import { Route as ShellProdutosRouteImport } from './routes/_shell.produtos'
-import { Route as ShellRankingRouteImport } from './routes/_shell.ranking'
+import { Route as ShellPosVendaRouteImport } from './routes/_shell.pos-venda'
+import { Route as ShellReembolsoRouteImport } from './routes/_shell.reembolso'
+import { Route as ShellReembolsosAdminRouteImport } from './routes/_shell.reembolsos-admin'
+import { Route as ShellSaudeDaLojaRouteImport } from './routes/_shell.saude-da-loja'
+import { Route as MembrosIndexRouteImport } from './routes/membros.index'
+import { Route as MembrosModuloSlugRouteImport } from './routes/membros.$moduloSlug'
 import { Route as ShellAnuncioItemIdRouteImport } from './routes/_shell.anuncio.$itemId'
+import { Route as ApiCronCatalogNotifyRouteImport } from './routes/api.cron.catalog-notify'
+import { Route as ApiCronImportOrdersRouteImport } from './routes/api.cron.import-orders'
+import { Route as ApiCronStoreStatsRouteImport } from './routes/api.cron.store-stats'
+import { Route as ApiCronWeeklyRecapRouteImport } from './routes/api.cron.weekly-recap'
+import { Route as ApiMercadoLivreCallbackRouteImport } from './routes/api.mercado-livre.callback'
+import { Route as ApiMercadoLivreConnectRouteImport } from './routes/api.mercado-livre.connect'
 import { Route as ApiShopeeCallbackRouteImport } from './routes/api.shopee.callback'
 import { Route as ApiShopeeConnectRouteImport } from './routes/api.shopee.connect'
 import { Route as ApiWebhooksApplyfyRouteImport } from './routes/api.webhooks.applyfy'
+import { Route as MembrosModuloSlugAulaSlugRouteImport } from './routes/membros.$moduloSlug_.$aulaSlug'
 
 const ShellRoute = ShellRouteImport.update({
   id: '/_shell',
@@ -48,9 +58,24 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MembrosRoute = MembrosRouteImport.update({
+  id: '/membros',
+  path: '/membros',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShellIndexRoute = ShellIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellAnunciosRoute = ShellAnunciosRouteImport.update({
+  id: '/anuncios',
+  path: '/anuncios',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellAplicativoRoute = ShellAplicativoRouteImport.update({
+  id: '/aplicativo',
+  path: '/aplicativo',
   getParentRoute: () => ShellRoute,
 } as any)
 const ShellAtendimentoAdminRoute = ShellAtendimentoAdminRouteImport.update({
@@ -78,26 +103,6 @@ const ShellCriarAnuncioRoute = ShellCriarAnuncioRouteImport.update({
   path: '/criar-anuncio',
   getParentRoute: () => ShellRoute,
 } as any)
-const ShellEditorVideoRoute = ShellEditorVideoRouteImport.update({
-  id: '/editor-video',
-  path: '/editor-video',
-  getParentRoute: () => ShellRoute,
-} as any)
-const ShellFavoritosRoute = ShellFavoritosRouteImport.update({
-  id: '/favoritos',
-  path: '/favoritos',
-  getParentRoute: () => ShellRoute,
-} as any)
-const ShellGruposDivulgacaoRoute = ShellGruposDivulgacaoRouteImport.update({
-  id: '/grupos-divulgacao',
-  path: '/grupos-divulgacao',
-  getParentRoute: () => ShellRoute,
-} as any)
-const ShellIaRoute = ShellIaRouteImport.update({
-  id: '/ia',
-  path: '/ia',
-  getParentRoute: () => ShellRoute,
-} as any)
 const ShellIntegracoesRoute = ShellIntegracoesRouteImport.update({
   id: '/integracoes',
   path: '/integracoes',
@@ -123,20 +128,70 @@ const ShellPedidosAdminRoute = ShellPedidosAdminRouteImport.update({
   path: '/pedidos-admin',
   getParentRoute: () => ShellRoute,
 } as any)
-const ShellProdutosRoute = ShellProdutosRouteImport.update({
-  id: '/produtos',
-  path: '/produtos',
+const ShellPosVendaRoute = ShellPosVendaRouteImport.update({
+  id: '/pos-venda',
+  path: '/pos-venda',
   getParentRoute: () => ShellRoute,
 } as any)
-const ShellRankingRoute = ShellRankingRouteImport.update({
-  id: '/ranking',
-  path: '/ranking',
+const ShellReembolsoRoute = ShellReembolsoRouteImport.update({
+  id: '/reembolso',
+  path: '/reembolso',
   getParentRoute: () => ShellRoute,
+} as any)
+const ShellReembolsosAdminRoute = ShellReembolsosAdminRouteImport.update({
+  id: '/reembolsos-admin',
+  path: '/reembolsos-admin',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellSaudeDaLojaRoute = ShellSaudeDaLojaRouteImport.update({
+  id: '/saude-da-loja',
+  path: '/saude-da-loja',
+  getParentRoute: () => ShellRoute,
+} as any)
+const MembrosIndexRoute = MembrosIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MembrosRoute,
+} as any)
+const MembrosModuloSlugRoute = MembrosModuloSlugRouteImport.update({
+  id: '/$moduloSlug',
+  path: '/$moduloSlug',
+  getParentRoute: () => MembrosRoute,
 } as any)
 const ShellAnuncioItemIdRoute = ShellAnuncioItemIdRouteImport.update({
   id: '/anuncio/$itemId',
   path: '/anuncio/$itemId',
   getParentRoute: () => ShellRoute,
+} as any)
+const ApiCronCatalogNotifyRoute = ApiCronCatalogNotifyRouteImport.update({
+  id: '/api/cron/catalog-notify',
+  path: '/api/cron/catalog-notify',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCronImportOrdersRoute = ApiCronImportOrdersRouteImport.update({
+  id: '/api/cron/import-orders',
+  path: '/api/cron/import-orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCronStoreStatsRoute = ApiCronStoreStatsRouteImport.update({
+  id: '/api/cron/store-stats',
+  path: '/api/cron/store-stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCronWeeklyRecapRoute = ApiCronWeeklyRecapRouteImport.update({
+  id: '/api/cron/weekly-recap',
+  path: '/api/cron/weekly-recap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiMercadoLivreCallbackRoute = ApiMercadoLivreCallbackRouteImport.update({
+  id: '/api/mercado-livre/callback',
+  path: '/api/mercado-livre/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiMercadoLivreConnectRoute = ApiMercadoLivreConnectRouteImport.update({
+  id: '/api/mercado-livre/connect',
+  path: '/api/mercado-livre/connect',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiShopeeCallbackRoute = ApiShopeeCallbackRouteImport.update({
   id: '/api/shopee/callback',
@@ -153,167 +208,238 @@ const ApiWebhooksApplyfyRoute = ApiWebhooksApplyfyRouteImport.update({
   path: '/api/webhooks/applyfy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MembrosModuloSlugAulaSlugRoute =
+  MembrosModuloSlugAulaSlugRouteImport.update({
+    id: '/$moduloSlug_/$aulaSlug',
+    path: '/$moduloSlug/$aulaSlug',
+    getParentRoute: () => MembrosRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/atendimento-admin': typeof ShellAtendimentoAdminRoute
   '/': typeof ShellIndexRoute
   '/atendimento': typeof AtendimentoRoute
   '/login': typeof LoginRoute
+  '/membros': typeof MembrosRouteWithChildren
+  '/anuncios': typeof ShellAnunciosRoute
+  '/aplicativo': typeof ShellAplicativoRoute
+  '/atendimento-admin': typeof ShellAtendimentoAdminRoute
   '/catalogo': typeof ShellCatalogoRoute
   '/comissoes': typeof ShellComissoesRoute
   '/configuracoes': typeof ShellConfiguracoesRoute
   '/criar-anuncio': typeof ShellCriarAnuncioRoute
-  '/editor-video': typeof ShellEditorVideoRoute
-  '/favoritos': typeof ShellFavoritosRoute
-  '/grupos-divulgacao': typeof ShellGruposDivulgacaoRoute
-  '/ia': typeof ShellIaRoute
   '/integracoes': typeof ShellIntegracoesRoute
   '/marketplace': typeof ShellMarketplaceRoute
   '/meus-links': typeof ShellMeusLinksRoute
   '/pedidos': typeof ShellPedidosRoute
   '/pedidos-admin': typeof ShellPedidosAdminRoute
-  '/produtos': typeof ShellProdutosRoute
-  '/ranking': typeof ShellRankingRoute
+  '/pos-venda': typeof ShellPosVendaRoute
+  '/reembolso': typeof ShellReembolsoRoute
+  '/reembolsos-admin': typeof ShellReembolsosAdminRoute
+  '/saude-da-loja': typeof ShellSaudeDaLojaRoute
+  '/membros/$moduloSlug': typeof MembrosModuloSlugRoute
+  '/membros/': typeof MembrosIndexRoute
   '/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
+  '/api/cron/catalog-notify': typeof ApiCronCatalogNotifyRoute
+  '/api/cron/import-orders': typeof ApiCronImportOrdersRoute
+  '/api/cron/store-stats': typeof ApiCronStoreStatsRoute
+  '/api/cron/weekly-recap': typeof ApiCronWeeklyRecapRoute
+  '/api/mercado-livre/callback': typeof ApiMercadoLivreCallbackRoute
+  '/api/mercado-livre/connect': typeof ApiMercadoLivreConnectRoute
   '/api/shopee/callback': typeof ApiShopeeCallbackRoute
   '/api/shopee/connect': typeof ApiShopeeConnectRoute
   '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
+  '/membros/$moduloSlug/$aulaSlug': typeof MembrosModuloSlugAulaSlugRoute
 }
-  '/atendimento-admin': typeof ShellAtendimentoAdminRoute
 export interface FileRoutesByTo {
   '/atendimento': typeof AtendimentoRoute
   '/login': typeof LoginRoute
+  '/anuncios': typeof ShellAnunciosRoute
+  '/aplicativo': typeof ShellAplicativoRoute
+  '/atendimento-admin': typeof ShellAtendimentoAdminRoute
   '/catalogo': typeof ShellCatalogoRoute
   '/comissoes': typeof ShellComissoesRoute
   '/configuracoes': typeof ShellConfiguracoesRoute
   '/criar-anuncio': typeof ShellCriarAnuncioRoute
-  '/editor-video': typeof ShellEditorVideoRoute
-  '/favoritos': typeof ShellFavoritosRoute
-  '/grupos-divulgacao': typeof ShellGruposDivulgacaoRoute
-  '/ia': typeof ShellIaRoute
   '/integracoes': typeof ShellIntegracoesRoute
   '/marketplace': typeof ShellMarketplaceRoute
   '/meus-links': typeof ShellMeusLinksRoute
   '/pedidos': typeof ShellPedidosRoute
   '/pedidos-admin': typeof ShellPedidosAdminRoute
-  '/produtos': typeof ShellProdutosRoute
-  '/ranking': typeof ShellRankingRoute
+  '/pos-venda': typeof ShellPosVendaRoute
+  '/reembolso': typeof ShellReembolsoRoute
+  '/reembolsos-admin': typeof ShellReembolsosAdminRoute
+  '/saude-da-loja': typeof ShellSaudeDaLojaRoute
+  '/membros/$moduloSlug': typeof MembrosModuloSlugRoute
   '/': typeof ShellIndexRoute
+  '/membros': typeof MembrosIndexRoute
   '/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
+  '/api/cron/catalog-notify': typeof ApiCronCatalogNotifyRoute
+  '/api/cron/import-orders': typeof ApiCronImportOrdersRoute
+  '/api/cron/store-stats': typeof ApiCronStoreStatsRoute
+  '/api/cron/weekly-recap': typeof ApiCronWeeklyRecapRoute
+  '/api/mercado-livre/callback': typeof ApiMercadoLivreCallbackRoute
+  '/api/mercado-livre/connect': typeof ApiMercadoLivreConnectRoute
   '/api/shopee/callback': typeof ApiShopeeCallbackRoute
   '/api/shopee/connect': typeof ApiShopeeConnectRoute
   '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
+  '/membros/$moduloSlug/$aulaSlug': typeof MembrosModuloSlugAulaSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_shell/atendimento-admin': typeof ShellAtendimentoAdminRoute
   '/_shell': typeof ShellRouteWithChildren
   '/atendimento': typeof AtendimentoRoute
   '/login': typeof LoginRoute
+  '/membros': typeof MembrosRouteWithChildren
+  '/_shell/anuncios': typeof ShellAnunciosRoute
+  '/_shell/aplicativo': typeof ShellAplicativoRoute
+  '/_shell/atendimento-admin': typeof ShellAtendimentoAdminRoute
   '/_shell/catalogo': typeof ShellCatalogoRoute
   '/_shell/comissoes': typeof ShellComissoesRoute
   '/_shell/configuracoes': typeof ShellConfiguracoesRoute
   '/_shell/criar-anuncio': typeof ShellCriarAnuncioRoute
-  '/_shell/editor-video': typeof ShellEditorVideoRoute
-  '/_shell/favoritos': typeof ShellFavoritosRoute
-  '/_shell/grupos-divulgacao': typeof ShellGruposDivulgacaoRoute
-  '/_shell/ia': typeof ShellIaRoute
   '/_shell/integracoes': typeof ShellIntegracoesRoute
   '/_shell/marketplace': typeof ShellMarketplaceRoute
   '/_shell/meus-links': typeof ShellMeusLinksRoute
   '/_shell/pedidos': typeof ShellPedidosRoute
   '/_shell/pedidos-admin': typeof ShellPedidosAdminRoute
-  '/_shell/produtos': typeof ShellProdutosRoute
-  '/_shell/ranking': typeof ShellRankingRoute
+  '/_shell/pos-venda': typeof ShellPosVendaRoute
+  '/_shell/reembolso': typeof ShellReembolsoRoute
+  '/_shell/reembolsos-admin': typeof ShellReembolsosAdminRoute
+  '/_shell/saude-da-loja': typeof ShellSaudeDaLojaRoute
+  '/membros/$moduloSlug': typeof MembrosModuloSlugRoute
   '/_shell/': typeof ShellIndexRoute
+  '/membros/': typeof MembrosIndexRoute
   '/_shell/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
+  '/api/cron/catalog-notify': typeof ApiCronCatalogNotifyRoute
+  '/api/cron/import-orders': typeof ApiCronImportOrdersRoute
+  '/api/cron/store-stats': typeof ApiCronStoreStatsRoute
+  '/api/cron/weekly-recap': typeof ApiCronWeeklyRecapRoute
+  '/api/mercado-livre/callback': typeof ApiMercadoLivreCallbackRoute
+  '/api/mercado-livre/connect': typeof ApiMercadoLivreConnectRoute
   '/api/shopee/callback': typeof ApiShopeeCallbackRoute
   '/api/shopee/connect': typeof ApiShopeeConnectRoute
   '/api/webhooks/applyfy': typeof ApiWebhooksApplyfyRoute
+  '/membros/$moduloSlug_/$aulaSlug': typeof MembrosModuloSlugAulaSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-    | '/atendimento-admin'
   fullPaths:
     | '/'
     | '/atendimento'
     | '/login'
+    | '/membros'
+    | '/anuncios'
+    | '/aplicativo'
+    | '/atendimento-admin'
     | '/catalogo'
     | '/comissoes'
     | '/configuracoes'
     | '/criar-anuncio'
-    | '/editor-video'
-    | '/favoritos'
-    | '/grupos-divulgacao'
-    | '/ia'
     | '/integracoes'
     | '/marketplace'
     | '/meus-links'
     | '/pedidos'
     | '/pedidos-admin'
-    | '/produtos'
-    | '/ranking'
+    | '/pos-venda'
+    | '/reembolso'
+    | '/reembolsos-admin'
+    | '/saude-da-loja'
+    | '/membros/$moduloSlug'
+    | '/membros/'
     | '/anuncio/$itemId'
+    | '/api/cron/catalog-notify'
+    | '/api/cron/import-orders'
+    | '/api/cron/store-stats'
+    | '/api/cron/weekly-recap'
+    | '/api/mercado-livre/callback'
+    | '/api/mercado-livre/connect'
     | '/api/shopee/callback'
     | '/api/shopee/connect'
     | '/api/webhooks/applyfy'
+    | '/membros/$moduloSlug/$aulaSlug'
   fileRoutesByTo: FileRoutesByTo
-    | '/atendimento-admin'
   to:
     | '/atendimento'
     | '/login'
+    | '/anuncios'
+    | '/aplicativo'
+    | '/atendimento-admin'
     | '/catalogo'
     | '/comissoes'
     | '/configuracoes'
     | '/criar-anuncio'
-    | '/editor-video'
-    | '/favoritos'
-    | '/grupos-divulgacao'
-    | '/ia'
     | '/integracoes'
     | '/marketplace'
     | '/meus-links'
     | '/pedidos'
     | '/pedidos-admin'
-    | '/produtos'
-    | '/ranking'
+    | '/pos-venda'
+    | '/reembolso'
+    | '/reembolsos-admin'
+    | '/saude-da-loja'
+    | '/membros/$moduloSlug'
     | '/'
+    | '/membros'
     | '/anuncio/$itemId'
+    | '/api/cron/catalog-notify'
+    | '/api/cron/import-orders'
+    | '/api/cron/store-stats'
+    | '/api/cron/weekly-recap'
+    | '/api/mercado-livre/callback'
+    | '/api/mercado-livre/connect'
     | '/api/shopee/callback'
     | '/api/shopee/connect'
     | '/api/webhooks/applyfy'
+    | '/membros/$moduloSlug/$aulaSlug'
   id:
     | '__root__'
-    | '/_shell/atendimento-admin'
     | '/_shell'
     | '/atendimento'
     | '/login'
+    | '/membros'
+    | '/_shell/anuncios'
+    | '/_shell/aplicativo'
+    | '/_shell/atendimento-admin'
     | '/_shell/catalogo'
     | '/_shell/comissoes'
     | '/_shell/configuracoes'
     | '/_shell/criar-anuncio'
-    | '/_shell/editor-video'
-    | '/_shell/favoritos'
-    | '/_shell/grupos-divulgacao'
-    | '/_shell/ia'
     | '/_shell/integracoes'
     | '/_shell/marketplace'
     | '/_shell/meus-links'
     | '/_shell/pedidos'
     | '/_shell/pedidos-admin'
-    | '/_shell/produtos'
-    | '/_shell/ranking'
+    | '/_shell/pos-venda'
+    | '/_shell/reembolso'
+    | '/_shell/reembolsos-admin'
+    | '/_shell/saude-da-loja'
+    | '/membros/$moduloSlug'
     | '/_shell/'
+    | '/membros/'
     | '/_shell/anuncio/$itemId'
+    | '/api/cron/catalog-notify'
+    | '/api/cron/import-orders'
+    | '/api/cron/store-stats'
+    | '/api/cron/weekly-recap'
+    | '/api/mercado-livre/callback'
+    | '/api/mercado-livre/connect'
     | '/api/shopee/callback'
     | '/api/shopee/connect'
     | '/api/webhooks/applyfy'
+    | '/membros/$moduloSlug_/$aulaSlug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   ShellRoute: typeof ShellRouteWithChildren
   AtendimentoRoute: typeof AtendimentoRoute
   LoginRoute: typeof LoginRoute
+  MembrosRoute: typeof MembrosRouteWithChildren
+  ApiCronCatalogNotifyRoute: typeof ApiCronCatalogNotifyRoute
+  ApiCronImportOrdersRoute: typeof ApiCronImportOrdersRoute
+  ApiCronStoreStatsRoute: typeof ApiCronStoreStatsRoute
+  ApiCronWeeklyRecapRoute: typeof ApiCronWeeklyRecapRoute
+  ApiMercadoLivreCallbackRoute: typeof ApiMercadoLivreCallbackRoute
+  ApiMercadoLivreConnectRoute: typeof ApiMercadoLivreConnectRoute
   ApiShopeeCallbackRoute: typeof ApiShopeeCallbackRoute
   ApiShopeeConnectRoute: typeof ApiShopeeConnectRoute
   ApiWebhooksApplyfyRoute: typeof ApiWebhooksApplyfyRoute
@@ -342,18 +468,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/membros': {
+      id: '/membros'
+      path: '/membros'
+      fullPath: '/membros'
+      preLoaderRoute: typeof MembrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_shell/': {
       id: '/_shell/'
       path: '/'
       fullPath: '/'
+      preLoaderRoute: typeof ShellIndexRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/anuncios': {
+      id: '/_shell/anuncios'
+      path: '/anuncios'
+      fullPath: '/anuncios'
+      preLoaderRoute: typeof ShellAnunciosRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/aplicativo': {
+      id: '/_shell/aplicativo'
+      path: '/aplicativo'
+      fullPath: '/aplicativo'
+      preLoaderRoute: typeof ShellAplicativoRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/atendimento-admin': {
       id: '/_shell/atendimento-admin'
       path: '/atendimento-admin'
       fullPath: '/atendimento-admin'
       preLoaderRoute: typeof ShellAtendimentoAdminRouteImport
-      parentRoute: typeof ShellRoute
-    }
-      preLoaderRoute: typeof ShellIndexRouteImport
       parentRoute: typeof ShellRoute
     }
     '/_shell/catalogo': {
@@ -382,34 +529,6 @@ declare module '@tanstack/react-router' {
       path: '/criar-anuncio'
       fullPath: '/criar-anuncio'
       preLoaderRoute: typeof ShellCriarAnuncioRouteImport
-      parentRoute: typeof ShellRoute
-    }
-    '/_shell/editor-video': {
-      id: '/_shell/editor-video'
-      path: '/editor-video'
-      fullPath: '/editor-video'
-      preLoaderRoute: typeof ShellEditorVideoRouteImport
-      parentRoute: typeof ShellRoute
-    }
-    '/_shell/favoritos': {
-      id: '/_shell/favoritos'
-      path: '/favoritos'
-      fullPath: '/favoritos'
-      preLoaderRoute: typeof ShellFavoritosRouteImport
-      parentRoute: typeof ShellRoute
-    }
-    '/_shell/grupos-divulgacao': {
-      id: '/_shell/grupos-divulgacao'
-      path: '/grupos-divulgacao'
-      fullPath: '/grupos-divulgacao'
-      preLoaderRoute: typeof ShellGruposDivulgacaoRouteImport
-      parentRoute: typeof ShellRoute
-    }
-    '/_shell/ia': {
-      id: '/_shell/ia'
-      path: '/ia'
-      fullPath: '/ia'
-      preLoaderRoute: typeof ShellIaRouteImport
       parentRoute: typeof ShellRoute
     }
     '/_shell/integracoes': {
@@ -447,19 +566,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellPedidosAdminRouteImport
       parentRoute: typeof ShellRoute
     }
-    '/_shell/produtos': {
-      id: '/_shell/produtos'
-      path: '/produtos'
-      fullPath: '/produtos'
-      preLoaderRoute: typeof ShellProdutosRouteImport
+    '/_shell/pos-venda': {
+      id: '/_shell/pos-venda'
+      path: '/pos-venda'
+      fullPath: '/pos-venda'
+      preLoaderRoute: typeof ShellPosVendaRouteImport
       parentRoute: typeof ShellRoute
     }
-    '/_shell/ranking': {
-      id: '/_shell/ranking'
-      path: '/ranking'
-      fullPath: '/ranking'
-      preLoaderRoute: typeof ShellRankingRouteImport
+    '/_shell/reembolso': {
+      id: '/_shell/reembolso'
+      path: '/reembolso'
+      fullPath: '/reembolso'
+      preLoaderRoute: typeof ShellReembolsoRouteImport
       parentRoute: typeof ShellRoute
+    }
+    '/_shell/reembolsos-admin': {
+      id: '/_shell/reembolsos-admin'
+      path: '/reembolsos-admin'
+      fullPath: '/reembolsos-admin'
+      preLoaderRoute: typeof ShellReembolsosAdminRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/saude-da-loja': {
+      id: '/_shell/saude-da-loja'
+      path: '/saude-da-loja'
+      fullPath: '/saude-da-loja'
+      preLoaderRoute: typeof ShellSaudeDaLojaRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/membros/': {
+      id: '/membros/'
+      path: '/'
+      fullPath: '/membros/'
+      preLoaderRoute: typeof MembrosIndexRouteImport
+      parentRoute: typeof MembrosRoute
+    }
+    '/membros/$moduloSlug': {
+      id: '/membros/$moduloSlug'
+      path: '/$moduloSlug'
+      fullPath: '/membros/$moduloSlug'
+      preLoaderRoute: typeof MembrosModuloSlugRouteImport
+      parentRoute: typeof MembrosRoute
     }
     '/_shell/anuncio/$itemId': {
       id: '/_shell/anuncio/$itemId'
@@ -467,6 +614,48 @@ declare module '@tanstack/react-router' {
       fullPath: '/anuncio/$itemId'
       preLoaderRoute: typeof ShellAnuncioItemIdRouteImport
       parentRoute: typeof ShellRoute
+    }
+    '/api/cron/catalog-notify': {
+      id: '/api/cron/catalog-notify'
+      path: '/api/cron/catalog-notify'
+      fullPath: '/api/cron/catalog-notify'
+      preLoaderRoute: typeof ApiCronCatalogNotifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/cron/import-orders': {
+      id: '/api/cron/import-orders'
+      path: '/api/cron/import-orders'
+      fullPath: '/api/cron/import-orders'
+      preLoaderRoute: typeof ApiCronImportOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/cron/store-stats': {
+      id: '/api/cron/store-stats'
+      path: '/api/cron/store-stats'
+      fullPath: '/api/cron/store-stats'
+      preLoaderRoute: typeof ApiCronStoreStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/cron/weekly-recap': {
+      id: '/api/cron/weekly-recap'
+      path: '/api/cron/weekly-recap'
+      fullPath: '/api/cron/weekly-recap'
+      preLoaderRoute: typeof ApiCronWeeklyRecapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/mercado-livre/callback': {
+      id: '/api/mercado-livre/callback'
+      path: '/api/mercado-livre/callback'
+      fullPath: '/api/mercado-livre/callback'
+      preLoaderRoute: typeof ApiMercadoLivreCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/mercado-livre/connect': {
+      id: '/api/mercado-livre/connect'
+      path: '/api/mercado-livre/connect'
+      fullPath: '/api/mercado-livre/connect'
+      preLoaderRoute: typeof ApiMercadoLivreConnectRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/shopee/callback': {
       id: '/api/shopee/callback'
@@ -489,57 +678,86 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiWebhooksApplyfyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/membros/$moduloSlug_/$aulaSlug': {
+      id: '/membros/$moduloSlug_/$aulaSlug'
+      path: '/$moduloSlug/$aulaSlug'
+      fullPath: '/membros/$moduloSlug/$aulaSlug'
+      preLoaderRoute: typeof MembrosModuloSlugAulaSlugRouteImport
+      parentRoute: typeof MembrosRoute
+    }
   }
 }
 
-  ShellAtendimentoAdminRoute: typeof ShellAtendimentoAdminRoute
 interface ShellRouteChildren {
+  ShellAnunciosRoute: typeof ShellAnunciosRoute
+  ShellAplicativoRoute: typeof ShellAplicativoRoute
+  ShellAtendimentoAdminRoute: typeof ShellAtendimentoAdminRoute
   ShellCatalogoRoute: typeof ShellCatalogoRoute
   ShellComissoesRoute: typeof ShellComissoesRoute
   ShellConfiguracoesRoute: typeof ShellConfiguracoesRoute
   ShellCriarAnuncioRoute: typeof ShellCriarAnuncioRoute
-  ShellEditorVideoRoute: typeof ShellEditorVideoRoute
-  ShellFavoritosRoute: typeof ShellFavoritosRoute
-  ShellGruposDivulgacaoRoute: typeof ShellGruposDivulgacaoRoute
-  ShellIaRoute: typeof ShellIaRoute
   ShellIntegracoesRoute: typeof ShellIntegracoesRoute
   ShellMarketplaceRoute: typeof ShellMarketplaceRoute
   ShellMeusLinksRoute: typeof ShellMeusLinksRoute
   ShellPedidosRoute: typeof ShellPedidosRoute
   ShellPedidosAdminRoute: typeof ShellPedidosAdminRoute
-  ShellProdutosRoute: typeof ShellProdutosRoute
-  ShellRankingRoute: typeof ShellRankingRoute
+  ShellPosVendaRoute: typeof ShellPosVendaRoute
+  ShellReembolsoRoute: typeof ShellReembolsoRoute
+  ShellReembolsosAdminRoute: typeof ShellReembolsosAdminRoute
+  ShellSaudeDaLojaRoute: typeof ShellSaudeDaLojaRoute
   ShellIndexRoute: typeof ShellIndexRoute
   ShellAnuncioItemIdRoute: typeof ShellAnuncioItemIdRoute
 }
 
-  ShellAtendimentoAdminRoute: ShellAtendimentoAdminRoute,
 const ShellRouteChildren: ShellRouteChildren = {
+  ShellAnunciosRoute: ShellAnunciosRoute,
+  ShellAplicativoRoute: ShellAplicativoRoute,
+  ShellAtendimentoAdminRoute: ShellAtendimentoAdminRoute,
   ShellCatalogoRoute: ShellCatalogoRoute,
   ShellComissoesRoute: ShellComissoesRoute,
   ShellConfiguracoesRoute: ShellConfiguracoesRoute,
   ShellCriarAnuncioRoute: ShellCriarAnuncioRoute,
-  ShellEditorVideoRoute: ShellEditorVideoRoute,
-  ShellFavoritosRoute: ShellFavoritosRoute,
-  ShellGruposDivulgacaoRoute: ShellGruposDivulgacaoRoute,
-  ShellIaRoute: ShellIaRoute,
   ShellIntegracoesRoute: ShellIntegracoesRoute,
   ShellMarketplaceRoute: ShellMarketplaceRoute,
   ShellMeusLinksRoute: ShellMeusLinksRoute,
   ShellPedidosRoute: ShellPedidosRoute,
   ShellPedidosAdminRoute: ShellPedidosAdminRoute,
-  ShellProdutosRoute: ShellProdutosRoute,
-  ShellRankingRoute: ShellRankingRoute,
+  ShellPosVendaRoute: ShellPosVendaRoute,
+  ShellReembolsoRoute: ShellReembolsoRoute,
+  ShellReembolsosAdminRoute: ShellReembolsosAdminRoute,
+  ShellSaudeDaLojaRoute: ShellSaudeDaLojaRoute,
   ShellIndexRoute: ShellIndexRoute,
   ShellAnuncioItemIdRoute: ShellAnuncioItemIdRoute,
 }
 
 const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
 
+interface MembrosRouteChildren {
+  MembrosModuloSlugRoute: typeof MembrosModuloSlugRoute
+  MembrosIndexRoute: typeof MembrosIndexRoute
+  MembrosModuloSlugAulaSlugRoute: typeof MembrosModuloSlugAulaSlugRoute
+}
+
+const MembrosRouteChildren: MembrosRouteChildren = {
+  MembrosModuloSlugRoute: MembrosModuloSlugRoute,
+  MembrosIndexRoute: MembrosIndexRoute,
+  MembrosModuloSlugAulaSlugRoute: MembrosModuloSlugAulaSlugRoute,
+}
+
+const MembrosRouteWithChildren =
+  MembrosRoute._addFileChildren(MembrosRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   ShellRoute: ShellRouteWithChildren,
   AtendimentoRoute: AtendimentoRoute,
   LoginRoute: LoginRoute,
+  MembrosRoute: MembrosRouteWithChildren,
+  ApiCronCatalogNotifyRoute: ApiCronCatalogNotifyRoute,
+  ApiCronImportOrdersRoute: ApiCronImportOrdersRoute,
+  ApiCronStoreStatsRoute: ApiCronStoreStatsRoute,
+  ApiCronWeeklyRecapRoute: ApiCronWeeklyRecapRoute,
+  ApiMercadoLivreCallbackRoute: ApiMercadoLivreCallbackRoute,
+  ApiMercadoLivreConnectRoute: ApiMercadoLivreConnectRoute,
   ApiShopeeCallbackRoute: ApiShopeeCallbackRoute,
   ApiShopeeConnectRoute: ApiShopeeConnectRoute,
   ApiWebhooksApplyfyRoute: ApiWebhooksApplyfyRoute,
