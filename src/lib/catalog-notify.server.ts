@@ -219,6 +219,19 @@ async function diffAndNotify(
 
   await saveSnapshot();
 
+  // Protege os anúncios dos clientes (pausa sem estoque, reativa, avisa custo).
+  let protection: Record<string, number> = {};
+  try {
+    const { protectListings } = await import("@/lib/listing-protection.server");
+    protection = await protectListings({
+      outOfStockIds: diff.outOfStock.map((i) => i.id),
+      backInStockIds: diff.backInStock.map((i) => i.id),
+      priceUpIds: diff.priceUp.map((c) => c.item.id),
+    });
+  } catch (err) {
+    console.error("[catalog-notify] proteção de anúncios falhou:", err);
+  }
+
   const counts = {
     added: diff.added.length,
     priceDown: diff.priceDown.length,
@@ -233,7 +246,7 @@ async function diffAndNotify(
   }
   await supabaseAdmin
     .from("catalog_notify_state")
-    .update({ last_summary: { ...counts, sent } })
+    .update({ last_summary: { ...counts, sent, ...protection } })
     .eq("id", 1);
   return { status: "notified", diff: counts, sent };
 }

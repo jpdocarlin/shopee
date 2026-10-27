@@ -678,6 +678,8 @@ export function CriarAnuncio() {
           imageDataUrl: null,
           imageUrl: selected.image,
           productUrl: selected.url,
+          productId: selected.id.replace(/^c7drop-/, ""),
+          costCents,
         },
       });
       setPublishApiItemId(result.itemId);
@@ -738,6 +740,8 @@ export function CriarAnuncio() {
           stock,
           imageUrl: selected.image,
           productUrl: selected.url,
+          productId: selected.id.replace(/^c7drop-/, ""),
+          costCents,
         },
       });
       setMlPublishItemId(result.itemId);

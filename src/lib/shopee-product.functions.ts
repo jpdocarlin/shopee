@@ -134,6 +134,9 @@ type PublishInput = {
   // Link da página do produto na C7Drop (ex.: c7drop.com.br/produto/{slug}) —
   // usado pra buscar a galeria real de fotos na hora de publicar.
   productUrl: string;
+  // Pra gravar em Meus anúncios: produto do catálogo e custo no momento.
+  productId?: string;
+  costCents?: number;
 };
 
 export const publishShopeeProduct = createServerFn({ method: "POST" })
@@ -245,5 +248,23 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
     });
 
     const parsed = result as { response?: { item_id?: number } };
-    return { itemId: parsed.response?.item_id ?? null };
+    const itemId = parsed.response?.item_id ?? null;
+    if (itemId) {
+      const { recordPublishedListing } = await import("@/lib/listings.server");
+      await recordPublishedListing({
+        userId: context.userId,
+        marketplace: "shopee",
+        externalId: String(itemId),
+        productId: data.productId ?? null,
+        title: data.itemName,
+        imageUrl: data.imageUrl,
+        permalink:
+          process.env.SHOPEE_ENV === "live"
+            ? `https://shopee.com.br/produto-i.${shopId}.${itemId}`
+            : null,
+        priceCents: Math.round(data.priceReais * 100),
+        costCents: data.costCents ?? null,
+      }).catch((err) => console.error("[listings] falha ao gravar:", err));
+    }
+    return { itemId };
   });

@@ -35,6 +35,9 @@ type PublishInput = {
   // Link da página do produto na C7Drop — usado pra buscar a galeria real
   // de fotos na hora de publicar, igual no fluxo da Shopee.
   productUrl: string;
+  // Pra gravar em Meus anúncios: produto do catálogo e custo no momento.
+  productId?: string;
+  costCents?: number;
 };
 
 export const publishMercadoLivreProduct = createServerFn({ method: "POST" })
@@ -88,6 +91,21 @@ export const publishMercadoLivreProduct = createServerFn({ method: "POST" })
       const msg = err instanceof Error ? err.message : String(err);
       if (!/GTIN/i.test(msg) || attributeList.some((a) => a.id === "EMPTY_GTIN_REASON")) throw err;
       result = await publish([...attributeList, emptyGtinReason()]);
+    }
+
+    if (result.itemId) {
+      const { recordPublishedListing } = await import("@/lib/listings.server");
+      await recordPublishedListing({
+        userId: context.userId,
+        marketplace: "mercado-livre",
+        externalId: String(result.itemId),
+        productId: data.productId ?? null,
+        title: data.itemName,
+        imageUrl: data.imageUrl,
+        permalink: result.permalink,
+        priceCents: Math.round(data.priceReais * 100),
+        costCents: data.costCents ?? null,
+      }).catch((err) => console.error("[listings] falha ao gravar:", err));
     }
 
     return { itemId: result.itemId, permalink: result.permalink };

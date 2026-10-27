@@ -1339,6 +1339,63 @@ export type Database = {
         };
         Relationships: [];
       };
+      listings: {
+        Row: {
+          cost_cents: number | null;
+          created_at: string;
+          external_id: string;
+          id: string;
+          image_url: string | null;
+          marketplace: string;
+          pause_reason: string | null;
+          paused_by_system: boolean;
+          permalink: string | null;
+          price_cents: number;
+          product_id: string | null;
+          status: string;
+          synced_at: string | null;
+          title: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          cost_cents?: number | null;
+          created_at?: string;
+          external_id: string;
+          id?: string;
+          image_url?: string | null;
+          marketplace: string;
+          pause_reason?: string | null;
+          paused_by_system?: boolean;
+          permalink?: string | null;
+          price_cents: number;
+          product_id?: string | null;
+          status?: string;
+          synced_at?: string | null;
+          title: string;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          cost_cents?: number | null;
+          created_at?: string;
+          external_id?: string;
+          id?: string;
+          image_url?: string | null;
+          marketplace?: string;
+          pause_reason?: string | null;
+          paused_by_system?: boolean;
+          permalink?: string | null;
+          price_cents?: number;
+          product_id?: string | null;
+          status?: string;
+          synced_at?: string | null;
+          title?: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       push_config: {
         Row: {
           created_at: string;

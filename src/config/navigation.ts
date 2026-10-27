@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   Headset,
   Smartphone,
+  Megaphone,
   type LucideIcon,
 } from "lucide-react";
 
@@ -54,6 +55,13 @@ export const navigation: NavGroup[] = [
         to: "/criar-anuncio",
         icon: Store,
         description: "Venda como lojista, sem precisar ser afiliado",
+        badge: "Novo",
+      },
+      {
+        label: "Meus anúncios",
+        to: "/anuncios",
+        icon: Megaphone,
+        description: "Preço, custo, taxa e lucro de cada anúncio; pausar e reativar",
         badge: "Novo",
       },
       {
