@@ -9,6 +9,7 @@ import {
   Headset,
   Smartphone,
   Megaphone,
+  MessagesSquare,
   type LucideIcon,
 } from "lucide-react";
 
@@ -69,6 +70,14 @@ export const navigation: NavGroup[] = [
         to: "/pedidos",
         icon: Receipt,
         description: "Produto, custo, etiqueta e comprovante do PIX de cada venda",
+        badge: "Novo",
+      },
+      {
+        label: "Pós-venda",
+        to: "/pos-venda",
+        icon: MessagesSquare,
+        description:
+          "Perguntas do Mercado Livre com resposta da IA, devoluções e relatório de lucro",
         badge: "Novo",
       },
     ],
