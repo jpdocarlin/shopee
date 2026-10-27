@@ -282,13 +282,23 @@ export async function importOrdersForAll(): Promise<{ users: number; imported: n
         .map((r) => r.user_id),
     ),
   ];
+  // Em paralelo (5 por vez) e com limite de 40 s por cliente: uma loja lenta
+  // ou travada não pode estourar o tempo do cron (300 s) e travar os outros.
   let imported = 0;
-  for (const userId of users) {
-    try {
-      imported += (await importOrdersForUser(userId)).imported;
-    } catch (err) {
-      console.error(`[order-import] ${userId}:`, err);
-    }
+  const withTimeout = <T>(p: Promise<T>, ms: number) =>
+    Promise.race([
+      p,
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error("timeout")), ms)),
+    ]);
+  for (let i = 0; i < users.length; i += 5) {
+    const batch = users.slice(i, i + 5);
+    const results = await Promise.allSettled(
+      batch.map((userId) => withTimeout(importOrdersForUser(userId), 40_000)),
+    );
+    results.forEach((r, k) => {
+      if (r.status === "fulfilled") imported += r.value.imported;
+      else console.error(`[order-import] ${batch[k]}:`, r.reason);
+    });
   }
   return { users: users.length, imported };
 }
