@@ -1,0 +1,16 @@
+name: Importar vendas (Shopee / Mercado Livre)
+
+# Reserva do cron da Vercel: chama o importador de vendas de todos os
+# clientes. Idempotente (cada venda entra uma vez só).
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Chamar o importador
+        run: curl -fsS --max-time 240 https://www.shoppfy.online/api/cron/import-orders

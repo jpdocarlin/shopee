@@ -48,6 +48,10 @@
     {
       "path": "/api/cron/catalog-notify",
       "schedule": "*/10 * * * *"
+    },
+    {
+      "path": "/api/cron/import-orders",
+      "schedule": "*/10 * * * *"
     }
   ]
 }

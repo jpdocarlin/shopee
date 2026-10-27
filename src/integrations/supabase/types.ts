@@ -1396,6 +1396,72 @@ export type Database = {
         };
         Relationships: [];
       };
+      marketplace_orders: {
+        Row: {
+          buyer_name: string | null;
+          channel_status: string | null;
+          cost_cents: number | null;
+          created_at: string;
+          dismissed_at: string | null;
+          external_item_id: string;
+          external_order_id: string;
+          fulfillment_request_id: string | null;
+          id: string;
+          listing_id: string | null;
+          marketplace: string;
+          ordered_at: string;
+          product_id: string | null;
+          product_image_url: string | null;
+          product_name: string;
+          quantity: number;
+          sale_cents: number;
+          shipment_id: string | null;
+          user_id: string;
+        };
+        Insert: {
+          buyer_name?: string | null;
+          channel_status?: string | null;
+          cost_cents?: number | null;
+          created_at?: string;
+          dismissed_at?: string | null;
+          external_item_id: string;
+          external_order_id: string;
+          fulfillment_request_id?: string | null;
+          id?: string;
+          listing_id?: string | null;
+          marketplace: string;
+          ordered_at: string;
+          product_id?: string | null;
+          product_image_url?: string | null;
+          product_name: string;
+          quantity?: number;
+          sale_cents: number;
+          shipment_id?: string | null;
+          user_id: string;
+        };
+        Update: {
+          buyer_name?: string | null;
+          channel_status?: string | null;
+          cost_cents?: number | null;
+          created_at?: string;
+          dismissed_at?: string | null;
+          external_item_id?: string;
+          external_order_id?: string;
+          fulfillment_request_id?: string | null;
+          id?: string;
+          listing_id?: string | null;
+          marketplace?: string;
+          ordered_at?: string;
+          product_id?: string | null;
+          product_image_url?: string | null;
+          product_name?: string;
+          quantity?: number;
+          sale_cents?: number;
+          shipment_id?: string | null;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       push_config: {
         Row: {
           created_at: string;

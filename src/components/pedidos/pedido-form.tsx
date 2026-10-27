@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AlertTriangle, Loader2, Package, Paperclip, Receipt, Send, UserRound } from "lucide-react";
 import { toast } from "sonner";
 
@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { useAuthStore } from "@/stores/auth-store";
 import { createFulfillmentRequest, PERSON_TYPE_LABEL, type PersonType } from "@/lib/fulfillment";
 import { notifyNewFulfillmentRequest } from "@/lib/push.functions";
+import { linkImportedOrder } from "@/lib/orders.functions";
 import { checkC7DropPrice } from "@/lib/c7drop-price.functions";
 import { formatBRL } from "@/lib/format";
 import { convertImageToPdf } from "@/lib/image-to-pdf";
@@ -102,7 +103,23 @@ function FileField({
   );
 }
 
-export function PedidoForm({ onCreated }: { onCreated: () => void }) {
+// Venda importada da Shopee/ML escolhida em "Vendas pra enviar ao
+// fornecedor": preenche produto, observação e (no ML) a etiqueta.
+export type PedidoPrefill = {
+  key: string;
+  importedOrderId: string;
+  product: C7DropProduct | null;
+  notes: string;
+  labelFile: File | null;
+};
+
+export function PedidoForm({
+  onCreated,
+  prefill,
+}: {
+  onCreated: () => void;
+  prefill?: PedidoPrefill | null;
+}) {
   const profile = useAuthStore((s) => s.profile);
   const session = useAuthStore((s) => s.session);
 
@@ -163,6 +180,14 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
       if (latestPickRef.current === picked.id) setPriceChecking(false);
     }
   };
+  useEffect(() => {
+    if (!prefill) return;
+    setNotes(prefill.notes);
+    setLabelFile(prefill.labelFile);
+    void pickProduct(prefill.product);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefill?.key]);
+
   const userId = session?.user.id ?? profile?.id;
   const canSubmit =
     Boolean(userId) &&
@@ -212,6 +237,11 @@ export function PedidoForm({ onCreated }: { onCreated: () => void }) {
           );
         }
         return;
+      }
+      if (prefill?.importedOrderId) {
+        await linkImportedOrder({
+          data: { id: prefill.importedOrderId, requestId: created.id },
+        }).catch((err) => console.error("[PedidoForm] falha ao ligar a venda:", err));
       }
       // Avisa a conta de pedidos no celular (push). Não trava o envio se falhar.
       void notifyNewFulfillmentRequest({ data: { requestId: created.id } }).catch((err) =>
