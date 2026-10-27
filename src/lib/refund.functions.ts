@@ -77,5 +77,17 @@ export const createRefundRequest = createServerFn({ method: "POST" })
     } catch (err) {
       console.error("[refund] falha ao notificar:", err);
     }
+    // Confirmação por e-mail pro cliente. Falha aqui não desfaz o pedido.
+    try {
+      const { sendEmail, refundRequestedEmail } = await import("@/lib/email.server");
+      const mail = refundRequestedEmail({
+        firstName: data.fullName.split(/\s+/)[0] || "tudo bem",
+        purchaseCode: data.purchaseCode,
+        plan: data.plan,
+      });
+      await sendEmail({ to: data.email, ...mail });
+    } catch (err) {
+      console.error("[refund] falha ao enviar e-mail:", err);
+    }
     return { ok: true, alreadyOpen: false };
   });
