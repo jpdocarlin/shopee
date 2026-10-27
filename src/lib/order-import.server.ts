@@ -192,6 +192,9 @@ async function saveSales(userId: string, sales: ImportedSale[]): Promise<Importe
     const product =
       findCatalogProductById(listing?.product_id) ??
       (listing ? null : findCatalogProductByName(s.title, 0.8));
+    // Venda de anúncio que não é do Shoppfy (ex.: outro fornecedor na mesma
+    // conta) não entra na lista de pedidos ao fornecedor.
+    if (!listing && !product) continue;
     const { error } = await supabaseAdmin.from("marketplace_orders").insert({
       user_id: userId,
       marketplace: s.marketplace,

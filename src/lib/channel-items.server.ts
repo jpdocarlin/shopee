@@ -15,6 +15,9 @@ export type ChannelItem = {
   status: ListingStatus;
   imageUrl: string | null;
   permalink: string | null;
+  // SKU do vendedor. O Shoppfy publica SEM SKU; anúncio com SKU veio de outro
+  // sistema/fornecedor (ex.: Fornecedor.io) e não aparece em Meus anúncios.
+  sku: string | null;
 };
 
 const toCents = (reais: number | null | undefined) => Math.round((reais ?? 0) * 100);
@@ -37,6 +40,7 @@ type ShopeeBase = {
   item_id: number;
   item_name: string;
   item_status: string;
+  item_sku?: string;
   price_info?: Array<{ current_price?: number; original_price?: number }>;
   image?: { image_url_list?: string[] };
 };
@@ -67,6 +71,7 @@ export async function shopeeItemsInfo(
         status: shopeeStatus(it.item_status),
         imageUrl: it.image?.image_url_list?.[0] ?? null,
         permalink: shopeePermalink(shopId, it.item_id),
+        sku: it.item_sku?.trim() || null,
       });
     }
   }
@@ -152,6 +157,8 @@ type MlItem = {
   permalink?: string;
   thumbnail?: string;
   secure_thumbnail?: string;
+  seller_custom_field?: string | null;
+  attributes?: Array<{ id: string; value_name?: string | null }>;
 };
 
 export async function mlItemsInfo(accessToken: string, ids: string[]): Promise<ChannelItem[]> {
@@ -162,7 +169,8 @@ export async function mlItemsInfo(accessToken: string, ids: string[]): Promise<C
       accessToken,
       query: {
         ids: chunk.join(","),
-        attributes: "id,title,family_name,price,status,permalink,thumbnail,secure_thumbnail",
+        attributes:
+          "id,title,family_name,price,status,permalink,thumbnail,secure_thumbnail,seller_custom_field,attributes",
       },
     });
     for (const r of json) {
@@ -174,6 +182,10 @@ export async function mlItemsInfo(accessToken: string, ids: string[]): Promise<C
         status: mlStatus(r.body.status),
         imageUrl: r.body.secure_thumbnail ?? r.body.thumbnail ?? null,
         permalink: r.body.permalink ?? null,
+        sku:
+          r.body.seller_custom_field?.trim() ||
+          r.body.attributes?.find((a) => a.id === "SELLER_SKU")?.value_name?.trim() ||
+          null,
       });
     }
   }

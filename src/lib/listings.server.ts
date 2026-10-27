@@ -46,6 +46,22 @@ export async function syncListingsFromChannel(
   marketplace: Channel,
   items: ChannelItem[],
 ): Promise<{ imported: number; updated: number }> {
+  // Anúncio com SKU não foi feito pelo Shoppfy (ex.: Fornecedor.io na mesma
+  // conta): não entra e, se já tinha entrado como importado, sai da lista.
+  const foreign = items.filter((i) => i.sku);
+  if (foreign.length > 0) {
+    await supabaseAdmin
+      .from("listings")
+      .delete()
+      .eq("user_id", userId)
+      .eq("marketplace", marketplace)
+      .eq("source", "imported")
+      .in(
+        "external_id",
+        foreign.map((i) => i.externalId),
+      );
+  }
+  items = items.filter((i) => !i.sku);
   if (items.length === 0) return { imported: 0, updated: 0 };
   const { findCatalogProductByName } = await import("@/lib/catalog");
 
