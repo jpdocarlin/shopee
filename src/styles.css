@@ -233,6 +233,21 @@
     background: var(--brand-ring);
   }
 
+  /* iPhone dá zoom na página ao focar campo com fonte < 16px — no celular
+     todo campo usa 16px (não muda nada no computador). */
+  @media (max-width: 640px) {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+
+  html,
+  body {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;

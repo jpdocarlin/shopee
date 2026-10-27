@@ -179,7 +179,13 @@ function NativeVideoPlayer({
     const el = containerRef.current;
     if (!el) return;
     if (document.fullscreenElement) void document.exitFullscreen();
-    else void el.requestFullscreen();
+    else if (el.requestFullscreen) void el.requestFullscreen();
+    else {
+      // iPhone não tem tela cheia de <div>: usa a do próprio vídeo.
+      const video = el.querySelector("video") as
+        (HTMLVideoElement & { webkitEnterFullscreen?: () => void }) | null;
+      video?.webkitEnterFullscreen?.();
+    }
   }
 
   return (
@@ -317,6 +323,12 @@ function YouTubeVideoPlayer({
   const [current, setCurrent] = useState(initialSeconds);
   const [duration, setDuration] = useState(0);
   const [muted, setMuted] = useState(false);
+  // Celular/tablet: usa os controles do próprio YouTube. No iPhone o toque
+  // num botão nosso por cima do vídeo não consegue dar play no YouTube (o
+  // Safari só aceita o toque direto no vídeo), então a aula "não clicava".
+  const [touch] = useState(
+    () => typeof window !== "undefined" && window.matchMedia?.("(pointer: coarse)").matches,
+  );
 
   const onProgressRef = useRef(onProgress);
   onProgressRef.current = onProgress;
@@ -348,7 +360,7 @@ function YouTubeVideoPlayer({
         // iframe seja recriado por fora do nosso controle, ele nasce já
         // perto de onde a pessoa parou.
         playerVars: {
-          controls: 0,
+          controls: touch ? 1 : 0,
           rel: 0,
           modestbranding: 1,
           playsinline: 1,
@@ -467,12 +479,18 @@ function YouTubeVideoPlayer({
     const el = containerRef.current;
     if (!el) return;
     if (document.fullscreenElement) void document.exitFullscreen();
-    else void el.requestFullscreen();
+    else if (el.requestFullscreen) void el.requestFullscreen();
+    else {
+      // iPhone não tem tela cheia de <div>: usa a do próprio vídeo.
+      const video = el.querySelector("video") as
+        (HTMLVideoElement & { webkitEnterFullscreen?: () => void }) | null;
+      video?.webkitEnterFullscreen?.();
+    }
   }
 
   return (
     <div ref={containerRef} className="mb-player group/player">
-      <div ref={mountRef} className="absolute inset-0" onClick={togglePlay} />
+      <div ref={mountRef} className="absolute inset-0" onClick={touch ? undefined : togglePlay} />
 
       {!ready && (
         <div className="absolute inset-0 flex items-center justify-center">
@@ -480,7 +498,7 @@ function YouTubeVideoPlayer({
         </div>
       )}
 
-      {ready && !playing && (
+      {!touch && ready && !playing && (
         <button
           type="button"
           onClick={togglePlay}
@@ -497,49 +515,51 @@ function YouTubeVideoPlayer({
           acima: hover-only deixava sem jeito de pausar/buscar/ampliar em
           touch, e escondia os controles assim que o mouse saía de cima do
           vídeo mesmo pausado. */}
-      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 bg-gradient-to-t from-black/85 via-black/35 to-transparent px-4 pb-3 pt-10">
-        <input
-          type="range"
-          className="mb-player-scrubber"
-          min={0}
-          max={duration || 0}
-          step={0.1}
-          value={current}
-          onChange={(e) => seek(Number(e.target.value))}
-          aria-label="Progresso do vídeo"
-        />
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={togglePlay}
-            className="text-white/90 transition-colors hover:text-white"
-          >
-            {playing ? (
-              <Pause className="size-4" fill="currentColor" />
-            ) : (
-              <Play className="size-4" fill="currentColor" />
-            )}
-          </button>
-          <button
-            type="button"
-            onClick={toggleMute}
-            className="text-white/70 transition-colors hover:text-white"
-          >
-            {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
-          </button>
-          <span className="text-[12px] tabular-nums text-white/70">
-            {formatClockTime(current)} / {formatClockTime(duration)}
-          </span>
-          <button
-            type="button"
-            onClick={toggleFullscreen}
-            className="ml-auto text-white/70 transition-colors hover:text-white"
-            aria-label="Tela cheia"
-          >
-            <Maximize className="size-4" />
-          </button>
+      {!touch && (
+        <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 bg-gradient-to-t from-black/85 via-black/35 to-transparent px-4 pb-3 pt-10">
+          <input
+            type="range"
+            className="mb-player-scrubber"
+            min={0}
+            max={duration || 0}
+            step={0.1}
+            value={current}
+            onChange={(e) => seek(Number(e.target.value))}
+            aria-label="Progresso do vídeo"
+          />
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={togglePlay}
+              className="text-white/90 transition-colors hover:text-white"
+            >
+              {playing ? (
+                <Pause className="size-4" fill="currentColor" />
+              ) : (
+                <Play className="size-4" fill="currentColor" />
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={toggleMute}
+              className="text-white/70 transition-colors hover:text-white"
+            >
+              {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
+            </button>
+            <span className="text-[12px] tabular-nums text-white/70">
+              {formatClockTime(current)} / {formatClockTime(duration)}
+            </span>
+            <button
+              type="button"
+              onClick={toggleFullscreen}
+              className="ml-auto text-white/70 transition-colors hover:text-white"
+              aria-label="Tela cheia"
+            >
+              <Maximize className="size-4" />
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

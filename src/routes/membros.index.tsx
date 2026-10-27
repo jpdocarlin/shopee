@@ -26,10 +26,13 @@ function MembrosHome() {
   return (
     <div className="mx-auto max-w-5xl px-5 pb-24 pt-10 sm:px-8 sm:pt-14">
       <header className="mb-12 flex items-center justify-between sm:mb-16">
-        <div className="flex items-center gap-2.5">
+        <Link to="/" className="flex items-center gap-2.5" aria-label="Voltar ao Shoppfy">
           <BrandMark />
           <span className="mb-heading text-[15px]">Shoppfy</span>
-        </div>
+        </Link>
+        <Link to="/" className="mb-btn-ghost text-[12px] sm:hidden">
+          ← Voltar ao painel
+        </Link>
         <button
           type="button"
           onClick={() =>
@@ -50,7 +53,7 @@ function MembrosHome() {
         <h1 className="mb-heading mt-3 text-[30px] sm:text-[38px]">Seus módulos</h1>
         <p className="mt-2 max-w-lg text-[14px] mb-body-muted">
           Escolha um módulo pra continuar. Todas as aulas já estão liberadas — assista na ordem que
-                        preferir.
+          preferir.
         </p>
       </Reveal>
 

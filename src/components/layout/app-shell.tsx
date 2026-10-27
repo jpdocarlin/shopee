@@ -12,11 +12,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   useTrackingNotifications();
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
+    <div className="flex h-dvh w-full overflow-hidden bg-background">
       <div className="flex min-w-0 flex-1 flex-col">
         <AppHeader />
         <main className="relative flex-1 overflow-y-auto">
-          <div className="mx-auto w-full max-w-[1400px] px-4 py-6 md:px-8 md:py-8 lg:pb-28">
+          <div className="mx-auto w-full max-w-[1400px] px-4 pb-[calc(env(safe-area-inset-bottom)+2rem)] pt-5 md:px-8 md:py-8 lg:pb-28">
             {children}
           </div>
         </main>

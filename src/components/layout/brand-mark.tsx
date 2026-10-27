@@ -21,7 +21,7 @@ export function BrandWordmark({ compact = false }: { compact?: boolean }) {
       {!compact && (
         <div className="flex flex-col leading-none">
           <span className="text-[15px] font-semibold tracking-tight text-foreground">Shoppfy</span>
-          <span className="mt-0.5 text-[11px] text-muted-foreground">Affiliate OS</span>
+          <span className="mt-0.5 text-[11px] text-muted-foreground">Painel do lojista</span>
         </div>
       )}
     </div>

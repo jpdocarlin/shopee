@@ -59,7 +59,7 @@ export const Route = createFileRoute("/atendimento")({
 
 function FullScreenLoader() {
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-background">
+    <div className="flex h-dvh w-full items-center justify-center bg-background">
       <Loader2 className="size-6 animate-spin text-muted-foreground" />
     </div>
   );
@@ -472,7 +472,7 @@ function AtendimentoChatApp() {
   const activeConversation = conversations.find((c) => c.id === conversationId);
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
+    <div className="flex h-dvh w-full overflow-hidden bg-background">
       {/* Sidebar — desktop sempre visível, mobile via overlay */}
       <aside
         className={`fixed inset-y-0 left-0 z-40 flex w-72 shrink-0 flex-col border-r border-border bg-popover transition-transform md:static md:translate-x-0 ${

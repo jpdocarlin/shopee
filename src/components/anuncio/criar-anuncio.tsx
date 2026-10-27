@@ -459,6 +459,16 @@ export function CriarAnuncio() {
 
   const selectProduct = (product: DemoProduct) => {
     setSelected(product);
+    // No celular o passo 2 fica lá embaixo da lista: leva a pessoa até ele.
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      window.setTimeout(
+        () =>
+          document
+            .getElementById("passo-preco")
+            ?.scrollIntoView({ behavior: "smooth", block: "start" }),
+        150,
+      );
+    }
     // O preço do catálogo é o que você paga no fornecedor — vira o custo.
     setCostInput((product.priceCents / 100).toFixed(2).replace(".", ","));
     setC7PriceNotice(null);
@@ -798,7 +808,7 @@ export function CriarAnuncio() {
       {selected && (
         <>
           {/* Passo 2 — preço */}
-          <Reveal className="surface-card p-5">
+          <Reveal className="surface-card scroll-mt-20 p-5" id="passo-preco">
             <Step n={2}>Defina o seu preço de venda</Step>
 
             <div className="grid gap-3 sm:grid-cols-2">

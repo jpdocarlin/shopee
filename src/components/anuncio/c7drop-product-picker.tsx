@@ -150,7 +150,9 @@ export function C7DropProductPicker({ selected, onSelect }: Props) {
             <SelectValue placeholder="Nicho" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={ALL_CATEGORIES}>Todos os nichos ({AVAILABLE_PRODUCTS.length})</SelectItem>
+            <SelectItem value={ALL_CATEGORIES}>
+              Todos os nichos ({AVAILABLE_PRODUCTS.length})
+            </SelectItem>
             {CATEGORY_COUNTS.map((c) => (
               <SelectItem key={c.category} value={c.category}>
                 {c.category} ({c.count})
@@ -181,9 +183,9 @@ export function C7DropProductPicker({ selected, onSelect }: Props) {
 
       <div
         ref={scrollAreaRef}
-        className="max-h-[480px] overflow-y-auto rounded-lg border border-border/60 bg-surface-hover/30 p-2.5"
+        className="max-h-[65dvh] overflow-y-auto overscroll-contain rounded-lg border border-border/60 bg-surface-hover/30 p-2 sm:max-h-[480px] sm:p-2.5"
       >
-        <div className="grid gap-2.5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-2.5 lg:grid-cols-4 xl:grid-cols-6">
           {products.map((product) => {
             const isSelected = selected?.id === product.id;
             return (
