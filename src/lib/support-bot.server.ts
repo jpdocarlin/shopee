@@ -352,7 +352,7 @@ function buildPrompt(params: {
     "1. NUNCA diga que vai chamar time, equipe, atendente, especialista, supervisor, nem peça pra aguardar. Não existe atendente humano neste chat.",
     "2. Responda usando o MANUAL e os DADOS DO CLIENTE. Use os dados reais (ex.: se a loja não está conectada, diga isso e como conectar; se o pedido está Aguardando há X dias, diga).",
     "3. Não invente preço, prazo, política ou função que não esteja no manual. Se o manual não cobre, dê a melhor orientação possível com o que existe no sistema e use action=notify_owner.",
-    '4. Reembolso: explique que é pedido em Configurações → aba Reembolso (formulário). Não diga que vai fazer o reembolso. Se o cliente pedir o código da compra: quando o contexto disser "Código da compra salvo no sistema: SIM", use action=lookup_purchase_code NA HORA, sem pedir dado nenhum. Se disser "não encontrado", peça o e-mail usado na compra e o nome completo, e quando ele mandar use action=lookup_purchase_code. Com lookup_purchase_code o sistema escreve a resposta inteira com o código e o passo a passo do reembolso — o seu reply pode ser curto (ex.: "Um instante.") e NUNCA diga que achou ou que não achou.',
+    '4. Reembolso: explique que é pedido na página www.shoppfy.online/reembolso (menu → Reembolso), onde o cliente também acompanha o status. Não diga que vai fazer o reembolso. Se o cliente pedir o código da compra: quando o contexto disser "Código da compra salvo no sistema: SIM", use action=lookup_purchase_code NA HORA, sem pedir dado nenhum. Se disser "não encontrado", peça o e-mail usado na compra e o nome completo, e quando ele mandar use action=lookup_purchase_code. Com lookup_purchase_code o sistema escreve a resposta inteira com o código e o passo a passo do reembolso — o seu reply pode ser curto (ex.: "Um instante.") e NUNCA diga que achou ou que não achou.',
     "5. Use action=notify_owner SÓ quando o cliente precisa de algo que só o dono faz: trocar e-mail da conta, esqueceu a senha/não consegue entrar, cancelar assinatura mensal, pedido pago há mais de 1 dia útil ainda 'Aguardando', cobrança errada, ou erro que o manual não resolve. Nesses casos responda: 'Chamei o responsável do Shoppfy. Ele vai continuar o atendimento aqui mesmo nesta conversa — pode ficar por aqui.' Não peça WhatsApp nem telefone e não mande o cliente procurar outro canal.",
     "6. Se o cliente estiver bravo, peça desculpas uma vez, curto, e vá direto pra solução.",
     "7. Não ofereça nem peça contato por WhatsApp/telefone: todo atendimento acontece neste chat.",
@@ -428,10 +428,11 @@ export function purchaseCodeReply(code: string): string {
     `Seu código da compra é: **${code}**`,
     "",
     "Para pedir o reembolso, é pelo Shoppfy:",
-    "1. Abra Configurações no menu.",
-    "2. Entre na aba Reembolso.",
-    '3. Preencha seus dados e cole esse código no campo "Código da compra".',
-    "4. Clique em Enviar.",
+    "1. Abra a página de reembolso: www.shoppfy.online/reembolso (ou menu → Reembolso).",
+    '2. Confira seus dados e cole esse código no campo "Código da compra".',
+    '3. Clique em "Pedir reembolso".',
+    "",
+    "Você recebe a confirmação no seu e-mail e acompanha o andamento na mesma página.",
     "",
     "O reembolso é feito só por esse formulário do Shoppfy.",
   ].join("\n");
@@ -550,7 +551,7 @@ export async function runSupportTurn(params: {
       parsed.action = "notify_owner";
       parsed.actionReason = `Cliente pediu o código da compra e não achei automaticamente (e-mail informado: ${parsed.extracted.email ?? "—"}).`;
       reply =
-        "Não encontrei uma compra com esses dados. Confere se o e-mail é o mesmo que você usou no pagamento e me manda aqui. Também já avisei o responsável do Shoppfy — ele continua o atendimento aqui nesta conversa.\n\nO pedido de reembolso é feito em Configurações → aba Reembolso, dentro do Shoppfy.";
+        "Não encontrei uma compra com esses dados. Confere se o e-mail é o mesmo que você usou no pagamento e me manda aqui. Também já avisei o responsável do Shoppfy — ele continua o atendimento aqui nesta conversa.\n\nO pedido de reembolso é feito em www.shoppfy.online/reembolso, dentro do Shoppfy.";
     }
   }
 

@@ -74,7 +74,7 @@ const esc = (s: string) =>
     (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c] as string,
   );
 
-// E-mail de confirmação do pedido de reembolso (Configurações → Reembolso).
+// E-mail de confirmação do pedido de reembolso (página /reembolso).
 export function refundRequestedEmail(input: {
   firstName: string;
   purchaseCode: string;
@@ -109,6 +109,38 @@ Código da compra: <strong>${esc(input.purchaseCode)}</strong><br>Plano: <strong
 </td></tr></table>
 <p style="margin:0 0 12px">O valor é devolvido no mesmo meio de pagamento que você usou na compra. Você não precisa fazer mais nada agora.</p>
 <p style="margin:0 0 20px">Se tiver qualquer dúvida, é só responder este e-mail ou falar com o <a href="https://www.shoppfy.online/atendimento" style="color:#ff6a00">atendimento</a>.</p>
+<p style="margin:0;color:#71717a">Equipe Shoppfy</p>
+</td></tr></table></td></tr></table></body></html>`;
+  return { subject, html, text };
+}
+
+// E-mail de reembolso concluído (o dono marcou como feito no painel).
+export function refundDoneEmail(input: { firstName: string; purchaseCode: string }) {
+  const subject = "Seu reembolso foi concluído — Shoppfy";
+  const text = [
+    `Olá, ${input.firstName}!`,
+    "",
+    "O seu reembolso foi concluído.",
+    "",
+    `Código da compra: ${input.purchaseCode}`,
+    "",
+    "O valor volta no mesmo meio de pagamento que você usou na compra. No cartão, ele aparece na próxima fatura ou na seguinte, conforme o seu banco.",
+    "",
+    "Se tiver qualquer dúvida, é só responder este e-mail.",
+    "",
+    "Equipe Shoppfy",
+  ].join("\n");
+  const html = `<!doctype html><html><body style="margin:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;color:#18181b">
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:24px 12px"><tr><td align="center">
+<table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border-radius:12px;padding:28px">
+<tr><td style="font-size:20px;font-weight:bold;color:#ff6a00;padding-bottom:16px">Shoppfy</td></tr>
+<tr><td style="font-size:16px;line-height:24px">
+<p style="margin:0 0 12px">Olá, ${esc(input.firstName)}!</p>
+<p style="margin:0 0 16px"><strong>O seu reembolso foi concluído.</strong></p>
+<table cellpadding="0" cellspacing="0" style="width:100%;background:#fafafa;border:1px solid #e4e4e7;border-radius:8px;margin:0 0 16px">
+<tr><td style="padding:12px 14px;font-size:14px;line-height:22px">Código da compra: <strong>${esc(input.purchaseCode)}</strong></td></tr></table>
+<p style="margin:0 0 12px">O valor volta no mesmo meio de pagamento que você usou na compra. No cartão, ele aparece na próxima fatura ou na seguinte, conforme o seu banco.</p>
+<p style="margin:0 0 20px">Se tiver qualquer dúvida, é só responder este e-mail.</p>
 <p style="margin:0;color:#71717a">Equipe Shoppfy</p>
 </td></tr></table></td></tr></table></body></html>`;
   return { subject, html, text };

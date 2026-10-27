@@ -1,4 +1,4 @@
-// Pedido de reembolso (Configurações → Reembolso). Antes o formulário só
+// Pedido de reembolso (página /reembolso). Antes o formulário só
 // mostrava "enviado" sem salvar nada — agora grava em refund_requests e avisa
 // o dono no celular (push), igual pedido novo.
 //
@@ -71,7 +71,7 @@ export const createRefundRequest = createServerFn({ method: "POST" })
       await sendToPedidosAdmins({
         title: `Reembolso: ${data.fullName.split(/\s+/)[0]}`,
         body: `${data.plan === "vitalicio" ? "Vitalício" : "Mensal"} · pago há ${data.daysSincePayment} dia(s) · código ${data.purchaseCode}`,
-        url: "/atendimento-admin",
+        url: "/reembolsos-admin",
         tag: `reembolso-${context.userId}`,
       });
     } catch (err) {
@@ -90,4 +90,148 @@ export const createRefundRequest = createServerFn({ method: "POST" })
       console.error("[refund] falha ao enviar e-mail:", err);
     }
     return { ok: true, alreadyOpen: false };
+  });
+
+// ------------------------------------------------------------------------
+// Página /reembolso: dados pra pré-preencher o formulário + os pedidos do
+// próprio cliente (com status).
+// ------------------------------------------------------------------------
+
+export type MyRefund = {
+  id: string;
+  status: "pending" | "done" | "denied";
+  purchaseCode: string;
+  plan: string;
+  createdAt: string;
+};
+
+export const getMyRefundPage = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseSession])
+  .handler(async ({ context }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const [{ data: profile }, { data: auth }, { data: purchases }, { data: refunds }] =
+      await Promise.all([
+        supabaseAdmin
+          .from("profiles")
+          .select("full_name, plan, created_at")
+          .eq("id", context.userId)
+          .maybeSingle(),
+        supabaseAdmin.auth.admin.getUserById(context.userId),
+        supabaseAdmin
+          .from("purchases")
+          .select("transaction_id, paid_at, plan")
+          .eq("user_id", context.userId)
+          .order("paid_at", { ascending: false })
+          .limit(1),
+        supabaseAdmin
+          .from("refund_requests")
+          .select("id, status, purchase_code, plan, created_at")
+          .eq("user_id", context.userId)
+          .order("created_at", { ascending: false })
+          .limit(10),
+      ]);
+    const purchase = purchases?.[0];
+    const paidAt = purchase?.paid_at ?? profile?.created_at ?? null;
+    const days = paidAt
+      ? Math.max(0, Math.floor((Date.now() - new Date(paidAt).getTime()) / 86_400_000))
+      : null;
+    return {
+      prefill: {
+        fullName: profile?.full_name ?? "",
+        email: auth?.user?.email ?? "",
+        plan: (purchase?.plan ?? profile?.plan) === "vitalicio" ? "vitalicio" : "mensal",
+        purchaseCode: purchase?.transaction_id ?? "",
+        daysSincePayment: days,
+      },
+      refunds: (refunds ?? []).map((r): MyRefund => ({
+        id: r.id,
+        status: (r.status as MyRefund["status"]) ?? "pending",
+        purchaseCode: r.purchase_code,
+        plan: r.plan,
+        createdAt: r.created_at,
+      })),
+    };
+  });
+
+// ------------------------------------------------------------------------
+// Admin: lista de reembolsos + marcar como feito/negado (manda e-mail).
+// ------------------------------------------------------------------------
+
+async function assertAdmin(userId: string) {
+  const { userHasRole } = await import("@/lib/push.server");
+  if (!(await userHasRole(userId, "admin")) && !(await userHasRole(userId, "pedidos_admin"))) {
+    throw new Error("Sem permissão.");
+  }
+}
+
+export type AdminRefund = {
+  id: string;
+  status: "pending" | "done" | "denied";
+  fullName: string;
+  email: string;
+  cpf: string;
+  purchaseCode: string;
+  plan: string;
+  daysSincePayment: number;
+  reason: string;
+  createdAt: string;
+};
+
+export const adminListRefunds = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseSession])
+  .handler(async ({ context }): Promise<AdminRefund[]> => {
+    await assertAdmin(context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await supabaseAdmin
+      .from("refund_requests")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(300);
+    if (error) throw new Error("Não deu pra carregar os reembolsos.");
+    return (data ?? []).map((r) => ({
+      id: r.id,
+      status: (r.status as AdminRefund["status"]) ?? "pending",
+      fullName: r.full_name,
+      email: r.email,
+      cpf: r.cpf,
+      purchaseCode: r.purchase_code,
+      plan: r.plan,
+      daysSincePayment: r.days_since_payment,
+      reason: r.reason,
+      createdAt: r.created_at,
+    }));
+  });
+
+export const adminSetRefundStatus = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseSession])
+  .validator((data: { id: string; status: "done" | "denied" | "pending" }) => {
+    if (!/^[0-9a-f-]{36}$/i.test(data?.id ?? "")) throw new Error("Pedido inválido.");
+    if (!["done", "denied", "pending"].includes(data?.status)) throw new Error("Status inválido.");
+    return data;
+  })
+  .handler(async ({ context, data }) => {
+    await assertAdmin(context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: row, error } = await supabaseAdmin
+      .from("refund_requests")
+      .update({ status: data.status })
+      .eq("id", data.id)
+      .select("full_name, email, purchase_code")
+      .single();
+    if (error || !row) throw new Error("Não deu pra atualizar o pedido.");
+    if (data.status === "done") {
+      try {
+        const { sendEmail, refundDoneEmail } = await import("@/lib/email.server");
+        await sendEmail({
+          to: row.email,
+          ...refundDoneEmail({
+            firstName: row.full_name.split(/\s+/)[0] || "tudo bem",
+            purchaseCode: row.purchase_code,
+          }),
+        });
+      } catch (err) {
+        console.error("[refund] falha ao enviar e-mail de concluído:", err);
+      }
+    }
+    return { ok: true };
   });

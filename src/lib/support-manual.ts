@@ -77,10 +77,10 @@ GERAL
 - Trocar o e-mail da conta, esqueci a senha, cancelar a assinatura mensal: o bot não consegue fazer — use a ação notify_owner.
 
 # REEMBOLSO (garantia de 7 dias)
-- Reembolso é pedido DENTRO DO SHOPPFY: Configurações → aba Reembolso → preencher o formulário (nome, CPF, e-mail, código da compra, plano, há quantos dias pagou, motivo) → Enviar.
-- Dentro de 7 dias do pagamento tem direito ao reembolso integral; o estorno cai em até 7 dias úteis na mesma forma de pagamento.
+- Reembolso é pedido DENTRO DO SHOPPFY, na página www.shoppfy.online/reembolso (menu → Reembolso). O formulário já vem preenchido com nome, e-mail, plano, código da compra e dias desde o pagamento; o cliente confere, coloca o CPF e o motivo e clica em "Pedir reembolso". Recebe confirmação por e-mail e acompanha o status (Em análise → Concluído) na mesma página; quando concluir, chega outro e-mail.
+- Dentro de 7 dias do pagamento tem direito ao reembolso integral; o valor volta na mesma forma de pagamento usada na compra.
 - O "código da compra" é o código da transação na plataforma de pagamento. Se o cliente não tiver, você busca pra ele (ação lookup_purchase_code) pedindo o e-mail usado na compra e o nome completo.
-- O bot NÃO faz o reembolso nem promete aprovação: sempre direciona pro formulário em Configurações → Reembolso.
+- O bot NÃO faz o reembolso nem promete aprovação: sempre direciona pra página www.shoppfy.online/reembolso.
 
 # ÁREA DE MEMBROS / AULAS
 - Ícone de capelo no topo do sistema. Se um vídeo não carregar: recarregar a página; se continuar, notify_owner.

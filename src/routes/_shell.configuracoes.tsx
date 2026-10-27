@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import {
@@ -572,230 +572,21 @@ const EMPTY_REFUND_FORM: RefundForm = {
   motivo: "",
 };
 
+// 28/10/2026: o reembolso ganhou página própria (/reembolso), com formulário
+// já preenchido e status do pedido. Aqui fica só o atalho.
 function ReembolsoTab() {
-  const t = useT();
-  const locale = useLocaleStore((s) => s.locale);
-  const [form, setForm] = useState<RefundForm>(EMPTY_REFUND_FORM);
-  const [status, setStatus] = useState<"idle" | "sent">("idle");
-
-  const update = (field: keyof RefundForm) => (value: string) =>
-    setForm((prev) => ({ ...prev, [field]: value }));
-
-  const dias = Number(form.diasPagamento);
-  const diasValidos = form.diasPagamento.trim() !== "" && !Number.isNaN(dias) && dias >= 0;
-  const dentroDoPrazo = diasValidos && dias < 7;
-
-  const isValid =
-    form.nome.trim() !== "" &&
-    form.cpf.trim() !== "" &&
-    form.email.trim() !== "" &&
-    form.codigoCompra.trim() !== "" &&
-    form.plano !== "" &&
-    diasValidos &&
-    form.motivo !== "";
-
-  const [sending, setSending] = useState(false);
-
-  const handleSubmit = async () => {
-    if (!isValid || sending) return;
-    setSending(true);
-    try {
-      await createRefundRequest({
-        data: {
-          fullName: form.nome,
-          cpf: form.cpf,
-          email: form.email,
-          purchaseCode: form.codigoCompra,
-          plan: form.plano === "vitalicio" ? "vitalicio" : "mensal",
-          daysSincePayment: dias,
-          reason: form.motivo,
-        },
-      });
-      setStatus("sent");
-      toast.success(t("Pedido de reembolso enviado"));
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Não deu pra enviar agora. Tente de novo.");
-    } finally {
-      setSending(false);
-    }
-  };
-
-  if (status === "sent") {
-    return (
-      <SettingsCard title={t("Pedido de reembolso")}>
-        <div className="flex items-start gap-3 rounded-lg border border-success/30 bg-success/10 p-4">
-          <Check className="mt-0.5 size-4 shrink-0 text-success" />
-          <div>
-            <p className="text-[13.5px] font-medium text-foreground">
-              {t("Recebemos seu pedido de reembolso")}
-            </p>
-            {dentroDoPrazo ? (
-              <p className="mt-1 text-[12.5px] leading-relaxed text-muted-foreground">
-                {locale === "en" ? (
-                  <>
-                    Since the payment was made less than 7 days ago, you have the right of
-                    withdrawal guaranteed by the Brazilian consumer code (art. 49). The amount will
-                    be refunded within up to 7 business days, to the same payment method used in the
-                    purchase. You'll get a confirmation at conta@shoppfy.com once it's processed.
-                  </>
-                ) : (
-                  <>
-                    Como o pagamento foi feito há menos de 7 dias, você tem direito de
-                    arrependimento garantido pelo Código de Defesa do Consumidor (art. 49). O valor
-                    será estornado em até 7 dias úteis, na mesma forma de pagamento usada na compra.
-                    Você recebe uma confirmação em conta@shoppfy.com assim que for processado.
-                  </>
-                )}
-              </p>
-            ) : (
-              <p className="mt-1 text-[12.5px] leading-relaxed text-muted-foreground">
-                {locale === "en" ? (
-                  <>
-                    By law (Brazilian consumer code, art. 49), the right of withdrawal with full
-                    refund applies for up to 7 days after payment. Since {form.diasPagamento} days
-                    have already passed, that window has closed, so the amount will not be refunded.
-                    If you believe there was a billing error or technical issue, reply to the
-                    confirmation email we sent to conta@shoppfy.com so we can review your case.
-                  </>
-                ) : (
-                  <>
-                    Pela lei (CDC, art. 49), o direito de arrependimento com reembolso integral vale
-                    até 7 dias após o pagamento. Como já se passaram {form.diasPagamento} dias, esse
-                    prazo já encerrou e, por isso, o valor não será estornado. Se você acredita que
-                    houve um erro de cobrança ou problema técnico, responda o e-mail de confirmação
-                    que enviamos pra conta@shoppfy.com pra revisarmos o caso.
-                  </>
-                )}
-              </p>
-            )}
-          </div>
-        </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            setForm(EMPTY_REFUND_FORM);
-            setStatus("idle");
-          }}
-        >
-          {t("Enviar outro pedido")}
-        </Button>
-      </SettingsCard>
-    );
-  }
-
   return (
-    <div className="space-y-5">
-      <SettingsCard
-        title={t("Solicitar reembolso")}
-        description={t(
-          "Sentiu que o Shopfy não é pra você? Preencha os dados abaixo pra pedir seu reembolso.",
-        )}
-      >
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="refund-nome">{t("Nome completo")}</Label>
-            <Input
-              id="refund-nome"
-              value={form.nome}
-              onChange={(e) => update("nome")(e.target.value)}
-              placeholder={t("Seu nome completo")}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="refund-cpf">{t("CPF")}</Label>
-            <Input
-              id="refund-cpf"
-              value={form.cpf}
-              onChange={(e) => update("cpf")(e.target.value)}
-              placeholder="000.000.000-00"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="refund-email">{t("E-mail")}</Label>
-            <Input
-              id="refund-email"
-              type="email"
-              value={form.email}
-              onChange={(e) => update("email")(e.target.value)}
-              placeholder={t("voce@exemplo.com")}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="refund-codigo">{t("Código da compra")}</Label>
-            <Input
-              id="refund-codigo"
-              value={form.codigoCompra}
-              onChange={(e) => update("codigoCompra")(e.target.value)}
-              placeholder={t("Ex: PED-48213")}
-            />
-            <p className="text-[11.5px] text-muted-foreground">
-              Não sabe o código? Peça no Atendimento (ícone de fone no topo) que ele te envia.
-            </p>
-          </div>
-          <div className="space-y-2">
-            <Label>{t("Plano da cobrança")}</Label>
-            <Select value={form.plano} onValueChange={update("plano")}>
-              <SelectTrigger className="bg-background">
-                <SelectValue placeholder={t("Selecione o plano")} />
-              </SelectTrigger>
-              <SelectContent>
-                {BILLING_PLANS.map((p) => (
-                  <SelectItem key={p.value} value={p.value}>
-                    {t(p.label)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="refund-dias">{t("Há quantos dias você pagou?")}</Label>
-            <Input
-              id="refund-dias"
-              type="number"
-              min={0}
-              value={form.diasPagamento}
-              onChange={(e) => update("diasPagamento")(e.target.value)}
-              placeholder={t("Ex: 3")}
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label>{t("Por que você quer reembolso?")}</Label>
-          <Select value={form.motivo} onValueChange={update("motivo")}>
-            <SelectTrigger className="bg-background">
-              <SelectValue placeholder={t("Selecione um motivo")} />
-            </SelectTrigger>
-            <SelectContent>
-              {REFUND_REASONS.map((r) => (
-                <SelectItem key={r.value} value={r.value}>
-                  {t(r.label)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <Button
-          onClick={() => void handleSubmit()}
-          disabled={!isValid || sending}
-          className="gap-2"
-        >
+    <SettingsCard
+      title="Reembolso"
+      description="Peça o reembolso e acompanhe o andamento na página de reembolso."
+    >
+      <Button asChild className="w-fit gap-2">
+        <Link to="/reembolso">
           <Send className="size-4" />
-          {t("Solicitar reembolso")}
-        </Button>
-      </SettingsCard>
-
-      <div className="flex items-start gap-2.5 rounded-lg border border-dashed border-border bg-card/40 px-4 py-3.5 text-[12px] leading-relaxed text-muted-foreground">
-        <AlertTriangle className="mt-0.5 size-3.5 shrink-0" />
-        <p>
-          {t(
-            "Por lei (CDC, art. 49), compras feitas online têm direito a arrependimento e reembolso integral em até 7 dias do pagamento. Pagamentos com menos de 7 dias são estornados em até 7 dias úteis na forma de pagamento original; após esse prazo, o valor não é estornado — vale revisar o texto exato com um advogado antes de publicar.",
-          )}
-        </p>
-      </div>
-    </div>
+          Ir pra página de reembolso
+        </Link>
+      </Button>
+    </SettingsCard>
   );
 }
 

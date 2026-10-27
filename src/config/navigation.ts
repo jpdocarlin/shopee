@@ -10,6 +10,8 @@ import {
   Smartphone,
   Megaphone,
   MessagesSquare,
+  Undo2,
+  RotateCcw,
   type LucideIcon,
 } from "lucide-react";
 
@@ -25,6 +27,8 @@ export type NavItem = {
   // Só aparece pra conta com role "pedidos_admin" (user_roles). Ver useIsPedidosAdmin().
   // Quem tem essa role só enxerga itens marcados assim (ver getNavigationForUser).
   pedidosAdminOnly?: boolean;
+  // Equipe: aparece pro dono E pra conta de pedidos.
+  staffOnly?: boolean;
 };
 
 export type NavGroup = {
@@ -106,6 +110,13 @@ export const navigation: NavGroup[] = [
         pedidosAdminOnly: true,
       },
       {
+        label: "Reembolsos (Admin)",
+        to: "/reembolsos-admin",
+        icon: RotateCcw,
+        description: "Pedidos de reembolso dos clientes; marcar como feito manda e-mail",
+        staffOnly: true,
+      },
+      {
         label: "Atendimento (Admin)",
         to: "/atendimento-admin",
         icon: Headset,
@@ -136,6 +147,12 @@ export const navigation: NavGroup[] = [
         icon: Settings,
         description: "Conta, plano e preferências",
       },
+      {
+        label: "Reembolso",
+        to: "/reembolso",
+        icon: Undo2,
+        description: "Pedir reembolso e acompanhar o andamento",
+      },
     ],
   },
 ];
@@ -160,19 +177,26 @@ export function getNavigationForUser({
     return navigation
       .map((group) => ({
         ...group,
-        items: group.items.filter((item) => !item.pedidosAdminOnly || isPedidosAdmin),
+        items: group.items.filter(
+          (item) => item.staffOnly || !item.pedidosAdminOnly || isPedidosAdmin,
+        ),
       }))
       .filter((group) => group.items.length > 0);
   }
   if (isPedidosAdmin) {
     return navigation
-      .map((group) => ({ ...group, items: group.items.filter((item) => item.pedidosAdminOnly) }))
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((item) => item.pedidosAdminOnly || item.staffOnly),
+      }))
       .filter((group) => group.items.length > 0);
   }
   return navigation
     .map((group) => ({
       ...group,
-      items: group.items.filter((item) => !item.ownerOnly && !item.pedidosAdminOnly),
+      items: group.items.filter(
+        (item) => !item.ownerOnly && !item.pedidosAdminOnly && !item.staffOnly,
+      ),
     }))
     .filter((group) => group.items.length > 0);
 }
