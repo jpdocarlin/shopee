@@ -364,11 +364,21 @@ function YouTubeVideoPlayer({
           rel: 0,
           modestbranding: 1,
           playsinline: 1,
+          // Recomendado pela IFrame API pra comunicação estável com o player.
+          origin: window.location.origin,
           ...(initialSeconds > 1 ? { start: Math.floor(initialSeconds) } : {}),
         },
         events: {
           onReady: () => {
             if (cancelled) return;
+            // Celular: o membros.css deixa o iframe com pointer-events: none
+            // (no computador quem recebe o clique é a nossa camada por cima).
+            // No toque isso bloqueava o play do próprio YouTube — a pessoa
+            // tocava no vídeo e nada acontecia. Libera o toque no iframe.
+            if (touch) {
+              const iframe = containerRef.current?.querySelector("iframe");
+              if (iframe) iframe.style.pointerEvents = "auto";
+            }
             setReady(true);
             const total = player.getDuration() || 0;
             setDuration(total);
@@ -436,6 +446,12 @@ function YouTubeVideoPlayer({
         },
       });
       playerRef.current = player;
+      // Mesmo motivo do onReady: libera o toque já, sem depender do onReady
+      // (se ele demorar ou não chegar no celular, o vídeo continua tocável).
+      if (touch) {
+        const iframe = containerRef.current?.querySelector("iframe");
+        if (iframe) iframe.style.pointerEvents = "auto";
+      }
     });
 
     return () => {
@@ -493,7 +509,7 @@ function YouTubeVideoPlayer({
       <div ref={mountRef} className="absolute inset-0" onClick={touch ? undefined : togglePlay} />
 
       {!ready && (
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div className="size-8 animate-spin rounded-full border-2 border-white/15 border-t-white/70" />
         </div>
       )}
