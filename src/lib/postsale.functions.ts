@@ -18,51 +18,69 @@ export type MlQuestion = {
 
 export const listMlQuestions = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<{ connected: boolean; questions: MlQuestion[] }> => {
-    const { getValidMercadoLivreAccessToken } =
-      await import("@/lib/mercadolivre-connection.server");
-    const { callMercadoLivreApi } = await import("@/lib/mercadolivre-api.server");
-    let accessToken: string;
-    try {
-      ({ accessToken } = await getValidMercadoLivreAccessToken(context.userId));
-    } catch {
-      return { connected: false, questions: [] };
-    }
-    const me = await callMercadoLivreApi<{ id: number }>("/users/me", { accessToken });
-    const json = await callMercadoLivreApi<{
-      questions?: Array<{ id: number; text: string; item_id: string; date_created: string }>;
-    }>("/questions/search", {
-      accessToken,
-      query: {
-        seller_id: me.id,
-        status: "UNANSWERED",
-        api_version: 4,
-        sort_fields: "date_created",
-        sort_types: "DESC",
-        limit: 50,
-      },
-    });
-    const questions = json.questions ?? [];
-    const ids = [...new Set(questions.map((q) => q.item_id))];
-    const titles = new Map<string, { title: string; thumb: string | null }>();
-    if (ids.length > 0) {
-      const { mlItemsInfo } = await import("@/lib/channel-items.server");
-      for (const it of await mlItemsInfo(accessToken, ids)) {
-        titles.set(it.externalId, { title: it.title, thumb: it.imageUrl });
+  .handler(
+    async ({
+      context,
+    }): Promise<{
+      connected: boolean;
+      blocked?: boolean;
+      questions: MlQuestion[];
+    }> => {
+      const { getValidMercadoLivreAccessToken } =
+        await import("@/lib/mercadolivre-connection.server");
+      const { callMercadoLivreApi } = await import("@/lib/mercadolivre-api.server");
+      let accessToken: string;
+      try {
+        ({ accessToken } = await getValidMercadoLivreAccessToken(context.userId));
+      } catch {
+        return { connected: false, questions: [] };
       }
-    }
-    return {
-      connected: true,
-      questions: questions.map((q) => ({
-        id: q.id,
-        text: q.text,
-        itemId: q.item_id,
-        itemTitle: titles.get(q.item_id)?.title ?? q.item_id,
-        itemThumbnail: titles.get(q.item_id)?.thumb ?? null,
-        createdAt: q.date_created,
-      })),
-    };
-  });
+      const me = await callMercadoLivreApi<{ id: number }>("/users/me", { accessToken });
+      let json: {
+        questions?: Array<{ id: number; text: string; item_id: string; date_created: string }>;
+      };
+      try {
+        json = await callMercadoLivreApi("/questions/search", {
+          accessToken,
+          query: {
+            seller_id: me.id,
+            status: "UNANSWERED",
+            api_version: 4,
+            sort_fields: "date_created",
+            sort_types: "DESC",
+            limit: 50,
+          },
+        });
+      } catch (err) {
+        // 403 PolicyAgent = o Mercado Livre não liberou perguntas pra esta
+        // conexão (permissão do app ou conexão feita antes da permissão).
+        if (/UNAUTHORIZED|PolicyAgent|403/i.test(err instanceof Error ? err.message : "")) {
+          return { connected: true, blocked: true, questions: [] };
+        }
+        throw err;
+      }
+      const questions = json.questions ?? [];
+      const ids = [...new Set(questions.map((q) => q.item_id))];
+      const titles = new Map<string, { title: string; thumb: string | null }>();
+      if (ids.length > 0) {
+        const { mlItemsInfo } = await import("@/lib/channel-items.server");
+        for (const it of await mlItemsInfo(accessToken, ids)) {
+          titles.set(it.externalId, { title: it.title, thumb: it.imageUrl });
+        }
+      }
+      return {
+        connected: true,
+        questions: questions.map((q) => ({
+          id: q.id,
+          text: q.text,
+          itemId: q.item_id,
+          itemTitle: titles.get(q.item_id)?.title ?? q.item_id,
+          itemThumbnail: titles.get(q.item_id)?.thumb ?? null,
+          createdAt: q.date_created,
+        })),
+      };
+    },
+  );
 
 export const suggestMlAnswer = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])

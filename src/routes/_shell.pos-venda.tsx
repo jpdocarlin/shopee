@@ -119,7 +119,11 @@ function QuestionItem({ q, onAnswered }: { q: MlQuestion; onAnswered: () => void
 }
 
 function QuestionsTab() {
-  const [state, setState] = useState<{ connected: boolean; questions: MlQuestion[] } | null>(null);
+  const [state, setState] = useState<{
+    connected: boolean;
+    blocked?: boolean;
+    questions: MlQuestion[];
+  } | null>(null);
   const load = async () => {
     setState(null);
     try {
@@ -157,6 +161,12 @@ function QuestionsTab() {
       ) : !state.connected ? (
         <p className="px-4 py-8 text-center text-[12.5px] text-muted-foreground">
           Conecte sua conta do Mercado Livre em Integrações pra ver as perguntas aqui.
+        </p>
+      ) : state.blocked ? (
+        <p className="px-4 py-8 text-center text-[12.5px] text-muted-foreground">
+          O Mercado Livre ainda não liberou as perguntas para o Shoppfy nesta conta. Vá em
+          Integrações, desconecte o Mercado Livre e conecte de novo. Se continuar, responda pelo app
+          do Mercado Livre enquanto a liberação não sai.
         </p>
       ) : state.questions.length === 0 ? (
         <p className="px-4 py-8 text-center text-[12.5px] text-muted-foreground">
