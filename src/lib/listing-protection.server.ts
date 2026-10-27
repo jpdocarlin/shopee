@@ -26,7 +26,10 @@ async function listingsFor(
   let q = supabaseAdmin
     .from("listings")
     .select("id, user_id, marketplace, external_id, title")
-    .in("product_id", productIds);
+    .in("product_id", productIds)
+    // Só mexe sozinho em anúncio publicado PELO Shoppfy. Anúncio importado da
+    // loja pode ser de outro fornecedor com nome parecido.
+    .eq("source", "shoppfy");
   q =
     filter === "active"
       ? q.eq("status", "active")

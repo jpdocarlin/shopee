@@ -2,6 +2,9 @@
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import type { Channel, ChannelItem } from "@/lib/channel-items.server";
 
+// Nome do anúncio importado precisa bater forte com o do catálogo.
+const STRICT_MATCH = 0.8;
+
 // Chamado logo depois de publicar pelo Criar Anúncio. Falha aqui nunca
 // derruba a publicação (o anúncio já existe no canal).
 export async function recordPublishedListing(input: {
@@ -48,21 +51,25 @@ export async function syncListingsFromChannel(
 
   const { data: existing } = await supabaseAdmin
     .from("listings")
-    .select("external_id, user_id")
+    .select("external_id, user_id, source, product_id")
     .eq("marketplace", marketplace)
     .in(
       "external_id",
       items.map((i) => i.externalId),
     );
-  const known = new Map((existing ?? []).map((r) => [r.external_id, r.user_id]));
+  const known = new Map((existing ?? []).map((r) => [r.external_id, r]));
 
   let imported = 0;
   let updated = 0;
   const now = new Date().toISOString();
   for (const item of items) {
-    const owner = known.get(item.externalId);
-    if (owner && owner !== userId) continue; // nunca mexe em anúncio de outra conta
-    if (owner) {
+    const row = known.get(item.externalId);
+    if (row && row.user_id !== userId) continue; // nunca mexe em anúncio de outra conta
+    if (row) {
+      // Anúncio importado: refaz a ligação com o catálogo só com nome bem
+      // parecido (ligação errada faria pausar ou pedir o produto errado).
+      const relink =
+        row.source === "imported" ? findCatalogProductByName(item.title, STRICT_MATCH) : undefined;
       await supabaseAdmin
         .from("listings")
         .update({
@@ -71,6 +78,9 @@ export async function syncListingsFromChannel(
           status: item.status,
           image_url: item.imageUrl,
           permalink: item.permalink,
+          ...(relink !== undefined
+            ? { product_id: relink?.id ?? null, cost_cents: relink?.priceCents ?? null }
+            : {}),
           synced_at: now,
           updated_at: now,
         })
@@ -78,7 +88,7 @@ export async function syncListingsFromChannel(
         .eq("external_id", item.externalId);
       updated++;
     } else {
-      const product = findCatalogProductByName(item.title);
+      const product = findCatalogProductByName(item.title, STRICT_MATCH);
       await supabaseAdmin.from("listings").insert({
         user_id: userId,
         marketplace,
@@ -90,6 +100,7 @@ export async function syncListingsFromChannel(
         price_cents: item.priceCents,
         cost_cents: product?.priceCents ?? null,
         status: item.status,
+        source: "imported",
         synced_at: now,
       });
       imported++;

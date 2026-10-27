@@ -190,7 +190,8 @@ async function saveSales(userId: string, sales: ImportedSale[]): Promise<Importe
   for (const s of fresh) {
     const listing = byItem.get(`${s.marketplace}|${s.externalItemId}`);
     const product =
-      findCatalogProductById(listing?.product_id) ?? findCatalogProductByName(s.title);
+      findCatalogProductById(listing?.product_id) ??
+      (listing ? null : findCatalogProductByName(s.title, 0.8));
     const { error } = await supabaseAdmin.from("marketplace_orders").insert({
       user_id: userId,
       marketplace: s.marketplace,

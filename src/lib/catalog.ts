@@ -48,7 +48,12 @@ export function findCatalogProductById(id: string | null | undefined): C7DropPro
 // Pedidos antigos têm o nome digitado à mão: tenta achar o produto do
 // catálogo mais parecido (igual primeiro; senão, maior sobreposição de
 // palavras, exigindo que a maioria das palavras digitadas bata).
-export function findCatalogProductByName(name: string | null | undefined): C7DropProduct | null {
+// `minScore` maior = só aceita nome bem parecido (usado ao importar anúncios e
+// vendas da loja, onde casar errado faria pausar/pedir o produto errado).
+export function findCatalogProductByName(
+  name: string | null | undefined,
+  minScore = 0.5,
+): C7DropProduct | null {
   if (!name) return null;
   const n = normalize(name);
   if (!n) return null;
@@ -75,7 +80,7 @@ export function findCatalogProductByName(name: string | null | undefined): C7Dro
       best = p;
     }
   }
-  return bestScore >= 0.5 ? best : null;
+  return bestScore >= minScore ? best : null;
 }
 
 export function resolveOrderProduct(order: {

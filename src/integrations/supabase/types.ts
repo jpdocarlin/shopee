@@ -1352,6 +1352,7 @@ export type Database = {
           permalink: string | null;
           price_cents: number;
           product_id: string | null;
+          source: string;
           status: string;
           synced_at: string | null;
           title: string;
@@ -1370,6 +1371,7 @@ export type Database = {
           permalink?: string | null;
           price_cents: number;
           product_id?: string | null;
+          source?: string;
           status?: string;
           synced_at?: string | null;
           title: string;
@@ -1388,6 +1390,7 @@ export type Database = {
           permalink?: string | null;
           price_cents?: number;
           product_id?: string | null;
+          source?: string;
           status?: string;
           synced_at?: string | null;
           title?: string;
