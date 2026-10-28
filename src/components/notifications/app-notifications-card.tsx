@@ -128,8 +128,13 @@ function AndroidSteps() {
 // variant="card": cartão do Dashboard (fecha, some quando já está ativo).
 // variant="page": bloco da página "Aplicativo no celular" (sempre aparece,
 // mostra o status e o botão de teste; o passo a passo fica na própria página).
-export function AppNotificationsCard({ variant = "card" }: { variant?: "card" | "page" }) {
+export function AppNotificationsCard({
+  variant = "card",
+}: {
+  variant?: "card" | "page" | "modal";
+}) {
   const isPage = variant === "page";
+  const isModal = variant === "modal";
   const [platform, setPlatform] = useState<Platform>("desktop");
   const [tab, setTab] = useState<"ios" | "android">("ios");
   const [standalone, setStandalone] = useState(false);
@@ -244,7 +249,7 @@ export function AppNotificationsCard({ variant = "card" }: { variant?: "card" | 
   };
 
   if (status === "checking") return null;
-  if (!isPage && (status === "on" || dismissed)) return null;
+  if (!isPage && !isModal && (status === "on" || dismissed)) return null;
 
   const mobile = platform !== "desktop";
   // iPhone só recebe notificação com o Shoppfy instalado na tela inicial.
@@ -253,9 +258,11 @@ export function AppNotificationsCard({ variant = "card" }: { variant?: "card" | 
   const canEnableHere = status === "off" && !needsInstall;
 
   return (
-    <div className="surface-card relative overflow-hidden p-5">
-      <div className="pointer-events-none absolute -right-16 -top-20 size-52 rounded-full bg-brand/10 blur-3xl" />
-      {!isPage && (
+    <div className={cn("relative overflow-hidden", !isModal && "surface-card p-5")}>
+      {!isModal && (
+        <div className="pointer-events-none absolute -right-16 -top-20 size-52 rounded-full bg-brand/10 blur-3xl" />
+      )}
+      {!isPage && !isModal && (
         <button
           type="button"
           onClick={handleDismiss}

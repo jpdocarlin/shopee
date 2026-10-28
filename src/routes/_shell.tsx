@@ -1,3 +1,4 @@
+import { AppInstallWelcome } from "@/components/notifications/app-install-welcome";
 import { useEffect } from "react";
 import { Outlet, createFileRoute, useNavigate, useRouterState } from "@tanstack/react-router";
 import { Loader2 } from "lucide-react";
@@ -41,7 +42,12 @@ function ShellLayout() {
       void navigate({ to: "/login" });
       return;
     }
-    if (profile && isPedidosAdmin && !isOwner && pathname !== "/pedidos-admin") {
+    if (
+      profile &&
+      isPedidosAdmin &&
+      !isOwner &&
+      !["/pedidos-admin", "/atendimento-admin", "/reembolsos-admin"].includes(pathname)
+    ) {
       void navigate({ to: "/pedidos-admin" });
       return;
     }
@@ -65,6 +71,7 @@ function ShellLayout() {
       <PageTransition routeKey={pathname}>
         <Outlet />
       </PageTransition>
+      <AppInstallWelcome />
     </AppShell>
   );
 }

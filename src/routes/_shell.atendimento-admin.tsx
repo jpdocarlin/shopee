@@ -34,7 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useIsOwner, useRolesReady } from "@/lib/owner";
+import { useIsPedidosAdmin, useRolesReady } from "@/lib/owner";
 import {
   CATEGORY_LABEL,
   KNOWLEDGE_CATEGORIES,
@@ -79,14 +79,15 @@ function formatDateTime(iso: string) {
 
 function AtendimentoAdminPage() {
   const ready = useRolesReady();
-  const isOwner = useIsOwner();
+  // Só a conta de admin (role pedidos_admin) — a conta pessoal do dono não vê.
+  const isAdminAccount = useIsPedidosAdmin();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (ready && !isOwner) void navigate({ to: "/" });
-  }, [ready, isOwner, navigate]);
+    if (ready && !isAdminAccount) void navigate({ to: "/" });
+  }, [ready, isAdminAccount, navigate]);
 
-  if (!ready || !isOwner) {
+  if (!ready || !isAdminAccount) {
     return (
       <div className="flex items-center justify-center py-24 text-muted-foreground">
         <Loader2 className="size-5 animate-spin" />

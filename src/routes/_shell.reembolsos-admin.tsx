@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Check, Copy, Loader2, RotateCcw, X } from "lucide-react";
 import { toast } from "sonner";
 
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { adminListRefunds, adminSetRefundStatus, type AdminRefund } from "@/lib/refund.functions";
+import { useIsPedidosAdmin, useRolesReady } from "@/lib/owner";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_shell/reembolsos-admin")({
@@ -28,6 +29,14 @@ const BADGE = {
 const LABEL = { pending: "Em análise", done: "Concluído", denied: "Não aprovado" } as const;
 
 function ReembolsosAdminPage() {
+  // Só a conta de admin (role pedidos_admin).
+  const ready = useRolesReady();
+  const isAdminAccount = useIsPedidosAdmin();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (ready && !isAdminAccount) void navigate({ to: "/" });
+  }, [ready, isAdminAccount, navigate]);
+
   const [rows, setRows] = useState<AdminRefund[] | null>(null);
   const [filter, setFilter] = useState<(typeof FILTERS)[number]["id"]>("pending");
   const [busy, setBusy] = useState<string | null>(null);
@@ -41,8 +50,8 @@ function ReembolsosAdminPage() {
     }
   };
   useEffect(() => {
-    void load();
-  }, []);
+    if (ready && isAdminAccount) void load();
+  }, [ready, isAdminAccount]);
 
   const shown = useMemo(
     () => (rows ?? []).filter((r) => filter === "all" || r.status === filter),

@@ -12,7 +12,7 @@ const UUID = /^[0-9a-f-]{36}$/i;
 
 async function assertAdmin(userId: string) {
   const { userHasRole } = await import("@/lib/push.server");
-  if (!(await userHasRole(userId, "admin"))) throw new Error("Sem permissão.");
+  if (!(await userHasRole(userId, "pedidos_admin"))) throw new Error("Sem permissão.");
 }
 
 export type AdminConversation = {
