@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { Bar, CartesianGrid, ComposedChart, Line, XAxis, YAxis } from "recharts";
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -14,6 +15,12 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@/components/ui/chart";
 import { formatBRL } from "@/lib/format";
 import { getStoreHealth, type ChannelReport, type StoreReport } from "@/lib/store-health.functions";
 import { cn } from "@/lib/utils";
@@ -34,6 +41,41 @@ export type StoreHealthData = {
   report: StoreReport;
   recaps: Recap[];
 };
+
+const recapChartConfig = {
+  visits: { label: "Visitas", color: "var(--brand)" },
+  orders: { label: "Vendas", color: "var(--success)" },
+} satisfies ChartConfig;
+
+// Evolução semana a semana (Semana 1, 2, 3…).
+function RecapChart({ recaps }: { recaps: Recap[] }) {
+  const series = [...recaps]
+    .sort((a, b) => a.weekNumber - b.weekNumber)
+    .map((w) => ({ week: `Sem ${w.weekNumber}`, visits: w.visits ?? 0, orders: w.orders }));
+  return (
+    <div className="px-4 py-4">
+      <ChartContainer config={recapChartConfig} className="h-[200px] w-full">
+        <ComposedChart data={series} margin={{ left: 0, right: 0, top: 8, bottom: 0 }}>
+          <CartesianGrid vertical={false} strokeOpacity={0.15} />
+          <XAxis dataKey="week" tickLine={false} axisLine={false} fontSize={11} />
+          <YAxis yAxisId="v" hide />
+          <YAxis yAxisId="o" orientation="right" hide />
+          <ChartTooltip content={<ChartTooltipContent />} />
+          <Bar yAxisId="v" dataKey="visits" fill="var(--color-visits)" radius={[4, 4, 0, 0]} />
+          <Line
+            yAxisId="o"
+            dataKey="orders"
+            stroke="var(--color-orders)"
+            strokeWidth={2}
+            type="monotone"
+            dot
+          />
+        </ComposedChart>
+      </ChartContainer>
+      <p className="mt-1 text-[11.5px] text-muted-foreground">Barras: visitas · Linha: vendas</p>
+    </div>
+  );
+}
 
 // Mesma fonte de dados pro Dashboard e pra Saúde da loja — a experiência é
 // igual pra qualquer conta (dono ou cliente).
@@ -343,10 +385,12 @@ export function StoreHealthDetails({
   data,
   error,
   days,
+  beforeRecap,
 }: {
   data: StoreHealthData | null;
   error: string | null;
   days: number;
+  beforeRecap?: React.ReactNode;
 }) {
   const state = StatusState({ data, error });
   if (state || !data) return <>{state}</>;
@@ -386,8 +430,11 @@ export function StoreHealthDetails({
         </div>
       )}
 
+      {beforeRecap}
+
       <div className="surface-card divide-y divide-border">
         <p className="px-4 py-3 text-[14px] font-semibold text-foreground">Recap das semanas</p>
+        {recaps.length > 1 && <RecapChart recaps={recaps} />}
         {recaps.length === 0 ? (
           <p className="px-4 py-6 text-center text-[12.5px] text-muted-foreground">
             Toda segunda de manhã você recebe o recap da semana no e-mail e no celular — e ele fica

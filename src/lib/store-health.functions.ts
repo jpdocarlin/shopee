@@ -10,6 +10,15 @@ export type {
   ChannelReport,
   ReviewItem,
 } from "@/lib/store-health.server";
+export type {
+  StoreInsights,
+  Reputation,
+  StoreScore,
+  StaleListing,
+  MlQuality,
+  Opportunity,
+  WeeklyTask,
+} from "@/lib/store-insights.server";
 
 export const getStoreHealth = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
@@ -78,4 +87,38 @@ export const getStoreHealth = createServerFn({ method: "GET" })
         };
       }),
     };
+  });
+
+// Saúde da loja v2: reputação, nota, parados, qualidade ML, oportunidades e
+// tarefas da semana. Separado do getStoreHealth porque chama mais APIs.
+export const getStoreInsights = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const [{ buildStoreInsights }, { getShopeeConnection }, { getMercadoLivreConnection }] =
+      await Promise.all([
+        import("@/lib/store-insights.server"),
+        import("@/lib/shopee-connection.server"),
+        import("@/lib/mercadolivre-connection.server"),
+      ]);
+    const [shopee, ml] = await Promise.all([
+      getShopeeConnection(context.userId).catch(() => null),
+      getMercadoLivreConnection(context.userId).catch(() => null),
+    ]);
+    const connected = [
+      ...(shopee ? ["shopee" as const] : []),
+      ...(ml ? ["mercado-livre" as const] : []),
+    ];
+    return buildStoreInsights(context.userId, connected);
+  });
+
+export const setWeeklyTask = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: { id: string; done: boolean }) => ({
+    id: String(data?.id ?? ""),
+    done: Boolean(data?.done),
+  }))
+  .handler(async ({ context, data }) => {
+    const { setWeeklyTaskDone } = await import("@/lib/store-insights.server");
+    await setWeeklyTaskDone(context.userId, data.id, data.done);
+    return { ok: true };
   });
