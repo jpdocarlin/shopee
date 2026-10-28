@@ -6,19 +6,14 @@ import { PageHeader } from "@/components/shared/page-header";
 import { AppNotificationsCard } from "@/components/notifications/app-notifications-card";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
-import {
-  StoreHealthPanel,
-  type StoreHealthData,
-} from "@/components/store-health/store-health-panel";
-import { getStoreHealth } from "@/lib/store-health.functions";
+import { StoreNumbers, useStoreHealth } from "@/components/store-health/store-health-panel";
 import { getGreeting } from "@/lib/greeting";
 import { useProfileStore } from "@/stores/profile-store";
 import { useAuthStore } from "@/stores/auth-store";
 import { cn } from "@/lib/utils";
 import { useT } from "@/i18n/translations";
 
-const DESCRIPTION =
-  "Como está a sua loja: visitas, vendas, lucro, o que melhorar em cada anúncio e o recap de cada semana.";
+const DESCRIPTION = "Os números das suas lojas: visitas, vendas, lucro e conversão.";
 
 export const Route = createFileRoute("/_shell/")({
   head: () => ({
@@ -67,16 +62,7 @@ function IndexPage() {
   const marketplaceConnected = useAuthStore((s) => Boolean(s.marketplaceConnected));
   const [contentDone, setContentDone] = useState(false);
   const [days, setDays] = useState(7);
-  const [data, setData] = useState<StoreHealthData | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    setData(null);
-    setError(null);
-    getStoreHealth({ data: { days } })
-      .then(setData)
-      .catch((err) => setError(err instanceof Error ? err.message : "Não deu pra carregar agora."));
-  }, [days]);
+  const { data, error } = useStoreHealth(days);
 
   const hasListing = (data?.report.listings.length ?? 0) > 0;
   const hasOrder = (data?.report.orders ?? 0) > 0;
@@ -203,7 +189,7 @@ function IndexPage() {
         </Reveal>
       )}
 
-      <StoreHealthPanel data={data} error={error} days={days} />
+      <StoreNumbers data={data} error={error} days={days} />
     </div>
   );
 }

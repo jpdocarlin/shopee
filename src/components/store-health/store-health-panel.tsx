@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   ArrowUpRight,
@@ -15,7 +16,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { formatBRL } from "@/lib/format";
-import type { ChannelReport, StoreReport } from "@/lib/store-health.functions";
+import { getStoreHealth, type ChannelReport, type StoreReport } from "@/lib/store-health.functions";
 import { cn } from "@/lib/utils";
 
 export type Recap = {
@@ -34,6 +35,21 @@ export type StoreHealthData = {
   report: StoreReport;
   recaps: Recap[];
 };
+
+// Mesma fonte de dados pro Dashboard e pra Saúde da loja — a experiência é
+// igual pra qualquer conta (dono ou cliente).
+export function useStoreHealth(days: number) {
+  const [data, setData] = useState<StoreHealthData | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    setData(null);
+    setError(null);
+    getStoreHealth({ data: { days } })
+      .then(setData)
+      .catch((err) => setError(err instanceof Error ? err.message : "Não deu pra carregar agora."));
+  }, [days]);
+  return { data, error };
+}
 
 const STORE = {
   shopee: { name: "Shopee", logo: "/logo-shopee.png" },
@@ -82,51 +98,60 @@ function Kpi({
   );
 }
 
-function StoreCard({ c, days, wide }: { c: ChannelReport; days: number; wide: boolean }) {
+function StoreKpis({ c, days, cols4 }: { c: ChannelReport; days: number; cols4?: boolean }) {
+  return (
+    <div className={cn("grid grid-cols-2 gap-2.5", cols4 && "lg:grid-cols-4")}>
+      <Kpi
+        icon={Eye}
+        label={`Visitas (${days} dias)`}
+        value={c.visits === null ? "—" : String(c.visits)}
+        trend={<Trend cur={c.visits} prev={c.prevVisits} />}
+      />
+      <Kpi
+        icon={ShoppingBag}
+        label="Vendas"
+        value={String(c.orders)}
+        trend={<Trend cur={c.orders} prev={c.prevOrders} />}
+      />
+      <Kpi icon={Wallet} label="Lucro estimado" value={formatBRL(c.profitCents)} />
+      <Kpi
+        icon={TrendingUp}
+        label="Conversão"
+        value={
+          c.conversion === null ? "—" : `${(c.conversion * 100).toFixed(1).replace(".", ",")}%`
+        }
+      />
+    </div>
+  );
+}
+
+function StoreHeader({ c, right }: { c: ChannelReport; right?: React.ReactNode }) {
   const store = STORE[c.marketplace];
   return (
-    <div className="surface-card overflow-hidden">
-      {/* Cabeçalho da loja */}
-      <div className="flex items-center gap-3 border-b border-border px-5 py-4">
-        <span className="grid size-10 shrink-0 place-items-center rounded-lg border border-border bg-white">
-          <img src={store.logo} alt={store.name} className="size-7 object-contain" />
-        </span>
-        <div className="min-w-0">
-          <p className="text-[15px] font-semibold text-foreground">{store.name}</p>
-          <p className="text-[12px] text-muted-foreground">
-            {c.listingsCount} anúncio(s) acompanhados
-          </p>
-        </div>
+    <div className="flex items-center gap-3 border-b border-border px-5 py-4">
+      <span className="grid size-10 shrink-0 place-items-center rounded-lg border border-border bg-white">
+        <img src={store.logo} alt={store.name} className="size-7 object-contain" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="text-[15px] font-semibold text-foreground">{store.name}</p>
+        <p className="text-[12px] text-muted-foreground">
+          {c.listingsCount} anúncio(s) acompanhados
+        </p>
       </div>
+      {right}
+    </div>
+  );
+}
+
+function StoreCard({ c, days, wide }: { c: ChannelReport; days: number; wide: boolean }) {
+  return (
+    <div className="surface-card overflow-hidden">
+      <StoreHeader c={c} />
 
       <div className={cn("grid gap-0", wide && "lg:grid-cols-2 lg:divide-x lg:divide-border")}>
         {/* Números + mais vendidos */}
         <div className="space-y-4 p-5">
-          <div className="grid grid-cols-2 gap-2.5">
-            <Kpi
-              icon={Eye}
-              label={`Visitas (${days} dias)`}
-              value={c.visits === null ? "—" : String(c.visits)}
-              trend={<Trend cur={c.visits} prev={c.prevVisits} />}
-            />
-            <Kpi
-              icon={ShoppingBag}
-              label="Vendas"
-              value={String(c.orders)}
-              trend={<Trend cur={c.orders} prev={c.prevOrders} />}
-            />
-            <Kpi icon={Wallet} label="Lucro estimado" value={formatBRL(c.profitCents)} />
-            <Kpi
-              icon={TrendingUp}
-              label="Conversão"
-              value={
-                c.conversion === null
-                  ? "—"
-                  : `${(c.conversion * 100).toFixed(1).replace(".", ",")}%`
-              }
-            />
-          </div>
-
+          <StoreKpis c={c} days={days} />
           <div>
             <p className="mb-2 flex items-center gap-1.5 text-[12.5px] font-medium text-foreground">
               <Trophy className="size-3.5 text-brand" /> Mais vendidos
@@ -212,15 +237,13 @@ function StoreCard({ c, days, wide }: { c: ChannelReport; days: number; wide: bo
   );
 }
 
-export function StoreHealthPanel({
+function StatusState({
   data,
   error,
-  days,
 }: {
   data: StoreHealthData | null;
   error: string | null;
-  days: number;
-}) {
+}): React.ReactNode | null {
   if (error) {
     return (
       <p className="surface-card px-4 py-8 text-center text-[13px] text-muted-foreground">
@@ -235,9 +258,7 @@ export function StoreHealthPanel({
       </div>
     );
   }
-
-  const { report: r, connected, recaps } = data;
-  if (connected.length === 0) {
+  if (data.connected.length === 0) {
     return (
       <div className="surface-card space-y-3 px-4 py-10 text-center">
         <p className="text-[14px] font-medium text-foreground">
@@ -253,11 +274,88 @@ export function StoreHealthPanel({
       </div>
     );
   }
+  return null;
+}
 
-  const stores = r.channels.filter((c) => connected.includes(c.marketplace));
+function connectedStores(data: StoreHealthData) {
+  return data.report.channels.filter((c) => data.connected.includes(c.marketplace));
+}
+
+function VisitsNotice({ stores }: { stores: ChannelReport[] }) {
+  if (!stores.every((c) => c.visits === null)) return null;
+  return (
+    <p className="text-[12px] text-muted-foreground">
+      As visitas começam a ser contadas a partir de hoje — em alguns dias os números aparecem aqui.
+    </p>
+  );
+}
+
+// Dashboard: só os números de cada loja conectada.
+export function StoreNumbers({
+  data,
+  error,
+  days,
+}: {
+  data: StoreHealthData | null;
+  error: string | null;
+  days: number;
+}) {
+  const state = StatusState({ data, error });
+  if (state || !data) return <>{state}</>;
+  const stores = connectedStores(data);
+  const single = stores.length === 1;
+  return (
+    <>
+      <div className={cn("grid gap-4", !single && "xl:grid-cols-2")}>
+        {stores.map((c) => {
+          const pending = c.reviewCount;
+          return (
+            <div key={c.marketplace} className="surface-card overflow-hidden">
+              <StoreHeader
+                c={c}
+                right={
+                  <Link
+                    to="/saude-da-loja"
+                    className="inline-flex shrink-0 items-center gap-1 text-[12px] text-brand hover:underline"
+                  >
+                    Saúde da loja
+                    {pending > 0 && (
+                      <span className="rounded-full bg-warning/15 px-1.5 py-0.5 text-[10.5px] text-warning">
+                        {pending} p/ revisar
+                      </span>
+                    )}
+                    <ArrowUpRight className="size-3" />
+                  </Link>
+                }
+              />
+              <div className="p-5">
+                <StoreKpis c={c} days={days} cols4={single} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <VisitsNotice stores={stores} />
+    </>
+  );
+}
+
+// Página Saúde da loja: tudo de cada loja + o que melhorar + recap.
+export function StoreHealthDetails({
+  data,
+  error,
+  days,
+}: {
+  data: StoreHealthData | null;
+  error: string | null;
+  days: number;
+}) {
+  const state = StatusState({ data, error });
+  if (state || !data) return <>{state}</>;
+  const stores = connectedStores(data);
   const wide = stores.length === 1;
-  const suggestions = r.suggestions.filter((s) => connected.includes(s.marketplace));
-  const noVisitsYet = stores.every((c) => c.visits === null);
+  const suggestions = data.report.suggestions.filter((s) => data.connected.includes(s.marketplace));
+  const recaps = data.recaps;
 
   return (
     <>
@@ -266,12 +364,7 @@ export function StoreHealthPanel({
           <StoreCard key={c.marketplace} c={c} days={days} wide={wide} />
         ))}
       </div>
-      {noVisitsYet && (
-        <p className="text-[12px] text-muted-foreground">
-          As visitas começam a ser contadas a partir de hoje — em alguns dias os números aparecem
-          aqui.
-        </p>
-      )}
+      <VisitsNotice stores={stores} />
 
       {suggestions.length > 0 && (
         <div className="surface-card divide-y divide-border">

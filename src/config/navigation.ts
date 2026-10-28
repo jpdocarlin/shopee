@@ -12,6 +12,7 @@ import {
   MessagesSquare,
   Undo2,
   RotateCcw,
+  HeartPulse,
   type LucideIcon,
 } from "lucide-react";
 
@@ -67,6 +68,13 @@ export const navigation: NavGroup[] = [
         to: "/anuncios",
         icon: Megaphone,
         description: "Preço, custo, taxa e lucro de cada anúncio; pausar e reativar",
+        badge: "Novo",
+      },
+      {
+        label: "Saúde da loja",
+        to: "/saude-da-loja",
+        icon: HeartPulse,
+        description: "O que melhorar em cada loja, anúncios pra revisar e o recap da semana",
         badge: "Novo",
       },
       {

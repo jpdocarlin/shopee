@@ -614,7 +614,7 @@ export async function sendWeeklyRecap(userId: string): Promise<{ sent: boolean; 
       report.orders > 0
         ? `${report.orders} venda(s), ${brl(report.revenueCents)} vendidos${report.visits !== null ? ` e ${report.visits} visitas` : ""}. Veja o que melhorar.`
         : `${report.visits !== null ? `${report.visits} visitas e ` : ""}nenhuma venda ainda. Veja o que fazer esta semana.`,
-    url: "/",
+    url: "/saude-da-loja",
     tag: `recap-${from}`,
   }).catch(() => undefined);
 
