@@ -111,6 +111,8 @@ async function shopeeReputation(userId: string): Promise<Reputation> {
     3: "Pedidos não enviados",
     42: "Cancelamentos",
     43: "Devoluções e reembolsos",
+    11: "Resposta no chat",
+    22: "Nota da loja",
   };
   const metrics: ReputationMetric[] = [];
   for (const m of perf.response.metric_list ?? []) {
