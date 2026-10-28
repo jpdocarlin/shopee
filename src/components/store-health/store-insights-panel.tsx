@@ -234,7 +234,7 @@ export function StoreScores({ data }: { data: StoreInsights }) {
             <div className="flex items-center gap-3 border-b border-border px-5 py-3.5">
               <Logo ch={ch} />
               <p className="flex-1 text-[14px] font-semibold text-foreground">
-                Saúde da {STORE[ch].name}
+                {ch === "shopee" ? "Saúde da Shopee" : "Saúde do Mercado Livre"}
               </p>
               {s && (
                 <p className={cn("text-[24px] font-semibold tabular-nums", scoreTone(s.score))}>

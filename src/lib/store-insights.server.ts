@@ -212,11 +212,16 @@ async function mlReputation(userId: string): Promise<Reputation> {
           target: `verde até ${pct(limit)}`,
           ok: r.rate * 100 <= limit,
         };
+  // Sem termômetro (poucas vendas), o Mercado Livre ainda não aplica as
+  // taxas na reputação — mostra os números, mas não marca como fora da meta.
+  const counts = !!rep.level_id;
   const metrics = [
     metric("Reclamações", m.claims, 1),
     metric("Atraso no envio", m.delayed_handling_time, 6),
     metric("Cancelamentos", m.cancellations, 0.5),
-  ].filter((x): x is ReputationMetric => x !== null);
+  ]
+    .filter((x): x is ReputationMetric => x !== null)
+    .map((x) => (counts ? x : { ...x, ok: null, target: "ainda não conta (poucas vendas)" }));
   const medal: Record<string, string> = {
     silver: "MercadoLíder",
     gold: "MercadoLíder Gold",
@@ -540,7 +545,17 @@ async function ensureWeeklyTasks(userId: string, drafts: TaskDraft[]): Promise<W
     link: string | null;
     done_at: string | null;
   }>;
-  // Gera uma vez por semana (as tarefas não mudam enquanto a pessoa trabalha nelas).
+  // Gera uma vez por semana. Enquanto nenhuma foi marcada como feita, a lista
+  // acompanha o estado atual (ex.: um problema que já foi resolvido sai).
+  const wanted = drafts.slice(0, 5).map((d) => d.key);
+  const stale =
+    rows.length > 0 &&
+    rows.every((r) => !r.done_at) &&
+    rows.map((r) => r.task_key).join("|") !== wanted.join("|");
+  if (stale) {
+    await table().delete().eq("user_id", userId).eq("week_start", week).is("done_at", null);
+    rows = [];
+  }
   if (rows.length === 0 && drafts.length) {
     const { data: inserted } = await table()
       .insert(
@@ -646,12 +661,12 @@ export async function buildStoreInsights(
 
   // Tarefas: as ações mais importantes da semana, na ordem de impacto.
   const drafts: TaskDraft[] = [];
-  const storeName = (ch: Channel) => (ch === "shopee" ? "Shopee" : "Mercado Livre");
+  const naLoja = (ch: Channel) => (ch === "shopee" ? "na Shopee" : "no Mercado Livre");
   for (const r of reputation) {
     if (r.punishments?.length)
       drafts.push({
         key: `punicao-${r.marketplace}`,
-        title: `Resolver a restrição na ${storeName(r.marketplace)}: ${r.punishments[0]}`,
+        title: `Resolver a restrição ${naLoja(r.marketplace)}: ${r.punishments[0]}`,
         detail:
           "Veja o motivo na saúde da conta da Central do Vendedor e corrija o que foi apontado.",
         link: "/saude-da-loja",
@@ -659,7 +674,7 @@ export async function buildStoreInsights(
     for (const m of r.metrics.filter((x) => x.ok === false))
       drafts.push({
         key: `metrica-${r.marketplace}-${m.name}`,
-        title: `Baixar "${m.name.toLowerCase()}" na ${storeName(r.marketplace)} (${m.value})`,
+        title: `Melhorar "${m.name.toLowerCase()}" ${naLoja(r.marketplace)} (${m.value})`,
         detail: m.target ? `Hoje está em ${m.value}; ${m.target}.` : `Hoje está em ${m.value}.`,
         link: "/pedidos",
       });
@@ -672,7 +687,7 @@ export async function buildStoreInsights(
     if (loss)
       drafts.push({
         key: `prejuizo-${ch}`,
-        title: `Corrigir o preço de ${loss} anúncio(s) com prejuízo na ${storeName(ch)}`,
+        title: `Corrigir o preço de ${loss} anúncio(s) com prejuízo ${naLoja(ch)}`,
         detail: "Em Meus anúncios, ajuste o preço pra voltar a ter lucro.",
         link: "/anuncios",
       });
@@ -692,7 +707,7 @@ export async function buildStoreInsights(
     if (few)
       drafts.push({
         key: `fotos-${ch}`,
-        title: `Colocar pelo menos 3 fotos em ${few} anúncio(s) na ${storeName(ch)}`,
+        title: `Colocar pelo menos 3 fotos em ${few} anúncio(s) ${naLoja(ch)}`,
         detail: "Anúncio com mais fotos aparece mais e converte melhor.",
         link: "/anuncios",
       });
