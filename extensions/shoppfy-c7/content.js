@@ -54,11 +54,18 @@
     return pick.closest("button, a, [role=button], label") || pick;
   }
 
+  // Campo controlado pelo React da C7: limpa o que veio da conta (dados do
+  // Jp) e escreve o do lojista, disparando os eventos que o React escuta.
   function setNativeValue(input, value) {
     const proto = Object.getPrototypeOf(input);
     const setter = Object.getOwnPropertyDescriptor(proto, "value")?.set;
-    setter ? setter.call(input, value) : (input.value = value);
-    input.dispatchEvent(new Event("input", { bubbles: true }));
+    const write = (v) => {
+      setter ? setter.call(input, v) : (input.value = v);
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    };
+    input.focus();
+    write("");
+    write(value);
     input.dispatchEvent(new Event("change", { bubbles: true }));
     input.dispatchEvent(new Event("blur", { bubbles: true }));
   }
@@ -196,27 +203,50 @@
     const nome = await waitFor(() => byPh("Seu nome"));
     if (!nome) return fail("Não achei o formulário de <b>Dados Pessoais</b>.");
 
-    setNativeValue(nome, s.firstName);
-    const sobrenome = byPh("Seu sobrenome");
-    if (sobrenome) setNativeValue(sobrenome, s.lastName || s.firstName);
-    const email = byPh("@");
-    if (email) setNativeValue(email, s.email);
-    const tel = [...document.querySelectorAll("input[type=tel]")].find(visible) || byPh("(00)");
-    if (tel) setNativeValue(tel, onlyDigits(s.phone));
+    const fields = () => {
+      const tel = [...document.querySelectorAll("input[type=tel]")].find(visible) || byPh("(00)");
+      const docInput = [...document.querySelectorAll("input[type=text], input:not([type])")]
+        .filter(visible)
+        .find((i) => /cpf|cnpj|000\.000|00\.000/i.test(i.placeholder + " " + i.name)) ||
+        // plano B: o campo logo abaixo do rótulo "CPF" / "CNPJ"
+        [...document.querySelectorAll("label, p, span, div")]
+          .filter((el) => visible(el) && /^(cpf|cnpj)$/i.test((el.innerText || "").trim()))
+          .map((el) => el.parentElement?.querySelector("input"))
+          .find(Boolean);
+      return [
+        [byPh("Seu nome"), s.firstName, (v) => norm(v) === norm(s.firstName)],
+        [
+          byPh("Seu sobrenome"),
+          s.lastName || s.firstName,
+          (v) => norm(v) === norm(s.lastName || s.firstName),
+        ],
+        [byPh("@"), s.email, (v) => norm(v) === norm(s.email)],
+        [tel, onlyDigits(s.phone), (v) => onlyDigits(v) === onlyDigits(s.phone)],
+        [docInput, onlyDigits(s.document), (v) => onlyDigits(v) === onlyDigits(s.document)],
+      ];
+    };
 
     const tipo = findByText(s.personType === "juridica" ? "Pessoa Jurídica" : "Pessoa Física");
     if (tipo) {
       tipo.click();
-      await sleep(400);
+      await sleep(500);
     }
-    // CPF/CNPJ: o campo de texto visível que vem depois dos botões de tipo de pessoa.
-    const doc = await waitFor(() => {
-      const inputs = [...document.querySelectorAll("input[type=text], input:not([type])")].filter(
-        visible,
+
+    // Escreve, espera a página assentar e confere — até 4 tentativas, porque a
+    // C7 recoloca os dados da conta logada logo depois de abrir o checkout.
+    let ok = false;
+    for (let attempt = 0; attempt < 4 && !ok; attempt++) {
+      for (const [input, value, matches] of fields()) {
+        if (input && !matches(input.value)) setNativeValue(input, value);
+      }
+      await sleep(1200);
+      ok = fields().every(([input, , matches]) => !input || matches(input.value));
+    }
+    if (!ok) {
+      return fail(
+        "A C7 não aceitou trocar os dados pelos do lojista. Confira os campos e corrija manualmente.",
       );
-      return inputs.find((i) => /cpf|cnpj|000\.000|00\.000/i.test(i.placeholder + " " + i.name));
-    }, 3000);
-    if (doc) setNativeValue(doc, onlyDigits(s.document));
+    }
 
     // Etiqueta
     if (state.data.label?.url) {
@@ -272,6 +302,8 @@
       else if (state.stage === "checkout" && path.startsWith("/checkout")) await stepCheckout(state);
     } finally {
       running = false;
+      // Uma etapa pode ter trocado de página enquanto rodava: confere de novo.
+      if (await getState()) setTimeout(tick, 1000);
     }
   }
 
