@@ -217,6 +217,29 @@ export type Suggestion = {
   priceCents?: number;
 };
 
+export type ReviewItem = {
+  listingId: string;
+  title: string;
+  imageUrl: string | null;
+  reasons: string[];
+  severity: number; // maior = mais urgente
+};
+
+export type ChannelReport = {
+  marketplace: Channel;
+  listingsCount: number;
+  visits: number | null;
+  prevVisits: number | null;
+  orders: number;
+  prevOrders: number;
+  revenueCents: number;
+  profitCents: number;
+  conversion: number | null;
+  topProducts: Array<{ name: string; qty: number; imageUrl: string | null }>;
+  review: ReviewItem[]; // só os que precisam de revisão (máx. 30)
+  reviewCount: number;
+};
+
 export type StoreReport = {
   from: string; // inclusive
   to: string; // inclusive
@@ -231,6 +254,7 @@ export type StoreReport = {
   listings: ListingHealth[];
   suggestions: Suggestion[];
   attention: string[];
+  channels: ChannelReport[];
 };
 
 async function visitsBetween(userId: string, from: string, to: string) {
@@ -282,7 +306,9 @@ export async function buildStoreReport(
     [
       supabaseAdmin
         .from("listings")
-        .select("id, marketplace, title, image_url, price_cents, product_id, cost_cents, status")
+        .select(
+          "id, marketplace, title, image_url, price_cents, product_id, cost_cents, status, paused_by_system",
+        )
         .eq("user_id", userId)
         .neq("status", "closed")
         .limit(2000),
@@ -299,7 +325,7 @@ export async function buildStoreReport(
         .limit(5000),
       supabaseAdmin
         .from("marketplace_orders")
-        .select("id, dismissed_at")
+        .select("id, dismissed_at, marketplace")
         .eq("user_id", userId)
         .gte("ordered_at", `${prevFrom}T03:00:00Z`)
         .lt("ordered_at", `${from}T03:00:00Z`)
@@ -428,9 +454,88 @@ export async function buildStoreReport(
   const prevVisits = prev.hasData ? [...prev.perListing.values()].reduce((a, b) => a + b, 0) : null;
   const topProducts = [...top.values()].sort((a, b) => b.qty - a.qty).slice(0, 5);
 
+  // ---- por loja (Shopee / Mercado Livre)
+  const brl = (c: number) => `R$ ${(c / 100).toFixed(2).replace(".", ",")}`;
+  const listingById = new Map((listings ?? []).map((l) => [l.id, l]));
+  const channels: ChannelReport[] = (["shopee", "mercado-livre"] as Channel[]).map((ch) => {
+    const chHealth = health.filter((h) => h.marketplace === ch);
+    const ids = new Set(chHealth.map((h) => h.listingId));
+    const sumVisits = (m: Map<string, number>) =>
+      [...m.entries()].filter(([id]) => ids.has(id)).reduce((a, [, v]) => a + v, 0);
+    const chVisits = cur.hasData ? sumVisits(cur.perListing) : null;
+    const chSales = sales.filter((o) => o.marketplace === ch);
+    let chRevenue = 0;
+    let chProfit = 0;
+    const chTop = new Map<string, { name: string; qty: number; imageUrl: string | null }>();
+    for (const o of chSales) {
+      chRevenue += o.sale_cents;
+      const unit = Math.round(o.sale_cents / Math.max(o.quantity, 1));
+      const fee = calcPricing(ch, 0, unit, 0).feeCents * o.quantity;
+      chProfit += o.sale_cents - fee - (o.cost_cents ?? 0) - PACKAGING * o.quantity;
+      const key = o.product_id ?? o.product_name;
+      const t = chTop.get(key) ?? { name: o.product_name, qty: 0, imageUrl: o.product_image_url };
+      t.qty += o.quantity;
+      chTop.set(key, t);
+    }
+
+    const review: ReviewItem[] = [];
+    for (const h of chHealth) {
+      const reasons: string[] = [];
+      let severity = 0;
+      if (listingById.get(h.listingId)?.paused_by_system) {
+        reasons.push("Pausado: sem estoque no fornecedor");
+        severity = Math.max(severity, 5);
+      }
+      if (h.profitPerSaleCents !== null && h.profitPerSaleCents < 0) {
+        reasons.push(`Prejuízo de ${brl(-h.profitPerSaleCents)} por venda — suba o preço`);
+        severity = Math.max(severity, 4);
+      } else if (h.profitPerSaleCents !== null && h.profitPerSaleCents < 300) {
+        reasons.push(`Lucro baixo: ${brl(h.profitPerSaleCents)} por venda`);
+        severity = Math.max(severity, 2);
+      }
+      if (h.diagnosis === "visita-sem-venda") {
+        reasons.push(`${h.visits} visitas e nenhuma venda — revise preço e fotos`);
+        severity = Math.max(severity, 3);
+      }
+      if (h.photos !== null && h.photos < 3) {
+        reasons.push(`Só ${h.photos} foto(s) — coloque pelo menos 3`);
+        severity = Math.max(severity, 2);
+      }
+      if (h.diagnosis === "poucas-visitas") {
+        reasons.push("Poucas visitas — melhore o título e a foto de capa");
+        severity = Math.max(severity, 1);
+      }
+      if (reasons.length)
+        review.push({
+          listingId: h.listingId,
+          title: h.title,
+          imageUrl: h.imageUrl,
+          reasons,
+          severity,
+        });
+    }
+    review.sort((a, b) => b.severity - a.severity || b.reasons.length - a.reasons.length);
+
+    return {
+      marketplace: ch,
+      listingsCount: chHealth.length,
+      visits: chVisits,
+      prevVisits: prev.hasData ? sumVisits(prev.perListing) : null,
+      orders: chSales.length,
+      prevOrders: (prevOrders ?? []).filter((o) => !o.dismissed_at && o.marketplace === ch).length,
+      revenueCents: chRevenue,
+      profitCents: chProfit,
+      conversion: chVisits && chVisits > 0 ? chSales.length / chVisits : null,
+      topProducts: [...chTop.values()].sort((a, b) => b.qty - a.qty).slice(0, 3),
+      review: review.slice(0, 30),
+      reviewCount: review.length,
+    };
+  });
+
   return {
     from,
     to,
+    channels,
     visits,
     prevVisits,
     orders: sales.length,
@@ -474,12 +579,20 @@ export async function sendWeeklyRecap(userId: string): Promise<{ sent: boolean; 
     .eq("user_id", userId);
   const weekNumber = (count ?? 0) + (existing ? 0 : 1);
 
-  await supabaseAdmin
-    .from("weekly_recaps")
-    .upsert(
-      { user_id: userId, week_start: from, week_number: weekNumber, payload: report as never },
-      { onConflict: "user_id,week_start" },
-    );
+  await supabaseAdmin.from("weekly_recaps").upsert(
+    {
+      user_id: userId,
+      week_start: from,
+      week_number: weekNumber,
+      // Histórico enxuto: sem a lista de anúncios (fica pesado e já existe em listings).
+      payload: {
+        ...report,
+        listings: [],
+        channels: report.channels.map((c) => ({ ...c, review: [] })),
+      } as never,
+    },
+    { onConflict: "user_id,week_start" },
+  );
 
   const { data: auth } = await supabaseAdmin.auth.admin.getUserById(userId);
   const { data: profile } = await supabaseAdmin

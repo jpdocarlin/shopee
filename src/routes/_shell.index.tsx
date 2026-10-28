@@ -6,8 +6,11 @@ import { PageHeader } from "@/components/shared/page-header";
 import { AppNotificationsCard } from "@/components/notifications/app-notifications-card";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
-import { StoreHealthPanel, type Recap } from "@/components/store-health/store-health-panel";
-import { getStoreHealth, type StoreReport } from "@/lib/store-health.functions";
+import {
+  StoreHealthPanel,
+  type StoreHealthData,
+} from "@/components/store-health/store-health-panel";
+import { getStoreHealth } from "@/lib/store-health.functions";
 import { getGreeting } from "@/lib/greeting";
 import { useProfileStore } from "@/stores/profile-store";
 import { useAuthStore } from "@/stores/auth-store";
@@ -64,7 +67,7 @@ function IndexPage() {
   const marketplaceConnected = useAuthStore((s) => Boolean(s.marketplaceConnected));
   const [contentDone, setContentDone] = useState(false);
   const [days, setDays] = useState(7);
-  const [data, setData] = useState<{ report: StoreReport; recaps: Recap[] } | null>(null);
+  const [data, setData] = useState<StoreHealthData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -81,11 +84,11 @@ function IndexPage() {
   // Tudo reflete o estado real: loja conectada, anúncio publicado, venda recebida.
   const doneSteps = useMemo(() => {
     const next = new Set<string>();
-    if (marketplaceConnected) next.add("connect");
+    if (marketplaceConnected || (data?.connected.length ?? 0) > 0) next.add("connect");
     if (hasListing) next.add("product");
     if (hasOrder || contentDone) next.add("content");
     return next;
-  }, [marketplaceConnected, hasListing, hasOrder, contentDone]);
+  }, [marketplaceConnected, data, hasListing, hasOrder, contentDone]);
 
   const doneCount = doneSteps.size;
   const progressPct = Math.round((doneCount / ONBOARDING_STEPS.length) * 100);
