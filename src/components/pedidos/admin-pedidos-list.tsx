@@ -31,7 +31,9 @@ import {
   type FulfillmentRequest,
   type FulfillmentStatus,
 } from "@/lib/fulfillment";
-import { createC7Handoff } from "@/lib/c7-handoff.functions";
+import { createC7Handoff, setFulfillmentPurchaseOptions } from "@/lib/c7-handoff.functions";
+import { checkC7DropPrice } from "@/lib/c7drop-price.functions";
+import { cn } from "@/lib/utils";
 import { resolveOrderProduct } from "@/lib/catalog";
 
 // Todo pedido pago via PIX inclui R$ 2,00 de embalagem além do custo do
@@ -165,14 +167,49 @@ function TrackingField({
 // Abre o produto na C7 com o passe pra extensão "Shoppfy → C7" preencher
 // carrinho, embalagem, dados do lojista e etiqueta. O pagamento é sempre manual.
 function BuyOnC7Button({ request }: { request: FulfillmentRequest }) {
+  const product = resolveOrderProduct(request);
   const [busy, setBusy] = useState(false);
+  const [variants, setVariants] = useState<Array<{ name: string; value: string }> | null>(null);
+  const [variation, setVariation] = useState(request.variation ?? "");
+  const [quantity, setQuantity] = useState(request.quantity ?? 1);
+
+  // Cores disponíveis na C7 (tabela Dropshipping) — pedidos antigos não
+  // guardavam a cor, então a conta de pedidos escolhe aqui.
+  useEffect(() => {
+    if (!product) return;
+    let cancelled = false;
+    checkC7DropPrice({ data: { productId: product.id } })
+      .then((live) => {
+        if (cancelled) return;
+        const list = live.variants ?? [];
+        setVariants(list);
+        if (!request.variation && list.length === 1) setVariation(list[0].value);
+      })
+      .catch(() => !cancelled && setVariants([]));
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product?.id]);
+
   // Pedidos antigos não guardavam o id do produto: acha pelo nome no catálogo.
-  if (!resolveOrderProduct(request)) return null;
+  if (!product) return null;
+  const needsVariation = (variants?.length ?? 0) > 1 && !variation;
+
   const open = async () => {
+    if (needsVariation) {
+      toast.error("Escolha a cor antes de comprar.");
+      return;
+    }
     // Abre a aba já no clique (o navegador bloqueia pop-up depois de await).
     const tab = window.open("about:blank", "_blank");
     setBusy(true);
     try {
+      if (variation !== (request.variation ?? "") || quantity !== (request.quantity ?? 1)) {
+        await setFulfillmentPurchaseOptions({
+          data: { requestId: request.id, variation: variation || null, quantity },
+        });
+      }
       const { url } = await createC7Handoff({ data: { requestId: request.id } });
       if (tab) tab.location.href = url;
       else window.location.href = url;
@@ -184,15 +221,51 @@ function BuyOnC7Button({ request }: { request: FulfillmentRequest }) {
     }
   };
   return (
-    <Button
-      size="sm"
-      className="h-8 gap-1.5 text-[12px]"
-      disabled={busy}
-      onClick={() => void open()}
-    >
-      {busy ? <Loader2 className="size-3.5 animate-spin" /> : <ShoppingCart className="size-3.5" />}
-      Comprar na C7
-    </Button>
+    <div className="flex flex-wrap items-center gap-1.5">
+      {variants && variants.length > 0 && (
+        <select
+          value={variation}
+          onChange={(e) => setVariation(e.target.value)}
+          aria-label={variants[0].name}
+          className={cn(
+            "h-8 rounded-md border bg-background px-2 text-[12px]",
+            needsVariation ? "border-warning text-warning" : "border-border",
+          )}
+        >
+          {variants.length > 1 && <option value="">{variants[0].name}: escolher</option>}
+          {variants.map((v) => (
+            <option key={v.value} value={v.value}>
+              {v.name}: {v.value}
+            </option>
+          ))}
+        </select>
+      )}
+      <input
+        type="number"
+        min={1}
+        max={50}
+        value={quantity}
+        onChange={(e) =>
+          setQuantity(Math.min(50, Math.max(1, Math.floor(Number(e.target.value) || 1))))
+        }
+        aria-label="Quantidade"
+        title="Quantidade"
+        className="h-8 w-14 rounded-md border border-border bg-background px-2 text-[12px]"
+      />
+      <Button
+        size="sm"
+        className="h-8 gap-1.5 text-[12px]"
+        disabled={busy || variants === null}
+        onClick={() => void open()}
+      >
+        {busy || variants === null ? (
+          <Loader2 className="size-3.5 animate-spin" />
+        ) : (
+          <ShoppingCart className="size-3.5" />
+        )}
+        Comprar na C7
+      </Button>
+    </div>
   );
 }
 

@@ -42,3 +42,29 @@ export const createC7Handoff = createServerFn({ method: "POST" })
       url: `https://www.c7drop.com.br/produto/${product.slug}#shoppfy-c7=${token}`,
     };
   });
+
+// Conta de pedidos ajusta cor e quantidade (pedidos antigos não tinham esses
+// campos) antes de comprar na C7.
+export const setFulfillmentPurchaseOptions = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: { requestId: string; variation: string | null; quantity: number }) => {
+    const requestId = typeof data?.requestId === "string" ? data.requestId.trim() : "";
+    if (!/^[0-9a-f-]{36}$/i.test(requestId)) throw new Error("Pedido inválido.");
+    const variation =
+      typeof data?.variation === "string" && data.variation.trim()
+        ? data.variation.trim().slice(0, 120)
+        : null;
+    const quantity = Math.min(50, Math.max(1, Math.floor(Number(data?.quantity) || 1)));
+    return { requestId, variation, quantity };
+  })
+  .handler(async ({ context, data }) => {
+    const { userHasRole } = await import("@/lib/push.server");
+    if (!(await userHasRole(context.userId, "pedidos_admin"))) throw new Error("Sem permissão.");
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin
+      .from("fulfillment_requests")
+      .update({ variation: data.variation, quantity: data.quantity } as never)
+      .eq("id", data.requestId);
+    if (error) throw new Error("Não deu pra salvar agora.");
+    return { ok: true };
+  });
