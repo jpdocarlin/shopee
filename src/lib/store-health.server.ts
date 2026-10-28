@@ -612,6 +612,30 @@ export async function buildStoreReport(
     };
   });
 
+  // Números informados à mão (lojas do dono que não estão conectadas).
+  const { data: manual } = await supabaseAdmin
+    .from("manual_store_stats" as never)
+    .select("marketplace, visits, orders")
+    .eq("user_id", userId)
+    .eq("period_days", days);
+  for (const m of (manual ?? []) as Array<{
+    marketplace: Channel;
+    visits: number | null;
+    orders: number | null;
+  }>) {
+    const c = channels.find((x) => x.marketplace === m.marketplace);
+    if (!c) continue;
+    if (m.visits !== null) {
+      c.visits = m.visits;
+      c.prevVisits = null;
+    }
+    if (m.orders !== null) {
+      c.orders = m.orders;
+      c.prevOrders = 0;
+    }
+    c.conversion = c.visits && c.visits > 0 ? c.orders / c.visits : null;
+  }
+
   const sumOrNull = (vals: Array<number | null>) =>
     vals.some((v) => v !== null) ? vals.reduce<number>((a, v) => a + (v ?? 0), 0) : null;
   const shopTotal = sumOrNull(channels.map((c) => c.visits));
