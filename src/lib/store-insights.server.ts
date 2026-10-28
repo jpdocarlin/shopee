@@ -398,6 +398,7 @@ async function staleListings(
 
 export type Opportunity = {
   productId: string;
+  reason: string; // por que está sendo sugerido (sempre verdadeiro)
   name: string;
   image: string;
   costCents: number;
@@ -433,6 +434,7 @@ async function opportunities(userId: string, ownProductIds: Set<string>): Promis
     const price = suggestPrice("shopee", p.priceCents, 0.25, PACKAGING);
     out.push({
       productId,
+      reason: `${a.qty} venda(s) entre os lojistas da Shoppfy nos últimos 30 dias`,
       name: p.name,
       image: p.image,
       costCents: p.priceCents,
@@ -443,7 +445,52 @@ async function opportunities(userId: string, ownProductIds: Set<string>): Promis
     });
   }
   void userId;
-  return out.sort((x, y) => y.soldQty - x.soldQty).slice(0, 6);
+  const sold = out.sort((x, y) => y.soldQty - x.soldQty).slice(0, 5);
+  if (sold.length >= 5) return sold;
+
+  // Completa até 5 com produtos do catálogo que a pessoa ainda não anunciou,
+  // em estoque e com lucro bom na Shopee. O motivo mostrado é só esse — sem
+  // inventar venda que não existe. Gira toda semana pra variar as sugestões.
+  const { CATALOG } = await import("@/lib/catalog");
+  const taken = new Set(sold.map((o) => o.productId));
+  const pool = CATALOG.filter(
+    (p) =>
+      !ownProductIds.has(p.id) &&
+      !taken.has(p.id) &&
+      (!p.manageStock || p.stock >= 10) &&
+      p.priceCents >= 1500 &&
+      p.priceCents <= 20000,
+  )
+    .map((p) => {
+      const price = suggestPrice("shopee", p.priceCents, 0.25, PACKAGING);
+      return {
+        p,
+        price,
+        profit: calcPricing("shopee", p.priceCents, price, PACKAGING).profitCents,
+      };
+    })
+    .filter((x) => x.profit >= 800)
+    .sort((a, b) => b.profit - a.profit)
+    .slice(0, 60);
+  const week = Math.floor(Date.now() / (7 * 86400000));
+  const extra: Opportunity[] = [];
+  for (let i = 0; i < pool.length && sold.length + extra.length < 5; i++) {
+    const { p, price, profit } = pool[(week * 5 + i) % pool.length];
+    if (taken.has(p.id)) continue;
+    taken.add(p.id);
+    extra.push({
+      productId: p.id,
+      reason: `Em estoque na C7 · lucro de R$ ${(profit / 100).toFixed(2).replace(".", ",")} por venda na Shopee`,
+      name: p.name,
+      image: p.image,
+      costCents: p.priceCents,
+      soldQty: 0,
+      sellers: 0,
+      suggestedShopeeCents: price,
+      profitShopeeCents: profit,
+    });
+  }
+  return [...sold, ...extra];
 }
 
 // ------------------------------------------------------------- nota 0–100
@@ -751,13 +798,6 @@ export async function buildStoreInsights(
         .map((s) => s.title.slice(0, 40))
         .join(" · "),
       link: "/saude-da-loja",
-    });
-  if (opps[0])
-    drafts.push({
-      key: `oportunidade-${opps[0].productId}`,
-      title: `Anunciar "${opps[0].name.slice(0, 50)}"`,
-      detail: `${opps[0].soldQty} vendas entre os lojistas da Shoppfy nos últimos 30 dias.`,
-      link: "/criar-anuncio",
     });
 
   const tasks = await safe(ensureWeeklyTasks(userId, drafts), [] as WeeklyTask[]);

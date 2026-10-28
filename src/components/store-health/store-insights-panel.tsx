@@ -119,7 +119,7 @@ export function WeeklyTasks({
       </SectionTitle>
       {data.tasks.length === 0 ? (
         <p className="px-5 py-6 text-center text-[12.5px] text-muted-foreground">
-          Nada pendente esta semana. Continue publicando e acompanhando por aqui.
+          Nenhuma tarefa esta semana — não encontramos nada que precise de correção agora.
         </p>
       ) : (
         <div className="divide-y divide-border">
@@ -401,8 +401,8 @@ export function Opportunities({ data }: { data: StoreInsights }) {
       ) : (
         <>
           <p className="px-5 pt-3 text-[12px] text-muted-foreground">
-            Produtos da C7 que mais venderam entre os lojistas da Shoppfy nos últimos 30 dias e que
-            você ainda não anunciou.
+            Produtos da C7 que você ainda não anunciou — primeiro os que mais venderam entre os
+            lojistas da Shoppfy, depois os com estoque e lucro bom. Muda toda semana.
           </p>
           <div className="grid gap-3 p-5 sm:grid-cols-2 xl:grid-cols-3">
             {data.opportunities.map((o) => (
@@ -416,7 +416,7 @@ export function Opportunities({ data }: { data: StoreInsights }) {
                 <div className="min-w-0 flex-1 space-y-0.5">
                   <p className="line-clamp-2 text-[12.5px] font-medium text-foreground">{o.name}</p>
                   <p className="text-[11.5px] text-muted-foreground">
-                    {o.soldQty} vendas · custo {formatBRL(o.costCents)}
+                    {o.reason} · custo {formatBRL(o.costCents)}
                   </p>
                   <p className="text-[11.5px] text-muted-foreground">
                     Shopee a {formatBRL(o.suggestedShopeeCents)} → lucro{" "}
