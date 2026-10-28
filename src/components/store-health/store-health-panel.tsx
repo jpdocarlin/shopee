@@ -10,7 +10,6 @@ import {
   TrendingDown,
   TrendingUp,
   Trophy,
-  Wallet,
   Wrench,
 } from "lucide-react";
 
@@ -98,9 +97,9 @@ function Kpi({
   );
 }
 
-function StoreKpis({ c, days, cols4 }: { c: ChannelReport; days: number; cols4?: boolean }) {
+function StoreKpis({ c, days }: { c: ChannelReport; days: number }) {
   return (
-    <div className={cn("grid grid-cols-2 gap-2.5", cols4 && "lg:grid-cols-4")}>
+    <div className="grid grid-cols-3 gap-2.5">
       <Kpi
         icon={Eye}
         label={`Visitas (${days} dias)`}
@@ -113,7 +112,6 @@ function StoreKpis({ c, days, cols4 }: { c: ChannelReport; days: number; cols4?:
         value={String(c.orders)}
         trend={<Trend cur={c.orders} prev={c.prevOrders} />}
       />
-      <Kpi icon={Wallet} label="Lucro estimado" value={formatBRL(c.profitCents)} />
       <Kpi
         icon={TrendingUp}
         label="Conversão"
@@ -329,7 +327,7 @@ export function StoreNumbers({
                 }
               />
               <div className="p-5">
-                <StoreKpis c={c} days={days} cols4={single} />
+                <StoreKpis c={c} days={days} />
               </div>
             </div>
           );
