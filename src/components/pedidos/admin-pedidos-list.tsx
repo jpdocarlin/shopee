@@ -32,6 +32,7 @@ import {
   type FulfillmentStatus,
 } from "@/lib/fulfillment";
 import { createC7Handoff } from "@/lib/c7-handoff.functions";
+import { resolveOrderProduct } from "@/lib/catalog";
 
 // Todo pedido pago via PIX inclui R$ 2,00 de embalagem além do custo do
 // produto (mesma regra mostrada no formulário de envio).
@@ -165,7 +166,8 @@ function TrackingField({
 // carrinho, embalagem, dados do lojista e etiqueta. O pagamento é sempre manual.
 function BuyOnC7Button({ request }: { request: FulfillmentRequest }) {
   const [busy, setBusy] = useState(false);
-  if (!request.product_id) return null;
+  // Pedidos antigos não guardavam o id do produto: acha pelo nome no catálogo.
+  if (!resolveOrderProduct(request)) return null;
   const open = async () => {
     // Abre a aba já no clique (o navegador bloqueia pop-up depois de await).
     const tab = window.open("about:blank", "_blank");

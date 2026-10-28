@@ -58,8 +58,8 @@ export const Route = createFileRoute("/api/c7-handoff")({
         if (!req) {
           return Response.json({ error: "Pedido não encontrado." }, { status: 404, headers: CORS });
         }
-        const { C7DROP_PRODUCTS } = await import("@/data/c7drop-products");
-        const product = C7DROP_PRODUCTS.find((p) => p.id === req.product_id);
+        const { resolveOrderProduct } = await import("@/lib/catalog");
+        const product = resolveOrderProduct(req);
 
         let label: { url: string; filename: string } | null = null;
         if (req.label_path) {

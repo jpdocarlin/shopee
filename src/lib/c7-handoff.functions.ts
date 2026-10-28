@@ -20,13 +20,13 @@ export const createC7Handoff = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: req } = await supabaseAdmin
       .from("fulfillment_requests")
-      .select("id, product_id")
+      .select("id, product_id, product_name")
       .eq("id", data.requestId)
       .maybeSingle();
-    if (!req?.product_id) throw new Error("Esse pedido não tem um produto do catálogo.");
-    const { C7DROP_PRODUCTS } = await import("@/data/c7drop-products");
-    const product = C7DROP_PRODUCTS.find((p) => p.id === req.product_id);
-    if (!product) throw new Error("Produto não encontrado no catálogo da C7.");
+    if (!req) throw new Error("Pedido não encontrado.");
+    const { resolveOrderProduct } = await import("@/lib/catalog");
+    const product = resolveOrderProduct(req);
+    if (!product) throw new Error("Não achei esse produto no catálogo da C7.");
 
     const bytes = new Uint8Array(32);
     crypto.getRandomValues(bytes);
