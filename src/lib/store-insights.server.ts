@@ -643,6 +643,36 @@ export async function buildStoreInsights(
 
   const reputation = [shRep, mlRep].filter((r): r is Reputation => r !== null);
 
+  // Qualidade do ML informada à mão (loja do dono que não está conectada).
+  const { data: manualQ } = await supabaseAdmin
+    .from("manual_ml_quality" as never)
+    .select("product_id, score, actions, position")
+    .eq("user_id", userId)
+    .order("position", { ascending: true });
+  const manualRows = (manualQ ?? []) as Array<{
+    product_id: string;
+    score: number;
+    actions: string[];
+  }>;
+  if (manualRows.length) {
+    const { findCatalogProductById } = await import("@/lib/catalog");
+    quality.splice(
+      0,
+      quality.length,
+      ...manualRows.map((r) => {
+        const p = findCatalogProductById(r.product_id);
+        return {
+          listingId: `manual-${r.product_id}`,
+          title: p?.name ?? "Anúncio",
+          imageUrl: p?.image ?? null,
+          score: r.score,
+          level: null,
+          actions: r.actions ?? [],
+        };
+      }),
+    );
+  }
+
   const scores = connected.map((ch) => {
     const chHealth = report.listings.filter((h) => h.marketplace === ch);
     return scoreFor(
