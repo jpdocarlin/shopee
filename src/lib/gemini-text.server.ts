@@ -510,6 +510,58 @@ function parseListing(text: string, limit: number): ListingResult {
   return { title, description, keywords };
 }
 
+// 28/10/2026 (pedido do Jp): título com a primeira letra de cada palavra
+// maiúscula ("Arco Tiara Laço Vermelho"), mantendo siglas/medidas como vieram
+// (LED, USB, 4K, 10A) e as palavrinhas de ligação em minúsculo, como nos
+// anúncios bem cuidados da Shopee e do Mercado Livre.
+const LOWER_WORDS = new Set([
+  "e",
+  "de",
+  "da",
+  "do",
+  "das",
+  "dos",
+  "a",
+  "o",
+  "as",
+  "os",
+  "em",
+  "na",
+  "no",
+  "nas",
+  "nos",
+  "para",
+  "pra",
+  "com",
+  "sem",
+  "por",
+  "ou",
+  "ao",
+  "aos",
+  "à",
+  "às",
+]);
+function titleCase(title: string): string {
+  let first = true;
+  return title.replace(/[\p{L}\p{N}][\p{L}\p{N}'’.]*/gu, (word) => {
+    const isFirst = first;
+    first = false;
+    if (/\p{N}/u.test(word)) return word; // medidas e modelos: 4K, 10A, 125
+    if (word.length > 1 && word === word.toUpperCase()) return word; // siglas: LED, USB
+    const lower = word.toLocaleLowerCase("pt-BR");
+    if (!isFirst && LOWER_WORDS.has(lower)) return lower;
+    return lower.charAt(0).toLocaleUpperCase("pt-BR") + lower.slice(1);
+  });
+}
+
+// Descrição: primeira letra de cada frase/linha/item da lista em maiúscula.
+function sentenceCase(text: string): string {
+  return text.replace(
+    /(^|[.!?]\s+|\n\s*(?:[-•*]\s*)?|:\s+)(\p{Ll})/gu,
+    (_m, before: string, ch: string) => before + ch.toLocaleUpperCase("pt-BR"),
+  );
+}
+
 export async function generateListing(input: ListingInput): Promise<ListingResult> {
   const limit = TITLE_LIMIT[input.marketplace];
   const pickAngle = () => TITLE_ANGLES[Math.floor(Math.random() * TITLE_ANGLES.length)];
@@ -538,5 +590,9 @@ export async function generateListing(input: ListingInput): Promise<ListingResul
     );
   }
 
-  return result;
+  return {
+    ...result,
+    title: titleCase(result.title),
+    description: sentenceCase(result.description),
+  };
 }
