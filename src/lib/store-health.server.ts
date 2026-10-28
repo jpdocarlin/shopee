@@ -103,8 +103,79 @@ async function mlCounters(userId: string, ids: string[]): Promise<Counter[]> {
   return [...out.values()];
 }
 
+// Visitas da loja Shopee inteira: soma do contador de visualizações de TODOS
+// os anúncios da loja (ativos e pausados), não só os publicados pela Shoppfy.
+export async function collectShopeeShopTotal(userId: string): Promise<boolean> {
+  const { getShopeeConnection, getValidShopeeAccessToken } =
+    await import("@/lib/shopee-connection.server");
+  if (!(await getShopeeConnection(userId).catch(() => null))) return false;
+  const { shopeeListItemIds } = await import("@/lib/channel-items.server");
+  const { accessToken, shopId } = await getValidShopeeAccessToken(userId);
+  const ids = await shopeeListItemIds(accessToken, shopId);
+  let total = 0;
+  for (let i = 0; i < ids.length; i += 50) {
+    const json = await callShopeeApi<{
+      response?: { item_list?: Array<{ item_id: number; views?: number }> };
+    }>("/api/v2/product/get_item_extra_info", {
+      accessToken,
+      shopId,
+      query: { item_id_list: ids.slice(i, i + 50).join(",") },
+    });
+    for (const it of json.response?.item_list ?? []) total += it.views ?? 0;
+  }
+  const { error } = await supabaseAdmin.from("store_daily_stats" as never).upsert(
+    {
+      user_id: userId,
+      marketplace: "shopee",
+      day: brDay(),
+      total_views: total,
+      item_count: ids.length,
+    } as never,
+    { onConflict: "user_id,marketplace,day" },
+  );
+  if (error) throw error;
+  return true;
+}
+
+// Visitas da conta inteira no Mercado Livre — a API já devolve o total do
+// período (não precisa de histórico nosso).
+async function mlAccountVisits(userId: string, from: string, to: string): Promise<number | null> {
+  const { getMercadoLivreConnection, getValidMercadoLivreAccessToken } =
+    await import("@/lib/mercadolivre-connection.server");
+  const conn = await getMercadoLivreConnection(userId).catch(() => null);
+  if (!conn?.user_id) return null;
+  const { accessToken } = await getValidMercadoLivreAccessToken(userId);
+  const json = await callMercadoLivreApi<{ total_visits?: number }>(
+    `/users/${conn.user_id}/items_visits`,
+    { accessToken, query: { date_from: from, date_to: addDays(to, 1) } },
+  );
+  return typeof json.total_visits === "number" ? json.total_visits : null;
+}
+
+// Visitas da loja Shopee no período = contador no fim − contador antes do início.
+async function shopeeShopVisits(userId: string, from: string, to: string): Promise<number | null> {
+  const { data } = await supabaseAdmin
+    .from("store_daily_stats" as never)
+    .select("day, total_views")
+    .eq("user_id", userId)
+    .eq("marketplace", "shopee")
+    .gte("day", addDays(from, -3))
+    .lte("day", to)
+    .order("day", { ascending: true });
+  const rows = (data ?? []) as Array<{ day: string; total_views: number }>;
+  const before = rows.filter((r) => r.day < from).at(-1);
+  const inside = rows.filter((r) => r.day >= from);
+  const start = before ?? inside[0];
+  const end = inside.at(-1);
+  if (!start || !end || start === end) return null;
+  return Math.max(0, Number(end.total_views) - Number(start.total_views));
+}
+
 // Foto do dia de todos os anúncios (não encerrados) de um cliente.
 export async function collectStatsForUser(userId: string): Promise<number> {
+  await collectShopeeShopTotal(userId).catch((err) =>
+    console.error("[store-health] total da loja shopee:", err instanceof Error ? err.message : err),
+  );
   const { data: listings } = await supabaseAdmin
     .from("listings")
     .select("id, marketplace, external_id")
@@ -457,12 +528,21 @@ export async function buildStoreReport(
   // ---- por loja (Shopee / Mercado Livre)
   const brl = (c: number) => `R$ ${(c / 100).toFixed(2).replace(".", ",")}`;
   const listingById = new Map((listings ?? []).map((l) => [l.id, l]));
+  // Visitas da LOJA inteira (todas as pessoas que viram qualquer anúncio).
+  const safe = (p: Promise<number | null>) => p.catch(() => null);
+  const [shCur, shPrev, mlCur, mlPrev] = await Promise.all([
+    safe(shopeeShopVisits(userId, from, to)),
+    safe(shopeeShopVisits(userId, prevFrom, prevTo)),
+    safe(mlAccountVisits(userId, from, to)),
+    safe(mlAccountVisits(userId, prevFrom, prevTo)),
+  ]);
+  const shopVisits: Record<Channel, { cur: number | null; prev: number | null }> = {
+    shopee: { cur: shCur, prev: shPrev },
+    "mercado-livre": { cur: mlCur, prev: mlPrev },
+  };
   const channels: ChannelReport[] = (["shopee", "mercado-livre"] as Channel[]).map((ch) => {
     const chHealth = health.filter((h) => h.marketplace === ch);
-    const ids = new Set(chHealth.map((h) => h.listingId));
-    const sumVisits = (m: Map<string, number>) =>
-      [...m.entries()].filter(([id]) => ids.has(id)).reduce((a, [, v]) => a + v, 0);
-    const chVisits = cur.hasData ? sumVisits(cur.perListing) : null;
+    const chVisits = shopVisits[ch].cur;
     const chSales = sales.filter((o) => o.marketplace === ch);
     let chRevenue = 0;
     let chProfit = 0;
@@ -520,7 +600,7 @@ export async function buildStoreReport(
       marketplace: ch,
       listingsCount: chHealth.length,
       visits: chVisits,
-      prevVisits: prev.hasData ? sumVisits(prev.perListing) : null,
+      prevVisits: shopVisits[ch].prev,
       orders: chSales.length,
       prevOrders: (prevOrders ?? []).filter((o) => !o.dismissed_at && o.marketplace === ch).length,
       revenueCents: chRevenue,
@@ -532,17 +612,25 @@ export async function buildStoreReport(
     };
   });
 
+  const sumOrNull = (vals: Array<number | null>) =>
+    vals.some((v) => v !== null) ? vals.reduce<number>((a, v) => a + (v ?? 0), 0) : null;
+  const shopTotal = sumOrNull(channels.map((c) => c.visits));
+  const shopPrevTotal = sumOrNull(channels.map((c) => c.prevVisits));
+
   return {
     from,
     to,
     channels,
-    visits,
-    prevVisits,
+    visits: shopTotal ?? visits,
+    prevVisits: shopPrevTotal ?? prevVisits,
     orders: sales.length,
     prevOrders: (prevOrders ?? []).filter((o) => !o.dismissed_at).length,
     revenueCents: revenue,
     profitCents: profit,
-    conversion: visits && visits > 0 ? sales.length / visits : null,
+    conversion:
+      (shopTotal ?? visits) && (shopTotal ?? visits)! > 0
+        ? sales.length / (shopTotal ?? visits)!
+        : null,
     topProducts,
     listings: health,
     suggestions: suggestions.slice(0, 6),

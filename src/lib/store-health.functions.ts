@@ -27,7 +27,12 @@ export const getStoreHealth = createServerFn({ method: "GET" })
       .select("listing_id", { count: "exact", head: true })
       .eq("user_id", context.userId)
       .eq("day", today);
-    if (!count) await collectStatsForUser(context.userId).catch(() => 0);
+    const { count: shopCount } = await supabaseAdmin
+      .from("store_daily_stats" as never)
+      .select("user_id", { count: "exact", head: true })
+      .eq("user_id", context.userId)
+      .eq("day", today);
+    if (!count || !shopCount) await collectStatsForUser(context.userId).catch(() => 0);
 
     const to = today;
     const from = new Date(new Date(`${to}T12:00:00Z`).getTime() - (data.days - 1) * 86400000)

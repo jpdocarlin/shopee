@@ -101,7 +101,7 @@ function StoreKpis({ c, days }: { c: ChannelReport; days: number }) {
     <div className="grid grid-cols-2 gap-2.5">
       <Kpi
         icon={Eye}
-        label={`Visitas (${days} dias)`}
+        label={`Visitas na loja (${days} dias)`}
         value={c.visits === null ? "—" : String(c.visits)}
         trend={<Trend cur={c.visits} prev={c.prevVisits} />}
       />
