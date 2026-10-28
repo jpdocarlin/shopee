@@ -177,3 +177,19 @@ export const reviewListingCost = createServerFn({ method: "POST" })
       .eq("id", row.id);
     return { ok: true };
   });
+
+// Anúncios informados à mão (lojas do dono não conectadas) — somam na contagem.
+export const getManualListingsExtra = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<number> => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data } = await supabaseAdmin
+      .from("manual_store_stats" as never)
+      .select("marketplace, listings_count")
+      .eq("user_id", context.userId)
+      .eq("period_days", 7);
+    return ((data ?? []) as Array<{ listings_count: number | null }>).reduce(
+      (n, r) => n + (r.listings_count ?? 0),
+      0,
+    );
+  });

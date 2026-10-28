@@ -606,7 +606,7 @@ export async function buildStoreReport(
       revenueCents: chRevenue,
       profitCents: chProfit,
       conversion: chVisits && chVisits > 0 ? chSales.length / chVisits : null,
-      topProducts: [...chTop.values()].sort((a, b) => b.qty - a.qty).slice(0, 3),
+      topProducts: [...chTop.values()].sort((a, b) => b.qty - a.qty).slice(0, 5),
       review: review.slice(0, 30),
       reviewCount: review.length,
     };
@@ -626,7 +626,7 @@ export async function buildStoreReport(
   }>) {
     const c = channels.find((x) => x.marketplace === m.marketplace);
     if (!c) continue;
-    if (m.listings_count !== null) c.listingsCount = m.listings_count;
+    if (m.listings_count !== null) c.listingsCount += m.listings_count;
     if (m.visits !== null) {
       c.visits = m.visits;
       c.prevVisits = null;
@@ -636,6 +636,29 @@ export async function buildStoreReport(
       c.prevOrders = 0;
     }
     c.conversion = c.visits && c.visits > 0 ? c.orders / c.visits : null;
+  }
+
+  // Ranking informado à mão (lojas do dono não conectadas).
+  const { data: manualTop } = await supabaseAdmin
+    .from("manual_top_products" as never)
+    .select("marketplace, product_id, qty, position")
+    .eq("user_id", userId)
+    .eq("period_days", days)
+    .order("position", { ascending: true });
+  const topRows = (manualTop ?? []) as Array<{
+    marketplace: Channel;
+    product_id: string;
+    qty: number;
+  }>;
+  if (topRows.length) {
+    for (const c of channels) {
+      const rows = topRows.filter((r) => r.marketplace === c.marketplace);
+      if (!rows.length) continue;
+      c.topProducts = rows.map((r) => {
+        const p = findCatalogProductById(r.product_id);
+        return { name: p?.name ?? "Produto", qty: r.qty, imageUrl: p?.image ?? null };
+      });
+    }
   }
 
   const sumOrNull = (vals: Array<number | null>) =>

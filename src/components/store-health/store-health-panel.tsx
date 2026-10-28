@@ -5,6 +5,7 @@ import {
   ArrowUpRight,
   CheckCircle2,
   Eye,
+  EyeOff,
   Lightbulb,
   Loader2,
   ShoppingBag,
@@ -183,6 +184,83 @@ function StoreHeader({ c, right }: { c: ChannelReport; right?: React.ReactNode }
   );
 }
 
+// Top 5 mais vendidos, com olhinho pra esconder os produtos (ex.: print, live).
+function TopProducts({ items }: { items: ChannelReport["topProducts"] }) {
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    try {
+      setHidden(localStorage.getItem("shoppfy:hide-top-products") === "1");
+    } catch {
+      // ok
+    }
+  }, []);
+  const toggle = () => {
+    setHidden((v) => {
+      try {
+        localStorage.setItem("shoppfy:hide-top-products", v ? "0" : "1");
+      } catch {
+        // ok
+      }
+      return !v;
+    });
+  };
+  return (
+    <div>
+      <div className="mb-2 flex items-center justify-between">
+        <p className="flex items-center gap-1.5 text-[12.5px] font-medium text-foreground">
+          <Trophy className="size-3.5 text-brand" /> Top 5 mais vendidos
+        </p>
+        {items.length > 0 && (
+          <button
+            type="button"
+            onClick={toggle}
+            className="grid size-7 place-items-center rounded-md text-muted-foreground hover:bg-surface-hover hover:text-foreground"
+            aria-label={hidden ? "Mostrar produtos" : "Ocultar produtos"}
+            title={hidden ? "Mostrar produtos" : "Ocultar produtos"}
+          >
+            {hidden ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+          </button>
+        )}
+      </div>
+      {items.length === 0 ? (
+        <p className="text-[12px] text-muted-foreground">Nenhuma venda no período.</p>
+      ) : (
+        <div className="space-y-2">
+          {items.map((p, i) => (
+            <div key={`${p.name}-${i}`} className="flex items-center gap-2.5 text-[12.5px]">
+              <span className="w-4 shrink-0 text-center font-semibold text-muted-foreground">
+                {i + 1}
+              </span>
+              {p.imageUrl ? (
+                <img
+                  src={p.imageUrl}
+                  alt=""
+                  loading="lazy"
+                  className={cn(
+                    "size-8 shrink-0 rounded-md object-cover transition",
+                    hidden && "blur-md",
+                  )}
+                />
+              ) : (
+                <div className="size-8 shrink-0 rounded-md bg-surface-hover" />
+              )}
+              <span
+                className={cn(
+                  "line-clamp-1 flex-1 text-foreground transition",
+                  hidden && "select-none blur-sm",
+                )}
+              >
+                {hidden ? "Produto oculto" : p.name}
+              </span>
+              <span className="shrink-0 text-muted-foreground">{p.qty} un.</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function StoreCard({ c, days, wide }: { c: ChannelReport; days: number; wide: boolean }) {
   return (
     <div className="surface-card overflow-hidden">
@@ -192,28 +270,7 @@ function StoreCard({ c, days, wide }: { c: ChannelReport; days: number; wide: bo
         {/* Números + mais vendidos */}
         <div className="space-y-4 p-5">
           <StoreKpis c={c} days={days} />
-          <div>
-            <p className="mb-2 flex items-center gap-1.5 text-[12.5px] font-medium text-foreground">
-              <Trophy className="size-3.5 text-brand" /> Mais vendidos
-            </p>
-            {c.topProducts.length === 0 ? (
-              <p className="text-[12px] text-muted-foreground">Nenhuma venda no período.</p>
-            ) : (
-              <div className="space-y-1.5">
-                {c.topProducts.map((p, i) => (
-                  <div
-                    key={p.name}
-                    className="flex items-center justify-between gap-3 text-[12.5px]"
-                  >
-                    <span className="line-clamp-1 text-foreground">
-                      {i + 1}. {p.name}
-                    </span>
-                    <span className="shrink-0 text-muted-foreground">{p.qty} un.</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <TopProducts items={c.topProducts} />
         </div>
 
         {/* Só os anúncios que precisam de revisão */}

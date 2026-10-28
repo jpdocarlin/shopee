@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { findCatalogProductById } from "@/lib/catalog";
 import { formatBRL } from "@/lib/format";
 import {
+  getManualListingsExtra,
   listMyListings,
   reviewListingCost,
   setListingActive,
@@ -342,6 +343,12 @@ function AnunciosPage() {
   const [channel, setChannel] = useState<ChannelFilter>("all");
   const [status, setStatus] = useState<StatusFilter>("all");
   const [query, setQuery] = useState("");
+  const [manualExtra, setManualExtra] = useState(0);
+  useEffect(() => {
+    getManualListingsExtra()
+      .then(setManualExtra)
+      .catch(() => setManualExtra(0));
+  }, []);
 
   const load = async () => {
     try {
@@ -397,8 +404,8 @@ function AnunciosPage() {
   const counts = useMemo(() => {
     const all = listings ?? [];
     return {
-      total: all.length,
-      active: all.filter((l) => l.status === "active").length,
+      total: all.length + manualExtra,
+      active: all.filter((l) => l.status === "active").length + manualExtra,
       paused: all.filter((l) => l.status === "paused").length,
       loss: all.filter((l) => {
         const cost = currentCost(l);
@@ -409,7 +416,7 @@ function AnunciosPage() {
         );
       }).length,
     };
-  }, [listings]);
+  }, [listings, manualExtra]);
 
   return (
     <div className="space-y-7">
