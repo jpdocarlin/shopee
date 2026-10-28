@@ -615,16 +615,18 @@ export async function buildStoreReport(
   // Números informados à mão (lojas do dono que não estão conectadas).
   const { data: manual } = await supabaseAdmin
     .from("manual_store_stats" as never)
-    .select("marketplace, visits, orders")
+    .select("marketplace, visits, orders, listings_count")
     .eq("user_id", userId)
     .eq("period_days", days);
   for (const m of (manual ?? []) as Array<{
     marketplace: Channel;
     visits: number | null;
     orders: number | null;
+    listings_count: number | null;
   }>) {
     const c = channels.find((x) => x.marketplace === m.marketplace);
     if (!c) continue;
+    if (m.listings_count !== null) c.listingsCount = m.listings_count;
     if (m.visits !== null) {
       c.visits = m.visits;
       c.prevVisits = null;
