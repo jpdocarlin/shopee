@@ -1,7 +1,6 @@
 // Server-only: IA gratuita (Groq — https://console.groq.com, plano free sem
-// cartão). Usada no AUTOATENDIMENTO no lugar do Gemini: respostas,
-// transcrição de áudio e leitura de print. O Criar Anúncio continua no Gemini
-// (decisão do Jp em 26/10/2026).
+// cartão). Usada no AUTOATENDIMENTO (respostas, áudio, print) e, desde
+// 28/10/2026, também nos textos do Criar Anúncio (título e descrição).
 //
 // 26/10/2026: o Jp pediu pra trocar o Gemini (cobrado por uso) por uma IA
 // gratuita no atendimento. Quando GROQ_API_KEY existe, o bot usa o Groq. Se o
