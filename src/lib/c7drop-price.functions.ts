@@ -35,6 +35,8 @@ type SubmitInput = {
   labelPath: string;
   proofPath: string;
   notes?: string;
+  variation?: string;
+  quantity?: number;
 };
 
 export type SubmitFulfillmentResult =
@@ -57,6 +59,8 @@ export const submitFulfillmentRequest = createServerFn({ method: "POST" })
       labelPath: clean(data?.labelPath, 300),
       proofPath: clean(data?.proofPath, 300),
       notes: clean(data?.notes, 2000),
+      variation: clean(data?.variation, 120),
+      quantity: Math.min(50, Math.max(1, Math.floor(Number(data?.quantity) || 1))),
     };
     if (!/^[0-9a-f-]{36}$/i.test(out.requestId)) throw new Error("Pedido inválido.");
     if (
@@ -85,9 +89,11 @@ export const submitFulfillmentRequest = createServerFn({ method: "POST" })
     if (!live.available) return { ok: false, reason: "sold_out" };
     // Preço subiu depois que o revendedor viu o valor: não grava, devolve o
     // preço novo pra ele mandar a diferença no PIX.
+    // expectedCostCents é o preço da UNIDADE que a pessoa viu.
     if (live.priceCents > data.expectedCostCents) {
       return { ok: false, reason: "price_changed", priceCents: live.priceCents };
     }
+    const quantity = data.quantity ?? 1;
 
     const product = C7DROP_PRODUCTS.find((p) => p.id === data.productId)!;
     const { data: row, error } = await context.supabase
@@ -104,16 +110,18 @@ export const submitFulfillmentRequest = createServerFn({ method: "POST" })
         product_id: product.id,
         product_image_url: product.image,
         // O que o revendedor viu e pagou (nunca menos que o preço atual).
-        cost_cents: data.expectedCostCents,
+        cost_cents: data.expectedCostCents * quantity,
         label_path: data.labelPath,
         proof_path: data.proofPath,
         notes: data.notes || null,
-      })
+        variation: data.variation || null,
+        quantity,
+      } as never)
       .select("id")
       .single();
     if (error) {
       console.error("[submitFulfillmentRequest] falha ao gravar:", error);
       throw new Error("Não deu pra enviar o pedido agora. Tente de novo.");
     }
-    return { ok: true, id: row.id, costCents: data.expectedCostCents };
+    return { ok: true, id: row.id, costCents: data.expectedCostCents * quantity };
   });

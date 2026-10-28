@@ -18,6 +18,8 @@ type C7DropVariant = {
   tier?: string | null;
   price?: number | null;
   value?: string | null;
+  name?: string | null;
+  stock?: number | null;
 };
 
 type C7DropDetail = {
@@ -30,9 +32,13 @@ type C7DropDetail = {
 
 export type C7DropLivePrice = {
   productId: string;
+  slug: string;
   priceCents: number;
   available: boolean;
   checkedAt: string;
+  // Variações (cor etc.) da tabela Dropshipping com estoque — pra pessoa
+  // escolher no pedido e a extensão marcar a mesma na C7.
+  variants: Array<{ name: string; value: string }>;
 };
 
 // Preço da tabela Dropshipping, na unidade da API. Em alguns produtos a C7Drop
@@ -95,5 +101,23 @@ export async function getC7DropLivePrice(productId: string): Promise<C7DropLiveP
   }
 
   const available = !(detail.manageStock === true && (detail.stock ?? 0) <= 0);
-  return { productId, priceCents, available, checkedAt: new Date().toISOString() };
+  const seen = new Set<string>();
+  const variants: C7DropLivePrice["variants"] = [];
+  for (const v of detail.variants ?? []) {
+    if (v?.tier !== "DROPSHIPPING" || typeof v.value !== "string") continue;
+    const value = v.value.trim();
+    if (!value || /^\d+([.,]\d+)?$/.test(value)) continue; // preço no lugar do valor
+    if (typeof v.stock === "number" && v.stock <= 0) continue;
+    if (seen.has(value)) continue;
+    seen.add(value);
+    variants.push({ name: (v.name ?? "Variação").trim() || "Variação", value });
+  }
+  return {
+    productId,
+    slug: snapshot.slug,
+    priceCents,
+    available,
+    checkedAt: new Date().toISOString(),
+    variants,
+  };
 }

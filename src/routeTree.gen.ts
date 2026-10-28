@@ -30,6 +30,7 @@ import { Route as ShellPosVendaRouteImport } from './routes/_shell.pos-venda'
 import { Route as ShellReembolsoRouteImport } from './routes/_shell.reembolso'
 import { Route as ShellReembolsosAdminRouteImport } from './routes/_shell.reembolsos-admin'
 import { Route as ShellSaudeDaLojaRouteImport } from './routes/_shell.saude-da-loja'
+import { Route as ApiC7HandoffRouteImport } from './routes/api.c7-handoff'
 import { Route as MembrosIndexRouteImport } from './routes/membros.index'
 import { Route as MembrosModuloSlugRouteImport } from './routes/membros.$moduloSlug'
 import { Route as ShellAnuncioItemIdRouteImport } from './routes/_shell.anuncio.$itemId'
@@ -148,6 +149,11 @@ const ShellSaudeDaLojaRoute = ShellSaudeDaLojaRouteImport.update({
   path: '/saude-da-loja',
   getParentRoute: () => ShellRoute,
 } as any)
+const ApiC7HandoffRoute = ApiC7HandoffRouteImport.update({
+  id: '/api/c7-handoff',
+  path: '/api/c7-handoff',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MembrosIndexRoute = MembrosIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -236,6 +242,7 @@ export interface FileRoutesByFullPath {
   '/reembolso': typeof ShellReembolsoRoute
   '/reembolsos-admin': typeof ShellReembolsosAdminRoute
   '/saude-da-loja': typeof ShellSaudeDaLojaRoute
+  '/api/c7-handoff': typeof ApiC7HandoffRoute
   '/membros/$moduloSlug': typeof MembrosModuloSlugRoute
   '/membros/': typeof MembrosIndexRoute
   '/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
@@ -269,6 +276,7 @@ export interface FileRoutesByTo {
   '/reembolso': typeof ShellReembolsoRoute
   '/reembolsos-admin': typeof ShellReembolsosAdminRoute
   '/saude-da-loja': typeof ShellSaudeDaLojaRoute
+  '/api/c7-handoff': typeof ApiC7HandoffRoute
   '/membros/$moduloSlug': typeof MembrosModuloSlugRoute
   '/': typeof ShellIndexRoute
   '/membros': typeof MembrosIndexRoute
@@ -306,6 +314,7 @@ export interface FileRoutesById {
   '/_shell/reembolso': typeof ShellReembolsoRoute
   '/_shell/reembolsos-admin': typeof ShellReembolsosAdminRoute
   '/_shell/saude-da-loja': typeof ShellSaudeDaLojaRoute
+  '/api/c7-handoff': typeof ApiC7HandoffRoute
   '/membros/$moduloSlug': typeof MembrosModuloSlugRoute
   '/_shell/': typeof ShellIndexRoute
   '/membros/': typeof MembrosIndexRoute
@@ -344,6 +353,7 @@ export interface FileRouteTypes {
     | '/reembolso'
     | '/reembolsos-admin'
     | '/saude-da-loja'
+    | '/api/c7-handoff'
     | '/membros/$moduloSlug'
     | '/membros/'
     | '/anuncio/$itemId'
@@ -377,6 +387,7 @@ export interface FileRouteTypes {
     | '/reembolso'
     | '/reembolsos-admin'
     | '/saude-da-loja'
+    | '/api/c7-handoff'
     | '/membros/$moduloSlug'
     | '/'
     | '/membros'
@@ -413,6 +424,7 @@ export interface FileRouteTypes {
     | '/_shell/reembolso'
     | '/_shell/reembolsos-admin'
     | '/_shell/saude-da-loja'
+    | '/api/c7-handoff'
     | '/membros/$moduloSlug'
     | '/_shell/'
     | '/membros/'
@@ -434,6 +446,7 @@ export interface RootRouteChildren {
   AtendimentoRoute: typeof AtendimentoRoute
   LoginRoute: typeof LoginRoute
   MembrosRoute: typeof MembrosRouteWithChildren
+  ApiC7HandoffRoute: typeof ApiC7HandoffRoute
   ApiCronCatalogNotifyRoute: typeof ApiCronCatalogNotifyRoute
   ApiCronImportOrdersRoute: typeof ApiCronImportOrdersRoute
   ApiCronStoreStatsRoute: typeof ApiCronStoreStatsRoute
@@ -594,6 +607,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellSaudeDaLojaRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/api/c7-handoff': {
+      id: '/api/c7-handoff'
+      path: '/api/c7-handoff'
+      fullPath: '/api/c7-handoff'
+      preLoaderRoute: typeof ApiC7HandoffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/membros/': {
       id: '/membros/'
       path: '/'
@@ -752,6 +772,7 @@ const rootRouteChildren: RootRouteChildren = {
   AtendimentoRoute: AtendimentoRoute,
   LoginRoute: LoginRoute,
   MembrosRoute: MembrosRouteWithChildren,
+  ApiC7HandoffRoute: ApiC7HandoffRoute,
   ApiCronCatalogNotifyRoute: ApiCronCatalogNotifyRoute,
   ApiCronImportOrdersRoute: ApiCronImportOrdersRoute,
   ApiCronStoreStatsRoute: ApiCronStoreStatsRoute,

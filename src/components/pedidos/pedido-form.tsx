@@ -134,6 +134,11 @@ export function PedidoForm({
 
   const [product, setProduct] = useState<C7DropProduct | null>(null);
   const [costInput, setCostInput] = useState("");
+  // Variação (cor etc.) e quantidade — vão junto pro pedido e a compra na C7
+  // marca a mesma variação automaticamente.
+  const [variants, setVariants] = useState<Array<{ name: string; value: string }>>([]);
+  const [variation, setVariation] = useState("");
+  const [quantity, setQuantity] = useState(1);
   const [notes, setNotes] = useState("");
   const [labelFile, setLabelFile] = useState<File | null>(null);
   const [proofFile, setProofFile] = useState<File | null>(null);
@@ -148,13 +153,16 @@ export function PedidoForm({
   // produto, a consulta anterior pode voltar depois).
   const latestPickRef = useRef<string | null>(null);
 
-  const costCents = parseMoney(costInput);
+  const unitCents = parseMoney(costInput);
+  const costCents = unitCents * quantity;
 
   const pickProduct = async (picked: C7DropProduct | null) => {
     setProduct(picked);
     setPriceError(null);
     setPriceNotice(null);
     setCostInput("");
+    setVariants([]);
+    setVariation("");
     latestPickRef.current = picked?.id ?? null;
     if (!picked) {
       setPriceChecking(false);
@@ -170,6 +178,8 @@ export function PedidoForm({
         return;
       }
       setCostInput(centsToDecimalInput(live.priceCents));
+      setVariants(live.variants ?? []);
+      if ((live.variants ?? []).length === 1) setVariation(live.variants[0].value);
     } catch (err) {
       if (latestPickRef.current !== picked.id) return;
       setProduct(null);
@@ -198,6 +208,7 @@ export function PedidoForm({
     document.trim().length > 0 &&
     Boolean(product) &&
     costCents > 0 &&
+    (variants.length <= 1 || variation.length > 0) &&
     !priceChecking &&
     Boolean(labelFile) &&
     Boolean(proofFile) &&
@@ -218,7 +229,9 @@ export function PedidoForm({
         submitterPersonType: personType,
         submitterDocument: document.trim(),
         productId: product.id,
-        costCents,
+        costCents: unitCents,
+        variation: variation || undefined,
+        quantity,
         labelFile,
         proofFile,
         notes,
@@ -227,7 +240,7 @@ export function PedidoForm({
         if (created.reason === "sold_out") {
           setError("Esse produto esgotou na C7Drop agora. O pedido não foi registrado.");
         } else {
-          const diff = created.priceCents - costCents;
+          const diff = (created.priceCents - unitCents) * quantity;
           setCostInput(centsToDecimalInput(created.priceCents));
           setProofFile(null);
           setPriceNotice(
@@ -252,6 +265,9 @@ export function PedidoForm({
       });
       setProduct(null);
       setCostInput("");
+      setVariants([]);
+      setVariation("");
+      setQuantity(1);
       setNotes("");
       setLabelFile(null);
       setProofFile(null);
@@ -410,6 +426,60 @@ export function PedidoForm({
             />
           </div>
         </div>
+
+        {product && unitCents > 0 && (
+          <div className="grid gap-3 sm:grid-cols-2">
+            {variants.length > 0 && (
+              <div>
+                <label
+                  className="mb-1.5 block text-[12px] text-muted-foreground"
+                  htmlFor="variacao"
+                >
+                  {variants[0].name}{" "}
+                  {variants.length > 1 && "(escolha a mesma que o cliente comprou)"}
+                </label>
+                <select
+                  id="variacao"
+                  value={variation}
+                  onChange={(e) => setVariation(e.target.value)}
+                  className="h-9 w-full rounded-md border border-border bg-background px-2 text-[13px]"
+                >
+                  {variants.length > 1 && <option value="">Selecione</option>}
+                  {variants.map((v) => (
+                    <option key={v.value} value={v.value}>
+                      {v.value}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+            <div>
+              <label
+                className="mb-1.5 block text-[12px] text-muted-foreground"
+                htmlFor="quantidade"
+              >
+                Quantidade
+              </label>
+              <Input
+                id="quantidade"
+                type="number"
+                min={1}
+                max={50}
+                inputMode="numeric"
+                value={quantity}
+                onChange={(e) =>
+                  setQuantity(Math.min(50, Math.max(1, Math.floor(Number(e.target.value) || 1))))
+                }
+                className="h-9 max-w-[120px] text-[13px]"
+              />
+              {quantity > 1 && (
+                <p className="mt-1 text-[11px] text-muted-foreground">
+                  {quantity} × {formatBRL(unitCents)} = {formatBRL(costCents)}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
 
         {priceNotice && (
           <div className="flex items-start gap-2.5 rounded-lg border border-destructive/40 bg-destructive/10 px-4 py-3.5 text-[13px] text-destructive">

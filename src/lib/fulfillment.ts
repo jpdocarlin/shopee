@@ -12,7 +12,10 @@ import {
   type SubmitFulfillmentResult,
 } from "@/lib/c7drop-price.functions";
 
-export type FulfillmentRequest = Database["public"]["Tables"]["fulfillment_requests"]["Row"];
+export type FulfillmentRequest = Database["public"]["Tables"]["fulfillment_requests"]["Row"] & {
+  variation?: string | null;
+  quantity?: number;
+};
 export type FulfillmentStatus = Database["public"]["Enums"]["fulfillment_status"];
 export type PersonType = Database["public"]["Enums"]["person_type"];
 
@@ -64,6 +67,8 @@ export async function createFulfillmentRequest(params: {
   labelFile: File;
   proofFile: File;
   notes?: string;
+  variation?: string;
+  quantity?: number;
 }): Promise<SubmitFulfillmentResult> {
   const requestId = crypto.randomUUID();
   const [labelPath, proofPath] = await Promise.all([
@@ -84,6 +89,8 @@ export async function createFulfillmentRequest(params: {
       labelPath,
       proofPath,
       notes: params.notes,
+      variation: params.variation,
+      quantity: params.quantity,
     },
   });
 }

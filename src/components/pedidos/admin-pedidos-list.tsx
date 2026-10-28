@@ -2,6 +2,7 @@ import { OrderProduct } from "@/components/pedidos/order-product";
 import { useEffect, useMemo, useState } from "react";
 import {
   CircleDollarSign,
+  ShoppingCart,
   Download,
   Loader2,
   Mail,
@@ -30,6 +31,7 @@ import {
   type FulfillmentRequest,
   type FulfillmentStatus,
 } from "@/lib/fulfillment";
+import { createC7Handoff } from "@/lib/c7-handoff.functions";
 
 // Todo pedido pago via PIX inclui R$ 2,00 de embalagem além do custo do
 // produto (mesma regra mostrada no formulário de envio).
@@ -159,6 +161,39 @@ function TrackingField({
   );
 }
 
+// Abre o produto na C7 com o passe pra extensão "Shoppfy → C7" preencher
+// carrinho, embalagem, dados do lojista e etiqueta. O pagamento é sempre manual.
+function BuyOnC7Button({ request }: { request: FulfillmentRequest }) {
+  const [busy, setBusy] = useState(false);
+  if (!request.product_id) return null;
+  const open = async () => {
+    // Abre a aba já no clique (o navegador bloqueia pop-up depois de await).
+    const tab = window.open("about:blank", "_blank");
+    setBusy(true);
+    try {
+      const { url } = await createC7Handoff({ data: { requestId: request.id } });
+      if (tab) tab.location.href = url;
+      else window.location.href = url;
+    } catch (err) {
+      tab?.close();
+      toast.error(err instanceof Error ? err.message : "Não deu pra abrir a C7 agora.");
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <Button
+      size="sm"
+      className="h-8 gap-1.5 text-[12px]"
+      disabled={busy}
+      onClick={() => void open()}
+    >
+      {busy ? <Loader2 className="size-3.5 animate-spin" /> : <ShoppingCart className="size-3.5" />}
+      Comprar na C7
+    </Button>
+  );
+}
+
 function PedidoCard({
   request,
   onStatusChange,
@@ -211,7 +246,10 @@ function PedidoCard({
           </div>
           <div className="space-y-1 text-[11.5px] text-muted-foreground">
             <p className="flex items-center justify-between">
-              <span>Produto</span>
+              <span>
+                Produto{(request.quantity ?? 1) > 1 ? ` (${request.quantity} un.)` : ""}
+                {request.variation ? ` · ${request.variation}` : ""}
+              </span>
               <span className="text-foreground">{formatBRL(request.cost_cents)}</span>
             </p>
             <p className="flex items-center justify-between">
@@ -236,6 +274,7 @@ function PedidoCard({
 
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-3.5">
         <div className="flex flex-wrap gap-1.5">
+          <BuyOnC7Button request={request} />
           <AttachmentLink path={request.label_path} label="Etiqueta" />
           <AttachmentLink path={request.proof_path} label="Comprovante PIX" />
         </div>

@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Shoppfy → C7",
+  "version": "1.0.0",
+  "description": "Preenche a compra na C7 Drop a partir de um pedido da Shoppfy (produto, embalagem, dados do lojista e etiqueta). O pagamento é sempre manual.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://www.c7drop.com.br/*",
+    "https://www.shoppfy.online/*",
+    "https://*.supabase.co/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["https://www.c7drop.com.br/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": { "128": "icon128.png" }
+}
