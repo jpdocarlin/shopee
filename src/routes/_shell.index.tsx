@@ -8,7 +8,7 @@ import { useProfileStore } from "@/stores/profile-store";
 import { cn } from "@/lib/utils";
 import { useT } from "@/i18n/translations";
 
-const DESCRIPTION = "Os números das suas lojas: visitas, vendas e conversão.";
+const DESCRIPTION = "Os números das suas lojas: visitas e conversão.";
 
 export const Route = createFileRoute("/_shell/")({
   head: () => ({

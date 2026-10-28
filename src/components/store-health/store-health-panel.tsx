@@ -6,7 +6,6 @@ import {
   Eye,
   Lightbulb,
   Loader2,
-  ShoppingBag,
   TrendingDown,
   TrendingUp,
   Trophy,
@@ -99,18 +98,12 @@ function Kpi({
 
 function StoreKpis({ c, days }: { c: ChannelReport; days: number }) {
   return (
-    <div className="grid grid-cols-3 gap-2.5">
+    <div className="grid grid-cols-2 gap-2.5">
       <Kpi
         icon={Eye}
         label={`Visitas (${days} dias)`}
         value={c.visits === null ? "—" : String(c.visits)}
         trend={<Trend cur={c.visits} prev={c.prevVisits} />}
-      />
-      <Kpi
-        icon={ShoppingBag}
-        label="Vendas"
-        value={String(c.orders)}
-        trend={<Trend cur={c.orders} prev={c.prevOrders} />}
       />
       <Kpi
         icon={TrendingUp}
