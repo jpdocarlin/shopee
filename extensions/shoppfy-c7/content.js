@@ -72,6 +72,16 @@
 
   const onlyDigits = (s) => (s || "").replace(/\D/g, "");
 
+  // A C7 guarda o carrinho no localStorage da própria página ("C7drop_cart").
+  function readCart() {
+    try {
+      const raw = JSON.parse(localStorage.getItem("C7drop_cart") || "[]");
+      return Array.isArray(raw) ? raw : [];
+    } catch (_) {
+      return [];
+    }
+  }
+
   // ------------------------------------------------------------- estado
   const getState = () =>
     new Promise((r) => chrome.storage.local.get(STATE_KEY, (v) => r(v[STATE_KEY] || null)));
@@ -124,6 +134,18 @@
     const { data } = state;
     showPanel(`Preparando <b>${data.productName}</b>…`);
 
+    // Carrinho com sobra de outra compra/teste: esvazia antes (senão a C7
+    // finaliza o produto antigo). Só uma vez por pedido, e recarrega a página
+    // pra C7 ler o carrinho vazio.
+    if (!state.cartCleared) {
+      await setState({ ...state, cartCleared: true });
+      if (readCart().length > 0) {
+        localStorage.setItem("C7drop_cart", "[]");
+        location.reload();
+        return;
+      }
+    }
+
     // Modo de compra: Dropshipping
     const drop = await waitFor(() => findByText("Dropshipping"));
     if (!drop) return fail("Não achei a opção <b>Dropshipping</b> nessa página.");
@@ -158,11 +180,28 @@
       }
     }
 
-    const add = await waitFor(() => findByText("Adicionar ao carrinho"));
+    // Botão principal da página (o primeiro na ordem da página — os
+    // "Adicionar" dos produtos sugeridos ficam mais pra baixo).
+    const add = await waitFor(() => {
+      const all = clickables().filter((el) => norm(el.innerText) === "adicionar ao carrinho");
+      const el = all[0];
+      return el ? el.closest("button, a, [role=button]") || el : null;
+    });
     if (!add) return fail("Não achei o botão <b>Adicionar ao carrinho</b>.");
-    await setState({ ...state, stage: "cart" });
     add.click();
-    await sleep(1500);
+
+    // Confere se entrou o produto CERTO no carrinho.
+    const added = await waitFor(
+      () => readCart().some((l) => !data.productId || l.id === data.productId),
+      8000,
+    );
+    if (!added) {
+      return fail(
+        "A C7 não colocou este produto no carrinho (talvez falte escolher a cor). Escolha e clique em “Adicionar ao carrinho” manualmente.",
+      );
+    }
+    await setState({ ...(await getState()), stage: "cart" });
+    await sleep(800);
     if (!/\/carrinho/.test(location.pathname)) location.href = "/carrinho";
   }
 
@@ -171,12 +210,19 @@
     const finish = await waitFor(() => findByText("Finalizar compra"));
     if (!finish) return fail("Não achei o botão <b>Finalizar compra</b> no carrinho.");
 
-    // Carrinho precisa ter só este pedido.
-    const countMatch = (document.body.innerText.match(/(\d+)\s+itens?\b/i) || [])[1];
-    const expected = 1;
-    if (countMatch && Number(countMatch) > expected) {
+    // Carrinho precisa ter só o produto deste pedido.
+    const cart = readCart();
+    const wrong = cart.filter((l) => state.data.productId && l.id !== state.data.productId);
+    const mine = cart.filter((l) => !state.data.productId || l.id === state.data.productId);
+    if (wrong.length || mine.length !== 1) {
       return fail(
-        `O carrinho tem <b>${countMatch} itens</b>. Deixe só o produto deste pedido e clique em “Comprar na C7” de novo.`,
+        `O carrinho não está só com <b>${state.data.productName}</b>. Limpe o carrinho e clique em “Comprar na C7” de novo.`,
+      );
+    }
+    const wantQty = Math.max(1, Number(state.data.quantity) || 1);
+    if (Number(mine[0].quantity) !== wantQty) {
+      return fail(
+        `A quantidade no carrinho está <b>${mine[0].quantity}</b>, mas o pedido é de <b>${wantQty}</b>. Ajuste e siga manualmente.`,
       );
     }
     // Embalagem C7 de R$ 1,50
@@ -194,6 +240,15 @@
 
   async function stepCheckout(state) {
     const s = state.data.submitter;
+    const cartNow = readCart();
+    if (
+      state.data.productId &&
+      (cartNow.length !== 1 || cartNow[0].id !== state.data.productId)
+    ) {
+      return fail(
+        `O checkout não está com <b>${state.data.productName}</b>. Limpe o carrinho e clique em “Comprar na C7” de novo.`,
+      );
+    }
     showPanel("Preenchendo os dados do lojista…");
 
     const byPh = (ph) =>

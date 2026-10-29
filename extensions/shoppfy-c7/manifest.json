@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Shoppfy → C7",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Preenche a compra na C7 Drop a partir de um pedido da Shoppfy (produto, embalagem, dados do lojista e etiqueta). O pagamento é sempre manual.",
   "permissions": ["storage"],
   "host_permissions": [

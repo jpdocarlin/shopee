@@ -88,6 +88,7 @@ export const Route = createFileRoute("/api/c7-handoff")({
         return Response.json(
           {
             productName: req.product_name,
+            productId: product?.id ?? null,
             slug: product?.slug ?? null,
             variation: req.variation ?? null,
             quantity: req.quantity ?? 1,
