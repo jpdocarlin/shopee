@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-10-28 — 1368 produtos, na ordem retornada pela API
+// Snapshot de 2026-10-29 — 1370 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -20,6 +20,28 @@ export type C7DropProduct = {
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
+  {
+    id: "cmvssoudl00fzhfvk9gdqitgq",
+    name: "Kit Compressor Aerógrafo Usb Recarregável Sem Fio Portátil",
+    slug: "kit-compressor-aerografo-usb-recarregavel-sem-fio-portatil",
+    priceCents: 8000,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1793232289852-788eaccb.webp",
+    category: "Produtos diversos",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmvsrqmqn008phfvkhabvl0c7",
+    name: "Gorro Touca Natal Papai Noel Vermelho Veludo",
+    slug: "gorro-touca-natal-papai-noel-vermelho-veludo",
+    priceCents: 700,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1793231082847-6e0fe49f.webp",
+    category: "Produto de Natal",
+    stock: 50,
+    manageStock: true,
+  },
   {
     id: "cmvs78oja0lrb9itppi1wzttf",
     name: "Fone De Ouvido Bluetooth Sem Fio Tws Mini Ft-1101",
@@ -567,7 +589,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1790203499265-dfddc765.webp",
     category: "Informática",
-    stock: 46,
+    stock: 45,
     manageStock: true,
   },
   {
@@ -930,7 +952,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788181902025-b76d6d36.webp",
     category: "Produto de Natal",
-    stock: 48,
+    stock: 47,
     manageStock: true,
   },
   {
@@ -4208,7 +4230,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/c5b0648e1e-8-39.jpg",
     category: "Mais vendidos",
-    stock: -19,
+    stock: -21,
     manageStock: false,
   },
   {
@@ -9103,7 +9125,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/b64b8f03a4-5.png",
     category: "Carregadores & Power Banks",
-    stock: -16,
+    stock: -17,
     manageStock: false,
   },
   {
@@ -10478,7 +10500,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3b245c2d74-Prancheta-3-6.png",
     category: "Casa e Utensílios Domésticos",
-    stock: 99,
+    stock: 98,
     manageStock: true,
   },
   {
@@ -13459,7 +13481,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f81078d31a-0-MoedorTrituradorDeCafGroswEltricoInox.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -13,
+    stock: -14,
     manageStock: false,
   },
   {
@@ -13503,7 +13525,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/9a5d081df4-2-2.webp",
     category: "Brinquedos",
-    stock: -404,
+    stock: -407,
     manageStock: false,
   },
   {
@@ -14152,7 +14174,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/69a26f5aa1-16.webp",
     category: "Games",
-    stock: 90,
+    stock: 89,
     manageStock: true,
   },
   {
