@@ -183,34 +183,64 @@ async function fetchGeminiWithRetry(apiKey: string, prompt: string): Promise<Res
   throw new Error("Falha inesperada ao chamar a API do Gemini.");
 }
 
+// 29/10/2026 (decisão do Jp): o Google (Gemini, pago) fica SÓ pro título e
+// a descrição do Criar Anúncio — ali a qualidade importa mais. Todo o resto
+// (história, roteiro, categoria do ML) usa só a IA gratuita (Groq).
+type Provider = "google-first" | "free-only";
+
+async function callFree(
+  prompt: string,
+  minLines: number,
+  clean: (raw: string) => string,
+): Promise<string> {
+  const r = await groqText(prompt, { maxTokens: 1500 });
+  const text = clean(r.text);
+  if (!text) throw new Error("resposta vazia");
+  if (r.finish !== "STOP" || text.split("\n").filter(Boolean).length < minLines) {
+    console.error(`[Groq texto] texto incompleto (finish=${r.finish}):`, text);
+    throw new Error("A IA devolveu um texto incompleto.");
+  }
+  return text;
+}
+
 async function callGemini(
   prompt: string,
   minLines: number,
   clean: (raw: string) => string = cleanStory,
+  provider: Provider = "free-only",
 ): Promise<string> {
-  // 28/10/2026: título, descrição e demais textos do Criar Anúncio usam a IA
-  // gratuita (Groq), a mesma do atendimento. Gemini só como reserva se o Groq
-  // falhar e houver chave do Google configurada.
-  if (hasGroq()) {
+  if (provider === "free-only") {
+    if (!hasGroq()) throw new Error("IA gratuita não configurada (GROQ_API_KEY).");
     try {
-      const r = await groqText(prompt, { maxTokens: 1500 });
-      const text = clean(r.text);
-      if (!text) throw new Error("resposta vazia");
-      if (r.finish !== "STOP" || text.split("\n").filter(Boolean).length < minLines) {
-        console.error(`[Groq texto] texto incompleto (finish=${r.finish}):`, text);
-        throw new Error("A IA devolveu um texto incompleto.");
-      }
-      return text;
+      return await callFree(prompt, minLines, clean);
     } catch (err) {
       console.error("[Groq texto] falhou:", err);
-      if (!process.env.GEMINI_API_KEY) {
-        throw new Error(
-          "O gerador de texto está sobrecarregado agora (limite de uso da IA). Espere um instante e tente de novo.",
-        );
-      }
+      throw new Error(
+        "A IA gratuita chegou no limite de uso agora. Espere alguns minutos e tente de novo.",
+      );
     }
   }
 
+  // google-first: Gemini; se falhar (sem crédito, fora do ar), cai na gratuita.
+  try {
+    return await callGoogle(prompt, minLines, clean);
+  } catch (err) {
+    console.error("[Gemini texto] falhou, usando a IA gratuita:", err);
+    if (!hasGroq()) throw err;
+    try {
+      return await callFree(prompt, minLines, clean);
+    } catch (err2) {
+      console.error("[Groq texto] falhou:", err2);
+      throw err instanceof Error ? err : new Error("Não foi possível gerar o texto agora.");
+    }
+  }
+}
+
+async function callGoogle(
+  prompt: string,
+  minLines: number,
+  clean: (raw: string) => string,
+): Promise<string> {
   const apiKey = requireApiKey();
 
   const res = await fetchGeminiWithRetry(apiKey, prompt);
@@ -219,9 +249,11 @@ async function callGemini(
     const errText = await res.text();
     console.error(`[Gemini texto] ${res.status} ${errText.slice(0, 500)}`);
     const message =
-      res.status === 429 || res.status === 402
-        ? "A IA gratuita chegou no limite de uso agora. Espere alguns minutos e tente de novo."
-        : `Não foi possível gerar o texto agora (erro ${res.status}).`;
+      res.status === 402
+        ? "Os créditos da IA do Google acabaram. Recarregue em aistudio.google.com pra voltar a gerar título e descrição."
+        : res.status === 429
+          ? "A IA está sobrecarregada agora. Espere um instante e tente de novo."
+          : `Não foi possível gerar o texto agora (erro ${res.status}).`;
     throw new Error(message);
   }
 
@@ -415,7 +447,9 @@ export function titleSimilarity(a: string, b: string): number {
 }
 
 /** Acima disso o título é considerado "cópia" do título do fornecedor. */
-const MAX_TITLE_SIMILARITY = 0.6;
+// 29/10/2026: era 0.6 e refazia o anúncio (pagando de novo) com frequência.
+// Agora só refaz quando o título sai quase igual ao do fornecedor.
+const MAX_TITLE_SIMILARITY = 0.85;
 
 function buildListingPrompt(input: ListingInput, angle: string, strict: boolean): string {
   const { productTitle, category, marketplace, variant } = input;
@@ -569,7 +603,12 @@ export async function generateListing(input: ListingInput): Promise<ListingResul
   // 1ª tentativa normal; se o título sair parecido demais com o do
   // fornecedor, tenta de novo com instrução mais dura e outro ângulo.
   let result = parseListing(
-    await callGemini(buildListingPrompt(input, pickAngle(), false), 4, cleanListing),
+    await callGemini(
+      buildListingPrompt(input, pickAngle(), false),
+      4,
+      cleanListing,
+      "google-first",
+    ),
     limit,
   );
   for (let retry = 0; retry < 2; retry++) {
@@ -578,7 +617,12 @@ export async function generateListing(input: ListingInput): Promise<ListingResul
       `[Gemini anúncio] título parecido demais com a origem (tentativa ${retry + 1}), gerando de novo`,
     );
     result = parseListing(
-      await callGemini(buildListingPrompt(input, pickAngle(), true), 4, cleanListing),
+      await callGemini(
+        buildListingPrompt(input, pickAngle(), true),
+        4,
+        cleanListing,
+        "google-first",
+      ),
       limit,
     );
   }

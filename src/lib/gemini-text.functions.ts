@@ -52,8 +52,45 @@ export const generateListing = createServerFn({ method: "POST" })
     const { enforceAiRateLimit, logAiUsage } = await import("@/lib/ai-usage.server");
     await enforceAiRateLimit(context.supabase, context.userId);
 
+    // 1ª geração do mesmo produto pelo mesmo cliente: reaproveita o texto
+    // salvo (não gasta IA). "Gerar outra versão" (variant > 0) sempre gera.
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const productKey = data.productTitle.trim().toLowerCase().slice(0, 300);
+    const cache = () => supabaseAdmin.from("listing_text_cache" as never);
+    if (!data.variant) {
+      const { data: hit } = await cache()
+        .select("payload, created_at")
+        .eq("user_id", context.userId)
+        .eq("marketplace", data.marketplace)
+        .eq("product_key", productKey)
+        .maybeSingle();
+      const row = hit as { payload: unknown; created_at: string } | null;
+      if (row && Date.now() - new Date(row.created_at).getTime() < 30 * 86400000) {
+        return row.payload as Awaited<
+          ReturnType<(typeof import("@/lib/gemini-text.server"))["generateListing"]>
+        >;
+      }
+    }
+
     const { generateListing: generate } = await import("@/lib/gemini-text.server");
     const result = await generate(data);
+    if (!data.variant) {
+      await cache()
+        .upsert(
+          {
+            user_id: context.userId,
+            marketplace: data.marketplace,
+            product_key: productKey,
+            payload: result,
+            created_at: new Date().toISOString(),
+          } as never,
+          { onConflict: "user_id,marketplace,product_key" },
+        )
+        .then(
+          () => undefined,
+          () => undefined,
+        );
+    }
 
     await logAiUsage(context.supabase, {
       userId: context.userId,

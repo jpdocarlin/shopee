@@ -501,6 +501,50 @@ export type SupportTurnResult = {
   extracted: ModelOutput["extracted"];
 };
 
+// 29/10/2026: mandar o manual INTEIRO em toda mensagem gastava ~4 mil tokens
+// por resposta e estourava o limite diário da IA gratuita. Agora vai só o que
+// tem a ver com a conversa: as seções básicas sempre + as 4 mais relacionadas
+// às últimas mensagens do cliente.
+const STOP = new Set(
+  "como para pela pelo esse essa isso esta este estou voce você meu minha tenho fazer quero onde quando porque qual quais muito mais tambem também ainda agora entao então sobre depois antes aqui".split(
+    " ",
+  ),
+);
+function words(text: string): string[] {
+  return (
+    text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .match(/[a-z0-9]{4,}/g) ?? []
+  ).filter((w) => !STOP.has(w));
+}
+function selectManual(manual: string, query: string): string {
+  const sections = manual
+    .split(/\n(?=# )/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (sections.length <= 5) return manual;
+  const always = (s: string) => /^# (O QUE É O SHOPPFY|O QUE NÃO EXISTE MAIS)/.test(s);
+  const q = new Set(words(query).map((w) => w.slice(0, 6)));
+  if (q.size === 0) return sections.filter(always).join("\n\n");
+  const scored = sections
+    .filter((s) => !always(s))
+    .map((s) => {
+      const sw = words(s).map((w) => w.slice(0, 6));
+      const head = words(s.split("\n")[0]).map((w) => w.slice(0, 6));
+      let score = 0;
+      for (const w of sw) if (q.has(w)) score += 1;
+      for (const w of head) if (q.has(w)) score += 5; // bate no título da seção
+      return { s, score };
+    })
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 4)
+    .map((x) => x.s);
+  return [...sections.filter(always), ...scored].join("\n\n");
+}
+
 export async function runSupportTurn(params: {
   admin: DbClient;
   userId: string;
@@ -515,7 +559,16 @@ export async function runSupportTurn(params: {
   for (let attempt = 0; attempt < 2; attempt++) {
     const raw = await callGemini(
       buildPrompt({
-        manual: SHOPPFY_MANUAL,
+        manual: selectManual(
+          SHOPPFY_MANUAL,
+          [
+            ...history
+              .filter((h) => h.role === "user")
+              .slice(-2)
+              .map((h) => h.content),
+            effectiveText,
+          ].join(" "),
+        ),
         customer: ctx.text,
         history,
         message: effectiveText,
