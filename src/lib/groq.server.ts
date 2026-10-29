@@ -14,10 +14,17 @@
 // pelas variáveis GROQ_TEXT_MODEL / GROQ_VISION_MODEL / GROQ_AUDIO_MODEL.
 const BASE = "https://api.groq.com/openai/v1";
 
+// 28/10/2026: no plano grátis o limite diário de tokens é POR MODELO
+// (ex.: 200 mil/dia no gpt-oss-120b). Atendimento + Criar Anúncio estouravam o
+// primeiro modelo e tudo caía no Gemini (sem crédito → erro 402). Agora, se um
+// modelo bater o limite do dia, passa pro próximo da lista na mesma hora.
 const TEXT_PREFERENCE = [
   "openai/gpt-oss-120b",
   "llama-3.3-70b-versatile",
+  "moonshotai/kimi-k2-instruct",
   "qwen/qwen3-32b",
+  "meta-llama/llama-4-maverick-17b-128e-instruct",
+  "meta-llama/llama-4-scout-17b-16e-instruct",
   "openai/gpt-oss-20b",
   "llama-3.1-8b-instant",
 ];
@@ -76,6 +83,70 @@ async function pickModel(
   return ids.find((id) => fallbackMatch.test(id)) ?? preference[0];
 }
 
+// Modelos que bateram o limite do dia: ficam de fora até a hora indicada.
+const exhaustedUntil = new Map<string, number>();
+
+function parseRetryMs(message: string): number {
+  const m = message.match(/try again in\s+(?:(\d+)h)?(?:(\d+)m)?(?:([\d.]+)s)?/i);
+  if (!m) return 60 * 60 * 1000;
+  const ms = (Number(m[1] || 0) * 3600 + Number(m[2] || 0) * 60 + Number(m[3] || 0)) * 1000 + 5000;
+  return Math.max(ms, 30_000);
+}
+
+async function candidateModels(
+  envName: string,
+  preference: string[],
+  fallbackMatch: RegExp,
+): Promise<string[]> {
+  const forced = process.env[envName];
+  const ids = await availableModels();
+  const list = [
+    ...(forced ? [forced] : []),
+    ...preference.filter((p) => ids.length === 0 || ids.includes(p)),
+    ...ids.filter((id) => fallbackMatch.test(id) && !preference.includes(id)),
+  ];
+  const now = Date.now();
+  const unique = [...new Set(list)];
+  const fresh = unique.filter((m) => (exhaustedUntil.get(m) ?? 0) <= now);
+  return fresh.length ? fresh : unique;
+}
+
+class GroqHttpError extends Error {
+  constructor(
+    public status: number,
+    message: string,
+  ) {
+    super(message);
+  }
+}
+
+// Tenta cada modelo na ordem; limite diário / modelo fora do ar → próximo.
+async function withModelFallback(
+  models: string[],
+  run: (model: string) => Promise<GroqResult>,
+): Promise<GroqResult> {
+  let last: unknown = null;
+  for (const model of models) {
+    try {
+      return await run(model);
+    } catch (err) {
+      last = err;
+      const msg = err instanceof Error ? err.message : String(err);
+      const daily = /per day|\(TPD\)|\(RPD\)/i.test(msg);
+      const gone =
+        err instanceof GroqHttpError &&
+        (err.status === 404 || /decommissioned|does not exist|not found/i.test(msg));
+      if (daily) exhaustedUntil.set(model, Date.now() + parseRetryMs(msg));
+      if (daily || gone || (err instanceof GroqHttpError && err.status === 429)) {
+        console.warn(`[Groq] ${model} indisponível agora, tentando o próximo modelo.`);
+        continue;
+      }
+      throw err;
+    }
+  }
+  throw last ?? new Error("[Groq] nenhum modelo disponível.");
+}
+
 // Alguns modelos (Qwen, DeepSeek) devolvem o raciocínio entre <think>…</think>.
 function stripThinking(text: string): string {
   return text.replace(/<think>[\s\S]*?<\/think>/gi, "").trim();
@@ -125,12 +196,14 @@ async function chat(
       return { text, finish };
     }
     const errText = await res.text();
-    // 429 = limite por minuto/dia do plano grátis; 5xx = instabilidade.
-    if ((res.status === 429 || res.status >= 500) && attempt < 3) {
+    const daily = /per day|\(TPD\)|\(RPD\)/i.test(errText);
+    // 429 por minuto / 5xx = passageiro: espera e tenta de novo. Limite do
+    // DIA não adianta esperar — quem chama troca de modelo.
+    if (!daily && (res.status === 429 || res.status >= 500) && attempt < 3) {
       await new Promise((r) => setTimeout(r, attempt * 1500));
       continue;
     }
-    throw new Error(`[Groq] ${res.status} ${errText.slice(0, 300)}`);
+    throw new GroqHttpError(res.status, `[Groq] ${res.status} ${errText.slice(0, 300)}`);
   }
   throw new Error("[Groq] falha inesperada.");
 }
@@ -139,12 +212,12 @@ export async function groqText(
   prompt: string,
   opts: { maxTokens: number; json?: boolean },
 ): Promise<GroqResult> {
-  const model = await pickModel(
+  const models = await candidateModels(
     "GROQ_TEXT_MODEL",
     TEXT_PREFERENCE,
     /gpt-oss|llama|qwen|kimi|deepseek/i,
   );
-  return chat(model, prompt, opts);
+  return withModelFallback(models, (model) => chat(model, prompt, opts));
 }
 
 export async function groqVision(
@@ -153,18 +226,20 @@ export async function groqVision(
   mimeType: string,
   opts: { maxTokens: number },
 ): Promise<GroqResult> {
-  const model = await pickModel(
+  const models = await candidateModels(
     "GROQ_VISION_MODEL",
     VISION_PREFERENCE,
     /vision|scout|maverick|-vl|qwen3\.\d+-\d+b/i,
   );
-  return chat(
-    model,
-    [
-      { type: "text", text: prompt },
-      { type: "image_url", image_url: { url: `data:${mimeType};base64,${base64}` } },
-    ],
-    opts,
+  return withModelFallback(models, (model) =>
+    chat(
+      model,
+      [
+        { type: "text", text: prompt },
+        { type: "image_url", image_url: { url: `data:${mimeType};base64,${base64}` } },
+      ],
+      opts,
+    ),
   );
 }
 

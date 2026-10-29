@@ -219,8 +219,8 @@ async function callGemini(
     const errText = await res.text();
     console.error(`[Gemini texto] ${res.status} ${errText.slice(0, 500)}`);
     const message =
-      res.status === 429
-        ? "O gerador de texto está sobrecarregado agora (limite de uso da IA). Espere um instante e tente de novo."
+      res.status === 429 || res.status === 402
+        ? "A IA gratuita chegou no limite de uso agora. Espere alguns minutos e tente de novo."
         : `Não foi possível gerar o texto agora (erro ${res.status}).`;
     throw new Error(message);
   }
