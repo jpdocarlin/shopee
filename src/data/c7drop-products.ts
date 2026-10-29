@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-10-29 — 1370 produtos, na ordem retornada pela API
+// Snapshot de 2026-10-29 — 1372 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -20,6 +20,28 @@ export type C7DropProduct = {
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
+  {
+    id: "cmvtjk1kb04cvhfvkxpr6ma9k",
+    name: "Relógio Parede Digital Grande Calendário Temperatura",
+    slug: "relogio-parede-digital-grande-calendario-temperatura",
+    priceCents: 9000,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1793277867857-418c6508.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmvtiqvnt049qhfvkcf6u79xf",
+    name: "Câmera De Segurança 4G Com Painel Solar Lente Dupla Preta Sigma SG6122S",
+    slug: "camera-de-seguranca-4g-com-painel-solar-lente-dupla-preta-sigma-sg6122s",
+    priceCents: 26000,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1793275743650-13b8ecd2.webp",
+    category: "Câmeras",
+    stock: 50,
+    manageStock: true,
+  },
   {
     id: "cmvssoudl00fzhfvk9gdqitgq",
     name: "Kit Compressor Aerógrafo Usb Recarregável Sem Fio Portátil",
@@ -1040,7 +1062,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787925294891-5876dcde.webp",
     category: "Produto de Natal",
-    stock: 50,
+    stock: 0,
     manageStock: true,
   },
   {
@@ -1073,7 +1095,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787921191547-1e29114d.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -1128,7 +1150,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787855356529-2950f74d.webp",
     category: "Produtos diversos",
-    stock: 37,
+    stock: 36,
     manageStock: true,
   },
   {
@@ -5396,7 +5418,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d7435e1d00-ca-1.jpg",
     category: "Media Streaming",
-    stock: -210,
+    stock: -212,
     manageStock: false,
   },
   {
@@ -6078,7 +6100,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/055b71a1f3-7-23.jpg",
     category: "Copa do Mundo",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -10874,7 +10896,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d11d528ad2-Prancheta-5-32.png",
     category: "Salão & Barbearia",
-    stock: -90,
+    stock: -91,
     manageStock: false,
   },
   {
@@ -13459,7 +13481,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/c2281cef04-BastoTripMiniPauDeSelfieBluetoothem-951709-MLB45132467872_032021.jpeg",
     category: "Ring Light & Suportes",
-    stock: -10,
+    stock: -11,
     manageStock: false,
   },
   {
@@ -13525,7 +13547,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/9a5d081df4-2-2.webp",
     category: "Brinquedos",
-    stock: -407,
+    stock: -408,
     manageStock: false,
   },
   {
@@ -13734,7 +13756,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3450091448-1-1.webp",
     category: "Caixas de Som",
-    stock: -209,
+    stock: -210,
     manageStock: false,
   },
   {
@@ -14449,7 +14471,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/98f279ab33-3-68.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: -83,
+    stock: -84,
     manageStock: false,
   },
   {
