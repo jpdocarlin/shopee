@@ -52,6 +52,11 @@ export const generateListing = createServerFn({ method: "POST" })
     const { enforceAiRateLimit, logAiUsage } = await import("@/lib/ai-usage.server");
     await enforceAiRateLimit(context.supabase, context.userId);
 
+    // 29/10/2026: limite de custo do Google — 20 gerações de título/descrição
+    // por dia e no máximo 2 no mesmo produto por dia. A conta do Jp fica fora.
+    const { enforceListingDailyLimits } = await import("@/lib/ai-usage.server");
+    await enforceListingDailyLimits(context.userId, data.productTitle);
+
     const { generateListing: generate } = await import("@/lib/gemini-text.server");
     const result = await generate(data);
 

@@ -158,7 +158,9 @@ async function fetchGeminiWithRetry(apiKey: string, prompt: string): Promise<Res
       // que conseguia zerar o thinking) a resposta vinha cortada no meio
       // ("A IA devolveu um texto incompleto", confirmado ao vivo). Subiu
       // pra sobrar espaço pro raciocínio + o texto de verdade.
-      maxOutputTokens: 3000,
+      // 29/10/2026: 3000 → 1800 pra cortar o "pensamento" cobrado. Se vier
+      // cortado, o título/descrição cai na IA gratuita (não trava a pessoa).
+      maxOutputTokens: 1800,
     },
   });
 
@@ -447,7 +449,9 @@ export function titleSimilarity(a: string, b: string): number {
 }
 
 /** Acima disso o título é considerado "cópia" do título do fornecedor. */
-const MAX_TITLE_SIMILARITY = 0.6;
+// 29/10/2026: era 0.6 e um clique virava até 3 cobranças no Google. Agora
+// só gera de novo quando o título sai quase igual ao do fornecedor.
+const MAX_TITLE_SIMILARITY = 0.85;
 
 function buildListingPrompt(input: ListingInput, angle: string, strict: boolean): string {
   const { productTitle, category, marketplace, variant } = input;

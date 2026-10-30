@@ -65,3 +65,51 @@ export async function logAiUsage(
     console.error("[AI usage log] falha ao registrar uso:", error.message);
   }
 }
+
+// Limites diários do título/descrição (Criar Anúncio), que usa a IA paga do
+// Google. Dia contado no horário de Brasília. Só a conta do dono fica de fora.
+const LISTING_DAILY_LIMIT = 20;
+const LISTING_PER_PRODUCT_LIMIT = 2;
+const UNLIMITED_EMAILS = new Set(["jpnogueiraz@gmail.com"]);
+
+export async function enforceListingDailyLimits(
+  userId: string,
+  productTitle: string,
+): Promise<void> {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data: auth } = await supabaseAdmin.auth.admin.getUserById(userId);
+  if (UNLIMITED_EMAILS.has((auth?.user?.email ?? "").toLowerCase())) return;
+
+  // Meia-noite de hoje em Brasília (UTC-3).
+  const brNow = new Date(Date.now() - 3 * 3600 * 1000);
+  const since = new Date(
+    Date.UTC(brNow.getUTCFullYear(), brNow.getUTCMonth(), brNow.getUTCDate(), 3),
+  ).toISOString();
+
+  const base = () =>
+    supabaseAdmin
+      .from("ai_generations")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", userId)
+      .eq("kind", "listing")
+      .gte("created_at", since);
+
+  const [{ count: today, error }, { count: sameProduct }] = await Promise.all([
+    base(),
+    base().eq("prompt", productTitle.slice(0, 4000)),
+  ]);
+  if (error) {
+    console.error("[AI limite diário] falha ao consultar uso:", error.message);
+    return;
+  }
+  if ((today ?? 0) >= LISTING_DAILY_LIMIT) {
+    throw new Error(
+      `Você já gerou ${LISTING_DAILY_LIMIT} títulos e descrições hoje, que é o limite diário. Amanhã libera de novo — até lá, dá pra editar o texto à mão.`,
+    );
+  }
+  if ((sameProduct ?? 0) >= LISTING_PER_PRODUCT_LIMIT) {
+    throw new Error(
+      `Você já gerou ${LISTING_PER_PRODUCT_LIMIT} versões pra este produto hoje. Escolha uma delas e ajuste à mão se quiser.`,
+    );
+  }
+}
