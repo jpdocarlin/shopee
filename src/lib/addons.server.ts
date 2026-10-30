@@ -1,10 +1,17 @@
 // Server-only: extras vendidos na Applyfy além do plano —
 //   • order bump "Lista dos Produtos Campeões" (kind "campeoes")
-//   • upsell "Call de implementação" (kind "call")
+//   • order bump "Call de implementação" (kind "call")
+//   • upsell "Acelerador Shoppfy 30 Dias" (kind "acelerador") — vale 30 dias
 // O webhook da Applyfy chama recordApplyfyEvent + grantAddonsFromPayload.
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
-export type AddonKind = "campeoes" | "call";
+export type AddonKind = "campeoes" | "call" | "acelerador";
+
+// Preço de cada extra na Applyfy (R$). Usado pra separar o extra do plano.
+export const ADDON_PRICE: Record<AddonKind, number> = { campeoes: 27, call: 127, acelerador: 247 };
+
+// Extras com prazo: o Acelerador vale 30 dias a partir da compra.
+const ADDON_DAYS: Partial<Record<AddonKind, number>> = { acelerador: 30 };
 
 const CALL_FIRST_HOUR = 9; // primeira sala (horário de Brasília)
 const CALL_LAST_HOUR = 21; // última sala
@@ -85,13 +92,17 @@ export function nextCallSlot(paidAt: Date): Date {
   return fromBrt(y, m, d, hour);
 }
 
-export async function getCallRoomUrl(): Promise<string | null> {
+async function getSetting(key: string): Promise<string | null> {
   const { data } = await supabaseAdmin
     .from("app_settings" as never)
     .select("value")
-    .eq("key", "call_room_url")
+    .eq("key", key)
     .maybeSingle();
   return (data as { value: string } | null)?.value ?? null;
+}
+
+export function getCallRoomUrl(): Promise<string | null> {
+  return getSetting("call_room_url");
 }
 
 export function formatSlot(slot: Date): string {
@@ -170,6 +181,31 @@ export async function grantAddons(params: {
       }).catch(() => undefined);
     }
   }
+
+  if (params.kinds.includes("acelerador")) {
+    const { data: profile } = await supabaseAdmin
+      .from("profiles")
+      .select("full_name")
+      .eq("id", params.userId)
+      .maybeSingle();
+    const name = params.name || profile?.full_name || null;
+    const groupUrl = await getSetting("acelerador_group_url");
+    const { aceleradorWelcomeEmail, sendEmail } = await import("@/lib/email.server");
+    const mail = aceleradorWelcomeEmail({
+      firstName: name?.trim().split(/\s+/)[0] ?? null,
+      groupUrl,
+    });
+    await sendEmail({ to: params.email, ...mail }).catch((err) =>
+      console.error("[addons] e-mail do Acelerador falhou:", err),
+    );
+    const { sendToPedidosAdmins } = await import("@/lib/push.server");
+    await sendToPedidosAdmins({
+      title: "Novo aluno no Acelerador",
+      body: `${name ?? params.email} entrou no Acelerador (R$247)`,
+      url: "/calls-admin",
+      tag: `acelerador-${params.transactionId ?? params.userId}`,
+    }).catch(() => undefined);
+  }
 }
 
 // Reembolso de uma compra que era SÓ o extra (ex.: a call como upsell):
@@ -204,10 +240,13 @@ export async function revokeAddonOnlyTransaction(transactionId: string): Promise
 export async function hasEntitlement(userId: string, kind: AddonKind): Promise<boolean> {
   const { data } = await supabaseAdmin
     .from("user_entitlements" as never)
-    .select("revoked_at")
+    .select("revoked_at, granted_at")
     .eq("user_id", userId)
     .eq("kind", kind)
     .maybeSingle();
-  const row = data as { revoked_at: string | null } | null;
-  return !!row && !row.revoked_at;
+  const row = data as { revoked_at: string | null; granted_at: string } | null;
+  if (!row || row.revoked_at) return false;
+  const days = ADDON_DAYS[kind];
+  if (!days) return true;
+  return Date.now() < new Date(row.granted_at).getTime() + days * 86400 * 1000;
 }

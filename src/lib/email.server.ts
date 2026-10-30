@@ -277,6 +277,49 @@ Você recebeu este e-mail porque usa a Shoppfy. Não quer mais receber avisos co
 }
 
 // Call de implementação: confirmação com o horário da sala (upsell).
+// Boas-vindas do Acelerador Shoppfy 30 Dias (upsell R$247).
+export function aceleradorWelcomeEmail(input: { firstName: string | null; groupUrl: string | null }) {
+  const hi = input.firstName ? `Oi, ${input.firstName}!` : "Oi!";
+  const subject = "Você está no Acelerador Shoppfy ✅";
+  const items = [
+    "4 calls ao vivo com o Jp Nogueiraz — toda quarta às 20h (horário de Brasília)",
+    "Grupo exclusivo no WhatsApp por 30 dias",
+    "Produtos Campeões da Semana, toda segunda",
+    "Diagnóstico da sua loja, por escrito",
+    "Calendário Black Friday e Natal",
+    "Suporte prioritário e gravações de todas as calls",
+  ];
+  const groupLine = input.groupUrl
+    ? `Entre no grupo do WhatsApp: ${input.groupUrl}`
+    : "O link do grupo do WhatsApp chega neste e-mail em breve.";
+  const text = [
+    hi,
+    "",
+    "Sua vaga no Acelerador Shoppfy 30 Dias está confirmada. O que você recebe:",
+    ...items.map((i) => `- ${i}`),
+    "",
+    groupLine,
+    "",
+    "Os links das calls ficam no grupo. Qualquer dúvida, é só responder este e-mail.",
+  ].join("\n");
+  const button = input.groupUrl
+    ? `<p style="margin:0 0 20px"><a href="${esc(input.groupUrl)}" style="display:inline-block;background:#111111;color:#ffffff;text-decoration:none;font-weight:bold;padding:12px 22px;border-radius:999px">Entrar no grupo do WhatsApp</a></p>`
+    : `<p style="margin:0 0 20px;color:#52525b">O link do grupo do WhatsApp chega neste e-mail em breve.</p>`;
+  const html = `<!doctype html><html><body style="margin:0;background:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;color:#18181b">
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:24px 12px"><tr><td align="center">
+<table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border-radius:14px;padding:30px">
+<tr><td style="font-size:13px;font-weight:600;color:#71717a;padding-bottom:6px">Acelerador Shoppfy · 30 dias</td></tr>
+<tr><td style="font-size:24px;font-weight:700;letter-spacing:-0.02em;padding-bottom:16px">Você está dentro.</td></tr>
+<tr><td style="font-size:16px;line-height:24px">
+<p style="margin:0 0 12px">${esc(hi)}</p>
+<p style="margin:0 0 12px">Sua vaga no <strong>Acelerador Shoppfy</strong> está confirmada. O que você recebe:</p>
+<ul style="margin:0 0 20px;padding-left:20px">${items.map((i) => `<li style="margin:0 0 6px">${esc(i)}</li>`).join("")}</ul>
+${button}
+<p style="margin:0;color:#71717a">Os links das calls ficam no grupo. Qualquer dúvida, é só responder este e-mail.</p>
+</td></tr></table></td></tr></table></body></html>`;
+  return { subject, text, html };
+}
+
 export function callBookedEmail(input: {
   firstName: string | null;
   when: string;

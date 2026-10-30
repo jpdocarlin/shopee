@@ -116,25 +116,26 @@ export async function handleTransactionPaid(payload: ApplyfyPayload): Promise<We
   const admin = getAdminClient();
 
   // Extras (order bump / upsell) que vieram nessa transação.
-  const { detectAddons, grantAddons, payloadHasMainProduct } = await import("@/lib/addons.server");
+  const { detectAddons, grantAddons, payloadHasMainProduct, ADDON_PRICE } =
+    await import("@/lib/addons.server");
   const addons = await detectAddons(payload as Record<string, unknown>);
   // Upsell comprado depois (transação separada, só o extra): não mexe no
   // plano nem conta como compra do sistema — só libera o extra.
   const rawAmount =
     payload.transaction?.originalAmount ?? payload.transaction?.commissionAmount ?? 0;
   const amountReais = rawAmount > 1000 ? rawAmount / 100 : rawAmount;
+  const addonsTotal = addons.reduce((sum, k) => sum + ADDON_PRICE[k], 0);
   // Só é "compra só do extra" se o plano não está no payload E o valor bate
-  // com o preço do extra (R$127 call, R$27 lista). Na dúvida, trata como
-  // compra do plano — nunca deixa alguém que pagou o plano sem acesso.
+  // com a soma dos extras detectados (ex.: R$247 Acelerador, R$127 call,
+  // R$27 lista). Na dúvida, trata como compra do plano — nunca deixa alguém
+  // que pagou o plano sem acesso.
   const addonOnly =
     addons.length > 0 &&
     !payloadHasMainProduct(payload as Record<string, unknown>) &&
-    [27, 127, 154].some((v) => Math.abs(amountReais - v) < 0.5);
+    Math.abs(amountReais - addonsTotal) < 0.5;
   // Extras que vieram junto com o plano (order bumps): desconta antes de
-  // decidir o plano. Lista R$27, Call R$127.
-  const extras = addonOnly
-    ? 0
-    : (addons.includes("campeoes") ? 27 : 0) + (addons.includes("call") ? 127 : 0);
+  // decidir o plano.
+  const extras = addonOnly ? 0 : addonsTotal;
   const detected = detectPlan(payload, extras);
   const grant = (userId: string) =>
     addons.length
@@ -153,6 +154,11 @@ export async function handleTransactionPaid(payload: ApplyfyPayload): Promise<We
       await grant(existing.id);
       return { ok: true, userId: existing.id, ignored: `addon_only:${addons.join(",")}` };
     }
+    // O Acelerador é upsell (só aparece depois de comprar a Shoppfy): se a
+    // conta ainda não existe, o evento do plano ainda não chegou. Não cria
+    // login a partir dele (R$247 viraria "vitalício") — devolve erro pra
+    // Applyfy reenviar; o evento fica salvo em applyfy_events.
+    if (addons.includes("acelerador")) return { ok: false, reason: "addon_user_not_found" };
     // Sem conta ainda (raro): segue o fluxo normal pra criar o login.
   }
 
