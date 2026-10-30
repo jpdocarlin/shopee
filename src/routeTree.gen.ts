@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShellRouteImport } from './routes/_shell'
+import { Route as AceleradorRouteImport } from './routes/acelerador'
 import { Route as AtendimentoRouteImport } from './routes/atendimento'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MembrosRouteImport } from './routes/membros'
@@ -53,6 +54,11 @@ import { Route as MembrosModuloSlugAulaSlugRouteImport } from './routes/membros.
 
 const ShellRoute = ShellRouteImport.update({
   id: '/_shell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AceleradorRoute = AceleradorRouteImport.update({
+  id: '/acelerador',
+  path: '/acelerador',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AtendimentoRoute = AtendimentoRouteImport.update({
@@ -259,6 +265,7 @@ const MembrosModuloSlugAulaSlugRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof ShellIndexRoute
+  '/acelerador': typeof AceleradorRoute
   '/atendimento': typeof AtendimentoRoute
   '/login': typeof LoginRoute
   '/membros': typeof MembrosRouteWithChildren
@@ -300,6 +307,7 @@ export interface FileRoutesByFullPath {
   '/membros/$moduloSlug/$aulaSlug': typeof MembrosModuloSlugAulaSlugRoute
 }
 export interface FileRoutesByTo {
+  '/acelerador': typeof AceleradorRoute
   '/atendimento': typeof AtendimentoRoute
   '/login': typeof LoginRoute
   '/anuncios': typeof ShellAnunciosRoute
@@ -343,6 +351,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_shell': typeof ShellRouteWithChildren
+  '/acelerador': typeof AceleradorRoute
   '/atendimento': typeof AtendimentoRoute
   '/login': typeof LoginRoute
   '/membros': typeof MembrosRouteWithChildren
@@ -388,6 +397,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/acelerador'
     | '/atendimento'
     | '/login'
     | '/membros'
@@ -429,6 +439,7 @@ export interface FileRouteTypes {
     | '/membros/$moduloSlug/$aulaSlug'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/acelerador'
     | '/atendimento'
     | '/login'
     | '/anuncios'
@@ -471,6 +482,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_shell'
+    | '/acelerador'
     | '/atendimento'
     | '/login'
     | '/membros'
@@ -515,6 +527,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   ShellRoute: typeof ShellRouteWithChildren
+  AceleradorRoute: typeof AceleradorRoute
   AtendimentoRoute: typeof AtendimentoRoute
   LoginRoute: typeof LoginRoute
   MembrosRoute: typeof MembrosRouteWithChildren
@@ -541,6 +554,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof ShellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/acelerador': {
+      id: '/acelerador'
+      path: '/acelerador'
+      fullPath: '/acelerador'
+      preLoaderRoute: typeof AceleradorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/atendimento': {
@@ -891,6 +911,7 @@ const MembrosRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   ShellRoute: ShellRouteWithChildren,
+  AceleradorRoute: AceleradorRoute,
   AtendimentoRoute: AtendimentoRoute,
   LoginRoute: LoginRoute,
   MembrosRoute: MembrosRouteWithChildren,

@@ -12,15 +12,11 @@ export function ThanksLayout({ children }: { children: ReactNode }) {
       style={{ fontFamily: FONT, letterSpacing: "-0.011em" }}
     >
       <header className="mx-auto flex h-16 w-full max-w-[720px] items-center gap-2.5 border-b border-[#1F1F1F] px-6">
-        <img src="/icon-192.png" alt="" className="size-6 rounded-md grayscale" />
-        <span className="text-[16px] font-semibold tracking-tight">Shoppfy</span>
+        <img src="/icon-192.png" alt="Shoppfy" className="size-7 rounded-md grayscale" />
       </header>
       <main className="mx-auto flex w-full max-w-[720px] flex-1 flex-col justify-center px-6 py-16">
         {children}
       </main>
-      <footer className="mx-auto w-full max-w-[720px] border-t border-[#1F1F1F] px-6 py-6 text-[12px] text-[#6E6E73]">
-        Shoppfy · shoppfy.online
-      </footer>
     </div>
   );
 }
