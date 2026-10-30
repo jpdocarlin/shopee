@@ -35,6 +35,8 @@ import { Route as ShellSaudeDaLojaRouteImport } from './routes/_shell.saude-da-l
 import { Route as ApiC7HandoffRouteImport } from './routes/api.c7-handoff'
 import { Route as MembrosIndexRouteImport } from './routes/membros.index'
 import { Route as MembrosModuloSlugRouteImport } from './routes/membros.$moduloSlug'
+import { Route as ObrigadoIndexRouteImport } from './routes/obrigado.index'
+import { Route as ObrigadoAceleradorRouteImport } from './routes/obrigado.acelerador'
 import { Route as ShellAnuncioItemIdRouteImport } from './routes/_shell.anuncio.$itemId'
 import { Route as ApiCronCatalogNotifyRouteImport } from './routes/api.cron.catalog-notify'
 import { Route as ApiCronCommunityEmailRouteImport } from './routes/api.cron.community-email'
@@ -178,6 +180,16 @@ const MembrosModuloSlugRoute = MembrosModuloSlugRouteImport.update({
   path: '/$moduloSlug',
   getParentRoute: () => MembrosRoute,
 } as any)
+const ObrigadoIndexRoute = ObrigadoIndexRouteImport.update({
+  id: '/obrigado/',
+  path: '/obrigado/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ObrigadoAceleradorRoute = ObrigadoAceleradorRouteImport.update({
+  id: '/obrigado/acelerador',
+  path: '/obrigado/acelerador',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShellAnuncioItemIdRoute = ShellAnuncioItemIdRouteImport.update({
   id: '/anuncio/$itemId',
   path: '/anuncio/$itemId',
@@ -270,7 +282,9 @@ export interface FileRoutesByFullPath {
   '/saude-da-loja': typeof ShellSaudeDaLojaRoute
   '/api/c7-handoff': typeof ApiC7HandoffRoute
   '/membros/$moduloSlug': typeof MembrosModuloSlugRoute
+  '/obrigado/acelerador': typeof ObrigadoAceleradorRoute
   '/membros/': typeof MembrosIndexRoute
+  '/obrigado/': typeof ObrigadoIndexRoute
   '/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
   '/api/cron/catalog-notify': typeof ApiCronCatalogNotifyRoute
   '/api/cron/community-email': typeof ApiCronCommunityEmailRoute
@@ -308,8 +322,10 @@ export interface FileRoutesByTo {
   '/saude-da-loja': typeof ShellSaudeDaLojaRoute
   '/api/c7-handoff': typeof ApiC7HandoffRoute
   '/membros/$moduloSlug': typeof MembrosModuloSlugRoute
+  '/obrigado/acelerador': typeof ObrigadoAceleradorRoute
   '/': typeof ShellIndexRoute
   '/membros': typeof MembrosIndexRoute
+  '/obrigado': typeof ObrigadoIndexRoute
   '/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
   '/api/cron/catalog-notify': typeof ApiCronCatalogNotifyRoute
   '/api/cron/community-email': typeof ApiCronCommunityEmailRoute
@@ -350,8 +366,10 @@ export interface FileRoutesById {
   '/_shell/saude-da-loja': typeof ShellSaudeDaLojaRoute
   '/api/c7-handoff': typeof ApiC7HandoffRoute
   '/membros/$moduloSlug': typeof MembrosModuloSlugRoute
+  '/obrigado/acelerador': typeof ObrigadoAceleradorRoute
   '/_shell/': typeof ShellIndexRoute
   '/membros/': typeof MembrosIndexRoute
+  '/obrigado/': typeof ObrigadoIndexRoute
   '/_shell/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
   '/api/cron/catalog-notify': typeof ApiCronCatalogNotifyRoute
   '/api/cron/community-email': typeof ApiCronCommunityEmailRoute
@@ -393,7 +411,9 @@ export interface FileRouteTypes {
     | '/saude-da-loja'
     | '/api/c7-handoff'
     | '/membros/$moduloSlug'
+    | '/obrigado/acelerador'
     | '/membros/'
+    | '/obrigado/'
     | '/anuncio/$itemId'
     | '/api/cron/catalog-notify'
     | '/api/cron/community-email'
@@ -431,8 +451,10 @@ export interface FileRouteTypes {
     | '/saude-da-loja'
     | '/api/c7-handoff'
     | '/membros/$moduloSlug'
+    | '/obrigado/acelerador'
     | '/'
     | '/membros'
+    | '/obrigado'
     | '/anuncio/$itemId'
     | '/api/cron/catalog-notify'
     | '/api/cron/community-email'
@@ -472,8 +494,10 @@ export interface FileRouteTypes {
     | '/_shell/saude-da-loja'
     | '/api/c7-handoff'
     | '/membros/$moduloSlug'
+    | '/obrigado/acelerador'
     | '/_shell/'
     | '/membros/'
+    | '/obrigado/'
     | '/_shell/anuncio/$itemId'
     | '/api/cron/catalog-notify'
     | '/api/cron/community-email'
@@ -495,6 +519,8 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MembrosRoute: typeof MembrosRouteWithChildren
   ApiC7HandoffRoute: typeof ApiC7HandoffRoute
+  ObrigadoAceleradorRoute: typeof ObrigadoAceleradorRoute
+  ObrigadoIndexRoute: typeof ObrigadoIndexRoute
   ApiCronCatalogNotifyRoute: typeof ApiCronCatalogNotifyRoute
   ApiCronCommunityEmailRoute: typeof ApiCronCommunityEmailRoute
   ApiCronImportOrdersRoute: typeof ApiCronImportOrdersRoute
@@ -692,6 +718,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MembrosModuloSlugRouteImport
       parentRoute: typeof MembrosRoute
     }
+    '/obrigado/': {
+      id: '/obrigado/'
+      path: '/obrigado'
+      fullPath: '/obrigado/'
+      preLoaderRoute: typeof ObrigadoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/obrigado/acelerador': {
+      id: '/obrigado/acelerador'
+      path: '/obrigado/acelerador'
+      fullPath: '/obrigado/acelerador'
+      preLoaderRoute: typeof ObrigadoAceleradorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_shell/anuncio/$itemId': {
       id: '/_shell/anuncio/$itemId'
       path: '/anuncio/$itemId'
@@ -855,6 +895,8 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MembrosRoute: MembrosRouteWithChildren,
   ApiC7HandoffRoute: ApiC7HandoffRoute,
+  ObrigadoAceleradorRoute: ObrigadoAceleradorRoute,
+  ObrigadoIndexRoute: ObrigadoIndexRoute,
   ApiCronCatalogNotifyRoute: ApiCronCatalogNotifyRoute,
   ApiCronCommunityEmailRoute: ApiCronCommunityEmailRoute,
   ApiCronImportOrdersRoute: ApiCronImportOrdersRoute,
