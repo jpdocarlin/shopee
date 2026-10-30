@@ -447,9 +447,7 @@ export function titleSimilarity(a: string, b: string): number {
 }
 
 /** Acima disso o título é considerado "cópia" do título do fornecedor. */
-// 29/10/2026: era 0.6 e refazia o anúncio (pagando de novo) com frequência.
-// Agora só refaz quando o título sai quase igual ao do fornecedor.
-const MAX_TITLE_SIMILARITY = 0.85;
+const MAX_TITLE_SIMILARITY = 0.6;
 
 function buildListingPrompt(input: ListingInput, angle: string, strict: boolean): string {
   const { productTitle, category, marketplace, variant } = input;
