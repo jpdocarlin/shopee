@@ -171,7 +171,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1792614214693-08a191a1.webp",
     category: "Fones de Ouvido",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -1139,7 +1139,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787857879084-2b4c2d59.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 37,
+    stock: 36,
     manageStock: true,
   },
   {
@@ -1238,7 +1238,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787668618452-331e7cbc.webp",
     category: "Carregadores & Power Banks",
-    stock: 43,
+    stock: 42,
     manageStock: true,
   },
   {
@@ -1392,7 +1392,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1786716245771-a697446f.webp",
     category: "Iluminação",
-    stock: 44,
+    stock: 42,
     manageStock: true,
   },
   {
@@ -1821,7 +1821,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1785253197350-54e7bafc.webp",
     category: "Carregadores & Power Banks",
-    stock: 40,
+    stock: 39,
     manageStock: true,
   },
   {
@@ -5583,7 +5583,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/7367dac8cf-1-13.jpg",
     category: "Informática",
-    stock: -75,
+    stock: -76,
     manageStock: false,
   },
   {
@@ -8322,7 +8322,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/af5fbaaa5b-5-17.jpg",
     category: "Carregadores & Power Banks",
-    stock: -8,
+    stock: -9,
     manageStock: false,
   },
   {
@@ -8476,7 +8476,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/cb4aad0dec-4-5.jpg",
     category: "Caixas de Som",
-    stock: 0,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -12304,7 +12304,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/b2622e457e-1-1.png",
     category: "Media Streaming",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
