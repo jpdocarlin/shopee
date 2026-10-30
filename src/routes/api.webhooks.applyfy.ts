@@ -48,6 +48,10 @@ export const Route = createFileRoute("/api/webhooks/applyfy")({
         // rastro nos logs da Vercel, e o único sinal é "o login não foi
         // criado" — dias depois, sem contexto nenhum pra investigar.
         console.log("[applyfy-webhook] received event:", payload.event ?? "(sem event)");
+        {
+          const { recordApplyfyEvent } = await import("@/lib/addons.server");
+          await recordApplyfyEvent(payload as Record<string, unknown>);
+        }
 
         try {
           let result: WebhookResult;
@@ -69,9 +73,18 @@ export const Route = createFileRoute("/api/webhooks/applyfy")({
               result = await handleAccessBlock(payload, "subscription_expired");
               break;
             // Reembolso e chargeback: bloqueia (não apaga mais a conta nem os pedidos).
-            case "TRANSACTION_REFUNDED":
+            case "TRANSACTION_REFUNDED": {
+              // Reembolso só do extra (ex.: a call comprada depois): tira o
+              // extra e NÃO bloqueia o acesso ao sistema.
+              const txId = payload.transaction?.id?.trim();
+              const { revokeAddonOnlyTransaction } = await import("@/lib/addons.server");
+              if (txId && (await revokeAddonOnlyTransaction(txId))) {
+                result = { ok: true, ignored: "addon_refunded" };
+                break;
+              }
               result = await handleAccessBlock(payload, "refunded");
               break;
+            }
             case "TRANSACTION_CHARGED_BACK":
               result = await handleAccessBlock(payload, "chargeback");
               break;

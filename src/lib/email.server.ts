@@ -275,3 +275,48 @@ Você recebeu este e-mail porque usa a Shoppfy. Não quer mais receber avisos co
 </td></tr></table></td></tr></table></body></html>`;
   return { subject, html, text };
 }
+
+// Call de implementação: confirmação com o horário da sala (upsell).
+export function callBookedEmail(input: {
+  firstName: string | null;
+  when: string;
+  roomUrl: string | null;
+}) {
+  const hi = input.firstName ? `Oi, ${input.firstName}!` : "Oi!";
+  const subject = "Sua call de implementação está marcada ✅";
+  const checklist = [
+    "Ter a loja da Shopee criada (seller.shopee.com.br) e/ou a conta do Mercado Livre",
+    "Documento (RG ou CNH) por perto, pra verificação da Shopee se ela pedir",
+    "Estar no computador, com a Shoppfy aberta e logada",
+  ];
+  const room = input.roomUrl ?? "https://www.shoppfy.online";
+  const text = [
+    hi,
+    "",
+    "Sua call de implementação com a equipe Shoppfy está marcada:",
+    `Quando: ${input.when} (horário de Brasília)`,
+    `Link da sala: ${room}`,
+    "",
+    "Pra aproveitar ao máximo, chegue com:",
+    ...checklist.map((c) => `- ${c}`),
+    "",
+    "Na call a gente monta sua loja com você, passo a passo, e você sai com os primeiros anúncios no ar.",
+    "É uma call única — se não puder no horário, responda este e-mail.",
+  ].join("\n");
+  const html = `<!doctype html><html><body style="margin:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;color:#18181b">
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:24px 12px"><tr><td align="center">
+<table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border-radius:12px;padding:28px">
+<tr><td style="font-size:20px;font-weight:bold;color:#ff6a00;padding-bottom:16px">Shoppfy</td></tr>
+<tr><td style="font-size:16px;line-height:24px">
+<p style="margin:0 0 12px">${esc(hi)}</p>
+<p style="margin:0 0 16px">Sua <strong>call de implementação</strong> com a equipe Shoppfy está marcada:</p>
+<table cellpadding="0" cellspacing="0" style="width:100%;background:#fafafa;border:1px solid #e4e4e7;border-radius:8px;margin:0 0 16px">
+<tr><td style="padding:12px 14px;font-size:15px;line-height:22px">Quando: <strong>${esc(input.when)}</strong> (horário de Brasília)</td></tr></table>
+<p style="margin:0 0 20px"><a href="${esc(room)}" style="display:inline-block;background:#ff6a00;color:#ffffff;text-decoration:none;font-weight:bold;padding:12px 22px;border-radius:8px">Entrar na sala</a></p>
+<p style="margin:0 0 8px">Pra aproveitar ao máximo, chegue com:</p>
+<ul style="margin:0 0 16px;padding-left:20px">${checklist.map((c) => `<li style="margin:0 0 6px">${esc(c)}</li>`).join("")}</ul>
+<p style="margin:0 0 12px">Na call a gente monta sua loja com você, passo a passo, e você sai com os primeiros anúncios no ar.</p>
+<p style="margin:0;color:#71717a">É uma call única — se não puder no horário, é só responder este e-mail.</p>
+</td></tr></table></td></tr></table></body></html>`;
+  return { subject, html, text };
+}

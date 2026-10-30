@@ -17,6 +17,7 @@ import { Route as ShellIndexRouteImport } from './routes/_shell.index'
 import { Route as ShellAnunciosRouteImport } from './routes/_shell.anuncios'
 import { Route as ShellAplicativoRouteImport } from './routes/_shell.aplicativo'
 import { Route as ShellAtendimentoAdminRouteImport } from './routes/_shell.atendimento-admin'
+import { Route as ShellCallsAdminRouteImport } from './routes/_shell.calls-admin'
 import { Route as ShellCatalogoRouteImport } from './routes/_shell.catalogo'
 import { Route as ShellComissoesRouteImport } from './routes/_shell.comissoes'
 import { Route as ShellConfiguracoesRouteImport } from './routes/_shell.configuracoes'
@@ -27,6 +28,7 @@ import { Route as ShellMeusLinksRouteImport } from './routes/_shell.meus-links'
 import { Route as ShellPedidosRouteImport } from './routes/_shell.pedidos'
 import { Route as ShellPedidosAdminRouteImport } from './routes/_shell.pedidos-admin'
 import { Route as ShellPosVendaRouteImport } from './routes/_shell.pos-venda'
+import { Route as ShellProdutosCampeoesRouteImport } from './routes/_shell.produtos-campeoes'
 import { Route as ShellReembolsoRouteImport } from './routes/_shell.reembolso'
 import { Route as ShellReembolsosAdminRouteImport } from './routes/_shell.reembolsos-admin'
 import { Route as ShellSaudeDaLojaRouteImport } from './routes/_shell.saude-da-loja'
@@ -86,6 +88,11 @@ const ShellAtendimentoAdminRoute = ShellAtendimentoAdminRouteImport.update({
   path: '/atendimento-admin',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellCallsAdminRoute = ShellCallsAdminRouteImport.update({
+  id: '/calls-admin',
+  path: '/calls-admin',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ShellCatalogoRoute = ShellCatalogoRouteImport.update({
   id: '/catalogo',
   path: '/catalogo',
@@ -134,6 +141,11 @@ const ShellPedidosAdminRoute = ShellPedidosAdminRouteImport.update({
 const ShellPosVendaRoute = ShellPosVendaRouteImport.update({
   id: '/pos-venda',
   path: '/pos-venda',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellProdutosCampeoesRoute = ShellProdutosCampeoesRouteImport.update({
+  id: '/produtos-campeoes',
+  path: '/produtos-campeoes',
   getParentRoute: () => ShellRoute,
 } as any)
 const ShellReembolsoRoute = ShellReembolsoRouteImport.update({
@@ -241,6 +253,7 @@ export interface FileRoutesByFullPath {
   '/anuncios': typeof ShellAnunciosRoute
   '/aplicativo': typeof ShellAplicativoRoute
   '/atendimento-admin': typeof ShellAtendimentoAdminRoute
+  '/calls-admin': typeof ShellCallsAdminRoute
   '/catalogo': typeof ShellCatalogoRoute
   '/comissoes': typeof ShellComissoesRoute
   '/configuracoes': typeof ShellConfiguracoesRoute
@@ -251,6 +264,7 @@ export interface FileRoutesByFullPath {
   '/pedidos': typeof ShellPedidosRoute
   '/pedidos-admin': typeof ShellPedidosAdminRoute
   '/pos-venda': typeof ShellPosVendaRoute
+  '/produtos-campeoes': typeof ShellProdutosCampeoesRoute
   '/reembolso': typeof ShellReembolsoRoute
   '/reembolsos-admin': typeof ShellReembolsosAdminRoute
   '/saude-da-loja': typeof ShellSaudeDaLojaRoute
@@ -277,6 +291,7 @@ export interface FileRoutesByTo {
   '/anuncios': typeof ShellAnunciosRoute
   '/aplicativo': typeof ShellAplicativoRoute
   '/atendimento-admin': typeof ShellAtendimentoAdminRoute
+  '/calls-admin': typeof ShellCallsAdminRoute
   '/catalogo': typeof ShellCatalogoRoute
   '/comissoes': typeof ShellComissoesRoute
   '/configuracoes': typeof ShellConfiguracoesRoute
@@ -287,6 +302,7 @@ export interface FileRoutesByTo {
   '/pedidos': typeof ShellPedidosRoute
   '/pedidos-admin': typeof ShellPedidosAdminRoute
   '/pos-venda': typeof ShellPosVendaRoute
+  '/produtos-campeoes': typeof ShellProdutosCampeoesRoute
   '/reembolso': typeof ShellReembolsoRoute
   '/reembolsos-admin': typeof ShellReembolsosAdminRoute
   '/saude-da-loja': typeof ShellSaudeDaLojaRoute
@@ -317,6 +333,7 @@ export interface FileRoutesById {
   '/_shell/anuncios': typeof ShellAnunciosRoute
   '/_shell/aplicativo': typeof ShellAplicativoRoute
   '/_shell/atendimento-admin': typeof ShellAtendimentoAdminRoute
+  '/_shell/calls-admin': typeof ShellCallsAdminRoute
   '/_shell/catalogo': typeof ShellCatalogoRoute
   '/_shell/comissoes': typeof ShellComissoesRoute
   '/_shell/configuracoes': typeof ShellConfiguracoesRoute
@@ -327,6 +344,7 @@ export interface FileRoutesById {
   '/_shell/pedidos': typeof ShellPedidosRoute
   '/_shell/pedidos-admin': typeof ShellPedidosAdminRoute
   '/_shell/pos-venda': typeof ShellPosVendaRoute
+  '/_shell/produtos-campeoes': typeof ShellProdutosCampeoesRoute
   '/_shell/reembolso': typeof ShellReembolsoRoute
   '/_shell/reembolsos-admin': typeof ShellReembolsosAdminRoute
   '/_shell/saude-da-loja': typeof ShellSaudeDaLojaRoute
@@ -358,6 +376,7 @@ export interface FileRouteTypes {
     | '/anuncios'
     | '/aplicativo'
     | '/atendimento-admin'
+    | '/calls-admin'
     | '/catalogo'
     | '/comissoes'
     | '/configuracoes'
@@ -368,6 +387,7 @@ export interface FileRouteTypes {
     | '/pedidos'
     | '/pedidos-admin'
     | '/pos-venda'
+    | '/produtos-campeoes'
     | '/reembolso'
     | '/reembolsos-admin'
     | '/saude-da-loja'
@@ -394,6 +414,7 @@ export interface FileRouteTypes {
     | '/anuncios'
     | '/aplicativo'
     | '/atendimento-admin'
+    | '/calls-admin'
     | '/catalogo'
     | '/comissoes'
     | '/configuracoes'
@@ -404,6 +425,7 @@ export interface FileRouteTypes {
     | '/pedidos'
     | '/pedidos-admin'
     | '/pos-venda'
+    | '/produtos-campeoes'
     | '/reembolso'
     | '/reembolsos-admin'
     | '/saude-da-loja'
@@ -433,6 +455,7 @@ export interface FileRouteTypes {
     | '/_shell/anuncios'
     | '/_shell/aplicativo'
     | '/_shell/atendimento-admin'
+    | '/_shell/calls-admin'
     | '/_shell/catalogo'
     | '/_shell/comissoes'
     | '/_shell/configuracoes'
@@ -443,6 +466,7 @@ export interface FileRouteTypes {
     | '/_shell/pedidos'
     | '/_shell/pedidos-admin'
     | '/_shell/pos-venda'
+    | '/_shell/produtos-campeoes'
     | '/_shell/reembolso'
     | '/_shell/reembolsos-admin'
     | '/_shell/saude-da-loja'
@@ -542,6 +566,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellAtendimentoAdminRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/calls-admin': {
+      id: '/_shell/calls-admin'
+      path: '/calls-admin'
+      fullPath: '/calls-admin'
+      preLoaderRoute: typeof ShellCallsAdminRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/catalogo': {
       id: '/_shell/catalogo'
       path: '/catalogo'
@@ -610,6 +641,13 @@ declare module '@tanstack/react-router' {
       path: '/pos-venda'
       fullPath: '/pos-venda'
       preLoaderRoute: typeof ShellPosVendaRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/produtos-campeoes': {
+      id: '/_shell/produtos-campeoes'
+      path: '/produtos-campeoes'
+      fullPath: '/produtos-campeoes'
+      preLoaderRoute: typeof ShellProdutosCampeoesRouteImport
       parentRoute: typeof ShellRoute
     }
     '/_shell/reembolso': {
@@ -752,6 +790,7 @@ interface ShellRouteChildren {
   ShellAnunciosRoute: typeof ShellAnunciosRoute
   ShellAplicativoRoute: typeof ShellAplicativoRoute
   ShellAtendimentoAdminRoute: typeof ShellAtendimentoAdminRoute
+  ShellCallsAdminRoute: typeof ShellCallsAdminRoute
   ShellCatalogoRoute: typeof ShellCatalogoRoute
   ShellComissoesRoute: typeof ShellComissoesRoute
   ShellConfiguracoesRoute: typeof ShellConfiguracoesRoute
@@ -762,6 +801,7 @@ interface ShellRouteChildren {
   ShellPedidosRoute: typeof ShellPedidosRoute
   ShellPedidosAdminRoute: typeof ShellPedidosAdminRoute
   ShellPosVendaRoute: typeof ShellPosVendaRoute
+  ShellProdutosCampeoesRoute: typeof ShellProdutosCampeoesRoute
   ShellReembolsoRoute: typeof ShellReembolsoRoute
   ShellReembolsosAdminRoute: typeof ShellReembolsosAdminRoute
   ShellSaudeDaLojaRoute: typeof ShellSaudeDaLojaRoute
@@ -773,6 +813,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellAnunciosRoute: ShellAnunciosRoute,
   ShellAplicativoRoute: ShellAplicativoRoute,
   ShellAtendimentoAdminRoute: ShellAtendimentoAdminRoute,
+  ShellCallsAdminRoute: ShellCallsAdminRoute,
   ShellCatalogoRoute: ShellCatalogoRoute,
   ShellComissoesRoute: ShellComissoesRoute,
   ShellConfiguracoesRoute: ShellConfiguracoesRoute,
@@ -783,6 +824,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellPedidosRoute: ShellPedidosRoute,
   ShellPedidosAdminRoute: ShellPedidosAdminRoute,
   ShellPosVendaRoute: ShellPosVendaRoute,
+  ShellProdutosCampeoesRoute: ShellProdutosCampeoesRoute,
   ShellReembolsoRoute: ShellReembolsoRoute,
   ShellReembolsosAdminRoute: ShellReembolsosAdminRoute,
   ShellSaudeDaLojaRoute: ShellSaudeDaLojaRoute,

@@ -1,12 +1,14 @@
 import { DockNavItem } from "./dock-nav-item";
 import { getNavigationForUser } from "@/config/navigation";
 import { useIsOwner, useIsPedidosAdmin } from "@/lib/owner";
+import { useEntitlements } from "@/lib/entitlements";
 import { cn } from "@/lib/utils";
 
 export function AppSidebar() {
   const isOwner = useIsOwner();
   const isPedidosAdmin = useIsPedidosAdmin();
-  const navigation = getNavigationForUser({ isOwner, isPedidosAdmin });
+  const entitlements = useEntitlements();
+  const navigation = getNavigationForUser({ isOwner, isPedidosAdmin, entitlements });
 
   return (
     <aside className="fixed inset-x-0 bottom-4 z-40 hidden justify-center lg:flex">

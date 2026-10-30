@@ -13,6 +13,8 @@ import {
   Undo2,
   RotateCcw,
   HeartPulse,
+  Trophy,
+  Video,
   type LucideIcon,
 } from "lucide-react";
 
@@ -30,6 +32,8 @@ export type NavItem = {
   pedidosAdminOnly?: boolean;
   // Equipe: aparece pro dono E pra conta de pedidos.
   staffOnly?: boolean;
+  // Só aparece pra quem comprou esse extra (order bump/upsell) — e pra equipe.
+  entitlement?: string;
 };
 
 export type NavGroup = {
@@ -78,6 +82,14 @@ export const navigation: NavGroup[] = [
         badge: "Novo",
       },
       {
+        label: "Produtos Campeões",
+        to: "/produtos-campeoes",
+        icon: Trophy,
+        description: "Os produtos que mais vendem entre os lojistas, com preço e margem",
+        badge: "Novo",
+        entitlement: "campeoes",
+      },
+      {
         label: "Pedidos",
         to: "/pedidos",
         icon: Receipt,
@@ -122,6 +134,13 @@ export const navigation: NavGroup[] = [
         to: "/reembolsos-admin",
         icon: RotateCcw,
         description: "Pedidos de reembolso dos clientes; marcar como feito manda e-mail",
+        pedidosAdminOnly: true,
+      },
+      {
+        label: "Calls (Admin)",
+        to: "/calls-admin",
+        icon: Video,
+        description: "Calls de implementação compradas: horário da sala e contato",
         pedidosAdminOnly: true,
       },
       {
@@ -175,6 +194,25 @@ export const flatNavigation: NavItem[] = navigation.flatMap((g) => g.items);
 // substituir o menu inteiro — checar isOwner primeiro evita esse conflito.
 // Descarta grupos que ficarem vazios depois do filtro (ex: o grupo "Admin").
 export function getNavigationForUser({
+  isOwner,
+  isPedidosAdmin,
+  entitlements = [],
+}: {
+  isOwner: boolean;
+  isPedidosAdmin: boolean;
+  entitlements?: string[];
+}): NavGroup[] {
+  const groups = navigationFor({ isOwner, isPedidosAdmin });
+  if (isOwner || isPedidosAdmin) return groups;
+  return groups
+    .map((g) => ({
+      ...g,
+      items: g.items.filter((i) => !i.entitlement || entitlements.includes(i.entitlement)),
+    }))
+    .filter((g) => g.items.length > 0);
+}
+
+function navigationFor({
   isOwner,
   isPedidosAdmin,
 }: {

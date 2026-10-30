@@ -112,6 +112,35 @@ export async function handleTransactionPaid(payload: ApplyfyPayload): Promise<We
   const detected = detectPlan(payload);
   const admin = getAdminClient();
 
+  // Extras (order bump / upsell) que vieram nessa transação.
+  const { detectAddons, grantAddons } = await import("@/lib/addons.server");
+  const addons = await detectAddons(payload as Record<string, unknown>);
+  const rawAmount =
+    payload.transaction?.originalAmount ?? payload.transaction?.commissionAmount ?? 0;
+  const amountReais = rawAmount > 1000 ? rawAmount / 100 : rawAmount;
+  // Upsell comprado depois (transação separada, só o extra): não mexe no
+  // plano nem conta como compra do sistema — só libera o extra.
+  const addonOnly = addons.length > 0 && amountReais > 0 && amountReais < 140;
+  const grant = (userId: string) =>
+    addons.length
+      ? grantAddons({
+          userId,
+          kinds: addons,
+          transactionId: payload.transaction?.id?.trim() || null,
+          email,
+          name: payload.client?.name?.trim() || null,
+          paidAt: payload.transaction?.payedAt ? new Date(payload.transaction.payedAt) : new Date(),
+        }).catch((err) => console.error("[applyfy-webhook] falha ao liberar extra:", err))
+      : Promise.resolve();
+  if (addonOnly) {
+    const existing = await findUserByEmail(email);
+    if (existing) {
+      await grant(existing.id);
+      return { ok: true, userId: existing.id, ignored: `addon_only:${addons.join(",")}` };
+    }
+    // Sem conta ainda (raro): segue o fluxo normal pra criar o login.
+  }
+
   const { data, error } = await admin.auth.admin.createUser({
     email,
     password: DEFAULT_PASSWORD,
@@ -167,6 +196,7 @@ export async function handleTransactionPaid(payload: ApplyfyPayload): Promise<We
       console.error("[applyfy-webhook] falha ao salvar compra:", purchaseError.message);
   }
 
+  await grant(userId);
   return { ok: true, userId, plan };
 }
 

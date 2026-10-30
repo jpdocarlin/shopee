@@ -46,7 +46,7 @@ function ShellLayout() {
       profile &&
       isPedidosAdmin &&
       !isOwner &&
-      !["/pedidos-admin", "/atendimento-admin", "/reembolsos-admin"].includes(pathname)
+      !["/pedidos-admin", "/atendimento-admin", "/reembolsos-admin", "/calls-admin"].includes(pathname)
     ) {
       void navigate({ to: "/pedidos-admin" });
       return;

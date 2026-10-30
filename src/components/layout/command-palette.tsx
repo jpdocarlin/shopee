@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/command";
 import { getNavigationForUser } from "@/config/navigation";
 import { useIsOwner, useIsPedidosAdmin } from "@/lib/owner";
+import { useEntitlements } from "@/lib/entitlements";
 import { useUIStore } from "@/stores/ui-store";
 import { useT } from "@/i18n/translations";
 
@@ -24,7 +25,8 @@ export function CommandPalette() {
   const t = useT();
   const isOwner = useIsOwner();
   const isPedidosAdmin = useIsPedidosAdmin();
-  const navigation = getNavigationForUser({ isOwner, isPedidosAdmin });
+  const entitlements = useEntitlements();
+  const navigation = getNavigationForUser({ isOwner, isPedidosAdmin, entitlements });
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {

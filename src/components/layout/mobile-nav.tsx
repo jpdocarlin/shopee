@@ -7,6 +7,7 @@ import { BrandWordmark } from "./brand-mark";
 import { SidebarNavItem } from "./sidebar-nav-item";
 import { getNavigationForUser } from "@/config/navigation";
 import { useIsOwner, useIsPedidosAdmin } from "@/lib/owner";
+import { useEntitlements } from "@/lib/entitlements";
 import { useT } from "@/i18n/translations";
 
 export function MobileNav() {
@@ -14,7 +15,8 @@ export function MobileNav() {
   const t = useT();
   const isOwner = useIsOwner();
   const isPedidosAdmin = useIsPedidosAdmin();
-  const navigation = getNavigationForUser({ isOwner, isPedidosAdmin });
+  const entitlements = useEntitlements();
+  const navigation = getNavigationForUser({ isOwner, isPedidosAdmin, entitlements });
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
