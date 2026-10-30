@@ -185,27 +185,107 @@ export async function grantAddons(params: {
   if (params.kinds.includes("acelerador")) {
     const { data: profile } = await supabaseAdmin
       .from("profiles")
-      .select("full_name")
+      .select("full_name, phone")
       .eq("id", params.userId)
       .maybeSingle();
     const name = params.name || profile?.full_name || null;
-    const groupUrl = await getSetting("acelerador_group_url");
-    const { aceleradorWelcomeEmail, sendEmail } = await import("@/lib/email.server");
-    const mail = aceleradorWelcomeEmail({
-      firstName: name?.trim().split(/\s+/)[0] ?? null,
-      groupUrl,
-    });
-    await sendEmail({ to: params.email, ...mail }).catch((err) =>
-      console.error("[addons] e-mail do Acelerador falhou:", err),
-    );
-    const { sendToPedidosAdmins } = await import("@/lib/push.server");
-    await sendToPedidosAdmins({
-      title: "Novo aluno no Acelerador",
-      body: `${name ?? params.email} entrou no Acelerador (R$247)`,
-      url: "/calls-admin",
-      tag: `acelerador-${params.transactionId ?? params.userId}`,
-    }).catch(() => undefined);
+    const { data: already } = await supabaseAdmin
+      .from("acelerador_members" as never)
+      .select("id")
+      .eq("transaction_id", params.transactionId ?? "")
+      .maybeSingle();
+    if (!already) {
+      const group = await openAceleradorGroup();
+      const joinedAt = params.paidAt;
+      const { data: member } = await supabaseAdmin
+        .from("acelerador_members" as never)
+        .insert({
+          user_id: params.userId,
+          transaction_id: params.transactionId,
+          group_id: group.id,
+          name,
+          email: params.email,
+          phone: profile?.phone ?? null,
+          joined_at: joinedAt.toISOString(),
+          expires_at: new Date(joinedAt.getTime() + 30 * 86400 * 1000).toISOString(),
+          link_sent_at: group.whatsapp_url ? new Date().toISOString() : null,
+        } as never)
+        .select("id")
+        .single();
+
+      const { aceleradorWelcomeEmail, sendEmail } = await import("@/lib/email.server");
+      const mail = aceleradorWelcomeEmail({
+        firstName: name?.trim().split(/\s+/)[0] ?? null,
+        groupUrl: group.whatsapp_url,
+      });
+      await sendEmail({ to: params.email, ...mail }).catch((err) =>
+        console.error("[addons] e-mail do Acelerador falhou:", err),
+      );
+
+      const { sendToPedidosAdmins } = await import("@/lib/push.server");
+      const pending = group.whatsapp_url ? "" : " — crie o grupo e cole o link no painel";
+      await sendToPedidosAdmins({
+        title: `Novo aluno no Acelerador · Turma ${group.number}`,
+        body: `${name ?? params.email} (${group.count + 1}/5)${pending}`,
+        url: "/calls-admin",
+        tag: `acelerador-${(member as { id: string } | null)?.id ?? params.userId}`,
+      }).catch(() => undefined);
+    }
   }
+}
+
+const ACELERADOR_GROUP_SIZE = 5;
+
+// Turma aberta: a de menor número com menos de 5 alunos; se todas estão
+// cheias, cria a próxima.
+async function openAceleradorGroup(): Promise<{
+  id: string;
+  number: number;
+  whatsapp_url: string | null;
+  count: number;
+}> {
+  const { data: groups } = await supabaseAdmin
+    .from("acelerador_groups" as never)
+    .select("id, number, whatsapp_url")
+    .order("number", { ascending: true });
+  const list = (groups ?? []) as Array<{ id: string; number: number; whatsapp_url: string | null }>;
+  if (list.length) {
+    const { data: members } = await supabaseAdmin
+      .from("acelerador_members" as never)
+      .select("group_id")
+      .in(
+        "group_id",
+        list.map((g) => g.id),
+      );
+    const counts = new Map<string, number>();
+    for (const m of (members ?? []) as Array<{ group_id: string }>)
+      counts.set(m.group_id, (counts.get(m.group_id) ?? 0) + 1);
+    const open = list.find((g) => (counts.get(g.id) ?? 0) < ACELERADOR_GROUP_SIZE);
+    if (open) return { ...open, count: counts.get(open.id) ?? 0 };
+  }
+  const number = (list.at(-1)?.number ?? 0) + 1;
+  const { data: created, error } = await supabaseAdmin
+    .from("acelerador_groups" as never)
+    .insert({ number } as never)
+    .select("id, number, whatsapp_url")
+    .single();
+  if (error || !created) {
+    // Outra compra criou a mesma turma ao mesmo tempo: usa a que já existe.
+    const { data: again } = await supabaseAdmin
+      .from("acelerador_groups" as never)
+      .select("id, number, whatsapp_url")
+      .eq("number", number)
+      .single();
+    if (!again) throw new Error("Não deu pra abrir a turma do Acelerador.");
+    return {
+      ...(again as unknown as { id: string; number: number; whatsapp_url: string | null }),
+      count: 0,
+    };
+  }
+  return {
+    ...(created as unknown as { id: string; number: number; whatsapp_url: string | null }),
+    count: 0,
+  };
 }
 
 // Reembolso de uma compra que era SÓ o extra (ex.: a call como upsell):
@@ -233,6 +313,10 @@ export async function revokeAddonOnlyTransaction(transactionId: string): Promise
   await supabaseAdmin
     .from("call_bookings" as never)
     .update({ status: "canceled" } as never)
+    .eq("transaction_id", transactionId);
+  await supabaseAdmin
+    .from("acelerador_members" as never)
+    .update({ status: "refunded" } as never)
     .eq("transaction_id", transactionId);
   return !purchase;
 }

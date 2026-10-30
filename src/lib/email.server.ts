@@ -278,7 +278,10 @@ Você recebeu este e-mail porque usa a Shoppfy. Não quer mais receber avisos co
 
 // Call de implementação: confirmação com o horário da sala (upsell).
 // Boas-vindas do Acelerador Shoppfy 30 Dias (upsell R$247).
-export function aceleradorWelcomeEmail(input: { firstName: string | null; groupUrl: string | null }) {
+export function aceleradorWelcomeEmail(input: {
+  firstName: string | null;
+  groupUrl: string | null;
+}) {
   const hi = input.firstName ? `Oi, ${input.firstName}!` : "Oi!";
   const subject = "Você está no Acelerador Shoppfy ✅";
   const items = [
