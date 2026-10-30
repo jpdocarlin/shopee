@@ -1645,7 +1645,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1786131217414-a4ad1b1b.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 38,
+    stock: 37,
     manageStock: true,
   },
   {
@@ -4824,7 +4824,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/4376abdfa8-1-21.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -7,
+    stock: -8,
     manageStock: false,
   },
   {
@@ -6573,7 +6573,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/109e4b9c69-7-22.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -8795,7 +8795,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -27,
+    stock: -28,
     manageStock: false,
   },
   {
@@ -9378,7 +9378,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f041b13200-ComboConjuntoDeChavesCanhoFacilDeUsarp-899626-MLB54266707025_032023.jpeg",
     category: "Ferramentas",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -10126,7 +10126,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/775c457211-1-19.webp",
     category: "Informática",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -14471,7 +14471,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/98f279ab33-3-68.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: -91,
+    stock: -92,
     manageStock: false,
   },
   {
