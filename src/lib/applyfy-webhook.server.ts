@@ -61,11 +61,15 @@ export function verifyApplyfyToken(payload: ApplyfyPayload): boolean {
 
 type Plan = "mensal" | "vitalicio";
 
-function detectPlan(payload: ApplyfyPayload): Plan {
+// Ofertas do plano: Vitalício R$249 / R$147 · Mensal R$149 / R$97.
+// `extrasReais` = valor dos extras que vieram juntos (ex.: order bump R$27),
+// descontado antes de decidir o plano.
+function detectPlan(payload: ApplyfyPayload, extrasReais = 0): Plan {
   const raw = payload.transaction?.originalAmount ?? payload.transaction?.commissionAmount ?? 0;
   // A Applyfy pode mandar o valor em centavos ou em reais dependendo do
   // campo/integração; se vier "grande demais" pra ser reais, assume centavos.
-  const amountInReais = raw > 1000 ? raw / 100 : raw;
+  const amountInReais = (raw > 1000 ? raw / 100 : raw) - extrasReais;
+  if (Math.abs(amountInReais - 147) < 1) return "vitalicio";
   return amountInReais >= VITALICIO_THRESHOLD_REAIS ? "vitalicio" : "mensal";
 }
 
@@ -109,18 +113,25 @@ export async function handleTransactionPaid(payload: ApplyfyPayload): Promise<We
   const email = payloadEmail(payload);
   if (!email) return { ok: false, reason: "missing_email" };
 
-  const detected = detectPlan(payload);
   const admin = getAdminClient();
 
   // Extras (order bump / upsell) que vieram nessa transação.
-  const { detectAddons, grantAddons } = await import("@/lib/addons.server");
+  const { detectAddons, grantAddons, payloadHasMainProduct } = await import("@/lib/addons.server");
   const addons = await detectAddons(payload as Record<string, unknown>);
+  // Upsell comprado depois (transação separada, só o extra): não mexe no
+  // plano nem conta como compra do sistema — só libera o extra.
   const rawAmount =
     payload.transaction?.originalAmount ?? payload.transaction?.commissionAmount ?? 0;
   const amountReais = rawAmount > 1000 ? rawAmount / 100 : rawAmount;
-  // Upsell comprado depois (transação separada, só o extra): não mexe no
-  // plano nem conta como compra do sistema — só libera o extra.
-  const addonOnly = addons.length > 0 && amountReais > 0 && amountReais < 140;
+  // Só é "compra só do extra" se o plano não está no payload E o valor bate
+  // com o preço do extra (R$127 call, R$27 lista). Na dúvida, trata como
+  // compra do plano — nunca deixa alguém que pagou o plano sem acesso.
+  const addonOnly =
+    addons.length > 0 &&
+    !payloadHasMainProduct(payload as Record<string, unknown>) &&
+    [27, 127, 154].some((v) => Math.abs(amountReais - v) < 0.5);
+  const extras = addonOnly ? 0 : addons.includes("campeoes") ? 27 : 0;
+  const detected = detectPlan(payload, extras);
   const grant = (userId: string) =>
     addons.length
       ? grantAddons({

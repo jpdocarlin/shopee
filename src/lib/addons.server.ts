@@ -41,6 +41,14 @@ export async function recordApplyfyEvent(payload: Record<string, unknown>) {
     );
 }
 
+// Produto principal (o plano da Shoppfy) na Applyfy.
+const MAIN_PRODUCT_ID = "cmrujoz4e08o001or9afpmypi";
+
+export function payloadHasMainProduct(payload: Record<string, unknown>): boolean {
+  const texts = collectStrings(payload).map((s) => s.trim().toLowerCase());
+  return texts.some((t) => t === MAIN_PRODUCT_ID || t === "shoppfy");
+}
+
 export async function detectAddons(payload: Record<string, unknown>): Promise<AddonKind[]> {
   const { data } = await supabaseAdmin.from("applyfy_product_map" as never).select("match, kind");
   const map = (data ?? []) as Array<{ match: string; kind: AddonKind }>;
