@@ -9,7 +9,14 @@ import type { StoreReport } from "@/lib/store-health.server";
 // Sem nenhuma das duas configuradas, não envia e só registra no log.
 const SUPPORT_INBOX = "shoppfysuporte@gmail.com";
 
-type Mail = { to: string; subject: string; html: string; text: string; replyTo?: string };
+type Mail = {
+  to: string;
+  subject: string;
+  html: string;
+  text: string;
+  replyTo?: string;
+  headers?: Record<string, string>;
+};
 
 async function sendViaGmail(input: Mail, user: string, pass: string): Promise<boolean> {
   const nodemailer = await import("nodemailer");
@@ -35,6 +42,12 @@ async function sendViaGmail(input: Mail, user: string, pass: string): Promise<bo
   }
 }
 
+export async function sendViaResendOnly(input: Mail): Promise<{ sent: boolean }> {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return { sent: false };
+  return { sent: await sendViaResend(input, key) };
+}
+
 async function sendViaResend(input: Mail, key: string): Promise<boolean> {
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -47,6 +60,7 @@ async function sendViaResend(input: Mail, key: string): Promise<boolean> {
       text: input.text,
       // Respostas do cliente caem no Gmail do suporte.
       reply_to: input.replyTo ?? SUPPORT_INBOX,
+      ...(input.headers ? { headers: input.headers } : {}),
     }),
   });
   if (!res.ok) {
@@ -210,5 +224,54 @@ ${r.attention.map((a) => `<tr><td style="font-size:14px;padding:3px 0">• ${esc
 <tr><td style="padding:22px 0 8px"><a href="https://www.shoppfy.online/saude-da-loja" style="display:inline-block;background:#ff6a00;color:#ffffff;text-decoration:none;font-weight:bold;padding:12px 18px;border-radius:8px">Ver a semana completa</a></td></tr>
 <tr><td style="font-size:13px;color:#71717a">Equipe Shoppfy</td></tr>
 </table></td></tr></table></body></html>`;
+  return { subject, html, text };
+}
+
+// Convite da Comunidade Shoppfy no Telegram (campanha de e-mail, 29/10/2026).
+export const COMMUNITY_LINK = "https://t.me/+vfJk0yfvNvMyNjlh";
+
+export function communityInviteEmail(input: { firstName: string | null; unsubscribeUrl: string }) {
+  const hi = input.firstName ? `Oi, ${input.firstName}! Tudo bem?` : "Oi! Tudo bem?";
+  const subject = "Tem um grupo esperando por você 🚀";
+  const items = [
+    ["Ficar por dentro das novidades", "do sistema antes de todo mundo"],
+    ["Trocar experiência", "com outros lojistas: o que está vendendo, preço, anúncio"],
+    ["Tirar dúvidas", "direto com a nossa equipe"],
+    ["Saber dos produtos novos e em alta", "do catálogo"],
+  ];
+  const text = [
+    hi,
+    "",
+    "Criamos a Comunidade Shoppfy no Telegram: um espaço só pra quem usa a Shoppfy e quer vender mais na Shopee e no Mercado Livre.",
+    "",
+    "Lá dentro você vai:",
+    ...items.map(([b, r]) => `- ${b} ${r}`),
+    "",
+    "É de graça e já está liberado pra você:",
+    `Entrar na comunidade: ${COMMUNITY_LINK}`,
+    "",
+    "Te esperamos lá!",
+    "",
+    "—",
+    `Você recebeu este e-mail porque usa a Shoppfy. Não quer mais receber avisos como este? Sair da lista: ${input.unsubscribeUrl}`,
+  ].join("\n");
+  const html = `<!doctype html><html><body style="margin:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;color:#18181b">
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:24px 12px"><tr><td align="center">
+<table width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border-radius:12px;padding:28px">
+<tr><td style="font-size:20px;font-weight:bold;color:#ff6a00;padding-bottom:16px">Shoppfy</td></tr>
+<tr><td style="font-size:16px;line-height:24px">
+<p style="margin:0 0 12px">${esc(hi)}</p>
+<p style="margin:0 0 16px">Criamos a <strong>Comunidade Shoppfy no Telegram</strong>: um espaço só pra quem usa a Shoppfy e quer vender mais na Shopee e no Mercado Livre.</p>
+<p style="margin:0 0 8px">Lá dentro você vai:</p>
+<ul style="margin:0 0 16px;padding-left:20px">
+${items.map(([b, r]) => `<li style="margin:0 0 6px"><strong>${esc(b)}</strong> ${esc(r)}</li>`).join("\n")}
+</ul>
+<p style="margin:0 0 20px">É de graça e já está liberado pra você:</p>
+<p style="margin:0 0 24px"><a href="${COMMUNITY_LINK}" style="display:inline-block;background:#ff6a00;color:#ffffff;text-decoration:none;font-weight:bold;padding:12px 22px;border-radius:8px">Entrar na comunidade</a></p>
+<p style="margin:0 0 4px">Te esperamos lá!</p>
+</td></tr>
+<tr><td style="padding-top:24px;border-top:1px solid #e4e4e7;font-size:12px;line-height:18px;color:#a1a1aa">
+Você recebeu este e-mail porque usa a Shoppfy. Não quer mais receber avisos como este? <a href="${esc(input.unsubscribeUrl)}" style="color:#a1a1aa">Sair da lista</a>
+</td></tr></table></td></tr></table></body></html>`;
   return { subject, html, text };
 }

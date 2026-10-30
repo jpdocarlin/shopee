@@ -35,9 +35,11 @@ import { Route as MembrosIndexRouteImport } from './routes/membros.index'
 import { Route as MembrosModuloSlugRouteImport } from './routes/membros.$moduloSlug'
 import { Route as ShellAnuncioItemIdRouteImport } from './routes/_shell.anuncio.$itemId'
 import { Route as ApiCronCatalogNotifyRouteImport } from './routes/api.cron.catalog-notify'
+import { Route as ApiCronCommunityEmailRouteImport } from './routes/api.cron.community-email'
 import { Route as ApiCronImportOrdersRouteImport } from './routes/api.cron.import-orders'
 import { Route as ApiCronStoreStatsRouteImport } from './routes/api.cron.store-stats'
 import { Route as ApiCronWeeklyRecapRouteImport } from './routes/api.cron.weekly-recap'
+import { Route as ApiEmailSairRouteImport } from './routes/api.email.sair'
 import { Route as ApiMercadoLivreCallbackRouteImport } from './routes/api.mercado-livre.callback'
 import { Route as ApiMercadoLivreConnectRouteImport } from './routes/api.mercado-livre.connect'
 import { Route as ApiShopeeCallbackRouteImport } from './routes/api.shopee.callback'
@@ -174,6 +176,11 @@ const ApiCronCatalogNotifyRoute = ApiCronCatalogNotifyRouteImport.update({
   path: '/api/cron/catalog-notify',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiCronCommunityEmailRoute = ApiCronCommunityEmailRouteImport.update({
+  id: '/api/cron/community-email',
+  path: '/api/cron/community-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiCronImportOrdersRoute = ApiCronImportOrdersRouteImport.update({
   id: '/api/cron/import-orders',
   path: '/api/cron/import-orders',
@@ -187,6 +194,11 @@ const ApiCronStoreStatsRoute = ApiCronStoreStatsRouteImport.update({
 const ApiCronWeeklyRecapRoute = ApiCronWeeklyRecapRouteImport.update({
   id: '/api/cron/weekly-recap',
   path: '/api/cron/weekly-recap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiEmailSairRoute = ApiEmailSairRouteImport.update({
+  id: '/api/email/sair',
+  path: '/api/email/sair',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiMercadoLivreCallbackRoute = ApiMercadoLivreCallbackRouteImport.update({
@@ -247,9 +259,11 @@ export interface FileRoutesByFullPath {
   '/membros/': typeof MembrosIndexRoute
   '/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
   '/api/cron/catalog-notify': typeof ApiCronCatalogNotifyRoute
+  '/api/cron/community-email': typeof ApiCronCommunityEmailRoute
   '/api/cron/import-orders': typeof ApiCronImportOrdersRoute
   '/api/cron/store-stats': typeof ApiCronStoreStatsRoute
   '/api/cron/weekly-recap': typeof ApiCronWeeklyRecapRoute
+  '/api/email/sair': typeof ApiEmailSairRoute
   '/api/mercado-livre/callback': typeof ApiMercadoLivreCallbackRoute
   '/api/mercado-livre/connect': typeof ApiMercadoLivreConnectRoute
   '/api/shopee/callback': typeof ApiShopeeCallbackRoute
@@ -282,9 +296,11 @@ export interface FileRoutesByTo {
   '/membros': typeof MembrosIndexRoute
   '/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
   '/api/cron/catalog-notify': typeof ApiCronCatalogNotifyRoute
+  '/api/cron/community-email': typeof ApiCronCommunityEmailRoute
   '/api/cron/import-orders': typeof ApiCronImportOrdersRoute
   '/api/cron/store-stats': typeof ApiCronStoreStatsRoute
   '/api/cron/weekly-recap': typeof ApiCronWeeklyRecapRoute
+  '/api/email/sair': typeof ApiEmailSairRoute
   '/api/mercado-livre/callback': typeof ApiMercadoLivreCallbackRoute
   '/api/mercado-livre/connect': typeof ApiMercadoLivreConnectRoute
   '/api/shopee/callback': typeof ApiShopeeCallbackRoute
@@ -320,9 +336,11 @@ export interface FileRoutesById {
   '/membros/': typeof MembrosIndexRoute
   '/_shell/anuncio/$itemId': typeof ShellAnuncioItemIdRoute
   '/api/cron/catalog-notify': typeof ApiCronCatalogNotifyRoute
+  '/api/cron/community-email': typeof ApiCronCommunityEmailRoute
   '/api/cron/import-orders': typeof ApiCronImportOrdersRoute
   '/api/cron/store-stats': typeof ApiCronStoreStatsRoute
   '/api/cron/weekly-recap': typeof ApiCronWeeklyRecapRoute
+  '/api/email/sair': typeof ApiEmailSairRoute
   '/api/mercado-livre/callback': typeof ApiMercadoLivreCallbackRoute
   '/api/mercado-livre/connect': typeof ApiMercadoLivreConnectRoute
   '/api/shopee/callback': typeof ApiShopeeCallbackRoute
@@ -358,9 +376,11 @@ export interface FileRouteTypes {
     | '/membros/'
     | '/anuncio/$itemId'
     | '/api/cron/catalog-notify'
+    | '/api/cron/community-email'
     | '/api/cron/import-orders'
     | '/api/cron/store-stats'
     | '/api/cron/weekly-recap'
+    | '/api/email/sair'
     | '/api/mercado-livre/callback'
     | '/api/mercado-livre/connect'
     | '/api/shopee/callback'
@@ -393,9 +413,11 @@ export interface FileRouteTypes {
     | '/membros'
     | '/anuncio/$itemId'
     | '/api/cron/catalog-notify'
+    | '/api/cron/community-email'
     | '/api/cron/import-orders'
     | '/api/cron/store-stats'
     | '/api/cron/weekly-recap'
+    | '/api/email/sair'
     | '/api/mercado-livre/callback'
     | '/api/mercado-livre/connect'
     | '/api/shopee/callback'
@@ -430,9 +452,11 @@ export interface FileRouteTypes {
     | '/membros/'
     | '/_shell/anuncio/$itemId'
     | '/api/cron/catalog-notify'
+    | '/api/cron/community-email'
     | '/api/cron/import-orders'
     | '/api/cron/store-stats'
     | '/api/cron/weekly-recap'
+    | '/api/email/sair'
     | '/api/mercado-livre/callback'
     | '/api/mercado-livre/connect'
     | '/api/shopee/callback'
@@ -448,9 +472,11 @@ export interface RootRouteChildren {
   MembrosRoute: typeof MembrosRouteWithChildren
   ApiC7HandoffRoute: typeof ApiC7HandoffRoute
   ApiCronCatalogNotifyRoute: typeof ApiCronCatalogNotifyRoute
+  ApiCronCommunityEmailRoute: typeof ApiCronCommunityEmailRoute
   ApiCronImportOrdersRoute: typeof ApiCronImportOrdersRoute
   ApiCronStoreStatsRoute: typeof ApiCronStoreStatsRoute
   ApiCronWeeklyRecapRoute: typeof ApiCronWeeklyRecapRoute
+  ApiEmailSairRoute: typeof ApiEmailSairRoute
   ApiMercadoLivreCallbackRoute: typeof ApiMercadoLivreCallbackRoute
   ApiMercadoLivreConnectRoute: typeof ApiMercadoLivreConnectRoute
   ApiShopeeCallbackRoute: typeof ApiShopeeCallbackRoute
@@ -642,6 +668,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCronCatalogNotifyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/cron/community-email': {
+      id: '/api/cron/community-email'
+      path: '/api/cron/community-email'
+      fullPath: '/api/cron/community-email'
+      preLoaderRoute: typeof ApiCronCommunityEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/cron/import-orders': {
       id: '/api/cron/import-orders'
       path: '/api/cron/import-orders'
@@ -661,6 +694,13 @@ declare module '@tanstack/react-router' {
       path: '/api/cron/weekly-recap'
       fullPath: '/api/cron/weekly-recap'
       preLoaderRoute: typeof ApiCronWeeklyRecapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/email/sair': {
+      id: '/api/email/sair'
+      path: '/api/email/sair'
+      fullPath: '/api/email/sair'
+      preLoaderRoute: typeof ApiEmailSairRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/mercado-livre/callback': {
@@ -774,9 +814,11 @@ const rootRouteChildren: RootRouteChildren = {
   MembrosRoute: MembrosRouteWithChildren,
   ApiC7HandoffRoute: ApiC7HandoffRoute,
   ApiCronCatalogNotifyRoute: ApiCronCatalogNotifyRoute,
+  ApiCronCommunityEmailRoute: ApiCronCommunityEmailRoute,
   ApiCronImportOrdersRoute: ApiCronImportOrdersRoute,
   ApiCronStoreStatsRoute: ApiCronStoreStatsRoute,
   ApiCronWeeklyRecapRoute: ApiCronWeeklyRecapRoute,
+  ApiEmailSairRoute: ApiEmailSairRoute,
   ApiMercadoLivreCallbackRoute: ApiMercadoLivreCallbackRoute,
   ApiMercadoLivreConnectRoute: ApiMercadoLivreConnectRoute,
   ApiShopeeCallbackRoute: ApiShopeeCallbackRoute,
