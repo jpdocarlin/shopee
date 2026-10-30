@@ -130,7 +130,11 @@ export async function handleTransactionPaid(payload: ApplyfyPayload): Promise<We
     addons.length > 0 &&
     !payloadHasMainProduct(payload as Record<string, unknown>) &&
     [27, 127, 154].some((v) => Math.abs(amountReais - v) < 0.5);
-  const extras = addonOnly ? 0 : addons.includes("campeoes") ? 27 : 0;
+  // Extras que vieram junto com o plano (order bumps): desconta antes de
+  // decidir o plano. Lista R$27, Call R$127.
+  const extras = addonOnly
+    ? 0
+    : (addons.includes("campeoes") ? 27 : 0) + (addons.includes("call") ? 127 : 0);
   const detected = detectPlan(payload, extras);
   const grant = (userId: string) =>
     addons.length
