@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-10-30 — 1372 produtos, na ordem retornada pela API
+// Snapshot de 2026-10-31 — 1372 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -1579,7 +1579,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1786204533305-ee5b4016.webp",
     category: "Produtos diversos",
-    stock: 42,
+    stock: 41,
     manageStock: true,
   },
   {
@@ -3438,7 +3438,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a0cfa05cf5-5-19.jpg",
     category: "Informática",
-    stock: -7,
+    stock: -8,
     manageStock: false,
   },
   {
@@ -3658,7 +3658,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/8baefda1b9-4-1.jpg",
     category: "Informática",
-    stock: -8,
+    stock: -9,
     manageStock: false,
   },
   {
@@ -4219,7 +4219,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/0b156d3550-3-56.jpg",
     category: "Informática",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -7046,7 +7046,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/9290ffd845-6-3.jpg",
     category: "Fora de Estoque",
-    stock: 99,
+    stock: 98,
     manageStock: true,
   },
   {
@@ -7739,7 +7739,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/1bcb1bf81d-6-2.jpg",
     category: "Produtos diversos",
-    stock: -7,
+    stock: -8,
     manageStock: false,
   },
   {
@@ -8619,7 +8619,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/56ea2db954-4-43.jpg",
     category: "Produtos diversos",
-    stock: -12,
+    stock: -17,
     manageStock: false,
   },
   {
@@ -11512,7 +11512,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/b9ec491607-Prancheta-1-31.png",
     category: "Câmeras",
-    stock: 95,
+    stock: 94,
     manageStock: true,
   },
   {
@@ -14988,7 +14988,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/120948dd30-bb559d0faf4250d7319958704204bede.jpeg",
     category: "Media Streaming",
-    stock: -17,
+    stock: -18,
     manageStock: false,
   },
   {
