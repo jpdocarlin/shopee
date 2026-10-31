@@ -1689,7 +1689,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1786019142682-e1425ae5.webp",
     category: "Media Streaming",
-    stock: -1,
+    stock: -3,
     manageStock: true,
   },
   {
@@ -2261,7 +2261,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/5cbd642ace-4-59.jpg",
     category: "Carregadores & Power Banks",
-    stock: 81,
+    stock: 80,
     manageStock: true,
   },
   {
@@ -3064,7 +3064,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a22949d6db-1-6.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -3658,7 +3658,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/8baefda1b9-4-1.jpg",
     category: "Informática",
-    stock: -9,
+    stock: -10,
     manageStock: false,
   },
   {
@@ -7299,7 +7299,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/8b2fc10cea-4-28.jpg",
     category: "Brinquedos",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -8795,7 +8795,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -28,
+    stock: -29,
     manageStock: false,
   },
   {
@@ -10181,7 +10181,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d137418aaf-2-13.webp",
     category: "Media Streaming",
-    stock: -10,
+    stock: -11,
     manageStock: false,
   },
   {
@@ -10522,7 +10522,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3b245c2d74-Prancheta-3-6.png",
     category: "Casa e Utensílios Domésticos",
-    stock: 97,
+    stock: 96,
     manageStock: true,
   },
   {
@@ -13503,7 +13503,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f81078d31a-0-MoedorTrituradorDeCafGroswEltricoInox.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -14,
+    stock: -15,
     manageStock: false,
   },
   {
