@@ -1,11 +1,13 @@
 // Página do upsell "Acelerador Shoppfy 30 Dias" (R$ 247), aberta pela Applyfy
-// logo depois da compra da Shoppfy (funil → página externa).
-// A compra é feita no CHECKOUT PRÓPRIO do Acelerador (produto sem afiliados),
-// e não no 1 clique do funil: no 1 clique a Applyfy paga comissão de upsell
-// ao afiliado da venda principal (confirmado pelo gerente da Applyfy).
-// "Não, obrigado" leva pra /obrigado.
+// logo depois da compra da Shoppfy (funil → upsell com página externa).
+// Os botões de comprar / recusar são o iframe da Applyfy dentro do bloco
+// #oferta; o script product-funnel.js liga o iframe à compra (one-click).
+// O HTML é estático (dangerouslySetInnerHTML) de propósito: o script da
+// Applyfy substitui o <iframe> no DOM, e o React não pode re-renderizar ele.
 import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+
+const FUNNEL_SCRIPT = "https://app.applyfy.com.br/scripts/product-funnel.js";
 
 export const Route = createFileRoute("/acelerador")({
   head: () => ({
@@ -190,7 +192,9 @@ aside{position:relative}
   .hero{padding-top:64px}
 }
 
-.ocb-hint{font-size:12.5px;color:var(--t3);margin-top:12px;text-align:center}
+.ocb{margin-top:6px;min-height:190px;border-radius:18px;overflow:hidden}
+.ocb iframe{display:block;width:100%;height:190px;border:0;background:transparent}
+.ocb-hint{font-size:12.5px;color:var(--t3);margin-top:10px;text-align:center}
 `;
 
 const HTML = `<div class="layout">
@@ -275,7 +279,7 @@ const HTML = `<div class="layout">
     <div class="pricebox">
       <div class="p"><small>R$</small>247</div>
       <div class="o">Pagamento único. Sem mensalidade.</div>
-      <a class="btn" href="https://checkout.applyfy.com.br/checkout/cmvuq3b4t0pwq01okmxik5bk5?offer=2F09MFN">Entrar no Acelerador</a><a class="no" href="/obrigado">Não, obrigado</a><p class="ocb-hint">Use o mesmo e-mail da sua compra da Shoppfy.</p>
+      <div class="ocb"><iframe id="product-funnel-cmvuq8o750p1x01odwhwdlxny" src="https://checkout.applyfy.com.br/ext/funnel/cmvuq8o750p1x01odwhwdlxny" width="100%" height="100%" frameborder="0" allowtransparency="true" allow="payment *"></iframe></div>
       <div class="guar"><div><b>Garantia de 7 dias.</b> Participe da primeira call. Se não for pra você, devolvemos 100%.</div></div>
     </div>
   </div>
@@ -293,7 +297,7 @@ const HTML = `<div class="layout">
 
   <div class="end">
     <h2 class="rv">Você já tem a ferramenta.<br><span class="soft">Agora, o acompanhamento.</span></h2>
-    <a class="btn rv" href="https://checkout.applyfy.com.br/checkout/cmvuq3b4t0pwq01okmxik5bk5?offer=2F09MFN">Entrar no Acelerador — R$247</a>
+    <a class="btn rv" href="#oferta">Entrar no Acelerador — R$247</a>
   </div>
   <footer><span>Shoppfy</span><span>shoppfy.online</span></footer>
 </main>
@@ -315,13 +319,13 @@ const HTML = `<div class="layout">
         <li><i></i>Gravações</li>
       </ul>
       <div class="pr"><b>R$247</b><span>pagamento único</span></div>
-      <a class="btn" href="https://checkout.applyfy.com.br/checkout/cmvuq3b4t0pwq01okmxik5bk5?offer=2F09MFN">Entrar no Acelerador</a>
+      <a class="btn" href="#oferta">Entrar no Acelerador</a>
     </div>
   </div>
 </aside>
 </div>
 
-<div class="mbar"><b>R$247</b><a class="btn" href="https://checkout.applyfy.com.br/checkout/cmvuq3b4t0pwq01okmxik5bk5?offer=2F09MFN">Entrar no Acelerador</a></div>`;
+<div class="mbar"><b>R$247</b><a class="btn" href="#oferta">Entrar no Acelerador</a></div>`;
 
 const ANSWERS: Array<[string, string, string]> = [
   [
@@ -443,6 +447,14 @@ function AceleradorPage() {
     cleanups.push(() => {
       document.documentElement.style.scrollBehavior = prevBehavior;
     });
+
+    // Script do funil da Applyfy (uma vez só).
+    if (!document.querySelector(`script[src="${FUNNEL_SCRIPT}"]`)) {
+      const sc = document.createElement("script");
+      sc.src = FUNNEL_SCRIPT;
+      sc.async = true;
+      document.body.appendChild(sc);
+    }
 
     return () => cleanups.forEach((fn) => fn());
   }, []);
