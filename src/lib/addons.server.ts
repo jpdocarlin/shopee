@@ -49,7 +49,7 @@ export async function recordApplyfyEvent(payload: Record<string, unknown>) {
 }
 
 // Produto principal (o plano da Shoppfy) na Applyfy.
-const MAIN_PRODUCT_ID = "cmrujoz4e08o001or9afpmypi";
+export const MAIN_PRODUCT_ID = "cmrujoz4e08o001or9afpmypi";
 
 export function payloadHasMainProduct(payload: Record<string, unknown>): boolean {
   const texts = collectStrings(payload).map((s) => s.trim().toLowerCase());

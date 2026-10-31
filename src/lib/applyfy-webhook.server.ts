@@ -42,6 +42,12 @@ export type ApplyfyPayload = {
     commissionAmount?: number | null;
     status?: string | null;
   } | null;
+  // Itens do pedido: cada produto com o preço SEM juros do parcelamento
+  // (o `originalAmount` da transação vem com os juros embutidos).
+  orderItems?: Array<{
+    price?: number | null;
+    product?: { id?: string | null; name?: string | null } | null;
+  }> | null;
   // Só vem nos eventos SUBSCRIPTION_* (docs Applyfy: Webhooks → Assinaturas).
   subscription?: {
     status?: string | null;
@@ -64,6 +70,11 @@ type Plan = "mensal" | "vitalicio";
 // Ofertas do plano: Vitalício R$249 / R$147 · Mensal R$149 / R$97.
 // `extrasReais` = valor dos extras que vieram juntos (ex.: order bump R$27),
 // descontado antes de decidir o plano.
+function planFromPrice(reais: number): Plan {
+  if (Math.abs(reais - 147) < 1) return "vitalicio";
+  return reais >= VITALICIO_THRESHOLD_REAIS ? "vitalicio" : "mensal";
+}
+
 function detectPlan(payload: ApplyfyPayload, extrasReais = 0): Plan {
   const raw = payload.transaction?.originalAmount ?? payload.transaction?.commissionAmount ?? 0;
   // A Applyfy pode mandar o valor em centavos ou em reais dependendo do
@@ -116,27 +127,31 @@ export async function handleTransactionPaid(payload: ApplyfyPayload): Promise<We
   const admin = getAdminClient();
 
   // Extras (order bump / upsell) que vieram nessa transação.
-  const { detectAddons, grantAddons, payloadHasMainProduct, ADDON_PRICE } =
+  const { detectAddons, grantAddons, payloadHasMainProduct, ADDON_PRICE, MAIN_PRODUCT_ID } =
     await import("@/lib/addons.server");
   const addons = await detectAddons(payload as Record<string, unknown>);
-  // Upsell comprado depois (transação separada, só o extra): não mexe no
-  // plano nem conta como compra do sistema — só libera o extra.
-  const rawAmount =
-    payload.transaction?.originalAmount ?? payload.transaction?.commissionAmount ?? 0;
-  const amountReais = rawAmount > 1000 ? rawAmount / 100 : rawAmount;
-  const addonsTotal = addons.reduce((sum, k) => sum + ADDON_PRICE[k], 0);
-  // Só é "compra só do extra" se o plano não está no payload E o valor bate
-  // com a soma dos extras detectados (ex.: R$247 Acelerador, R$127 call,
-  // R$27 lista). Na dúvida, trata como compra do plano — nunca deixa alguém
-  // que pagou o plano sem acesso.
-  const addonOnly =
-    addons.length > 0 &&
-    !payloadHasMainProduct(payload as Record<string, unknown>) &&
-    Math.abs(amountReais - addonsTotal) < 0.5;
-  // Extras que vieram junto com o plano (order bumps): desconta antes de
-  // decidir o plano.
-  const extras = addonOnly ? 0 : addonsTotal;
-  const detected = detectPlan(payload, extras);
+  const items = Array.isArray(payload.orderItems) ? payload.orderItems : [];
+  const mainItem = items.find((i) => i?.product?.id === MAIN_PRODUCT_ID);
+  let addonOnly: boolean;
+  let detected: Plan;
+  if (items.length) {
+    // Formato atual da Applyfy: decide pelos produtos do pedido. Pedido sem o
+    // produto Shoppfy = compra só do extra (ex.: Acelerador pelo checkout
+    // dele, à vista ou parcelado) — nunca mexe no plano.
+    addonOnly = addons.length > 0 && !mainItem;
+    detected = mainItem?.price ? planFromPrice(Number(mainItem.price)) : detectPlan(payload);
+  } else {
+    // Fallback (payload sem itens): decide pelo valor total.
+    const rawAmount =
+      payload.transaction?.originalAmount ?? payload.transaction?.commissionAmount ?? 0;
+    const amountReais = rawAmount > 1000 ? rawAmount / 100 : rawAmount;
+    const addonsTotal = addons.reduce((sum, k) => sum + ADDON_PRICE[k], 0);
+    addonOnly =
+      addons.length > 0 &&
+      !payloadHasMainProduct(payload as Record<string, unknown>) &&
+      Math.abs(amountReais - addonsTotal) < 0.5;
+    detected = detectPlan(payload, addonOnly ? 0 : addonsTotal);
+  }
   const grant = (userId: string) =>
     addons.length
       ? grantAddons({
@@ -154,12 +169,18 @@ export async function handleTransactionPaid(payload: ApplyfyPayload): Promise<We
       await grant(existing.id);
       return { ok: true, userId: existing.id, ignored: `addon_only:${addons.join(",")}` };
     }
-    // O Acelerador é upsell (só aparece depois de comprar a Shoppfy): se a
-    // conta ainda não existe, o evento do plano ainda não chegou. Não cria
-    // login a partir dele (R$247 viraria "vitalício") — devolve erro pra
-    // Applyfy reenviar; o evento fica salvo em applyfy_events.
-    if (addons.includes("acelerador")) return { ok: false, reason: "addon_user_not_found" };
-    // Sem conta ainda (raro): segue o fluxo normal pra criar o login.
+    // Comprou só o extra com um e-mail que não tem conta (ex.: digitou outro
+    // e-mail no checkout do Acelerador). Nunca cria login nem plano a partir
+    // de um extra — avisa a conta de pedidos pra resolver na mão. O evento
+    // fica salvo em applyfy_events.
+    const { sendToPedidosAdmins } = await import("@/lib/push.server");
+    await sendToPedidosAdmins({
+      title: "Extra comprado sem conta na Shoppfy",
+      body: `${email} comprou ${addons.join(", ")} — e-mail sem conta. Confira e libere manualmente.`,
+      url: "/calls-admin",
+      tag: `addon-sem-conta-${payload.transaction?.id ?? email}`,
+    }).catch(() => undefined);
+    return { ok: true, ignored: `addon_without_account:${addons.join(",")}` };
   }
 
   const { data, error } = await admin.auth.admin.createUser({
