@@ -4230,7 +4230,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/6b9927239b-1-66.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -27,
+    stock: -30,
     manageStock: false,
   },
   {
@@ -8322,7 +8322,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/af5fbaaa5b-5-17.jpg",
     category: "Carregadores & Power Banks",
-    stock: -9,
+    stock: -10,
     manageStock: false,
   },
   {
@@ -8619,7 +8619,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/56ea2db954-4-43.jpg",
     category: "Produtos diversos",
-    stock: -17,
+    stock: -18,
     manageStock: false,
   },
   {
