@@ -5451,7 +5451,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/ec8301090f-1-24.jpg",
     category: "Informática",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -11875,7 +11875,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/37c1b267cd-3-2.webp",
     category: "Iluminação",
-    stock: 96,
+    stock: 92,
     manageStock: true,
   },
   {
@@ -14614,7 +14614,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/8685cb04ab-0-BarbeadorEltricoMaquinaDeBarbearAparelhoBar.jpeg",
     category: "Salão & Barbearia",
-    stock: -69,
+    stock: -70,
     manageStock: false,
   },
   {
