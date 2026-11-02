@@ -36,6 +36,7 @@ import {
 } from "@/lib/shopee-product.functions";
 import { pickBestCategory, type ShopeeCategoryOption } from "@/lib/shopee-category-match";
 import { explainPublishError, type Marketplace } from "@/lib/publish-error-explain";
+import { PublishProgress, type PublishProgressState } from "@/components/anuncio/publish-progress";
 import { getMercadoLivreStatus } from "@/lib/mercadolivre.functions";
 import {
   predictMercadoLivreCategory,
@@ -353,6 +354,8 @@ export function CriarAnuncio() {
   const [mlPublishError, setMlPublishError] = useState<string | null>(null);
   const [mlPublishItemId, setMlPublishItemId] = useState<string | null>(null);
   const [mlPublishPermalink, setMlPublishPermalink] = useState<string | null>(null);
+  // Animação de "publicando" (tela por cima com os passos e a comemoração).
+  const [publishAnim, setPublishAnim] = useState<PublishProgressState | null>(null);
 
   const runListing = useServerFn(generateListing);
   const runShopeeStatus = useServerFn(getShopeeStatus);
@@ -676,6 +679,11 @@ export function CriarAnuncio() {
     setPublishApiError(null);
     setPublishApiItemId(null);
     setItemPreview(null);
+    setPublishAnim({
+      marketplace: "shopee",
+      phase: "running",
+      product: { title: listing.title, image: selected.image ?? null, priceCents },
+    });
     try {
       const result = await runPublishApi({
         data: {
@@ -693,9 +701,7 @@ export function CriarAnuncio() {
         },
       });
       setPublishApiItemId(result.itemId);
-      toast.success("Produto publicado na loja Shopee", {
-        description: result.itemId ? `item_id ${result.itemId}` : undefined,
-      });
+      setPublishAnim((a) => (a ? { ...a, phase: "success" } : a));
 
       // Busca os dados reais do anúncio (foto/título/preço/status) direto na
       // Shopee, já que o sandbox não tem vitrine navegável — assim dá pra
@@ -706,6 +712,9 @@ export function CriarAnuncio() {
         try {
           const preview = await runItemPreview({ data: { itemId: result.itemId } });
           setItemPreview(preview);
+          setPublishAnim((a) =>
+            a && a.marketplace === "shopee" ? { ...a, viewUrl: preview?.productUrl ?? null } : a,
+          );
         } catch (previewErr) {
           console.error("[CriarAnuncio] falha ao buscar preview do anúncio:", previewErr);
         } finally {
@@ -714,9 +723,9 @@ export function CriarAnuncio() {
       }
     } catch (err) {
       console.error("[CriarAnuncio] falha ao publicar via API:", err);
-      setPublishApiError(
-        err instanceof Error ? err.message : "Não foi possível publicar pela API agora.",
-      );
+      const msg = err instanceof Error ? err.message : "Não foi possível publicar pela API agora.";
+      setPublishApiError(msg);
+      setPublishAnim((a) => (a ? { ...a, phase: "error", error: msg } : a));
     } finally {
       setPublishApiLoading(false);
     }
@@ -740,6 +749,11 @@ export function CriarAnuncio() {
     setMlPublishError(null);
     setMlPublishItemId(null);
     setMlPublishPermalink(null);
+    setPublishAnim({
+      marketplace: "mercado-livre",
+      phase: "running",
+      product: { title: listing.title, image: selected.image ?? null, priceCents },
+    });
     try {
       const result = await runMlPublish({
         data: {
@@ -756,14 +770,14 @@ export function CriarAnuncio() {
       });
       setMlPublishItemId(result.itemId);
       setMlPublishPermalink(result.permalink);
-      toast.success("Produto publicado no Mercado Livre", {
-        description: result.itemId ? `item ${result.itemId}` : undefined,
-      });
+      setPublishAnim((a) =>
+        a ? { ...a, phase: "success", viewUrl: result.permalink ?? null } : a,
+      );
     } catch (err) {
       console.error("[CriarAnuncio] falha ao publicar no Mercado Livre:", err);
-      setMlPublishError(
-        err instanceof Error ? err.message : "Não foi possível publicar pela API agora.",
-      );
+      const msg = err instanceof Error ? err.message : "Não foi possível publicar pela API agora.";
+      setMlPublishError(msg);
+      setPublishAnim((a) => (a ? { ...a, phase: "error", error: msg } : a));
     } finally {
       setMlPublishLoading(false);
     }
@@ -771,6 +785,7 @@ export function CriarAnuncio() {
 
   return (
     <div className="space-y-7">
+      <PublishProgress state={publishAnim} onClose={() => setPublishAnim(null)} />
       <Reveal className="surface-card p-5">
         <Step n={1}>Escolha o produto que você vai revender</Step>
         <p className="mb-3 text-[12.5px] text-muted-foreground">
