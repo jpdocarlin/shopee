@@ -72,7 +72,7 @@ function Confetti() {
     [],
   );
   return (
-    <div className="pp-confetti pointer-events-none absolute left-1/2 top-[34%]" aria-hidden>
+    <div className="pp-confetti pointer-events-none absolute left-1/2 top-[22%]" aria-hidden>
       {pieces.map((p, i) => (
         <span
           key={i}
@@ -151,45 +151,50 @@ export function PublishProgress({
       <div className="pp-card relative w-full max-w-[420px] overflow-hidden rounded-t-3xl border border-border bg-card px-6 pb-7 pt-6 shadow-2xl sm:rounded-3xl">
         {phase === "success" && <Confetti />}
 
-        {/* Produto */}
-        <div className="flex items-center gap-3">
-          <div className="relative shrink-0">
+        {/* Produto: a foto em destaque, com o logo da loja onde vai ser publicado */}
+        <div className="flex flex-col items-center text-center">
+          <div className="relative">
             {state.product.image ? (
               <img
                 src={state.product.image}
                 alt=""
                 className={cn(
-                  "size-16 rounded-xl border border-border object-cover",
+                  "size-28 rounded-2xl border border-border bg-white object-cover shadow-lg sm:size-32",
                   phase === "running" && "pp-float",
                 )}
               />
             ) : (
-              <div className="size-16 rounded-xl bg-muted" />
+              <div className="size-28 rounded-2xl bg-muted sm:size-32" />
             )}
-            <span className="absolute -bottom-1.5 -right-1.5 grid size-7 place-items-center rounded-lg border border-border bg-white">
-              <img src={LOGO[state.marketplace]} alt={label} className="size-5 object-contain" />
+            <span
+              className={cn(
+                "absolute -bottom-2.5 -right-2.5 grid size-11 place-items-center rounded-xl border-2 border-card bg-white shadow-md",
+                phase === "success" && "pp-pop",
+              )}
+            >
+              <img src={LOGO[state.marketplace]} alt={label} className="size-7 object-contain" />
             </span>
-          </div>
-          <div className="min-w-0">
-            <p className="line-clamp-2 text-[13.5px] font-medium leading-snug text-foreground">
-              {state.product.title}
-            </p>
-            {state.product.priceCents > 0 && (
-              <p className="mt-0.5 text-[12.5px] text-muted-foreground">
-                {formatBRL(state.product.priceCents)}
-              </p>
+            {phase === "success" && (
+              <span className="pp-pop absolute -left-2.5 -top-2.5 grid size-9 place-items-center rounded-full border-2 border-card bg-success text-white shadow-md">
+                <Check className="size-5" strokeWidth={3} />
+              </span>
             )}
           </div>
+          <p className="mt-4 line-clamp-2 max-w-[320px] text-[14px] font-medium leading-snug text-foreground">
+            {state.product.title}
+          </p>
+          {state.product.priceCents > 0 && (
+            <p className="mt-0.5 text-[13px] text-muted-foreground">
+              {formatBRL(state.product.priceCents)}
+            </p>
+          )}
         </div>
 
         {/* Resultado / título */}
         {phase === "success" ? (
-          <div className="pp-pop mt-6 flex flex-col items-center text-center">
-            <span className="pp-ring grid size-16 place-items-center rounded-full bg-success text-white">
-              <Check className="size-8" strokeWidth={3} />
-            </span>
-            <p className="mt-4 text-[20px] font-semibold tracking-tight text-foreground">
-              Publicado no {label}!
+          <div className="pp-pop mt-5 flex flex-col items-center text-center">
+            <p className="text-[21px] font-semibold tracking-tight text-foreground">
+              Publicado no {label}! 🎉
             </p>
             <p className="mt-1 text-[13px] text-muted-foreground">
               Seu anúncio já está na sua loja.
