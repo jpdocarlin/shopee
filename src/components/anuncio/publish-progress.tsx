@@ -29,6 +29,12 @@ const LABEL: Record<PublishMarketplace, string> = {
   "mercado-livre": "Mercado Livre",
 };
 
+// "na Shopee" / "no Mercado Livre"
+const NA: Record<PublishMarketplace, string> = {
+  shopee: "na Shopee",
+  "mercado-livre": "no Mercado Livre",
+};
+
 const LOGO: Record<PublishMarketplace, string> = {
   shopee: "/logo-shopee.png",
   "mercado-livre": "/logo-mercadolivre.png",
@@ -145,7 +151,11 @@ export function PublishProgress({
       role="dialog"
       aria-modal="true"
       aria-live="polite"
-      aria-label={phase === "success" ? `Publicado no ${label}` : `Publicando no ${label}`}
+      aria-label={
+        phase === "success"
+          ? `Publicado ${NA[state.marketplace]}`
+          : `Publicando ${NA[state.marketplace]}`
+      }
     >
       <style>{CSS}</style>
       <div className="pp-card relative w-full max-w-[420px] overflow-hidden rounded-t-3xl border border-border bg-card px-6 pb-7 pt-6 shadow-2xl sm:rounded-3xl">
@@ -194,7 +204,7 @@ export function PublishProgress({
         {phase === "success" ? (
           <div className="pp-pop mt-5 flex flex-col items-center text-center">
             <p className="text-[21px] font-semibold tracking-tight text-foreground">
-              Publicado no {label}! 🎉
+              Publicado {NA[state.marketplace]}! 🎉
             </p>
             <p className="mt-1 text-[13px] text-muted-foreground">
               Seu anúncio já está na sua loja.
@@ -215,7 +225,9 @@ export function PublishProgress({
             )}
           </div>
         ) : (
-          <p className="mt-5 text-[15px] font-semibold text-foreground">Publicando no {label}…</p>
+          <p className="mt-5 text-[15px] font-semibold text-foreground">
+            Publicando {NA[state.marketplace]}…
+          </p>
         )}
 
         {/* Passos */}
