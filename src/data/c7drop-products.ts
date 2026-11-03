@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-02 — 1372 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-03 — 1372 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -798,7 +798,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788438226763-f0e2e8cb.webp",
     category: "Ring Light & Suportes",
-    stock: 45,
+    stock: 44,
     manageStock: true,
   },
   {
@@ -2261,7 +2261,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/5cbd642ace-4-59.jpg",
     category: "Carregadores & Power Banks",
-    stock: 80,
+    stock: 79,
     manageStock: true,
   },
   {
@@ -2338,7 +2338,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/894350716b-4-44.jpg",
     category: "Caixas de Som",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -12216,7 +12216,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/9aa438e839-Design-sem-nome-1.jpg",
     category: "Relogios e Smartwatchs",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -14449,7 +14449,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/dd2d07828b-8-42.jpg",
     category: "Produtos diversos",
-    stock: -24,
+    stock: -25,
     manageStock: false,
   },
   {
@@ -14691,7 +14691,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/0223a406c9-8-45.webp",
     category: "Fora de Estoque",
-    stock: 1,
+    stock: 0,
     manageStock: true,
   },
   {
@@ -14812,7 +14812,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3d4d39e06d-11-15.jpg",
     category: "Caixas de Som",
-    stock: -15,
+    stock: -16,
     manageStock: false,
   },
   {
