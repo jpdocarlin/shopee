@@ -19,7 +19,13 @@
 // atributos obrigatórios diferentes) — publishProduct() abaixo cobre o caso
 // comum, mas precisa ser validado contra a "API Test Tool" do console (ou
 // contra uma chamada real em sandbox) antes de confiar 100% nele em produção.
-import { ANATEL_ATTRIBUTE, ANATEL_HOMOLOGATION_NUMBER } from "@/lib/anatel";
+import {
+  ANATEL_ATTRIBUTE,
+  ANATEL_HOMOLOGATION_NUMBER,
+  RF_PARENT_ATTRIBUTE,
+  pickYesNo,
+  productHasRadio,
+} from "@/lib/anatel";
 import crypto from "node:crypto";
 import { ProxyAgent } from "undici";
 
@@ -448,13 +454,47 @@ export async function buildMandatoryAttributeList(
   accessToken: string,
   shopId: number,
   attributes: ShopeeAttribute[],
+  productText = "",
 ): Promise<Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }>> {
   const result: Array<{ attribute_id: number; attribute_value_list: ShopeeAttributeValue[] }> = [];
+  const hasRadio = productHasRadio(productText);
 
-  // Número ANATEL: preenche sempre que a categoria tiver o campo (mesmo
-  // quando a árvore não marca como obrigatório — a validação real exige).
+  const valuesOf = async (attr: ShopeeAttribute) => {
+    let candidates = attr.attribute_value_list ?? [];
+    if (getSupportSearchValue(attr) && candidates.length === 0) {
+      try {
+        candidates = await searchAttributeValueList(accessToken, shopId, attr.attribute_id);
+      } catch {
+        // segue com a amostra (vazia)
+      }
+    }
+    return candidates;
+  };
+
+  // "Contém Bluetooth, Wi-Fi ou RF?" (anúncio Shopee 1586): responde pelo
+  // produto — Não pra quem não tem rádio (aí a Shopee não exige ANATEL),
+  // Sim só pra produto com Bluetooth/Wi-Fi/rádio de verdade.
+  const rfParent = attributes.find((attr) => RF_PARENT_ATTRIBUTE.test(attr.name ?? ""));
+  let rfAnswer: boolean | null = null;
+  if (rfParent) {
+    const candidates = await valuesOf(rfParent);
+    const choice = pickYesNo(candidates, hasRadio) ?? pickYesNo(candidates, !hasRadio);
+    if (choice?.value_id !== undefined) {
+      rfAnswer = pickYesNo([choice], true) ? true : false;
+      result.push({
+        attribute_id: rfParent.attribute_id,
+        attribute_value_list: [{ value_id: choice.value_id }],
+      });
+    }
+  }
+
+  // Número ANATEL: só quando o produto tem rádio (respondeu "Sim") ou quando a
+  // categoria exige o número sempre (ex.: celular), sem a pergunta de RF.
+  const needsAnatel = (attr: ShopeeAttribute) =>
+    rfAnswer === true || (rfAnswer === null && (attr.mandatory || hasRadio));
   const anatelAttrs = attributes.filter((attr) => ANATEL_ATTRIBUTE.test(attr.name ?? ""));
   for (const attr of anatelAttrs) {
+    if (!needsAnatel(attr)) continue;
     result.push({
       attribute_id: attr.attribute_id,
       attribute_value_list: [{ value_id: 0, original_value_name: ANATEL_HOMOLOGATION_NUMBER }],
@@ -462,20 +502,14 @@ export async function buildMandatoryAttributeList(
   }
 
   const mandatory = attributes.filter(
-    (attr) => attr.mandatory && !ANATEL_ATTRIBUTE.test(attr.name ?? ""),
+    (attr) =>
+      attr.mandatory &&
+      !ANATEL_ATTRIBUTE.test(attr.name ?? "") &&
+      attr.attribute_id !== rfParent?.attribute_id,
   );
 
   for (const attr of mandatory) {
-    let candidates = attr.attribute_value_list ?? [];
-
-    if (getSupportSearchValue(attr) && candidates.length === 0) {
-      try {
-        candidates = await searchAttributeValueList(accessToken, shopId, attr.attribute_id);
-      } catch {
-        // segue com a amostra (vazia) — melhor tentar publicar do que travar tudo.
-      }
-    }
-
+    const candidates = await valuesOf(attr);
     const firstValue = candidates[0];
     const isPureDropdown = getInputType(attr) === 1 || getInputType(attr) === 4;
 
@@ -747,18 +781,30 @@ export async function publishProduct(input: PublishProductInput) {
   // mensagem clara em vez de ficar tentando de novo às cegas.
   // 24/10/2026: agora o campo ANATEL é preenchido com o número único
   // autorizado (ver lib/anatel.ts). Só falha se a Shopee recusar o número.
+  const radio = productHasRadio(itemName);
   const anatelError = () =>
     new Error(
-      `A Shopee não aceitou o número de homologação ANATEL (${ANATEL_HOMOLOGATION_NUMBER}) nesse produto.`,
+      radio
+        ? `Esse produto tem Bluetooth/Wi-Fi/rádio, e a Shopee exige o número de homologação ANATEL do próprio produto — ela não aceitou o número padrão (${ANATEL_HOMOLOGATION_NUMBER}). Escolha outro produto ou fale com o suporte.`
+        : `A Shopee pediu o número de homologação ANATEL nessa categoria e não aceitou o número padrão (${ANATEL_HOMOLOGATION_NUMBER}). Escolha outro produto ou fale com o suporte.`,
     );
 
   let desc = truncateAtWordBoundary(description, GENEROUS_CAP);
   let attrs = attributeList;
+  let triedWithoutAnatel = false;
+  const anatelIds = new Set<number>();
+  const isAnatelAttr = (id: number) =>
+    anatelIds.has(id) ||
+    (attributeList ?? []).some(
+      (a) =>
+        a.attribute_id === id &&
+        a.attribute_value_list.some((v) => v.original_value_name === ANATEL_HOMOLOGATION_NUMBER),
+    );
 
-  // Máximo 4 tentativas: cobre o caso de precisar corrigir tamanho de
+  // Máximo 6 tentativas: cobre o caso de precisar corrigir tamanho de
   // descrição E atributos faltantes na mesma publicação (situações
   // independentes, cada uma consome uma tentativa).
-  for (let attempt = 0; attempt < 4; attempt++) {
+  for (let attempt = 0; attempt < 6; attempt++) {
     try {
       return await callShopeeApi("/api/v2/product/add_item", {
         method: "POST",
@@ -768,6 +814,7 @@ export async function publishProduct(input: PublishProductInput) {
       });
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
+      console.error(`[Shopee] add_item tentativa ${attempt + 1} falhou:`, message.slice(0, 600));
 
       const descMatch = message.match(
         /description length must be between \d+ and (\d+) characters/i,
@@ -785,25 +832,47 @@ export async function publishProduct(input: PublishProductInput) {
           if (/anatel/i.test(message)) throw anatelError();
           throw err; // já tentamos preencher esses — não repete em loop
         }
+        // Sem rádio, já tiramos o ANATEL e a Shopee exigiu de novo: a
+        // categoria pede o número sempre — não fica em loop.
+        if (triedWithoutAnatel && newOnes.some((m) => ANATEL_ATTRIBUTE.test(m.name))) {
+          throw anatelError();
+        }
         attrs = [
           ...(attrs ?? []),
-          ...newOnes.map(({ id, name }) => ({
-            attribute_id: id,
-            attribute_value_list: [
-              {
-                value_id: 0,
-                original_value_name: ANATEL_ATTRIBUTE.test(name)
-                  ? ANATEL_HOMOLOGATION_NUMBER
-                  : "Padrão",
-              },
-            ],
-          })),
+          ...newOnes.map(({ id, name }) => {
+            if (ANATEL_ATTRIBUTE.test(name)) anatelIds.add(id);
+            return {
+              attribute_id: id,
+              attribute_value_list: [
+                {
+                  value_id: 0,
+                  original_value_name: ANATEL_ATTRIBUTE.test(name)
+                    ? ANATEL_HOMOLOGATION_NUMBER
+                    : RF_PARENT_ATTRIBUTE.test(name)
+                      ? radio
+                        ? "Sim"
+                        : "Não"
+                      : "Padrão",
+                },
+              ],
+            };
+          }),
         ];
         continue;
       }
 
       // Número ANATEL recusado na validação (ex.: ERROR_ANATEL_ID_INCORRECT).
-      if (/anatel/i.test(message)) throw anatelError();
+      // Produto sem rádio: tenta de novo uma vez SEM o campo ANATEL (ele não
+      // deveria ser exigido). Produto com rádio: o número é obrigatório mesmo.
+      if (/anatel/i.test(message)) {
+        const hasAnatel = (attrs ?? []).some((a) => isAnatelAttr(a.attribute_id));
+        if (!radio && !triedWithoutAnatel && hasAnatel) {
+          triedWithoutAnatel = true;
+          attrs = (attrs ?? []).filter((a) => !isAnatelAttr(a.attribute_id));
+          continue;
+        }
+        throw anatelError();
+      }
 
       throw err;
     }

@@ -227,7 +227,12 @@ export const publishShopeeProduct = createServerFn({ method: "POST" })
     let attributeList: Awaited<ReturnType<typeof buildMandatoryAttributeList>> = [];
     try {
       const attributes = await getAttributeTree(accessToken, shopId, data.categoryId);
-      attributeList = await buildMandatoryAttributeList(accessToken, shopId, attributes);
+      attributeList = await buildMandatoryAttributeList(
+        accessToken,
+        shopId,
+        attributes,
+        data.itemName,
+      );
     } catch {
       // categoria pode não ter atributos obrigatórios — segue sem eles.
     }
