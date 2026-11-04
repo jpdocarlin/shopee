@@ -23,7 +23,15 @@ export const Route = createFileRoute("/api/shopee/connect")({
           const redirectUrl = new URL("/api/shopee/callback", request.url);
           redirectUrl.searchParams.set("state", state);
           const authLink = buildAuthLink(redirectUrl.toString());
-          return Response.redirect(authLink, 302);
+          // Aberto pelo "link pra janela anônima" (via=link): marca a janela
+          // pro callback mandar pra /conectado em vez de /integracoes. Conexão
+          // normal limpa a marca, se tiver sobrado de um link neste navegador.
+          const { redirectWith, viaLinkCookie, clearViaCookie } =
+            await import("@/lib/connect-redirect.server");
+          return redirectWith(
+            authLink,
+            url.searchParams.get("via") === "link" ? viaLinkCookie() : clearViaCookie(),
+          );
         } catch (err) {
           console.error("[shopee-connect] erro:", err);
           return new Response(

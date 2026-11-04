@@ -147,6 +147,37 @@ export async function invalidateMercadoLivreConnection(userId: string): Promise<
   if (error) throw error;
 }
 
+// 04/11/2026: "Desconectar" agora também desfaz a autorização do lado do
+// Mercado Livre (ver revokeAppAuthorization) — assim, na próxima conexão, o
+// ML mostra a tela de permissão de novo em vez de voltar direto pra mesma
+// conta. A revogação vale pra conta do ML inteira, então NÃO revoga se a
+// mesma conta do ML estiver conectada em outro usuário da Shoppfy (senão
+// derrubaria a conexão dele). Falha na revogação não impede desconectar.
+export async function disconnectMercadoLivreAccount(userId: string): Promise<void> {
+  const conn = await getMercadoLivreConnection(userId).catch(() => null);
+  if (conn?.user_id) {
+    try {
+      const admin = getAdminClient();
+      const marketplaceId = await getMercadoLivreMarketplaceId();
+      const { data: others } = await admin
+        .from("marketplace_accounts")
+        .select("id")
+        .eq("marketplace_id", marketplaceId)
+        .neq("user_id", userId)
+        .filter("metadata->mercadolivre_api->>user_id", "eq", String(conn.user_id))
+        .limit(1);
+      if (!others?.length) {
+        const { accessToken } = await getValidMercadoLivreAccessToken(userId);
+        const { revokeAppAuthorization } = await import("@/lib/mercadolivre-api.server");
+        await revokeAppAuthorization(accessToken, conn.user_id);
+      }
+    } catch (err) {
+      console.warn("[mercadolivre-disconnect] não deu pra revogar no ML:", err);
+    }
+  }
+  await invalidateMercadoLivreConnection(userId);
+}
+
 // Chama antes de qualquer publishProduct/callMercadoLivreApi — renova o
 // access_token se estiver perto de expirar (margem de 5 min) e já salva o
 // novo par de tokens (o refresh_token do ML é de uso único: sempre vem um

@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as AceleradorRouteImport } from './routes/acelerador'
 import { Route as AtendimentoRouteImport } from './routes/atendimento'
+import { Route as ConectadoRouteImport } from './routes/conectado'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MembrosRouteImport } from './routes/membros'
 import { Route as ShellIndexRouteImport } from './routes/_shell.index'
@@ -64,6 +65,11 @@ const AceleradorRoute = AceleradorRouteImport.update({
 const AtendimentoRoute = AtendimentoRouteImport.update({
   id: '/atendimento',
   path: '/atendimento',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConectadoRoute = ConectadoRouteImport.update({
+  id: '/conectado',
+  path: '/conectado',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -267,6 +273,7 @@ export interface FileRoutesByFullPath {
   '/': typeof ShellIndexRoute
   '/acelerador': typeof AceleradorRoute
   '/atendimento': typeof AtendimentoRoute
+  '/conectado': typeof ConectadoRoute
   '/login': typeof LoginRoute
   '/membros': typeof MembrosRouteWithChildren
   '/anuncios': typeof ShellAnunciosRoute
@@ -309,6 +316,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/acelerador': typeof AceleradorRoute
   '/atendimento': typeof AtendimentoRoute
+  '/conectado': typeof ConectadoRoute
   '/login': typeof LoginRoute
   '/anuncios': typeof ShellAnunciosRoute
   '/aplicativo': typeof ShellAplicativoRoute
@@ -353,6 +361,7 @@ export interface FileRoutesById {
   '/_shell': typeof ShellRouteWithChildren
   '/acelerador': typeof AceleradorRoute
   '/atendimento': typeof AtendimentoRoute
+  '/conectado': typeof ConectadoRoute
   '/login': typeof LoginRoute
   '/membros': typeof MembrosRouteWithChildren
   '/_shell/anuncios': typeof ShellAnunciosRoute
@@ -399,6 +408,7 @@ export interface FileRouteTypes {
     | '/'
     | '/acelerador'
     | '/atendimento'
+    | '/conectado'
     | '/login'
     | '/membros'
     | '/anuncios'
@@ -441,6 +451,7 @@ export interface FileRouteTypes {
   to:
     | '/acelerador'
     | '/atendimento'
+    | '/conectado'
     | '/login'
     | '/anuncios'
     | '/aplicativo'
@@ -484,6 +495,7 @@ export interface FileRouteTypes {
     | '/_shell'
     | '/acelerador'
     | '/atendimento'
+    | '/conectado'
     | '/login'
     | '/membros'
     | '/_shell/anuncios'
@@ -529,6 +541,7 @@ export interface RootRouteChildren {
   ShellRoute: typeof ShellRouteWithChildren
   AceleradorRoute: typeof AceleradorRoute
   AtendimentoRoute: typeof AtendimentoRoute
+  ConectadoRoute: typeof ConectadoRoute
   LoginRoute: typeof LoginRoute
   MembrosRoute: typeof MembrosRouteWithChildren
   ApiC7HandoffRoute: typeof ApiC7HandoffRoute
@@ -568,6 +581,13 @@ declare module '@tanstack/react-router' {
       path: '/atendimento'
       fullPath: '/atendimento'
       preLoaderRoute: typeof AtendimentoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conectado': {
+      id: '/conectado'
+      path: '/conectado'
+      fullPath: '/conectado'
+      preLoaderRoute: typeof ConectadoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -913,6 +933,7 @@ const rootRouteChildren: RootRouteChildren = {
   ShellRoute: ShellRouteWithChildren,
   AceleradorRoute: AceleradorRoute,
   AtendimentoRoute: AtendimentoRoute,
+  ConectadoRoute: ConectadoRoute,
   LoginRoute: LoginRoute,
   MembrosRoute: MembrosRouteWithChildren,
   ApiC7HandoffRoute: ApiC7HandoffRoute,

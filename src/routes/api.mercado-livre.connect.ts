@@ -23,13 +23,25 @@ export const Route = createFileRoute("/api/mercado-livre/connect")({
               302,
             );
           }
-          const { buildAuthLink } = await import("@/lib/mercadolivre-api.server");
+          const { buildAuthLink, withLogout } = await import("@/lib/mercadolivre-api.server");
           // Redirect URI FIXA (sem query string) — precisa ser exatamente
           // essa mesma URL cadastrada como "Redirect URI" no app do Mercado
           // Livre Developers.
           const redirectUrl = new URL("/api/mercado-livre/callback", request.url).toString();
           const authLink = buildAuthLink(redirectUrl, state);
-          return Response.redirect(authLink, 302);
+          // "Entrar com outra conta": passa antes pelo logout do ML, senão ele
+          // usa a conta já logada no navegador e volta direto pro callback.
+          const target =
+            url.searchParams.get("conta") === "outra" ? withLogout(authLink) : authLink;
+          // Aberto pelo "link pra janela anônima" (via=link): marca a janela
+          // pro callback mandar pra /conectado em vez de /integracoes. Conexão
+          // normal limpa a marca, se tiver sobrado de um link neste navegador.
+          const { redirectWith, viaLinkCookie, clearViaCookie } =
+            await import("@/lib/connect-redirect.server");
+          return redirectWith(
+            target,
+            url.searchParams.get("via") === "link" ? viaLinkCookie() : clearViaCookie(),
+          );
         } catch (err) {
           console.error("[mercadolivre-connect] erro:", err);
           return new Response(

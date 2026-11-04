@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { CheckCircle2, Copy, Loader2, MapPin, Plug, Unplug, Zap } from "lucide-react";
 import { toast } from "sonner";
@@ -7,17 +7,10 @@ import { PageHeader } from "@/components/shared/page-header";
 import { ModulePlaceholder } from "@/components/shared/module-placeholder";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
+import { ConnectDialog, type ConnectMarketplace } from "@/components/integracoes/connect-dialog";
 import { useT } from "@/i18n/translations";
-import {
-  createShopeeConnectState,
-  disconnectShopee,
-  getShopeeStatus,
-} from "@/lib/shopee.functions";
-import {
-  createMercadoLivreConnectState,
-  disconnectMercadoLivre,
-  getMercadoLivreStatus,
-} from "@/lib/mercadolivre.functions";
+import { disconnectShopee, getShopeeStatus } from "@/lib/shopee.functions";
+import { disconnectMercadoLivre, getMercadoLivreStatus } from "@/lib/mercadolivre.functions";
 
 export const Route = createFileRoute("/_shell/integracoes")({
   head: () => ({
@@ -55,15 +48,15 @@ type MercadoLivreStatus =
 function IntegracoesPage() {
   const t = useT();
   const [shopeeStatus, setShopeeStatus] = useState<ShopeeStatus>({ loading: true });
-  const [connectingShopee, setConnectingShopee] = useState(false);
   const [mlStatus, setMlStatus] = useState<MercadoLivreStatus>({ loading: true });
-  const [connectingMl, setConnectingMl] = useState(false);
+  // Loja escolhida no "Conectar" — abre a escolha de conta (ConnectDialog).
+  const [connectFor, setConnectFor] = useState<ConnectMarketplace | null>(null);
   const [disconnectingShopee, setDisconnectingShopee] = useState(false);
   const [disconnectingMl, setDisconnectingMl] = useState(false);
 
   async function handleDisconnectShopee() {
     const ok = window.confirm(
-      "Desconectar sua loja Shopee?\n\nSeus anúncios que já estão na Shopee continuam no ar. Você só não vai conseguir publicar novos até conectar de novo.",
+      "Desconectar sua loja Shopee?\n\nSeus anúncios que já estão na Shopee continuam no ar. Você só não vai conseguir publicar novos até conectar de novo — e aí pode escolher qual loja conectar.",
     );
     if (!ok) return;
     setDisconnectingShopee(true);
@@ -80,7 +73,7 @@ function IntegracoesPage() {
 
   async function handleDisconnectMercadoLivre() {
     const ok = window.confirm(
-      "Desconectar sua loja do Mercado Livre?\n\nSeus anúncios que já estão no Mercado Livre continuam no ar. Você só não vai conseguir publicar novos até conectar de novo.",
+      "Desconectar sua loja do Mercado Livre?\n\nSeus anúncios que já estão no Mercado Livre continuam no ar. A Shoppfy também perde o acesso a essa conta lá no Mercado Livre. Pra publicar de novo, é só conectar — e aí pode escolher qual loja conectar.",
     );
     if (!ok) return;
     setDisconnectingMl(true);
@@ -95,31 +88,23 @@ function IntegracoesPage() {
     }
   }
 
-  async function handleConnectShopee() {
-    setConnectingShopee(true);
-    try {
-      const { token } = await createShopeeConnectState();
-      window.location.href = `/api/shopee/connect?state=${encodeURIComponent(token)}`;
-    } catch {
-      setConnectingShopee(false);
-      toast.error("Não deu pra iniciar a conexão com a Shopee", {
-        description: "Tente de novo em instantes.",
+  // Conectado pela janela anônima: atualiza o status sem recarregar a página.
+  const handleConnected = useCallback((m: ConnectMarketplace) => {
+    setConnectFor(null);
+    if (m === "shopee") {
+      getShopeeStatus()
+        .then((res) => setShopeeStatus({ loading: false, ...res }))
+        .catch(() => undefined);
+      toast.success("Loja Shopee conectada", { description: "A API oficial já pode ser usada." });
+    } else {
+      getMercadoLivreStatus()
+        .then((res) => setMlStatus({ loading: false, ...res }))
+        .catch(() => undefined);
+      toast.success("Loja Mercado Livre conectada", {
+        description: "A API oficial já pode ser usada.",
       });
     }
-  }
-
-  async function handleConnectMercadoLivre() {
-    setConnectingMl(true);
-    try {
-      const { token } = await createMercadoLivreConnectState();
-      window.location.href = `/api/mercado-livre/connect?state=${encodeURIComponent(token)}`;
-    } catch {
-      setConnectingMl(false);
-      toast.error("Não deu pra iniciar a conexão com o Mercado Livre", {
-        description: "Tente de novo em instantes.",
-      });
-    }
-  }
+  }, []);
 
   useEffect(() => {
     // Feedback do redirect de volta do OAuth da Shopee (?shopee=connected|error)
@@ -169,6 +154,12 @@ function IntegracoesPage() {
 
   return (
     <div className="space-y-7">
+      <ConnectDialog
+        marketplace={connectFor}
+        onOpenChange={(open) => !open && setConnectFor(null)}
+        onConnected={handleConnected}
+      />
+
       <PageHeader
         title={t("Integrações")}
         description={t("APIs, webhooks, automações e conexões com ferramentas externas.")}
@@ -221,17 +212,8 @@ function IntegracoesPage() {
               </Button>
             </div>
           ) : (
-            <Button
-              size="sm"
-              className="shrink-0 gap-1.5"
-              disabled={connectingShopee}
-              onClick={handleConnectShopee}
-            >
-              {connectingShopee ? (
-                <Loader2 className="size-3.5 animate-spin" />
-              ) : (
-                <Zap className="size-3.5" />
-              )}
+            <Button size="sm" className="shrink-0 gap-1.5" onClick={() => setConnectFor("shopee")}>
+              <Zap className="size-3.5" />
               Conectar loja Shopee
             </Button>
           )}
@@ -288,14 +270,9 @@ function IntegracoesPage() {
             <Button
               size="sm"
               className="shrink-0 gap-1.5"
-              disabled={connectingMl}
-              onClick={handleConnectMercadoLivre}
+              onClick={() => setConnectFor("mercado-livre")}
             >
-              {connectingMl ? (
-                <Loader2 className="size-3.5 animate-spin" />
-              ) : (
-                <Zap className="size-3.5" />
-              )}
+              <Zap className="size-3.5" />
               Conectar loja Mercado Livre
             </Button>
           )}

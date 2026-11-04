@@ -12,34 +12,30 @@ export const Route = createFileRoute("/api/shopee/callback")({
     handlers: {
       GET: async ({ request }) => {
         const url = new URL(request.url);
+        const { afterConnectRedirect } = await import("@/lib/connect-redirect.server");
         const code = url.searchParams.get("code");
         const shopIdRaw = url.searchParams.get("shop_id");
         const state = url.searchParams.get("state");
         if (!code || !shopIdRaw || !state) {
-          return Response.redirect(
-            new URL("/integracoes?shopee=error&reason=missing_params", url.origin).toString(),
-            302,
+          return afterConnectRedirect(
+            request,
+            "shopee",
+            false,
+            "shopee=error&reason=missing_params",
           );
         }
         try {
           const { exchangeCodeForToken } = await import("@/lib/shopee-api.server");
-          const { saveShopeeConnection, consumeShopeeOAuthState } = await import(
-            "@/lib/shopee-connection.server"
-          );
+          const { saveShopeeConnection, consumeShopeeOAuthState } =
+            await import("@/lib/shopee-connection.server");
           const userId = await consumeShopeeOAuthState(state);
           const tokens = await exchangeCodeForToken(code, Number(shopIdRaw));
           await saveShopeeConnection(tokens, userId);
           console.log("[shopee-callback] loja conectada:", tokens.shopId);
-          return Response.redirect(
-            new URL("/integracoes?shopee=connected", url.origin).toString(),
-            302,
-          );
+          return afterConnectRedirect(request, "shopee", true, "shopee=connected");
         } catch (err) {
           console.error("[shopee-callback] falha ao conectar:", err);
-          return Response.redirect(
-            new URL("/integracoes?shopee=error", url.origin).toString(),
-            302,
-          );
+          return afterConnectRedirect(request, "shopee", false, "shopee=error");
         }
       },
     },

@@ -73,6 +73,37 @@ export function buildAuthLink(redirectUrl: string, state: string): string {
   return url.toString();
 }
 
+// 04/11/2026: "trocar de conta" na hora de conectar. O Mercado Livre usa a
+// conta que já está logada no navegador e, se ela já autorizou o app, volta
+// direto pro callback sem mostrar nada — a pessoa nunca consegue escolher
+// outra loja. Passar antes pelo logout do ML (que limpa a sessão em todos os
+// domínios dele via /session/replicator e depois segue pro `go`) faz a tela
+// de login aparecer. Testado 04/11/2026: logout → replicator → authorization.
+const LOGOUT_URL = "https://www.mercadolivre.com/jms/mlb/lgz/logout";
+export function withLogout(authLink: string): string {
+  const url = new URL(LOGOUT_URL);
+  url.searchParams.set("go", authLink);
+  return url.toString();
+}
+
+// Desfaz a autorização do app do lado do Mercado Livre (doc oficial "Gerencie
+// seu aplicativo" → Revogar a autorização do usuário). Sem isso, o
+// "Desconectar" só apagava os tokens aqui: o grant continuava valendo lá e a
+// próxima conexão pulava a tela de permissão, caindo direto na mesma conta.
+export async function revokeAppAuthorization(accessToken: string, mlUserId: number): Promise<void> {
+  const { appId } = requireCreds();
+  const res = await mlFetch(`${API_HOST}/users/${mlUserId}/applications/${appId}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(
+      `[Mercado Livre] revogar autorização falhou (${res.status}): ${body.slice(0, 300)}`,
+    );
+  }
+}
+
 export type MercadoLivreTokenSet = {
   accessToken: string;
   refreshToken: string;

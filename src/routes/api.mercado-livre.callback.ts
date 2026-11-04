@@ -11,19 +11,21 @@ export const Route = createFileRoute("/api/mercado-livre/callback")({
     handlers: {
       GET: async ({ request }) => {
         const url = new URL(request.url);
+        const { afterConnectRedirect } = await import("@/lib/connect-redirect.server");
         const code = url.searchParams.get("code");
         const state = url.searchParams.get("state");
         if (!code || !state) {
-          return Response.redirect(
-            new URL("/integracoes?ml=error&reason=missing_params", url.origin).toString(),
-            302,
+          return afterConnectRedirect(
+            request,
+            "mercado-livre",
+            false,
+            "ml=error&reason=missing_params",
           );
         }
         try {
           const { exchangeCodeForToken } = await import("@/lib/mercadolivre-api.server");
-          const { saveMercadoLivreConnection, consumeMercadoLivreOAuthState } = await import(
-            "@/lib/mercadolivre-connection.server"
-          );
+          const { saveMercadoLivreConnection, consumeMercadoLivreOAuthState } =
+            await import("@/lib/mercadolivre-connection.server");
           const userId = await consumeMercadoLivreOAuthState(state);
           // Precisa ser a MESMA redirect_uri (sem query string) usada em
           // /api/mercado-livre/connect — o ML valida que bate exato.
@@ -31,10 +33,10 @@ export const Route = createFileRoute("/api/mercado-livre/callback")({
           const tokens = await exchangeCodeForToken(code, redirectUrl);
           await saveMercadoLivreConnection(tokens, userId);
           console.log("[mercadolivre-callback] loja conectada:", tokens.userId);
-          return Response.redirect(new URL("/integracoes?ml=connected", url.origin).toString(), 302);
+          return afterConnectRedirect(request, "mercado-livre", true, "ml=connected");
         } catch (err) {
           console.error("[mercadolivre-callback] falha ao conectar:", err);
-          return Response.redirect(new URL("/integracoes?ml=error", url.origin).toString(), 302);
+          return afterConnectRedirect(request, "mercado-livre", false, "ml=error");
         }
       },
     },
