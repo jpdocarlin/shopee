@@ -40,6 +40,25 @@ type PublishInput = {
   costCents?: number;
 };
 
+// Junta só as mensagens/códigos dos "cause" do tipo error de uma resposta de
+// erro do ML (o resto são avisos que não impedem a publicação). Sem JSON
+// reconhecível, devolve a mensagem inteira.
+function mercadoLivreErrorCauses(message: string): string {
+  const start = message.indexOf("{");
+  if (start < 0) return message;
+  try {
+    const json = JSON.parse(message.slice(start)) as {
+      message?: string;
+      cause?: Array<{ type?: string; code?: string; message?: string }>;
+    };
+    const errors = (json.cause ?? []).filter((c) => c.type !== "warning");
+    if (!errors.length) return message;
+    return errors.map((c) => `${c.code ?? ""} ${c.message ?? ""}`).join(" | ");
+  } catch {
+    return message;
+  }
+}
+
 export const publishMercadoLivreProduct = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .validator((data: PublishInput) => data)
@@ -65,7 +84,7 @@ export const publishMercadoLivreProduct = createServerFn({ method: "POST" })
     let attributeList: ReturnType<typeof buildMandatoryAttributeList> = [];
     try {
       const attributes = await getCategoryAttributes(accessToken, data.categoryId);
-      attributeList = buildMandatoryAttributeList(attributes);
+      attributeList = buildMandatoryAttributeList(attributes, data.itemName);
     } catch {
       // categoria pode não ter atributos obrigatórios — segue sem eles.
     }
@@ -82,16 +101,37 @@ export const publishMercadoLivreProduct = createServerFn({ method: "POST" })
         attributeList: attrs,
       });
 
-    let result: Awaited<ReturnType<typeof publishProduct>>;
-    try {
-      result = await publish(attributeList);
-    } catch (err) {
-      // Categoria pediu GTIN (código de barras) e a lista de atributos não
-      // trouxe o EMPTY_GTIN_REASON: tenta de novo informando "sem código".
-      const msg = err instanceof Error ? err.message : String(err);
-      if (!/GTIN/i.test(msg) || attributeList.some((a) => a.id === "EMPTY_GTIN_REASON")) throw err;
-      result = await publish([...attributeList, emptyGtinReason()]);
+    // Tenta de novo corrigindo o que o ML reclamou (no máximo 3 tentativas):
+    //   - GTIN (código de barras) sem EMPTY_GTIN_REASON → informa "sem código";
+    //   - campo ANATEL recusado → manda sem os campos ANATEL (só quando o ML
+    //     não exige o campo; se exigir, o erro segue pra tela explicando).
+    // Só olha os "cause" do tipo error (o ML também manda avisos, ex.: envio).
+    let result: Awaited<ReturnType<typeof publishProduct>> | null = null;
+    let attrs = attributeList;
+    let lastErr: unknown = null;
+    for (let attempt = 0; attempt < 3 && !result; attempt++) {
+      try {
+        result = await publish(attrs);
+      } catch (err) {
+        lastErr = err;
+        const msg = err instanceof Error ? err.message : String(err);
+        const errors = mercadoLivreErrorCauses(msg);
+        if (/GTIN/i.test(errors) && !attrs.some((a) => a.id === "EMPTY_GTIN_REASON")) {
+          attrs = [...attrs, emptyGtinReason()];
+          continue;
+        }
+        if (
+          /ANATEL|HOMOLOGATION/i.test(errors) &&
+          attrs.some((a) => /ANATEL|HOMOLOG/i.test(a.id))
+        ) {
+          console.warn("[MercadoLivre] campo ANATEL recusado, tentando sem ele:", errors);
+          attrs = attrs.filter((a) => !/ANATEL|HOMOLOG/i.test(a.id));
+          continue;
+        }
+        throw err;
+      }
     }
+    if (!result) throw lastErr ?? new Error("Não foi possível publicar no Mercado Livre agora.");
 
     if (result.itemId) {
       const { recordPublishedListing } = await import("@/lib/listings.server");

@@ -18,17 +18,30 @@ const BASE = "https://api.groq.com/openai/v1";
 // (ex.: 200 mil/dia no gpt-oss-120b). Atendimento + Criar Anúncio estouravam o
 // primeiro modelo e tudo caía no Gemini (sem crédito → erro 402). Agora, se um
 // modelo bater o limite do dia, passa pro próximo da lista na mesma hora.
+// 04/11/2026: a Groq tirou do plano grátis os Llama 3.x, Llama 4, Kimi e
+// Qwen3-32B (viraram "Enterprise" ou saíram). Sobraram gpt-oss-120b,
+// gpt-oss-20b e qwen3.8-27b. Quando os dois gpt-oss batiam o limite do dia, a
+// lista caía em "llama-prompt-guard" (modelo de moderação, máx. 512 tokens) e
+// TODA chamada voltava erro 400 — título/descrição, categoria do ML e
+// atendimento. Agora modelos que não são de conversa ficam de fora e erro 400
+// de um modelo passa pro próximo.
 const TEXT_PREFERENCE = [
   "openai/gpt-oss-120b",
+  "openai/gpt-oss-20b",
+  "qwen/qwen3.8-27b",
   "llama-3.3-70b-versatile",
   "moonshotai/kimi-k2-instruct",
   "qwen/qwen3-32b",
   "meta-llama/llama-4-maverick-17b-128e-instruct",
   "meta-llama/llama-4-scout-17b-16e-instruct",
-  "openai/gpt-oss-20b",
   "llama-3.1-8b-instant",
 ];
+
+// Modelos que não servem pra conversa (moderação, áudio, voz) — nunca entram
+// como alternativa de texto/visão.
+const NOT_CHAT = /guard|safeguard|whisper|orpheus|tts|playai|distil|embed/i;
 const VISION_PREFERENCE = [
+  "qwen/qwen3.8-27b",
   "meta-llama/llama-4-scout-17b-16e-instruct",
   "meta-llama/llama-4-maverick-17b-128e-instruct",
 ];
@@ -103,7 +116,7 @@ async function candidateModels(
   const list = [
     ...(forced ? [forced] : []),
     ...preference.filter((p) => ids.length === 0 || ids.includes(p)),
-    ...ids.filter((id) => fallbackMatch.test(id) && !preference.includes(id)),
+    ...ids.filter((id) => fallbackMatch.test(id) && !NOT_CHAT.test(id) && !preference.includes(id)),
   ];
   const now = Date.now();
   const unique = [...new Set(list)];
@@ -135,9 +148,15 @@ async function withModelFallback(
       const daily = /per day|\(TPD\)|\(RPD\)/i.test(msg);
       const gone =
         err instanceof GroqHttpError &&
-        (err.status === 404 || /decommissioned|does not exist|not found/i.test(msg));
+        (err.status === 404 ||
+          err.status === 403 ||
+          /decommissioned|does not exist|not found|not have access|model_permission/i.test(msg));
+      // 400 por causa do modelo (limite de tokens menor, sem suporte a imagem
+      // ou a JSON...): outro modelo da lista pode atender.
+      const unsupported = err instanceof GroqHttpError && err.status === 400;
       if (daily) exhaustedUntil.set(model, Date.now() + parseRetryMs(msg));
-      if (daily || gone || (err instanceof GroqHttpError && err.status === 429)) {
+      if (gone) exhaustedUntil.set(model, Date.now() + 6 * 60 * 60 * 1000);
+      if (daily || gone || unsupported || (err instanceof GroqHttpError && err.status === 429)) {
         console.warn(`[Groq] ${model} indisponível agora, tentando o próximo modelo.`);
         continue;
       }

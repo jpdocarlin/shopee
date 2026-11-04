@@ -130,6 +130,14 @@ const SHOPEE_RULES: Rule[] = [
 
 const ML_RULES: Rule[] = [
   {
+    // 04/11/2026: vem antes da regra de foto porque o erro da etiqueta ANATEL
+    // fala em "invalid picture".
+    test: /ANATEL|HOMOLOGATION|homologa/i,
+    reason:
+      "O Mercado Livre pediu o certificado da ANATEL desse produto (número de homologação e/ou foto da etiqueta) e não aceitou o que foi enviado.",
+    fix: "Clique em Publicar de novo — o sistema já tenta publicar sem o campo da ANATEL quando o produto não precisa dele. Se repetir, esse produto exige certificado do fabricante: escolha outro produto do catálogo.",
+  },
+  {
     test: /invalid_token|invalid.?access.?token|expired_token|unauthorized|\b401\b|invalid_grant/i,
     reason: "A conexão entre o Shoppfy e a sua conta do Mercado Livre expirou ou foi desfeita.",
     fix: "Vá em Integrações, clique em Desconectar no Mercado Livre e conecte a conta de novo. Depois volte aqui e publique.",
@@ -201,6 +209,23 @@ function isAlreadyFriendly(raw: string): boolean {
   return !/^\[(Shopee|Mercado Livre)\]/.test(raw.trim()) && !/[{}[\]]/.test(raw);
 }
 
+// Mensagens e códigos só dos "cause" que são erro (não aviso). null quando
+// não tem JSON com "cause".
+function errorCauses(raw: string): string | null {
+  const start = raw.indexOf("{");
+  if (start < 0) return null;
+  try {
+    const json = JSON.parse(raw.slice(start)) as {
+      cause?: Array<{ type?: string; code?: string; message?: string }>;
+    };
+    const errors = (json.cause ?? []).filter((c) => c.type !== "warning");
+    if (!errors.length) return null;
+    return errors.map((c) => `${c.code ?? ""} ${c.message ?? ""}`).join(" | ");
+  } catch {
+    return null;
+  }
+}
+
 export function explainPublishError(
   marketplace: Marketplace,
   raw: string,
@@ -222,9 +247,13 @@ export function explainPublishError(
     return { reason: raw, fix: "" };
   }
 
-  // Procura primeiro no "message"/"cause" do JSON (mais preciso), depois no texto todo.
+  // Procura primeiro nos "cause" do tipo erro do JSON (o ML manda avisos
+  // junto — ex.: "shipping.lost_me1_by_user" — que não impedem a publicação e
+  // faziam a explicação apontar pro motivo errado), depois no texto todo.
   const rules = [...(marketplace === "shopee" ? SHOPEE_RULES : ML_RULES), ...COMMON_RULES(label)];
-  const hit = rules.find((r) => r.test.test(raw));
+  const focus = errorCauses(raw);
+  const hit =
+    (focus && rules.find((r) => r.test.test(focus))) || rules.find((r) => r.test.test(raw));
   if (hit) {
     return { reason: hit.reason, fix: hit.fix, technical: raw };
   }

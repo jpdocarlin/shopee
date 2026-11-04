@@ -11,6 +11,7 @@ import { Check, ExternalLink, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { formatBRL } from "@/lib/format";
+import { explainPublishError } from "@/lib/publish-error-explain";
 import { cn } from "@/lib/utils";
 
 export type PublishMarketplace = "shopee" | "mercado-livre";
@@ -95,6 +96,23 @@ function Confetti() {
           }
         />
       ))}
+    </div>
+  );
+}
+
+// Erro em português (motivo + o que fazer), igual à caixa de erro da tela —
+// nunca o JSON cru da API.
+function ErrorText({ marketplace, raw }: { marketplace: PublishMarketplace; raw: string }) {
+  const { reason, fix } = explainPublishError(marketplace, raw);
+  return (
+    <div className="mt-1.5 max-h-40 space-y-1.5 overflow-y-auto text-[12.5px] leading-snug">
+      <p className="text-muted-foreground">{reason}</p>
+      {fix && (
+        <p className="text-foreground/85">
+          <span className="font-semibold">O que fazer: </span>
+          {fix}
+        </p>
+      )}
     </div>
   );
 }
@@ -218,11 +236,7 @@ export function PublishProgress({
             <p className="mt-3 text-[17px] font-semibold text-foreground">
               Não deu pra publicar agora
             </p>
-            {state.error && (
-              <p className="mt-1.5 max-h-28 overflow-y-auto text-[12.5px] text-muted-foreground">
-                {state.error}
-              </p>
-            )}
+            {state.error && <ErrorText marketplace={state.marketplace} raw={state.error} />}
           </div>
         ) : (
           <p className="mt-5 text-[15px] font-semibold text-foreground">

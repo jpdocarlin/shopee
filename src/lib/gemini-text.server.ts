@@ -160,7 +160,13 @@ async function fetchGeminiWithRetry(apiKey: string, prompt: string): Promise<Res
       // pra sobrar espaço pro raciocínio + o texto de verdade.
       // 29/10/2026: 3000 → 1800 pra cortar o "pensamento" cobrado. Se vier
       // cortado, o título/descrição cai na IA gratuita (não trava a pessoa).
-      maxOutputTokens: 1800,
+      // 04/11/2026: com 1800 o anúncio vinha cortado quase sempre
+      // (finishReason=MAX_TOKENS no meio da descrição — visto nos logs da
+      // Vercel) e, com a IA gratuita fora, a pessoa via "A IA devolveu um
+      // texto incompleto". Esse número é só um TETO: o Google cobra o que a
+      // resposta usou de verdade, então teto baixo não economiza — só faz
+      // pagar por um texto cortado que vai pro lixo. Volta pra 4096.
+      maxOutputTokens: 4096,
     },
   });
 
@@ -233,7 +239,12 @@ async function callGemini(
       return await callFree(prompt, minLines, clean);
     } catch (err2) {
       console.error("[Groq texto] falhou:", err2);
-      throw err instanceof Error ? err : new Error("Não foi possível gerar o texto agora.");
+      // Crédito do Google acabou: mostra essa mensagem (é o que resolve). O
+      // resto (texto cortado, instabilidade) vira uma mensagem simples.
+      if (err instanceof Error && /créditos/i.test(err.message)) throw err;
+      throw new Error(
+        "A IA não conseguiu gerar o texto agora. Clique em gerar de novo em instantes.",
+      );
     }
   }
 }

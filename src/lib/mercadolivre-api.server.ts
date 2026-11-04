@@ -32,7 +32,7 @@
 // só pra Shopee (shopee-api.server.ts), que exige IP declarado no Go-Live.
 // Antes passava pelo proxy "por garantia", o que gastava a cota do plano e
 // derrubava o Mercado Livre junto quando a conta do QuotaGuard era suspensa.
-import { ANATEL_ATTRIBUTE, ANATEL_HOMOLOGATION_NUMBER } from "@/lib/anatel";
+import { ANATEL_ATTRIBUTE, ANATEL_HOMOLOGATION_NUMBER, productHasRadio } from "@/lib/anatel";
 
 function mlFetch(url: string, init: RequestInit = {}): Promise<Response> {
   return fetch(url, init);
@@ -357,7 +357,12 @@ export type MercadoLivreAttribute = {
   id: string;
   name: string;
   value_type: string;
-  tags?: { required?: boolean; catalog_required?: boolean; conditional_required?: boolean };
+  tags?: {
+    required?: boolean;
+    catalog_required?: boolean;
+    conditional_required?: boolean;
+    hidden?: boolean;
+  };
   values?: Array<{ id: string; name: string }>;
 };
 
@@ -384,12 +389,25 @@ export async function getCategoryAttributes(
 // um dado real do produto.
 export function buildMandatoryAttributeList(
   attributes: MercadoLivreAttribute[],
+  productText = "",
 ): Array<{ id: string; value_name?: string; value_id?: string }> {
-  // Número ANATEL: preenche sempre que a categoria tiver o campo (ver lib/anatel.ts).
-  const anatel = attributes
-    .filter((attr) => ANATEL_ATTRIBUTE.test(attr.id) || ANATEL_ATTRIBUTE.test(attr.name ?? ""))
+  // Número ANATEL (ver lib/anatel.ts). 04/11/2026: o ML recusava anúncios
+  // (ex.: Hub USB, MLB11187) com "item.attribute.value_name.invalid" porque
+  // TODO atributo com "anatel/homologa" no nome recebia o número — inclusive
+  // "Etiqueta de homologação da Anatel" (ANATEL_HOMOLOGATION_LABEL), que é
+  // uma FOTO (value_type picture_id) e não aceita número. Agora:
+  //   - só preenche campo de texto/número (nunca foto) e nunca campo oculto;
+  //   - só manda o número se o ML exigir o campo ou se o produto tiver
+  //     rádio (Bluetooth, Wi-Fi...) — mesma regra da Shopee.
+  const radio = productHasRadio(productText);
+  const anatelAttrs = attributes.filter(
+    (attr) => ANATEL_ATTRIBUTE.test(attr.id) || ANATEL_ATTRIBUTE.test(attr.name ?? ""),
+  );
+  const anatel = anatelAttrs
+    .filter((attr) => /^(string|number)$/.test(attr.value_type) && !attr.tags?.hidden)
+    .filter((attr) => attr.tags?.required || attr.tags?.conditional_required || radio)
     .map((attr) => ({ id: attr.id, value_name: ANATEL_HOMOLOGATION_NUMBER }));
-  const anatelIds = new Set(anatel.map((a) => a.id));
+  const anatelIds = new Set(anatelAttrs.map((a) => a.id));
 
   const list: Array<{ id: string; value_name?: string; value_id?: string }> = attributes
     .filter((attr) => attr.tags?.required && attr.id !== "GTIN" && !anatelIds.has(attr.id))
