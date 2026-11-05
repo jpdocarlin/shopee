@@ -28,7 +28,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1793277867857-418c6508.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -1920,7 +1920,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1784992941575-2a105e56.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 19,
+    stock: 18,
     manageStock: true,
   },
   {
@@ -2943,7 +2943,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/fa86f54ffa-1-16.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -6,
+    stock: -7,
     manageStock: false,
   },
   {
@@ -3317,7 +3317,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/baa4c74545-1-10.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -12,
+    stock: -13,
     manageStock: false,
   },
   {
@@ -7794,7 +7794,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/259c970d7f-589.jpg",
     category: "Produto de Natal",
-    stock: -6,
+    stock: -8,
     manageStock: false,
   },
   {
@@ -7827,7 +7827,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/c363567f46-4-39.jpg",
     category: "Produto de Natal",
-    stock: 299,
+    stock: 297,
     manageStock: true,
   },
   {
@@ -14141,7 +14141,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/c22968fecf-1-1.png",
     category: "Salão & Barbearia",
-    stock: -18,
+    stock: -19,
     manageStock: false,
   },
   {
