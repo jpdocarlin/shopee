@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-05 — 1372 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-06 — 1372 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -853,7 +853,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788356901045-cfbf08bf.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 38,
+    stock: 37,
     manageStock: true,
   },
   {
@@ -1326,7 +1326,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787341236332-94f9ec60.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 41,
+    stock: 40,
     manageStock: true,
   },
   {
@@ -4824,7 +4824,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/4376abdfa8-1-21.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -10,
+    stock: -11,
     manageStock: false,
   },
   {
@@ -7068,7 +7068,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/122a6f1a9a-1-3.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -1,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -10478,7 +10478,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/038cc32bbf-Prancheta-2-13.png",
     category: "Fones de Ouvido",
-    stock: -8,
+    stock: -9,
     manageStock: false,
   },
   {
@@ -10731,7 +10731,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/b6e8e85481-Prancheta-1-58.png",
     category: "Salão & Barbearia",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
