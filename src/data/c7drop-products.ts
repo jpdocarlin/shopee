@@ -842,7 +842,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788438226763-f0e2e8cb.webp",
     category: "Ring Light & Suportes",
-    stock: 1,
+    stock: 0,
     manageStock: true,
   },
   {
@@ -2987,7 +2987,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/fa86f54ffa-1-16.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -8,
+    stock: -10,
     manageStock: false,
   },
   {
@@ -3570,7 +3570,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/c894017222-1-13.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -7420,7 +7420,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/20030b8f35-6-25.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -8828,7 +8828,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -38,
+    stock: -39,
     manageStock: false,
   },
   {
@@ -10522,7 +10522,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/bf6f998b3c-Prancheta-4-9.png",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
