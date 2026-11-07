@@ -6430,7 +6430,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f5f2c3fadd-1-1.webp",
     category: "Iluminação",
-    stock: -14,
+    stock: -17,
     manageStock: false,
   },
   {
@@ -7343,7 +7343,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/8b2fc10cea-4-28.jpg",
     category: "Brinquedos",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -11479,7 +11479,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a5d9012f1a-Prancheta-1-3.png",
     category: "Informática",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -13745,7 +13745,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/79ebed91e9-0-FarolLanternaDeCabeaLedSuperForteResistent.jpeg",
     category: "Iluminação",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
