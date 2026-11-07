@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-06 — 1375 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-07 — 1375 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -6430,7 +6430,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f5f2c3fadd-1-1.webp",
     category: "Iluminação",
-    stock: -8,
+    stock: -14,
     manageStock: false,
   },
   {
@@ -7090,7 +7090,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/9290ffd845-6-3.jpg",
     category: "Fora de Estoque",
-    stock: 97,
+    stock: 92,
     manageStock: true,
   },
   {
@@ -13371,7 +13371,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/9192e7ba4d-2.png",
     category: "Fones de Ouvido",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
