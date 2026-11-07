@@ -1018,7 +1018,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788181902025-b76d6d36.webp",
     category: "Produto de Natal",
-    stock: 45,
+    stock: 44,
     manageStock: true,
   },
   {
@@ -1744,7 +1744,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1786017786388-0f4155d8.webp",
     category: "Media Streaming",
-    stock: 41,
+    stock: 40,
     manageStock: true,
   },
   {
@@ -2657,7 +2657,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/e5f05dcdb4-2-41.jpg",
     category: "Fones de Ouvido",
-    stock: -8,
+    stock: -9,
     manageStock: false,
   },
   {
@@ -5462,7 +5462,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d7435e1d00-ca-1.jpg",
     category: "Media Streaming",
-    stock: -241,
+    stock: -244,
     manageStock: false,
   },
   {
@@ -6017,12 +6017,12 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
   },
   {
     id: "cmrnvr3vg05xfiudh6h3767lw",
-    name: "Fogão Cooktop Elétrica Fogareiro Portátil 1000w 1 Boca Mesa Viagem Camping Queimadores Acampamento",
+    name: "Fogão Cooktop Elétrico 1000W Compacto para Camping",
     slug: "fogao-cooktop-eletrica-fogareiro-portatil-1000w-1-boca-mesa-viagem-camping-queimadores-acampamento",
-    priceCents: 6800,
+    priceCents: 6500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f856a8f4c0-2-39.jpg",
-    category: "Produtos diversos",
+    category: "Casa e Utensílios Domésticos",
     stock: 0,
     manageStock: false,
   },
@@ -7838,7 +7838,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/259c970d7f-589.jpg",
     category: "Produto de Natal",
-    stock: -12,
+    stock: -13,
     manageStock: false,
   },
   {
@@ -9906,7 +9906,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/2cc3cd0abf-1-11.jpg",
     category: "Iluminação",
-    stock: -17,
+    stock: -18,
     manageStock: false,
   },
   {
@@ -12458,7 +12458,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/7b20d43a74-capa-8.png",
     category: "Ferramentas",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -13404,7 +13404,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3c1c0f0626-8.webp",
     category: "Mais vendidos",
-    stock: -11,
+    stock: -12,
     manageStock: false,
   },
   {
@@ -14676,11 +14676,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvnage00eqiudhihqjs98b",
     name: "Luminária Solar Arandela 30 Leds Parede Com Sensor Presença",
     slug: "arandela-luminaria-30-led-energia-solar-sensor-de-presenca",
-    priceCents: 2300,
+    priceCents: 1900,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/26e7dd858d-0-LuminriaLedSensorDePresenaArandelaLuzS.jpeg",
-    category: "Fora de Estoque",
-    stock: 0,
+    category: "Iluminação",
+    stock: 50,
     manageStock: true,
   },
   {
@@ -15021,7 +15021,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/120948dd30-bb559d0faf4250d7319958704204bede.jpeg",
     category: "Media Streaming",
-    stock: -22,
+    stock: -23,
     manageStock: false,
   },
   {
