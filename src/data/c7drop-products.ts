@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-07 — 1375 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-08 — 1375 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -842,7 +842,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788438226763-f0e2e8cb.webp",
     category: "Ring Light & Suportes",
-    stock: 0,
+    stock: 50,
     manageStock: true,
   },
   {
@@ -1183,7 +1183,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787857879084-2b4c2d59.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 36,
+    stock: 35,
     manageStock: true,
   },
   {
@@ -2323,7 +2323,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrslwlqe000pnc2t5de7f718",
     name: "Repetidor Wifi Range Extender N300 Cor Branco",
     slug: "repetidor-wifi-range-extender-n300-cor-branco",
-    priceCents: 7300,
+    priceCents: 8500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/551caafefc-3-17.webp",
     category: "Informática",
@@ -3445,7 +3445,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvs96u07q8iudhnnbbmbsr",
     name: "Mini Cabine LED UV Secador Portátil para Unhas Gel e Postiças",
     slug: "mini-cabine-led-uv-secador-portatil-para-unhas-gel-e-posticas",
-    priceCents: 3000,
+    priceCents: 2500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/0f5a5ebad0-2-3.jpg",
     category: "Beleza e Cuidado Pessoal",
@@ -3489,7 +3489,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvs8hv07p4iudhmdn7gry1",
     name: "Inversor Carro Veicular 350w 6portas Usb Usbc 12v 110v",
     slug: "inversor-carro-veicular-350w-6portas-usb-usbc-12v-110v",
-    priceCents: 12600,
+    priceCents: 12000,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/4128294c77-1-20.jpg",
     category: "Produtos diversos",
@@ -3500,7 +3500,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvs8bh07otiudhwb50385b",
     name: "Inversor De Energia Automotivo 400w 12v Para 110v Usb Tipo-c",
     slug: "inversor-de-energia-automotivo-400w-12v-para-110v-usb-tipo-c",
-    priceCents: 14800,
+    priceCents: 14500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a8d454c4ae-1-19.jpg",
     category: "Produtos diversos",
@@ -5324,13 +5324,13 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
   },
   {
     id: "cmrnvrf4506fliudhmgowfvly",
-    name: "Fone De Ouvido Bluetooth Esportivo Kd-903 Cor Preto",
+    name: "Fone De Ouvido Bluetooth Esportivo Kd-903",
     slug: "fone-de-ouvido-bluetooth-esportivo-kd-903-kaidi-cor-preto-cor-da-luz-preto",
     priceCents: 4500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d2b73fe271-1a.jpg",
     category: "Fones de Ouvido",
-    stock: 0,
+    stock: 50,
     manageStock: true,
   },
   {
@@ -6418,7 +6418,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     priceCents: 1500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/65692de347-1-7.jpg",
-    category: "Fora de Estoque",
+    category: "Ferramentas",
     stock: 0,
     manageStock: false,
   },
@@ -13257,11 +13257,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvnwwp01f9iudh0cozmm9n",
     name: "Fone De Ouvido Sem Fio Bluetooth Mário Bros Menino Menina",
     slug: "fone-de-ouvido-sem-fio-bluetooth-mario-bros-menino-menina",
-    priceCents: 6500,
+    priceCents: 5500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/8c585b08f5-3.webp",
     category: "Fora de Estoque",
-    stock: -3,
+    stock: 50,
     manageStock: true,
   },
   {
