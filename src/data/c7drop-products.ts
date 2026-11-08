@@ -4208,7 +4208,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/cc70dc4377-8-45.jpg",
     category: "Garrafas, Copos e Canecas",
-    stock: 5,
+    stock: 3,
     manageStock: true,
   },
   {
@@ -6617,7 +6617,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/66f560efd2-1-24.jpg",
     category: "Fora de Estoque",
-    stock: 47,
+    stock: 46,
     manageStock: true,
   },
   {
@@ -8146,7 +8146,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/911c921d0e-AD.webp",
     category: "Mais vendidos",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -8784,7 +8784,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -39,
+    stock: -40,
     manageStock: false,
   },
   {
@@ -10665,7 +10665,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/b6e8e85481-Prancheta-1-58.png",
     category: "Salão & Barbearia",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -11919,7 +11919,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/24e2f7aed5-Prancheta-2-2.png",
     category: "Iluminação",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -13822,7 +13822,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/60bfbcb305-1.png",
     category: "Salão & Barbearia",
-    stock: -69,
+    stock: -70,
     manageStock: false,
   },
   {
