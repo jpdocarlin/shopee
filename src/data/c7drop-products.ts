@@ -666,7 +666,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1790081017911-ecb1f2c3.webp",
     category: "Produtos diversos",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -1172,7 +1172,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787859270772-2aa6d0cd.webp",
     category: "Produtos diversos",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -1623,7 +1623,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1786204533305-ee5b4016.webp",
     category: "Produtos diversos",
-    stock: 39,
+    stock: 38,
     manageStock: true,
   },
   {
@@ -7805,7 +7805,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/259c970d7f-589.jpg",
     category: "Produto de Natal",
-    stock: -13,
+    stock: -14,
     manageStock: false,
   },
   {
@@ -9345,7 +9345,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f041b13200-ComboConjuntoDeChavesCanhoFacilDeUsarp-899626-MLB54266707025_032023.jpeg",
     category: "Ferramentas",
-    stock: -6,
+    stock: -7,
     manageStock: false,
   },
   {
@@ -9840,7 +9840,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/2cc3cd0abf-1-11.jpg",
     category: "Iluminação",
-    stock: -18,
+    stock: -19,
     manageStock: false,
   },
   {
@@ -10434,7 +10434,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/038cc32bbf-Prancheta-2-13.png",
     category: "Fones de Ouvido",
-    stock: -9,
+    stock: -14,
     manageStock: false,
   },
   {
@@ -13811,7 +13811,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/594b2a56d9-1-1.png",
     category: "Salão & Barbearia",
-    stock: 40,
+    stock: 39,
     manageStock: true,
   },
   {
@@ -14570,7 +14570,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/0223a406c9-8-45.webp",
     category: "Produtos diversos",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
