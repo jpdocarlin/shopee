@@ -324,6 +324,7 @@ export function CriarAnuncio() {
   // fica travada: sem campo de busca, sem "trocar". Ver os dois useEffect
   // abaixo (carregar categorias / recalcular o melhor match).
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+  const [categoryDetecting, setCategoryDetecting] = useState(false);
   const [stockInput, setStockInput] = useState("10");
   const [weightInput, setWeightInput] = useState("0,3");
   const [publishApiLoading, setPublishApiLoading] = useState(false);
@@ -407,28 +408,32 @@ export function CriarAnuncio() {
   useEffect(() => {
     if (!selected || categories.length === 0) {
       setSelectedCategoryId(null);
+      setCategoryDetecting(false);
       return;
     }
-    const match = pickBestCategory(
+    // 09/11/2026: a ordem inverteu. Antes o nosso casador por palavra-chave
+    // decidia e a Shopee só era consultada quando ele não achava nada — e ele
+    // errava (ex.: "Adaptador Hub 8 em 2 USB-C" caía em "Mouses", puxado pela
+    // dica do nicho Informática). Agora quem decide é a sugestão OFICIAL da
+    // Shopee pro nome do produto (mesmo esquema do Mercado Livre); o casador
+    // por palavra-chave fica só de reserva, se a Shopee não sugerir nenhuma
+    // categoria-folha válida.
+    const fallback = pickBestCategory(
       { title: selected.title, category: selected.category },
       categories,
     );
-    if (match) {
-      setSelectedCategoryId(match.id);
-      return;
-    }
-    // Sem match confiável no nosso matcher: pergunta a sugestão oficial da
-    // Shopee pro nome do produto e só aceita se for categoria-folha válida.
     setSelectedCategoryId(null);
+    setCategoryDetecting(true);
     let cancelled = false;
     const leafIds = new Set(categories.map((c) => c.id));
     runRecommendShopeeCategory({ data: { itemName: selected.title } })
-      .then((ids) => {
+      .then((ids) => ids.find((id) => leafIds.has(id)) ?? null)
+      .catch(() => null)
+      .then((recommended) => {
         if (cancelled) return;
-        const first = ids.find((id) => leafIds.has(id));
-        if (first) setSelectedCategoryId(first);
-      })
-      .catch(() => {});
+        setSelectedCategoryId(recommended ?? fallback?.id ?? null);
+        setCategoryDetecting(false);
+      });
     return () => {
       cancelled = true;
     };
@@ -1105,8 +1110,8 @@ export function CriarAnuncio() {
                         </label>
                         <div className="flex h-9 items-center rounded-md border border-border bg-card px-2.5 text-[13px]">
                           <span className="truncate text-foreground">
-                            {categoriesLoading
-                              ? "Carregando…"
+                            {categoriesLoading || categoryDetecting
+                              ? "Identificando a categoria…"
                               : selectedCategoryId
                                 ? (categories.find((c) => c.id === selectedCategoryId)?.path ??
                                   `Categoria ${selectedCategoryId}`)
@@ -1237,7 +1242,8 @@ export function CriarAnuncio() {
                         hasListing: !!listing,
                         priceCents,
                         hasCategory: !!selectedCategoryId,
-                        categoryLoading: categoriesLoading || categories.length === 0,
+                        categoryLoading:
+                          categoriesLoading || categoryDetecting || categories.length === 0,
                         label: "Shopee",
                       });
                       return why ? (
