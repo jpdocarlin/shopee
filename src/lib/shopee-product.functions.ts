@@ -75,7 +75,101 @@ export const recommendShopeeCategory = createServerFn({ method: "GET" })
     }
   });
 
-export const getShopeeLogisticsChannels = createServerFn({ method: "GET" })
+// 09/11/2026: categoria do produto vinda do banco interno (product_categories).
+//   1. Já está gravada → devolve ela (mesma categoria pra todo mundo).
+//   2. Produto novo → pede a sugestão oficial da Shopee, fica só com as
+//      categorias-folha, a IA confere qual descreve o produto e o resultado é
+//      gravado pra próxima vez. Se a IA disser que nenhuma serve, devolve a
+//      primeira sugestão da Shopee SEM gravar (alguém confere depois).
+// Sem sugestão nenhuma, devolve null e o front cai no casador por palavra.
+let leafCache: { at: number; paths: Map<number, string> } | null = null;
+
+export const resolveShopeeCategory = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: { productId: string; itemName: string }) => data)
+  .handler(async ({ context, data }) => {
+    const { getSavedCategory, saveAutoCategory } = await import("@/lib/product-categories.server");
+    const productId = String(data.productId || "").slice(0, 80);
+
+    if (productId) {
+      const saved = await getSavedCategory(productId, "shopee");
+      const savedId = saved ? Number(saved.categoryId) : NaN;
+      if (Number.isFinite(savedId)) return { categoryId: savedId, source: "banco" as const };
+    }
+
+    const { getValidShopeeAccessToken } = await import("@/lib/shopee-connection.server");
+    const { recommendCategory, getCategoryList } = await import("@/lib/shopee-api.server");
+    const { accessToken, shopId } = await getValidShopeeAccessToken(context.userId);
+
+    let recommended: number[] = [];
+    try {
+      recommended = await recommendCategory(accessToken, shopId, data.itemName);
+    } catch (err) {
+      console.error("[Shopee] category_recommend falhou:", err);
+      return { categoryId: null, source: "nenhuma" as const };
+    }
+    if (recommended.length === 0) return { categoryId: null, source: "nenhuma" as const };
+
+    // Caminho completo das categorias-folha (guardado 1h na memória).
+    try {
+      if (!leafCache || Date.now() - leafCache.at > 60 * 60 * 1000) {
+        const all = await getCategoryList(accessToken, shopId);
+        const byId = new Map(all.map((c) => [c.category_id, c]));
+        const paths = new Map<number, string>();
+        for (const leaf of all) {
+          if (leaf.has_children) continue;
+          const parts: string[] = [];
+          const seen = new Set<number>();
+          let current: (typeof all)[number] | undefined = leaf;
+          while (current && !seen.has(current.category_id)) {
+            seen.add(current.category_id);
+            parts.unshift(current.display_category_name || `Categoria ${current.category_id}`);
+            current = current.parent_category_id ? byId.get(current.parent_category_id) : undefined;
+          }
+          paths.set(leaf.category_id, parts.join(" / "));
+        }
+        leafCache = { at: Date.now(), paths };
+      }
+    } catch (err) {
+      console.error("[Shopee] get_category falhou:", err);
+      return { categoryId: recommended[0], source: "shopee" as const };
+    }
+
+    const paths = leafCache.paths;
+    const leaves = recommended.filter((id) => paths.has(id));
+    if (leaves.length === 0) return { categoryId: null, source: "nenhuma" as const };
+
+    // A IA confere qual das sugestões descreve o produto.
+    let chosen = leaves[0];
+    let confirmed = false;
+    try {
+      const { chooseCategoryWithAI } = await import("@/lib/gemini-text.server");
+      const index = await chooseCategoryWithAI(
+        data.itemName,
+        leaves.map((id) => paths.get(id) as string),
+      );
+      if (index >= 0 && index < leaves.length) {
+        chosen = leaves[index];
+        confirmed = true;
+      }
+    } catch (err) {
+      console.error("[Shopee] conferência da categoria pela IA falhou:", err);
+    }
+
+    if (confirmed && productId) {
+      await saveAutoCategory({
+        productId,
+        marketplace: "shopee",
+        categoryId: String(chosen),
+        categoryPath: paths.get(chosen) ?? null,
+        productName: data.itemName,
+        source: "shopee+ia",
+      });
+    }
+    return { categoryId: chosen, source: "shopee" as const };
+  });
+
+export const getShopeeLogisticsChannels =createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { getValidShopeeAccessToken } = await import("@/lib/shopee-connection.server");

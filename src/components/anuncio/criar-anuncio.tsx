@@ -30,7 +30,7 @@ import { getShopeeStatus } from "@/lib/shopee.functions";
 import { checkC7DropPrice } from "@/lib/c7drop-price.functions";
 import {
   getShopeeCategories,
-  recommendShopeeCategory,
+  resolveShopeeCategory,
   getShopeeItemPreview,
   publishShopeeProduct,
 } from "@/lib/shopee-product.functions";
@@ -361,7 +361,7 @@ export function CriarAnuncio() {
   const runListing = useServerFn(generateListing);
   const runShopeeStatus = useServerFn(getShopeeStatus);
   const runShopeeCategories = useServerFn(getShopeeCategories);
-  const runRecommendShopeeCategory = useServerFn(recommendShopeeCategory);
+  const runResolveShopeeCategory = useServerFn(resolveShopeeCategory);
   const runPublishApi = useServerFn(publishShopeeProduct);
   const runItemPreview = useServerFn(getShopeeItemPreview);
   const runMlStatus = useServerFn(getMercadoLivreStatus);
@@ -426,8 +426,12 @@ export function CriarAnuncio() {
     setCategoryDetecting(true);
     let cancelled = false;
     const leafIds = new Set(categories.map((c) => c.id));
-    runRecommendShopeeCategory({ data: { itemName: selected.title } })
-      .then((ids) => ids.find((id) => leafIds.has(id)) ?? null)
+    // Primeiro o banco interno de categorias (já conferidas); produto novo é
+    // resolvido e gravado no servidor (ver resolveShopeeCategory).
+    runResolveShopeeCategory({
+      data: { productId: selected.id.replace(/^c7drop-/, ""), itemName: selected.title },
+    })
+      .then((res) => (res.categoryId && leafIds.has(res.categoryId) ? res.categoryId : null))
       .catch(() => null)
       .then((recommended) => {
         if (cancelled) return;
