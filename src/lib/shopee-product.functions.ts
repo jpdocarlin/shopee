@@ -151,6 +151,15 @@ export const resolveShopeeCategory = createServerFn({ method: "GET" })
       if (index >= 0 && index < leaves.length) {
         chosen = leaves[index];
         confirmed = true;
+      } else {
+        // A IA olhou as sugestões da Shopee e disse que NENHUMA descreve o
+        // produto (ex.: isqueiro sugerido em "Cofres"). Melhor travar a
+        // publicação do que publicar na categoria errada.
+        console.warn(
+          `[Shopee] nenhuma categoria sugerida serve pra "${data.itemName}":`,
+          leaves.map((id) => paths.get(id)).join(" | "),
+        );
+        return { categoryId: null, source: "recusada" as const };
       }
     } catch (err) {
       console.error("[Shopee] conferência da categoria pela IA falhou:", err);

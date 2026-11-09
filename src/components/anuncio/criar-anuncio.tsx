@@ -431,11 +431,16 @@ export function CriarAnuncio() {
     runResolveShopeeCategory({
       data: { productId: selected.id.replace(/^c7drop-/, ""), itemName: selected.title },
     })
-      .then((res) => (res.categoryId && leafIds.has(res.categoryId) ? res.categoryId : null))
-      .catch(() => null)
-      .then((recommended) => {
+      .then((res) => ({
+        id: res.categoryId && leafIds.has(res.categoryId) ? res.categoryId : null,
+        // "recusada": a IA conferiu e nenhuma sugestão da Shopee serve — não
+        // cai no casador por palavra, fica sem categoria (publicar trava).
+        refused: res.source === "recusada",
+      }))
+      .catch(() => ({ id: null as number | null, refused: false }))
+      .then((res) => {
         if (cancelled) return;
-        setSelectedCategoryId(recommended ?? fallback?.id ?? null);
+        setSelectedCategoryId(res.id ?? (res.refused ? null : (fallback?.id ?? null)));
         setCategoryDetecting(false);
       });
     return () => {
