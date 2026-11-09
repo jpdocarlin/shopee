@@ -40,9 +40,21 @@ const shopeeProxyAgent = process.env.QUOTAGUARDSTATIC_URL
   ? new ProxyAgent(process.env.QUOTAGUARDSTATIC_URL)
   : undefined;
 
-function shopeeFetch(url: string, init: RequestInit = {}): Promise<Response> {
+// 09/11/2026: desde 08/11 TODA chamada da Shopee falhava com "fetch failed"
+// em ~7ms (logs da Vercel) — o proxy do QuotaGuard parou de aceitar conexão.
+// Resultado: não achava categoria, não conectava loja, não publicava. Agora,
+// se o proxy falhar na conexão, registra o motivo real e tenta direto (sem
+// IP fixo). Se a Shopee exigir o IP cadastrado, ela mesma responde com o erro
+// dela — nunca fica pior do que o "fetch failed".
+async function shopeeFetch(url: string, init: RequestInit = {}): Promise<Response> {
   if (!shopeeProxyAgent) return fetch(url, init);
-  return fetch(url, { ...init, dispatcher: shopeeProxyAgent } as RequestInit);
+  try {
+    return await fetch(url, { ...init, dispatcher: shopeeProxyAgent } as RequestInit);
+  } catch (err) {
+    const cause = (err as { cause?: unknown })?.cause;
+    console.error("[Shopee] proxy de IP fixo (QuotaGuard) falhou, tentando direto:", cause ?? err);
+    return fetch(url, init);
+  }
 }
 
 // Host de sandbox confirmado direto na "API Test Tool" do console da Shopee
