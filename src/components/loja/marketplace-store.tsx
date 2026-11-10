@@ -4,13 +4,28 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { ChevronDown, ImagePlus, Loader2, Pencil, Plus, Save, Store, Trash2, X } from "lucide-react";
+import {
+  Check,
+  ChevronDown,
+  ImagePlus,
+  Loader2,
+  Pencil,
+  Plus,
+  Save,
+  Store,
+  Trash2,
+  Wand2,
+  X,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  applyShopCategoryGroup,
+  planShopOrganization,
+  type OrganizationGroup,
   changeShopeeShopCategoryItems,
   deleteShopeeShopCategory,
   getListingContent,
@@ -538,6 +553,196 @@ function ShopeeCategories({
 }
 
 // ---------------------------------------------------------------------------
+// Shopee: "Organizar minha loja" — cria as categorias e distribui os produtos
+// ---------------------------------------------------------------------------
+
+type GroupState = "pending" | "running" | "ok" | "error";
+
+function OrganizeStore({ onDone }: { onDone: () => void }) {
+  const runPlan = useServerFn(planShopOrganization);
+  const runApply = useServerFn(applyShopCategoryGroup);
+
+  const [phase, setPhase] = useState<"idle" | "planning" | "preview" | "running" | "done">("idle");
+  const [groups, setGroups] = useState<OrganizationGroup[]>([]);
+  const [info, setInfo] = useState({ total: 0, skipped: 0 });
+  const [off, setOff] = useState<Set<string>>(new Set());
+  const [states, setStates] = useState<Record<string, GroupState>>({});
+  const [organized, setOrganized] = useState(0);
+
+  const chosen = groups.filter((g) => !off.has(g.name));
+  const chosenProducts = chosen.reduce((sum, g) => sum + g.externalIds.length, 0);
+
+  async function plan() {
+    setPhase("planning");
+    try {
+      const result = await runPlan();
+      if (result.groups.length === 0) {
+        toast.error("Não achei a categoria dos seus anúncios pra montar a organização.");
+        setPhase("idle");
+        return;
+      }
+      setGroups(result.groups);
+      setInfo({ total: result.total, skipped: result.skipped });
+      setOff(new Set());
+      setStates({});
+      setPhase("preview");
+    } catch (err) {
+      toast.error(message(err, "Não deu pra analisar a loja agora."));
+      setPhase("idle");
+    }
+  }
+
+  async function apply() {
+    if (
+      !window.confirm(
+        `Organizar a sua loja na Shopee?\n\nVou criar ${chosen.length} categoria(s) e colocar ${chosenProducts} produto(s) nelas. Os anúncios não mudam — só passam a aparecer organizados na sua loja.`,
+      )
+    ) {
+      return;
+    }
+    setPhase("running");
+    setStates(Object.fromEntries(chosen.map((g) => [g.name, "pending" as GroupState])));
+    let total = 0;
+    for (const group of chosen) {
+      setStates((s) => ({ ...s, [group.name]: "running" }));
+      try {
+        const result = await runApply({ data: { name: group.name, externalIds: group.externalIds } });
+        total += result.added;
+        setOrganized(total);
+        setStates((s) => ({ ...s, [group.name]: "ok" }));
+      } catch (err) {
+        console.error("[minha-loja] categoria falhou:", err);
+        setStates((s) => ({ ...s, [group.name]: "error" }));
+      }
+    }
+    setPhase("done");
+    onDone();
+  }
+
+  const failed = Object.values(states).filter((s) => s === "error").length;
+
+  return (
+    <section className="surface-card overflow-hidden border-brand/30">
+      <div className="flex flex-col gap-4 bg-gradient-to-r from-brand/10 to-transparent p-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <h2 className="flex items-center gap-2 text-[15px] font-semibold text-foreground">
+            <Wand2 className="size-4 text-brand" /> Organizar minha loja
+          </h2>
+          <p className="mt-1 max-w-2xl text-[12.5px] text-muted-foreground">
+            O Shoppfy olha a categoria de cada anúncio, cria as categorias da sua loja na Shopee e
+            coloca cada produto no lugar certo. Você vê a proposta antes de qualquer coisa mudar.
+          </p>
+        </div>
+        {(phase === "idle" || phase === "planning") && (
+          <Button className="shrink-0 gap-1.5" disabled={phase === "planning"} onClick={() => void plan()}>
+            {phase === "planning" ? <Loader2 className="size-3.5 animate-spin" /> : <Wand2 className="size-3.5" />}
+            {phase === "planning" ? "Analisando seus anúncios…" : "Montar a organização"}
+          </Button>
+        )}
+      </div>
+
+      {phase !== "idle" && phase !== "planning" && (
+        <div className="space-y-4 border-t border-border p-5">
+          {phase === "preview" && (
+            <p className="text-[12.5px] text-muted-foreground">
+              Proposta pra {info.total} anúncios ativos
+              {info.skipped > 0 ? ` (${info.skipped} ficaram de fora porque a Shopee não informou a categoria)` : ""}.
+              Desmarque o que não quiser criar.
+            </p>
+          )}
+          {phase === "done" && (
+            <p className={cn("text-[13.5px] font-medium", failed ? "text-warning" : "text-success")}>
+              {failed
+                ? `Terminou com ${failed} categoria(s) que a Shopee não aceitou. ${organized} produto(s) organizados.`
+                : `Loja organizada: ${chosen.length} categoria(s) e ${organized} produto(s) no lugar. 🎉`}
+            </p>
+          )}
+
+          <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {(phase === "preview" ? groups : chosen).map((group, index) => {
+              const state = states[group.name];
+              const disabled = off.has(group.name);
+              return (
+                <li
+                  key={group.name}
+                  className={cn(
+                    "org-item flex items-center gap-2.5 rounded-lg border px-3 py-2.5 transition-colors",
+                    state === "ok"
+                      ? "border-success/40 bg-success/10"
+                      : state === "error"
+                        ? "border-destructive/40 bg-destructive/10"
+                        : state === "running"
+                          ? "border-brand/50 bg-brand/10"
+                          : "border-border",
+                    disabled && "opacity-45",
+                  )}
+                  style={{ animationDelay: `${index * 40}ms` }}
+                >
+                  {phase === "preview" ? (
+                    <input
+                      type="checkbox"
+                      checked={!disabled}
+                      onChange={() =>
+                        setOff((current) => {
+                          const next = new Set(current);
+                          if (next.has(group.name)) next.delete(group.name);
+                          else next.add(group.name);
+                          return next;
+                        })
+                      }
+                      className="size-4 shrink-0 cursor-pointer accent-brand"
+                      aria-label={`Criar a categoria ${group.name}`}
+                    />
+                  ) : state === "running" ? (
+                    <Loader2 className="size-4 shrink-0 animate-spin text-brand" />
+                  ) : state === "ok" ? (
+                    <Check className="size-4 shrink-0 text-success" />
+                  ) : state === "error" ? (
+                    <X className="size-4 shrink-0 text-destructive" />
+                  ) : (
+                    <span className="size-4 shrink-0 rounded-full border border-border" />
+                  )}
+                  <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-foreground">
+                    {group.name}
+                  </span>
+                  <span className="shrink-0 text-[12px] text-muted-foreground">
+                    {group.externalIds.length}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+
+          {phase === "preview" && (
+            <div className="flex flex-wrap gap-2">
+              <Button className="gap-1.5" disabled={chosen.length === 0} onClick={() => void apply()}>
+                <Wand2 className="size-3.5" />
+                Criar {chosen.length} categoria(s) na Shopee
+              </Button>
+              <Button variant="outline" onClick={() => setPhase("idle")}>
+                Cancelar
+              </Button>
+            </div>
+          )}
+          {phase === "running" && (
+            <p className="flex items-center gap-2 text-[12.5px] text-muted-foreground">
+              <Loader2 className="size-3.5 animate-spin" /> Organizando na Shopee… não feche esta tela.
+              {organized > 0 ? ` ${organized} produto(s) já no lugar.` : ""}
+            </p>
+          )}
+          {phase === "done" && (
+            <Button variant="outline" size="sm" onClick={() => setPhase("idle")}>
+              Fechar
+            </Button>
+          )}
+        </div>
+      )}
+      <style>{`.org-item{animation:org-in .35s ease-out both}@keyframes org-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion:reduce){.org-item{animation:none}}`}</style>
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Anúncios: título e descrição (Shopee e Mercado Livre)
 // ---------------------------------------------------------------------------
 
@@ -814,7 +1019,18 @@ export function MarketplaceStore() {
                     setOverview((o) => (o && o.shopee ? { ...o, shopee: { ...o.shopee, ...next } } : o))
                   }
                 />
-                <ShopeeCategories initial={overview.shopee.categories} listings={current ?? []} />
+                <OrganizeStore
+                  onDone={() => {
+                    runGet()
+                      .then(setOverview)
+                      .catch(() => undefined);
+                  }}
+                />
+                <ShopeeCategories
+                  key={overview.shopee.categories.map((c) => `${c.id}:${c.active}`).join(",")}
+                  initial={overview.shopee.categories}
+                  listings={current ?? []}
+                />
               </>
             ) : (
               <p className="surface-card px-4 py-8 text-center text-[13px] text-muted-foreground">

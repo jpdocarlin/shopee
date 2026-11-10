@@ -277,6 +277,287 @@ export const changeShopeeShopCategoryItems = createServerFn({ method: "POST" })
   });
 
 // ---------------------------------------------------------------------------
+// Shopee: "Organizar minha loja" (10/11/2026)
+// Monta as categorias da loja a partir da categoria de cada anúncio e
+// distribui os produtos nelas. Duas etapas:
+//   1. planShopOrganization — só LÊ: devolve a proposta (nada muda na loja);
+//   2. applyShopCategoryGroup — cria/usa UMA categoria e põe os produtos nela
+//      (o front chama uma vez por categoria, pra mostrar o progresso).
+// ---------------------------------------------------------------------------
+
+export type OrganizationGroup = { name: string; externalIds: string[] };
+
+const MIN_GROUP = 5;
+const MAX_GROUPS = 20;
+const OTHERS = "Outros achados";
+
+// Nomes curtos e claros pro comprador (a árvore da Shopee tem nomes longos).
+const GROUP_NAMES: Record<string, string> = {
+  "Eletrodomésticos / Peças e Circuitos Elétricos": "Tomadas e Elétrica",
+  "Eletrodomésticos / Utensílios de Cozinha": "Eletroportáteis de Cozinha",
+  "Eletrodomésticos / TVs e Acessórios": "TV e Streaming",
+  "Eletrodomésticos / Eletrodomésticos Pequenos": "Eletroportáteis",
+  "Eletrodomésticos / Eletrodomésticos Grandes": "Ventiladores e Clima",
+  "Casa e Decoração / Artigos de Festa": "Festa e Natal",
+  "Casa e Decoração / Artigos de Cozinha": "Cozinha",
+  "Casa e Decoração / Artigos de Cuidados com a Casa": "Limpeza da Casa",
+  "Casa e Decoração / Ferramentas e Melhorias para a Casa": "Ferramentas",
+  "Casa e Decoração / Organizadores para Casa": "Organização",
+  "Casa e Decoração / Decoração": "Decoração",
+  "Casa e Decoração / Iluminação": "Iluminação",
+  "Casa e Decoração / Banheiros": "Banheiro",
+  "Casa e Decoração / Louça": "Mesa e Louça",
+  "Celulares e Dispositivos / Acessórios": "Acessórios para Celular",
+  "Celulares e Dispositivos / Aparelhos Vestíveis": "Smartwatches",
+  "Áudio / Fones de Ouvido, Headphones e Headsets": "Fones de Ouvido",
+  "Áudio / Áudio e Alto Falantes para Casa": "Caixas de Som",
+  "Beleza / Cuidados Masculinos": "Barba e Cabelo",
+  "Beleza / Utensílios de Beleza": "Beleza e Cuidados",
+  "Mãe e Bebê / Brinquedos": "Brinquedos",
+  "Hobbies e Coleções / Brinquedos e Jogos": "Jogos e Brinquedos",
+  "Papelaria / Equipamento Escolar e de Escritório": "Papelaria",
+  "Câmeras e Drones / Câmeras e Sistemas de Segurança": "Câmeras de Segurança",
+  "Computadores e Acessórios": "Informática",
+  "Celulares e Dispositivos": "Celulares e Acessórios",
+  "Peças e Acessórios para Veículos": "Carro e Moto",
+  "Esportes e Atividades ao Ar Livre": "Esporte e Lazer",
+  "Mãe e Bebê": "Bebê e Infantil",
+  "Hobbies e Coleções": "Jogos e Hobbies",
+  "Câmeras e Drones": "Câmeras",
+  "Saúde": "Saúde e Bem-estar",
+};
+
+function buildGroups(items: Array<{ externalId: string; path: string }>): OrganizationGroup[] {
+  const level = (path: string, depth: number) => path.split(" / ").slice(0, depth).join(" / ");
+  const bucket = (key: (path: string) => string, list: typeof items) => {
+    const map = new Map<string, string[]>();
+    for (const item of list) {
+      const k = key(item.path);
+      map.set(k, [...(map.get(k) ?? []), item.externalId]);
+    }
+    return map;
+  };
+
+  // 1) Tenta pelo 2º nível; grupo pequeno sobe pro 1º nível; o que ainda
+  //    ficar pequeno vai pra "Outros achados".
+  const groups = new Map<string, string[]>();
+  const leftovers: typeof items = [];
+  const byId = new Map(items.map((i) => [i.externalId, i]));
+  for (const [key, ids] of bucket((p) => level(p, 2), items)) {
+    if (ids.length >= MIN_GROUP) groups.set(key, ids);
+    else leftovers.push(...ids.map((id) => byId.get(id)!));
+  }
+  const others: string[] = [];
+  for (const [key, ids] of bucket((p) => level(p, 1), leftovers)) {
+    if (ids.length >= MIN_GROUP) groups.set(key, [...(groups.get(key) ?? []), ...ids]);
+    else others.push(...ids);
+  }
+
+  // 2) Nome amigável (grupos que caem no mesmo nome se juntam).
+  const named = new Map<string, string[]>();
+  for (const [key, ids] of groups) {
+    const name = (GROUP_NAMES[key] ?? key.split(" / ").pop() ?? key).slice(0, 40);
+    named.set(name, [...(named.get(name) ?? []), ...ids]);
+  }
+
+  // 3) No máximo MAX_GROUPS categorias; as menores vão pra "Outros achados".
+  const sorted = [...named.entries()].sort((a, b) => b[1].length - a[1].length);
+  const kept = sorted.slice(0, MAX_GROUPS - 1);
+  for (const [, ids] of sorted.slice(MAX_GROUPS - 1)) others.push(...ids);
+  const result = kept.map(([name, externalIds]) => ({ name, externalIds }));
+  if (others.length > 0) result.push({ name: OTHERS, externalIds: others });
+  return result;
+}
+
+export const planShopOrganization = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: rows } = await supabaseAdmin
+      .from("listings")
+      .select("external_id, product_id")
+      .eq("user_id", context.userId)
+      .eq("marketplace", "shopee")
+      .eq("status", "active")
+      .limit(1500);
+    const listings = (rows ?? []) as Array<{ external_id: string; product_id: string | null }>;
+    if (listings.length === 0) {
+      throw new Error("Você ainda não tem anúncio ativo na Shopee pra organizar.");
+    }
+
+    try {
+      const { api, accessToken, shopId } = await shopee(context.userId);
+
+      // Caminho completo de cada categoria-folha da Shopee.
+      const all = await api.getCategoryList(accessToken, shopId);
+      const byCategoryId = new Map(all.map((c) => [c.category_id, c]));
+      const pathOf = (categoryId: number): string | null => {
+        const parts: string[] = [];
+        const seen = new Set<number>();
+        let current = byCategoryId.get(categoryId);
+        while (current && !seen.has(current.category_id)) {
+          seen.add(current.category_id);
+          if (current.display_category_name) parts.unshift(current.display_category_name);
+          current = current.parent_category_id
+            ? byCategoryId.get(current.parent_category_id)
+            : undefined;
+        }
+        return parts.length ? parts.join(" / ") : null;
+      };
+
+      // 1ª opção: a categoria conferida do nosso banco (produto do catálogo).
+      const verified = new Map<string, string>();
+      const productIds = [...new Set(listings.map((l) => l.product_id).filter(Boolean))] as string[];
+      for (let i = 0; i < productIds.length; i += 150) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { data } = await (supabaseAdmin as any)
+          .from("product_categories")
+          .select("product_id, category_path")
+          .eq("marketplace", "shopee")
+          .in("product_id", productIds.slice(i, i + 150));
+        for (const row of (data ?? []) as Array<{ product_id: string; category_path: string | null }>) {
+          if (row.category_path) verified.set(row.product_id, row.category_path);
+        }
+      }
+
+      // 2ª opção: a categoria em que o anúncio está publicado na Shopee.
+      const items: Array<{ externalId: string; path: string }> = [];
+      const needLookup: string[] = [];
+      for (const l of listings) {
+        const path = l.product_id ? verified.get(l.product_id) : undefined;
+        if (path) items.push({ externalId: l.external_id, path });
+        else needLookup.push(l.external_id);
+      }
+      const chunks: string[][] = [];
+      for (let i = 0; i < needLookup.length; i += 50) chunks.push(needLookup.slice(i, i + 50));
+      let skipped = 0;
+      let next = 0;
+      const worker = async () => {
+        while (next < chunks.length) {
+          const chunk = chunks[next++];
+          try {
+            const res = await api.callShopeeApi<{
+              response?: { item_list?: Array<{ item_id: number; category_id?: number }> };
+            }>("/api/v2/product/get_item_base_info", {
+              accessToken,
+              shopId,
+              query: {
+                item_id_list: chunk.join(","),
+                need_tax_info: "false",
+                need_complaint_policy: "false",
+              },
+            });
+            const found = new Set<string>();
+            for (const item of res.response?.item_list ?? []) {
+              const path = item.category_id ? pathOf(item.category_id) : null;
+              if (path) {
+                items.push({ externalId: String(item.item_id), path });
+                found.add(String(item.item_id));
+              }
+            }
+            skipped += chunk.filter((id) => !found.has(id)).length;
+          } catch (err) {
+            console.error("[minha-loja] get_item_base_info falhou num lote:", err);
+            skipped += chunk.length;
+          }
+        }
+      };
+      await Promise.all([worker(), worker(), worker(), worker()]);
+
+      return { total: listings.length, skipped, groups: buildGroups(items) };
+    } catch (err) {
+      throw friendly(err, "Não deu pra analisar a loja agora.");
+    }
+  });
+
+export const applyShopCategoryGroup = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: { name: string; externalIds: string[] }) => data)
+  .handler(async ({ context, data }) => {
+    const name = clean(data.name, 40);
+    if (name.length < 2) throw new Error("Categoria sem nome.");
+    const wanted = (Array.isArray(data.externalIds) ? data.externalIds : [])
+      .map((id) => String(id))
+      .filter((id) => /^\d{5,20}$/.test(id))
+      .slice(0, 1500);
+    if (wanted.length === 0) return { id: 0, name, added: 0 };
+
+    // Só entram anúncios da Shopee do próprio usuário.
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const mine = new Set<string>();
+    for (let i = 0; i < wanted.length; i += 200) {
+      const { data: rows } = await supabaseAdmin
+        .from("listings")
+        .select("external_id")
+        .eq("user_id", context.userId)
+        .eq("marketplace", "shopee")
+        .in("external_id", wanted.slice(i, i + 200));
+      for (const row of (rows ?? []) as Array<{ external_id: string }>) mine.add(row.external_id);
+    }
+    const itemIds = wanted.filter((id) => mine.has(id)).map(Number);
+    if (itemIds.length === 0) throw new Error("Nenhum anúncio válido nessa categoria.");
+
+    try {
+      const { api, accessToken, shopId } = await shopee(context.userId);
+      // Já existe uma categoria com esse nome? Usa ela.
+      const existing = await api.callShopeeApi<{
+        response?: {
+          shop_categorys?: Array<{ shop_category_id: number; name: string; status: number }>;
+        };
+      }>("/api/v2/shop_category/get_shop_category_list", {
+        accessToken,
+        shopId,
+        query: { page_size: 100, page_no: 1 },
+      });
+      const match = (existing.response?.shop_categorys ?? []).find(
+        (c) => c.status !== 0 && c.name.trim().toLowerCase() === name.toLowerCase(),
+      );
+      let id = match?.shop_category_id;
+      if (!id) {
+        const created = await api.callShopeeApi<{ response?: { shop_category_id?: number } }>(
+          "/api/v2/shop_category/add_shop_category",
+          { method: "POST", accessToken, shopId, body: { name } },
+        );
+        id = Number(created.response?.shop_category_id);
+      }
+      if (!id) throw new Error("A Shopee não devolveu a categoria criada.");
+
+      let added = 0;
+      for (let i = 0; i < itemIds.length; i += 100) {
+        const batch = itemIds.slice(i, i + 100);
+        const res = await api.callShopeeApi<{
+          response?: { invalid_item_id_list?: unknown[] };
+        }>("/api/v2/shop_category/add_item_list", {
+          method: "POST",
+          accessToken,
+          shopId,
+          body: { shop_category_id: id, item_list: batch },
+        });
+        added += batch.length - (res.response?.invalid_item_id_list?.length ?? 0);
+      }
+
+      // Deixa a categoria visível na loja (falhar aqui não desfaz o resto).
+      let visible = match?.status === 1;
+      if (!visible) {
+        try {
+          await api.callShopeeApi("/api/v2/shop_category/update_shop_category", {
+            method: "POST",
+            accessToken,
+            shopId,
+            body: { shop_category_id: id, status: "NORMAL" },
+          });
+          visible = true;
+        } catch (err) {
+          console.error("[minha-loja] não deu pra ativar a categoria:", err);
+        }
+      }
+      return { id, name, added, visible };
+    } catch (err) {
+      throw friendly(err, `A Shopee não aceitou a categoria “${name}”.`);
+    }
+  });
+
+// ---------------------------------------------------------------------------
 // Anúncios (Shopee e Mercado Livre): título e descrição
 // ---------------------------------------------------------------------------
 
