@@ -24,8 +24,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
   applyShopCategoryGroup,
+  classifyShopeeListings,
   planShopOrganization,
-  type OrganizationGroup,
   changeShopeeShopCategoryItems,
   deleteShopeeShopCategory,
   getListingContent,
@@ -38,6 +38,7 @@ import {
   type EditableListing,
   type ShopCategory,
 } from "@/lib/marketplace-store.functions";
+import { buildGroups, type OrganizationGroup } from "@/lib/shop-organization";
 import { cn } from "@/lib/utils";
 
 type Channel = "shopee" | "mercado-livre";
@@ -561,6 +562,8 @@ type GroupState = "pending" | "running" | "ok" | "error";
 function OrganizeStore({ onDone }: { onDone: () => void }) {
   const runPlan = useServerFn(planShopOrganization);
   const runApply = useServerFn(applyShopCategoryGroup);
+  const runClassify = useServerFn(classifyShopeeListings);
+  const [progress, setProgress] = useState({ done: 0, total: 0 });
 
   const [phase, setPhase] = useState<"idle" | "planning" | "preview" | "running" | "done">("idle");
   const [groups, setGroups] = useState<OrganizationGroup[]>([]);
@@ -574,8 +577,35 @@ function OrganizeStore({ onDone }: { onDone: () => void }) {
 
   async function plan() {
     setPhase("planning");
+    setProgress({ done: 0, total: 0 });
     try {
-      const result = await runPlan();
+      const base = await runPlan();
+      const items = [...base.items];
+      let skipped = 0;
+      setProgress({ done: base.items.length, total: base.total });
+      // O que ainda não tem categoria guardada é classificado em lotes
+      // (sugestão oficial da Shopee pro título), mostrando o progresso.
+      let next = 0;
+      const worker = async () => {
+        while (next < base.pending.length) {
+          const chunk = base.pending.slice(next, next + 24);
+          next += 24;
+          try {
+            const classified = await runClassify({ data: { externalIds: chunk } });
+            for (const row of classified) {
+              if (row.path) items.push({ externalId: row.externalId, path: row.path });
+              else skipped += 1;
+            }
+            skipped += chunk.length - classified.length;
+          } catch {
+            skipped += chunk.length;
+          }
+          setProgress((p) => ({ ...p, done: Math.min(p.total, p.done + chunk.length) }));
+        }
+      };
+      await Promise.all([worker(), worker()]);
+
+      const result = { groups: buildGroups(items), total: base.total, skipped };
       if (result.groups.length === 0) {
         toast.error("Não achei a categoria dos seus anúncios pra montar a organização.");
         setPhase("idle");
@@ -636,7 +666,11 @@ function OrganizeStore({ onDone }: { onDone: () => void }) {
         {(phase === "idle" || phase === "planning") && (
           <Button className="shrink-0 gap-1.5" disabled={phase === "planning"} onClick={() => void plan()}>
             {phase === "planning" ? <Loader2 className="size-3.5 animate-spin" /> : <Wand2 className="size-3.5" />}
-            {phase === "planning" ? "Analisando seus anúncios…" : "Montar a organização"}
+            {phase === "planning"
+              ? progress.total > 0
+                ? `Analisando ${progress.done} de ${progress.total} anúncios…`
+                : "Analisando seus anúncios…"
+              : "Montar a organização"}
           </Button>
         )}
       </div>
@@ -646,7 +680,7 @@ function OrganizeStore({ onDone }: { onDone: () => void }) {
           {phase === "preview" && (
             <p className="text-[12.5px] text-muted-foreground">
               Proposta pra {info.total} anúncios ativos
-              {info.skipped > 0 ? ` (${info.skipped} ficaram de fora porque a Shopee não informou a categoria)` : ""}.
+              {info.skipped > 0 ? ` (${info.skipped} ficaram de fora porque a Shopee não sugeriu categoria)` : ""}.
               Desmarque o que não quiser criar.
             </p>
           )}

@@ -285,88 +285,40 @@ export const changeShopeeShopCategoryItems = createServerFn({ method: "POST" })
 //      (o front chama uma vez por categoria, pra mostrar o progresso).
 // ---------------------------------------------------------------------------
 
-export type OrganizationGroup = { name: string; externalIds: string[] };
+// 10/11/2026: no 1º teste ao vivo, usar a categoria em que o anúncio ESTÁ
+// publicado deu errado — 42 anúncios da loja do Jp estavam publicados em
+// "Anéis" (anúncios antigos, feitos fora do Shoppfy). Agora a categoria de
+// cada anúncio vem, nesta ordem: (1) do banco conferido, quando é produto do
+// catálogo; (2) de uma classificação já guardada pra esse anúncio; (3) da
+// sugestão oficial da Shopee pro título, feita na hora e guardada.
+// A classificação guardada usa a mesma tabela product_categories, com
+// product_id = "listing:<id do anúncio na Shopee>".
+const LISTING_PREFIX = "listing:";
 
-const MIN_GROUP = 5;
-const MAX_GROUPS = 20;
-const OTHERS = "Outros achados";
-
-// Nomes curtos e claros pro comprador (a árvore da Shopee tem nomes longos).
-const GROUP_NAMES: Record<string, string> = {
-  "Eletrodomésticos / Peças e Circuitos Elétricos": "Tomadas e Elétrica",
-  "Eletrodomésticos / Utensílios de Cozinha": "Eletroportáteis de Cozinha",
-  "Eletrodomésticos / TVs e Acessórios": "TV e Streaming",
-  "Eletrodomésticos / Eletrodomésticos Pequenos": "Eletroportáteis",
-  "Eletrodomésticos / Eletrodomésticos Grandes": "Ventiladores e Clima",
-  "Casa e Decoração / Artigos de Festa": "Festa e Natal",
-  "Casa e Decoração / Artigos de Cozinha": "Cozinha",
-  "Casa e Decoração / Artigos de Cuidados com a Casa": "Limpeza da Casa",
-  "Casa e Decoração / Ferramentas e Melhorias para a Casa": "Ferramentas",
-  "Casa e Decoração / Organizadores para Casa": "Organização",
-  "Casa e Decoração / Decoração": "Decoração",
-  "Casa e Decoração / Iluminação": "Iluminação",
-  "Casa e Decoração / Banheiros": "Banheiro",
-  "Casa e Decoração / Louça": "Mesa e Louça",
-  "Celulares e Dispositivos / Acessórios": "Acessórios para Celular",
-  "Celulares e Dispositivos / Aparelhos Vestíveis": "Smartwatches",
-  "Áudio / Fones de Ouvido, Headphones e Headsets": "Fones de Ouvido",
-  "Áudio / Áudio e Alto Falantes para Casa": "Caixas de Som",
-  "Beleza / Cuidados Masculinos": "Barba e Cabelo",
-  "Beleza / Utensílios de Beleza": "Beleza e Cuidados",
-  "Mãe e Bebê / Brinquedos": "Brinquedos",
-  "Hobbies e Coleções / Brinquedos e Jogos": "Jogos e Brinquedos",
-  "Papelaria / Equipamento Escolar e de Escritório": "Papelaria",
-  "Câmeras e Drones / Câmeras e Sistemas de Segurança": "Câmeras de Segurança",
-  "Computadores e Acessórios": "Informática",
-  "Celulares e Dispositivos": "Celulares e Acessórios",
-  "Peças e Acessórios para Veículos": "Carro e Moto",
-  "Esportes e Atividades ao Ar Livre": "Esporte e Lazer",
-  "Mãe e Bebê": "Bebê e Infantil",
-  "Hobbies e Coleções": "Jogos e Hobbies",
-  "Câmeras e Drones": "Câmeras",
-  "Saúde": "Saúde e Bem-estar",
-};
-
-function buildGroups(items: Array<{ externalId: string; path: string }>): OrganizationGroup[] {
-  const level = (path: string, depth: number) => path.split(" / ").slice(0, depth).join(" / ");
-  const bucket = (key: (path: string) => string, list: typeof items) => {
-    const map = new Map<string, string[]>();
-    for (const item of list) {
-      const k = key(item.path);
-      map.set(k, [...(map.get(k) ?? []), item.externalId]);
+let leafPaths: { at: number; paths: Map<number, string> } | null = null;
+async function shopeeLeafPaths(
+  api: Awaited<ReturnType<typeof shopee>>["api"],
+  accessToken: string,
+  shopId: number,
+): Promise<Map<number, string>> {
+  if (leafPaths && Date.now() - leafPaths.at < 60 * 60 * 1000) return leafPaths.paths;
+  const all = await api.getCategoryList(accessToken, shopId);
+  const byId = new Map(all.map((c) => [c.category_id, c]));
+  const paths = new Map<number, string>();
+  for (const leaf of all) {
+    if (leaf.has_children) continue;
+    const parts: string[] = [];
+    const seen = new Set<number>();
+    let current: (typeof all)[number] | undefined = leaf;
+    while (current && !seen.has(current.category_id)) {
+      seen.add(current.category_id);
+      if (current.display_category_name) parts.unshift(current.display_category_name);
+      current = current.parent_category_id ? byId.get(current.parent_category_id) : undefined;
     }
-    return map;
-  };
-
-  // 1) Tenta pelo 2º nível; grupo pequeno sobe pro 1º nível; o que ainda
-  //    ficar pequeno vai pra "Outros achados".
-  const groups = new Map<string, string[]>();
-  const leftovers: typeof items = [];
-  const byId = new Map(items.map((i) => [i.externalId, i]));
-  for (const [key, ids] of bucket((p) => level(p, 2), items)) {
-    if (ids.length >= MIN_GROUP) groups.set(key, ids);
-    else leftovers.push(...ids.map((id) => byId.get(id)!));
+    if (parts.length) paths.set(leaf.category_id, parts.join(" / "));
   }
-  const others: string[] = [];
-  for (const [key, ids] of bucket((p) => level(p, 1), leftovers)) {
-    if (ids.length >= MIN_GROUP) groups.set(key, [...(groups.get(key) ?? []), ...ids]);
-    else others.push(...ids);
-  }
-
-  // 2) Nome amigável (grupos que caem no mesmo nome se juntam).
-  const named = new Map<string, string[]>();
-  for (const [key, ids] of groups) {
-    const name = (GROUP_NAMES[key] ?? key.split(" / ").pop() ?? key).slice(0, 40);
-    named.set(name, [...(named.get(name) ?? []), ...ids]);
-  }
-
-  // 3) No máximo MAX_GROUPS categorias; as menores vão pra "Outros achados".
-  const sorted = [...named.entries()].sort((a, b) => b[1].length - a[1].length);
-  const kept = sorted.slice(0, MAX_GROUPS - 1);
-  for (const [, ids] of sorted.slice(MAX_GROUPS - 1)) others.push(...ids);
-  const result = kept.map(([name, externalIds]) => ({ name, externalIds }));
-  if (others.length > 0) result.push({ name: OTHERS, externalIds: others });
-  return result;
+  leafPaths = { at: Date.now(), paths };
+  return paths;
 }
 
 export const planShopOrganization = createServerFn({ method: "GET" })
@@ -386,25 +338,6 @@ export const planShopOrganization = createServerFn({ method: "GET" })
     }
 
     try {
-      const { api, accessToken, shopId } = await shopee(context.userId);
-
-      // Caminho completo de cada categoria-folha da Shopee.
-      const all = await api.getCategoryList(accessToken, shopId);
-      const byCategoryId = new Map(all.map((c) => [c.category_id, c]));
-      const pathOf = (categoryId: number): string | null => {
-        const parts: string[] = [];
-        const seen = new Set<number>();
-        let current = byCategoryId.get(categoryId);
-        while (current && !seen.has(current.category_id)) {
-          seen.add(current.category_id);
-          if (current.display_category_name) parts.unshift(current.display_category_name);
-          current = current.parent_category_id
-            ? byCategoryId.get(current.parent_category_id)
-            : undefined;
-        }
-        return parts.length ? parts.join(" / ") : null;
-      };
-
       // 1ª opção: a categoria conferida do nosso banco (produto do catálogo).
       const verified = new Map<string, string>();
       const productIds = [...new Set(listings.map((l) => l.product_id).filter(Boolean))] as string[];
@@ -420,53 +353,109 @@ export const planShopOrganization = createServerFn({ method: "GET" })
         }
       }
 
-      // 2ª opção: a categoria em que o anúncio está publicado na Shopee.
-      const items: Array<{ externalId: string; path: string }> = [];
-      const needLookup: string[] = [];
-      for (const l of listings) {
-        const path = l.product_id ? verified.get(l.product_id) : undefined;
-        if (path) items.push({ externalId: l.external_id, path });
-        else needLookup.push(l.external_id);
-      }
-      const chunks: string[][] = [];
-      for (let i = 0; i < needLookup.length; i += 50) chunks.push(needLookup.slice(i, i + 50));
-      let skipped = 0;
-      let next = 0;
-      const worker = async () => {
-        while (next < chunks.length) {
-          const chunk = chunks[next++];
-          try {
-            const res = await api.callShopeeApi<{
-              response?: { item_list?: Array<{ item_id: number; category_id?: number }> };
-            }>("/api/v2/product/get_item_base_info", {
-              accessToken,
-              shopId,
-              query: {
-                item_id_list: chunk.join(","),
-                need_tax_info: "false",
-                need_complaint_policy: "false",
-              },
-            });
-            const found = new Set<string>();
-            for (const item of res.response?.item_list ?? []) {
-              const path = item.category_id ? pathOf(item.category_id) : null;
-              if (path) {
-                items.push({ externalId: String(item.item_id), path });
-                found.add(String(item.item_id));
-              }
-            }
-            skipped += chunk.filter((id) => !found.has(id)).length;
-          } catch (err) {
-            console.error("[minha-loja] get_item_base_info falhou num lote:", err);
-            skipped += chunk.length;
+      // 2ª opção: classificação já guardada pra esse anúncio.
+      const cached = new Map<string, string>();
+      const rest = listings.filter((l) => !(l.product_id && verified.has(l.product_id)));
+      for (let i = 0; i < rest.length; i += 150) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { data } = await (supabaseAdmin as any)
+          .from("product_categories")
+          .select("product_id, category_path")
+          .eq("marketplace", "shopee")
+          .in(
+            "product_id",
+            rest.slice(i, i + 150).map((l) => `${LISTING_PREFIX}${l.external_id}`),
+          );
+        for (const row of (data ?? []) as Array<{ product_id: string; category_path: string | null }>) {
+          if (row.category_path) {
+            cached.set(row.product_id.slice(LISTING_PREFIX.length), row.category_path);
           }
         }
-      };
-      await Promise.all([worker(), worker(), worker(), worker()]);
+      }
 
-      return { total: listings.length, skipped, groups: buildGroups(items) };
+      // O que sobrar (pending) o front manda classificar em lotes, pra
+      // mostrar o progresso (ver classifyShopeeListings).
+      const items: Array<{ externalId: string; path: string }> = [];
+      const pending: string[] = [];
+      for (const l of listings) {
+        const path =
+          (l.product_id ? verified.get(l.product_id) : undefined) ?? cached.get(l.external_id);
+        if (path) items.push({ externalId: l.external_id, path });
+        else pending.push(l.external_id);
+      }
+      return { total: listings.length, items, pending };
     } catch (err) {
       throw friendly(err, "Não deu pra analisar a loja agora.");
+    }
+  });
+
+// Classifica um lote de anúncios pela sugestão oficial da Shopee pro título
+// (a mesma do Criar Anúncio) e guarda o resultado. Até 24 por chamada.
+export const classifyShopeeListings = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .validator((data: { externalIds: string[] }) => data)
+  .handler(async ({ context, data }) => {
+    const wanted = (Array.isArray(data.externalIds) ? data.externalIds : [])
+      .map((id) => String(id))
+      .filter((id) => /^\d{5,20}$/.test(id))
+      .slice(0, 24);
+    if (wanted.length === 0) return [] as Array<{ externalId: string; path: string | null }>;
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: rows } = await supabaseAdmin
+      .from("listings")
+      .select("external_id, title")
+      .eq("user_id", context.userId)
+      .eq("marketplace", "shopee")
+      .in("external_id", wanted);
+    const mine = (rows ?? []) as Array<{ external_id: string; title: string | null }>;
+
+    try {
+      const { api, accessToken, shopId } = await shopee(context.userId);
+      const paths = await shopeeLeafPaths(api, accessToken, shopId);
+      const results: Array<{ externalId: string; path: string | null; categoryId: number | null }> =
+        [];
+      let next = 0;
+      const worker = async () => {
+        while (next < mine.length) {
+          const listing = mine[next++];
+          let categoryId: number | null = null;
+          try {
+            const ids = await api.recommendCategory(accessToken, shopId, listing.title ?? "");
+            categoryId = ids.find((id) => paths.has(id)) ?? null;
+          } catch (err) {
+            console.error("[minha-loja] category_recommend falhou:", err);
+          }
+          results.push({
+            externalId: listing.external_id,
+            categoryId,
+            path: categoryId ? (paths.get(categoryId) ?? null) : null,
+          });
+        }
+      };
+      await Promise.all([worker(), worker(), worker(), worker(), worker(), worker()]);
+
+      const toSave = results
+        .filter((r) => r.categoryId && r.path)
+        .map((r) => ({
+          product_id: `${LISTING_PREFIX}${r.externalId}`,
+          marketplace: "shopee",
+          category_id: String(r.categoryId),
+          category_path: r.path,
+          product_name: (mine.find((m) => m.external_id === r.externalId)?.title ?? "").slice(0, 300),
+          status: "auto",
+          source: "organizar",
+        }));
+      if (toSave.length) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { error } = await (supabaseAdmin as any)
+          .from("product_categories")
+          .upsert(toSave, { onConflict: "product_id,marketplace", ignoreDuplicates: true });
+        if (error) console.error("[minha-loja] falha ao guardar classificação:", error.message);
+      }
+      return results.map((r) => ({ externalId: r.externalId, path: r.path }));
+    } catch (err) {
+      throw friendly(err, "Não deu pra classificar os anúncios agora.");
     }
   });
 
