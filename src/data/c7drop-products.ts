@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-09 — 1363 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-10 — 1365 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -20,6 +20,28 @@ export type C7DropProduct = {
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
+  {
+    id: "cmw9rixmp0ra7vpt8no2eivlx",
+    name: "Parafusadeira/furadeira Portatil Com 2 Baterias 48v",
+    slug: "parafusadeira-furadeira-portatil-com-2-baterias-48v",
+    priceCents: 11600,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794258576366-b116611e.webp",
+    category: "Ferramentas",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmw9qn1jy0r2xvpt8yr1nj2fa",
+    name: "Pendrive 128 Gb Tomate Ultra Rápido Compacto Mpd-1128",
+    slug: "pendrive-128-gb-tomate-ultra-rapido-compacto-mpd-1128",
+    priceCents: 9000,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794257094860-0bc9667e.webp",
+    category: "Informática",
+    stock: 50,
+    manageStock: true,
+  },
   {
     id: "cmw9pptpu0qsbvpt8z7zxvrbl",
     name: "Trava Para Porta Hotel De Segurança Aço Resistente + Alarme",
@@ -226,7 +248,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1792699866174-6bc51145.webp",
     category: "Câmeras",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -930,7 +952,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788356901045-cfbf08bf.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 30,
+    stock: 29,
     manageStock: true,
   },
   {
@@ -2173,7 +2195,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1784759998485-d909ce37.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 47,
+    stock: 46,
     manageStock: true,
   },
   {
@@ -3042,7 +3064,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/ada1beac56-1-13.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -4054,7 +4076,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d67f1fbcb4-1-3.jpg",
     category: "Produtos diversos",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -4076,7 +4098,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3f549b50e6-6.jpg",
     category: "Produtos diversos",
-    stock: -2,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -4417,7 +4439,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/ce4a1f4e14-1-57.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -8,
+    stock: -9,
     manageStock: false,
   },
   {
@@ -6441,7 +6463,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f5f2c3fadd-1-1.webp",
     category: "Iluminação",
-    stock: -17,
+    stock: -19,
     manageStock: false,
   },
   {
@@ -7090,7 +7112,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/9290ffd845-6-3.jpg",
     category: "Fora de Estoque",
-    stock: 91,
+    stock: 89,
     manageStock: true,
   },
   {
@@ -7838,7 +7860,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/259c970d7f-589.jpg",
     category: "Produto de Natal",
-    stock: -16,
+    stock: -21,
     manageStock: false,
   },
   {
@@ -8179,7 +8201,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/911c921d0e-AD.webp",
     category: "Mais vendidos",
-    stock: -7,
+    stock: -8,
     manageStock: false,
   },
   {
@@ -9411,7 +9433,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/40ed36bea7-7-23.webp",
     category: "Brinquedos",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -10632,7 +10654,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/4def4b759a-Prancheta-1.png",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -10687,7 +10709,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/b6e8e85481-Prancheta-1-58.png",
     category: "Salão & Barbearia",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -12051,7 +12073,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a7c972439a-1-7.png",
     category: "Casa e Utensílios Domésticos",
-    stock: -6,
+    stock: -7,
     manageStock: false,
   },
   {
@@ -12359,7 +12381,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/c16ad7ee15-1.png",
     category: "Fora de Estoque",
-    stock: 87,
+    stock: 86,
     manageStock: true,
   },
   {
@@ -13503,7 +13525,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/75f1416e32-AspiradorPorttilAutomotivoPotenteRecarregvel-833424-MLB52275247199_112022.jpeg",
     category: "Promoções do Mês",
-    stock: -60,
+    stock: -61,
     manageStock: false,
   },
   {
@@ -13734,7 +13756,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/95d3f51ec9-4-1.webp",
     category: "Salão & Barbearia",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -13844,7 +13866,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/60bfbcb305-1.png",
     category: "Salão & Barbearia",
-    stock: -71,
+    stock: -72,
     manageStock: false,
   },
   {
