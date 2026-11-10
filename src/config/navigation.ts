@@ -15,6 +15,7 @@ import {
   HeartPulse,
   Trophy,
   Video,
+  Paintbrush,
   type LucideIcon,
 } from "lucide-react";
 
@@ -72,6 +73,13 @@ export const navigation: NavGroup[] = [
         to: "/anuncios",
         icon: Megaphone,
         description: "Preço, custo, taxa e lucro de cada anúncio; pausar e reativar",
+        badge: "Novo",
+      },
+      {
+        label: "Minha Loja",
+        to: "/minha-loja",
+        icon: Paintbrush,
+        description: "Edite nome, logo, categorias e anúncios da sua loja na Shopee e no Mercado Livre",
         badge: "Novo",
       },
       {

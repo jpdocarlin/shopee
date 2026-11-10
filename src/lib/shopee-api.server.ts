@@ -634,7 +634,25 @@ async function uploadImageBuffer(
   if (!res.ok || json.error) {
     throw new Error(`[Shopee] upload de imagem falhou: ${JSON.stringify(json)}`);
   }
+  lastUploadedImageUrl =
+    (json.response.image_info.image_url_list?.[0]?.image_url as string | undefined) ?? null;
   return json.response.image_info.image_id as string;
+}
+
+// 10/11/2026 (Minha Loja): o logo da loja (shop/update_profile) precisa de uma
+// URL de imagem — sobe a imagem no CDN da Shopee e devolve a URL dela.
+let lastUploadedImageUrl: string | null = null;
+export async function uploadImageForUrl(
+  accessToken: string,
+  shopId: number,
+  buffer: Buffer,
+): Promise<string> {
+  lastUploadedImageUrl = null;
+  const imageId = await uploadImageBuffer(accessToken, shopId, buffer, "logo.jpg");
+  const url = lastUploadedImageUrl as string | null;
+  if (url) return url;
+  // Sem URL na resposta: monta pelo padrão do CDN da Shopee Brasil.
+  return `https://cf.shopee.com.br/file/${imageId}`;
 }
 
 export async function uploadProductImage(
