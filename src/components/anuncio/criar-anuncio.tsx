@@ -1122,14 +1122,29 @@ export function CriarAnuncio() {
                             {categoriesLoading || categoryDetecting
                               ? "Identificando a categoria…"
                               : selectedCategoryId
-                                ? (categories.find((c) => c.id === selectedCategoryId)?.path ??
-                                  `Categoria ${selectedCategoryId}`)
+                                ? // 10/11/2026: mostra primeiro a parte específica (ex.:
+                                  // "Ferramentas › Brocas, Chaves de Fenda e Acessórios").
+                                  // O caminho inteiro começa pelo departamento da Shopee
+                                  // ("Casa e Decoração / …") e parecia categoria errada.
+                                  (categories
+                                    .find((c) => c.id === selectedCategoryId)
+                                    ?.path.split(" / ")
+                                    .slice(-2)
+                                    .join(" › ") ?? `Categoria ${selectedCategoryId}`)
                                 : "Não identificamos a categoria certa pra esse produto"}
                           </span>
                         </div>
+                        {selectedCategoryId && !categoriesLoading && !categoryDetecting && (
+                          <p className="mt-1 text-[11px] text-muted-foreground">
+                            Caminho completo na Shopee:{" "}
+                            {categories.find((c) => c.id === selectedCategoryId)?.path}
+                          </p>
+                        )}
                         <p className="mt-1 text-[11px] text-muted-foreground">
                           Detectada automaticamente pelo produto — não dá pra trocar, é assim que
-                          evitamos anúncio marcado com categoria errada.
+                          evitamos anúncio marcado com categoria errada. Os departamentos são os da
+                          própria Shopee (ferramentas, por exemplo, ficam dentro de “Casa e
+                          Decoração”).
                         </p>
                       </div>
                       <div className="grid grid-cols-2 gap-3">
