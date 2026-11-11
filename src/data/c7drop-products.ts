@@ -5517,7 +5517,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a7bb92d909-3-30.jpg",
     category: "Iluminação",
-    stock: 32,
+    stock: 31,
     manageStock: true,
   },
   {
@@ -13349,7 +13349,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/9192e7ba4d-2.png",
     category: "Fones de Ouvido",
-    stock: 48,
+    stock: 47,
     manageStock: true,
   },
   {
@@ -14438,7 +14438,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/6e6105413f-12-33.webp",
     category: "Salão & Barbearia",
-    stock: -24,
+    stock: -25,
     manageStock: false,
   },
   {
