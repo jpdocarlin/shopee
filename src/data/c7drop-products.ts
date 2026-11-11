@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-10 — 1368 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-11 — 1372 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -20,6 +20,50 @@ export type C7DropProduct = {
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
+  {
+    id: "cmwbd0epu08umyl7oxt5cjk72",
+    name: "apel Térmico Para Etiqueta 100x150mm Com 500 Folhas Oia-840",
+    slug: "apel-termico-para-etiqueta-100x150mm-com-500-folhas-oia-840",
+    priceCents: 3300,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794355102117-bee69957.webp",
+    category: "Papelaria",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwbb6a6n083hyl7oy2kut092",
+    name: "Rádio Retrô Portátil Solar Wassay Am Fm Bluetooth Usb",
+    slug: "radio-retro-portatil-solar-wassay-am-fm-bluetooth-usb",
+    priceCents: 7500,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794351339666-fa469f6c.webp",
+    category: "Outros",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwb903cz07fwyl7omjob9v32",
+    name: "Mini Globo Jogo De Luz Bola Giratorio Festa Balada Dj Led Rgb Colorido",
+    slug: "mini-globo-jogo-de-luz-bola-giratorio-festa-balada-dj-led-rgb-colorido",
+    priceCents: 2700,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794348516623-e21d7ca6.webp",
+    category: "Iluminação",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwb718sh070cyl7ohww61iid",
+    name: "Lâmpada De Emergência 60w Led Recarregável Inteligente Bivolt",
+    slug: "lampada-de-emergencia-60w-led-recarregavel-inteligente-bivolt",
+    priceCents: 4100,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794345245592-ab48810f.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+    manageStock: true,
+  },
   {
     id: "cmwb0wvaa04dkyl7o5379ahhj",
     name: "Cabo USB-C para Carregamento Rápido 240W com Adaptador e Suporte Dobrável 1,5m",
@@ -490,7 +534,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1791939763407-de77ada2.webp",
     category: "Produtos diversos",
-    stock: 14,
+    stock: 13,
     manageStock: true,
   },
   {
@@ -622,7 +666,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1791420237802-fe1b3145.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -710,7 +754,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1790897741615-9668cc80.webp",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: 50,
     manageStock: true,
   },
   {
@@ -941,7 +985,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788438226763-f0e2e8cb.webp",
     category: "Ring Light & Suportes",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -5704,7 +5748,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/7367dac8cf-1-13.jpg",
     category: "Informática",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -6947,7 +6991,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/975ae31312-2-14.jpg",
     category: "Informática",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -7937,7 +7981,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/c363567f46-4-39.jpg",
     category: "Produto de Natal",
-    stock: 296,
+    stock: 294,
     manageStock: true,
   },
   {
@@ -8201,7 +8245,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/52fe7fda22-4-23.jpg",
     category: "Mais vendidos",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -8883,7 +8927,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -41,
+    stock: -42,
     manageStock: false,
   },
   {
@@ -12942,7 +12986,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a40677f55e-1-2.png",
     category: "Iluminação",
-    stock: -19,
+    stock: -21,
     manageStock: false,
   },
   {
@@ -13899,7 +13943,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/60bfbcb305-1.png",
     category: "Salão & Barbearia",
-    stock: -72,
+    stock: -73,
     manageStock: false,
   },
   {
