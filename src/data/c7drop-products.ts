@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-12 — 1372 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-12 — 1371 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -1337,7 +1337,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787855356529-2950f74d.webp",
     category: "Produtos diversos",
-    stock: 31,
+    stock: 30,
     manageStock: true,
   },
   {
@@ -2096,7 +2096,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1784992941575-2a105e56.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 18,
+    stock: 17,
     manageStock: true,
   },
   {
@@ -3328,7 +3328,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/e8c939893f-4-21.jpg",
     category: "Garrafas, Copos e Canecas",
-    stock: -11,
+    stock: -13,
     manageStock: false,
   },
   {
@@ -3487,7 +3487,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
   },
   {
     id: "cmrnvsakr07sjiudhtc79xmwa",
-    name: "Medidor De Glicose E Acido Urico 2 Em 1 Uso Domestico",
+    name: "Medidor De Glicose Glicosímetro Digital Completo com Lancetador + Tiras Teste Portátil",
     slug: "medidor-de-glicose-e-acido-urico-2-em-1-uso-domestico",
     priceCents: 5500,
     compareAtPriceCents: null,
@@ -5517,7 +5517,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a7bb92d909-3-30.jpg",
     category: "Iluminação",
-    stock: 29,
+    stock: 28,
     manageStock: true,
   },
   {
@@ -5748,7 +5748,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/7367dac8cf-1-13.jpg",
     category: "Informática",
-    stock: 48,
+    stock: 47,
     manageStock: true,
   },
   {
@@ -11241,17 +11241,6 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     manageStock: true,
   },
   {
-    id: "cmrnvot1802mziudhqmj0lpgk",
-    name: "Anemômetro climático Proster GM816a Medidor de temperatura do vento",
-    slug: "anemometro-climatico-proster-gm816a-medidor-de-temperatura-do-vento",
-    priceCents: 6300,
-    compareAtPriceCents: null,
-    image: "https://arquivos.c7drop.com.br/produtos-imagens/55c0158949-Prancheta-1-13.png",
-    category: "Ferramentas",
-    stock: -4,
-    manageStock: false,
-  },
-  {
     id: "cmrnvosv502muiudhwp5b2bet",
     name: "Kit Teclado Wireless Ultra Fino + Mouse + Capa Protetora Cor do mouse",
     slug: "kit-teclado-wireless-ultra-fino-mouse-capa-protetora-cor-do-mouse",
@@ -12927,10 +12916,10 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvo1w301neiudhzx6k0082",
     name: "Anemômetro Digital Portátil Paraglider Kite Drone",
     slug: "secador-profissional-110v-com-2-velocidades-tomate-mse-2600a-copia",
-    priceCents: 7500,
+    priceCents: 7000,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/293fbc8870-CAPA-5.png",
-    category: "Produtos diversos",
+    category: "Ferramentas",
     stock: 0,
     manageStock: false,
   },
@@ -13470,7 +13459,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3b79d869fa-capa-1.png",
     category: "Caixas de Som",
-    stock: -3,
+    stock: -5,
     manageStock: false,
   },
   {
