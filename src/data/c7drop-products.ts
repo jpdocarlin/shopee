@@ -83,7 +83,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1794334855760-b9e852dd.webp",
     category: "Informática",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -3724,7 +3724,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/9adf563401-1-12.jpg",
     category: "Fora de Estoque",
-    stock: 0,
+    stock: -1,
     manageStock: true,
   },
   {
@@ -14856,7 +14856,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/58261b9a84-1-5.png",
     category: "Câmeras",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
