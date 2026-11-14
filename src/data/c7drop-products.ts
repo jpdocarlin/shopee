@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-14 — 1372 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-14 — 1377 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -20,6 +20,61 @@ export type C7DropProduct = {
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
+  {
+    id: "cmwgv9ohr08lh1yg2bmkdfldm",
+    name: "Power Bank Portátil Mini 45w 20ah Carregador Turbo Celular",
+    slug: "power-bank-portatil-mini-45w-20ah-carregador-turbo-celular",
+    priceCents: 10900,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794688188603-bf5dfcbb.webp",
+    category: "Carregadores & Power Banks",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwgopw3006cj1yg2qogaua8n",
+    name: "Novo Mini Processador E Triturador Manual De Alimentos BM-F910",
+    slug: "mini-processador-e-triturador-manual-de-alimentos",
+    priceCents: 2700,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794688243882-9425cef6.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwgng9tz064x1yg2o3u425qb",
+    name: "Cabo Tipo-c Para Macbook Magsafe Carregador 1,8m",
+    slug: "cabo-tipo-c-para-macbook-magsafe-carregador-1-8m",
+    priceCents: 7000,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794674523899-5ba8c2a3.webp",
+    category: "Informática",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwgkr2op05fz1yg28o4fxyhz",
+    name: "Garrafa Térmica Água Aço Inox 500ml Portátil Leve Segura Resistente Moderna",
+    slug: "garrafa-termica-agua-aco-inox-500ml-portatil-leve-segura-resistente-moderna",
+    priceCents: 3400,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794670524331-6fa988cb.webp",
+    category: "Produtos diversos",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwgjs0r805ab1yg21q8y4l4d",
+    name: "10 Mil Etiquetas 10x15cm Térmica Serrilha Resma Branco",
+    slug: "10-mil-etiquetas-10x15cm-termica-serrilha-resma-branco",
+    priceCents: 36000,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794688223706-c070c040.webp",
+    category: "Papelaria",
+    stock: 50,
+    manageStock: true,
+  },
   {
     id: "cmwdkmryh0snlyl7oz3o490ef",
     name: "Lampião Solar Led Cob 200 lm Recarregável Bomvink Modelo BOM-4211",
@@ -743,7 +798,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1791290442082-4bb76c43.webp",
     category: "Brinquedos",
-    stock: 90,
+    stock: 88,
     manageStock: true,
   },
   {
@@ -2096,7 +2151,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1784993887205-231dca28.webp",
     category: "Informática",
-    stock: 44,
+    stock: 43,
     manageStock: true,
   },
   {
@@ -6683,7 +6738,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/fb62b0ffd5-8-22.jpg",
     category: "Produtos diversos",
-    stock: -5,
+    stock: -6,
     manageStock: false,
   },
   {
@@ -7794,7 +7849,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/e96cc4e5cf-3-9.jpg",
     category: "Brinquedos",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -8938,7 +8993,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -44,
+    stock: -45,
     manageStock: false,
   },
   {
@@ -10962,7 +11017,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d11d528ad2-Prancheta-5-32.png",
     category: "Salão & Barbearia",
-    stock: -92,
+    stock: -93,
     manageStock: false,
   },
   {
