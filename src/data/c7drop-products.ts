@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-13 — 1372 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-14 — 1372 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -798,7 +798,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1790200812352-97f997d8.webp",
     category: "Fones de Ouvido",
-    stock: 35,
+    stock: 34,
     manageStock: true,
   },
   {
@@ -2800,7 +2800,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/e5f05dcdb4-2-41.jpg",
     category: "Fones de Ouvido",
-    stock: -15,
+    stock: -16,
     manageStock: false,
   },
   {
@@ -5528,7 +5528,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a7bb92d909-3-30.jpg",
     category: "Iluminação",
-    stock: 27,
+    stock: 26,
     manageStock: true,
   },
   {
@@ -5594,7 +5594,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d7435e1d00-ca-1.jpg",
     category: "Media Streaming",
-    stock: -253,
+    stock: -254,
     manageStock: false,
   },
   {
@@ -6892,7 +6892,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/5749009c77-2-7.jpg",
     category: "Produtos diversos",
-    stock: -1,
+    stock: -2,
     manageStock: false,
   },
   {
@@ -9433,7 +9433,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/08b9a9a34d-2-12.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -7,
+    stock: -10,
     manageStock: false,
   },
   {
@@ -11281,7 +11281,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788526670152-13009a86.webp",
     category: "Ferramentas",
-    stock: -7,
+    stock: -8,
     manageStock: false,
   },
   {
