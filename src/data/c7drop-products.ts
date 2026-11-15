@@ -39,7 +39,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1794695288348-ae4f6ed0.webp",
     category: "Ring Light & Suportes",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -1513,7 +1513,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787752659203-b3f687a2.webp",
     category: "Produtos diversos",
-    stock: 42,
+    stock: 41,
     manageStock: true,
   },
   {
@@ -2129,7 +2129,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1785249682613-81125e00.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 47,
+    stock: 45,
     manageStock: true,
   },
   {
@@ -2558,7 +2558,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/5cbd642ace-4-59.jpg",
     category: "Carregadores & Power Banks",
-    stock: 77,
+    stock: 76,
     manageStock: true,
   },
   {
@@ -3152,7 +3152,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/2b7cdc3c91-1-23.jpg",
     category: "Relogios e Smartwatchs",
-    stock: -4,
+    stock: -5,
     manageStock: false,
   },
   {
@@ -3240,7 +3240,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/fa86f54ffa-1-16.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -34,
+    stock: -35,
     manageStock: false,
   },
   {
@@ -3658,7 +3658,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1786542674692-cfa959f0.webp",
     category: "Câmeras",
-    stock: -13,
+    stock: -14,
     manageStock: false,
   },
   {
@@ -3680,7 +3680,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/cdd81236aa-1-4.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -4934,7 +4934,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/6684d6407f-1-36.jpg",
     category: "Materiais de Pesca",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -5638,7 +5638,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a7bb92d909-3-30.jpg",
     category: "Iluminação",
-    stock: 26,
+    stock: 25,
     manageStock: true,
   },
   {
@@ -8179,7 +8179,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/95fe14326a-1-47.jpg",
     category: "Umidificadores & Ventiladores",
-    stock: 0,
+    stock: -1,
     manageStock: true,
   },
   {
@@ -8971,7 +8971,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/587d88a0f9-9-14.jpg",
     category: "Beleza e Cuidado Pessoal",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -14031,7 +14031,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/c2aeccaec2-1-1.jpg",
     category: "Salão & Barbearia",
-    stock: -57,
+    stock: -58,
     manageStock: false,
   },
   {
@@ -14053,7 +14053,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/60bfbcb305-1.png",
     category: "Salão & Barbearia",
-    stock: -76,
+    stock: -77,
     manageStock: false,
   },
   {
