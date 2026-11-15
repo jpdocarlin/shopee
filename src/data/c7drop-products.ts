@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-14 — 1377 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-15 — 1382 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -20,6 +20,61 @@ export type C7DropProduct = {
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
+  {
+    id: "cmwh0b17209q31yg2vyfrm6bj",
+    name: "Nova Lanterna Led de Cabeça XPE Imã Livro Camping Pesca",
+    slug: "lanterna-led-de-cabeca-xpe-ima-livro-camping-pesca",
+    priceCents: 2600,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794696788846-3bb9f71e.webp",
+    category: "Produtos diversos",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwgzh0s009kv1yg2owvei85c",
+    name: "Suporte De Celular Veicular Ventilação Firme Sem Trepidação",
+    slug: "suporte-de-celular-veicular-ventilacao-firme-sem-trepidacao",
+    priceCents: 1900,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794695288348-ae4f6ed0.webp",
+    category: "Ring Light & Suportes",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwgyjeu209dm1yg2wrgkh5sm",
+    name: "Adaptador Receptor Wifi Usb Antena 150mbps 2.4ghz",
+    slug: "adaptador-receptor-wifi-usb-antena-150mbps-2-4ghz",
+    priceCents: 1950,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794693815325-ce68f450.webp",
+    category: "Informática",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwgxu9po09991yg2ilpc4aka",
+    name: "Power Bank KD 955 Portátil de 20.000 mAh",
+    slug: "power-bank-kd-955-portatil-de-20-000-mah",
+    priceCents: 7500,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794692557111-add863f4.webp",
+    category: "Carregadores & Power Banks",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwgvy3w008tb1yg2d68alx5l",
+    name: "Power Bank CS-922 20000mah Tipo-c E Lightning Branco",
+    slug: "power-bank-cs-922-20000mah-tipo-c-e-lightning-branco",
+    priceCents: 9000,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794689403477-e0c70340.webp",
+    category: "Carregadores & Power Banks",
+    stock: 50,
+    manageStock: true,
+  },
   {
     id: "cmwgv9ohr08lh1yg2bmkdfldm",
     name: "Power Bank Portátil Mini 45w 20ah Carregador Turbo Celular",
@@ -88,7 +143,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
   },
   {
     id: "cmwbd0epu08umyl7oxt5cjk72",
-    name: "apel Térmico Para Etiqueta 100x150mm Com 500 Folhas Oia-840",
+    name: "Papel Térmico Para Etiqueta 100x150mm Com 500 Folhas Oia-840",
     slug: "apel-termico-para-etiqueta-100x150mm-com-500-folhas-oia-840",
     priceCents: 3300,
     compareAtPriceCents: null,
@@ -369,7 +424,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1792713549649-1a871bf3.webp",
     category: "Produtos diversos",
-    stock: 50,
+    stock: 49,
     manageStock: true,
   },
   {
@@ -1051,7 +1106,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788438226763-f0e2e8cb.webp",
     category: "Ring Light & Suportes",
-    stock: 46,
+    stock: 45,
     manageStock: true,
   },
   {
@@ -2833,7 +2888,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: 800,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/b538dc6e50-1-6.webp",
     category: "Fones de Ouvido",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -4417,7 +4472,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/cc70dc4377-8-45.jpg",
     category: "Garrafas, Copos e Canecas",
-    stock: 3,
+    stock: 2,
     manageStock: true,
   },
   {
@@ -8993,7 +9048,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -45,
+    stock: -47,
     manageStock: false,
   },
   {
@@ -11017,7 +11072,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d11d528ad2-Prancheta-5-32.png",
     category: "Salão & Barbearia",
-    stock: -93,
+    stock: -95,
     manageStock: false,
   },
   {
@@ -12535,7 +12590,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/4970ece263-1.png",
     category: "Casa e Utensílios Domésticos",
-    stock: -29,
+    stock: -33,
     manageStock: false,
   },
   {
