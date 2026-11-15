@@ -424,7 +424,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1792713549649-1a871bf3.webp",
     category: "Produtos diversos",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
