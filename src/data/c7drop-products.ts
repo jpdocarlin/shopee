@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-17 — 1382 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-18 — 1383 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -20,6 +20,17 @@ export type C7DropProduct = {
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
+  {
+    id: "cmwl9hotq02lw22c4n8b6v439",
+    name: "Power Bank Bateria Solar 20000mah Portátil Turbo Lanterna",
+    slug: "power-bank-bateria-solar-20000mah-portatil-turbo-lanterna",
+    priceCents: 9500,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1794954158047-e1adefa2.webp",
+    category: "Carregadores & Power Banks",
+    stock: 50,
+    manageStock: true,
+  },
   {
     id: "cmwh0b17209q31yg2vyfrm6bj",
     name: "Nova Lanterna Led de Cabeça XPE Imã Livro Camping Pesca",
@@ -1194,7 +1205,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788268540502-23a3d6cd.webp",
     category: "Fones de Ouvido",
-    stock: 34,
+    stock: 33,
     manageStock: true,
   },
   {
@@ -1238,7 +1249,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788218174783-d36fc2bf.webp",
     category: "Produto de Natal",
-    stock: 50,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -2503,7 +2514,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1784664512339-f34ee13f.webp",
     category: "Câmeras",
-    stock: 48,
+    stock: 46,
     manageStock: true,
   },
   {
@@ -3339,7 +3350,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/18ac53b4d4-1-8.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: 0,
+    stock: -1,
     manageStock: false,
   },
   {
@@ -3438,7 +3449,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/61366e5208-1-27.jpg",
     category: "Produtos diversos",
-    stock: -17,
+    stock: -18,
     manageStock: false,
   },
   {
@@ -3570,7 +3581,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a118907c3d-1-14.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -17,
+    stock: -19,
     manageStock: false,
   },
   {
@@ -4747,7 +4758,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/44e854b70c-5-40.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -10,
+    stock: -13,
     manageStock: false,
   },
   {
@@ -5700,7 +5711,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvrct706c6iudhi8jwwlrx",
     name: "Fire Stick Amazon Fire 4k Select 8gb Wi-fi Alexa Controle",
     slug: "fire-stick-amazon-fire-4k-select-8gb-wi-fi-alexa-controle",
-    priceCents: 21500,
+    priceCents: 23500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d7435e1d00-ca-1.jpg",
     category: "Media Streaming",
@@ -5711,7 +5722,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvrcml06buiudhrplue16f",
     name: "Amazon Fire Tv Stick 4k Plus Wifi6 Jogue Xbox Game Pass Cor Preto Tipo de controle remoto De voz",
     slug: "amazon-fire-tv-stick-4k-plus-wifi6-jogue-xbox-game-pass-cor-preto-tipo-de-controle-remoto-de-voz",
-    priceCents: 28800,
+    priceCents: 31500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/136ae2938e-ca.jpg",
     category: "Fora de Estoque",
@@ -7321,7 +7332,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/9290ffd845-6-3.jpg",
     category: "Fora de Estoque",
-    stock: 85,
+    stock: 84,
     manageStock: true,
   },
   {
@@ -8575,7 +8586,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/af5fbaaa5b-5-17.jpg",
     category: "Carregadores & Power Banks",
-    stock: -12,
+    stock: -13,
     manageStock: false,
   },
   {
@@ -10324,7 +10335,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/ad5e48b21e-3-24.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -10936,11 +10947,11 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvp00902ukiudhv22szkzy",
     name: "Fire Tv 4k MAX 16gb Alexa Controle de Voz",
     slug: "fire-tv-4k-max-16gb-alexa-controle-de-voz",
-    priceCents: 38500,
+    priceCents: 41000,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3e423b442c-1-1.png",
     category: "Media Streaming",
-    stock: -56,
+    stock: -57,
     manageStock: false,
   },
   {
@@ -11072,7 +11083,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/d11d528ad2-Prancheta-5-32.png",
     category: "Salão & Barbearia",
-    stock: -96,
+    stock: -98,
     manageStock: false,
   },
   {
@@ -11387,7 +11398,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvosc702mjiudh0nvria2d",
     name: "Paquímetro Digital 150mm Fibra Carbono Estojo 2 Baterias",
     slug: "chave-ferramenta-bicicleta-10-em-1-startools-de-8mm-a-17mm-aco-pratico-resistente",
-    priceCents: 3600,
+    priceCents: 2500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788526670152-13009a86.webp",
     category: "Ferramentas",
@@ -12454,7 +12465,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmrnvobdz0222iudhqh0il7hu",
     name: "Fire TV Stick 4K Ultra HD Com Alexa, Wi-Fi 6",
     slug: "fire-tv-stick-4k-ultra-hd-com-alexa-wi-fi-6",
-    priceCents: 27500,
+    priceCents: 30500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/b2622e457e-1-1.png",
     category: "Media Streaming",
@@ -12502,7 +12513,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/a5f60bc79c-1-4.png",
     category: "Casa e Utensílios Domésticos",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
@@ -13492,7 +13503,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3c1c0f0626-8.webp",
     category: "Mais vendidos",
-    stock: -16,
+    stock: -21,
     manageStock: false,
   },
   {
@@ -13602,7 +13613,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/c2281cef04-BastoTripMiniPauDeSelfieBluetoothem-951709-MLB45132467872_032021.jpeg",
     category: "Ring Light & Suportes",
-    stock: -12,
+    stock: -13,
     manageStock: false,
   },
   {
@@ -14988,7 +14999,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/840fd7933f-10916017973c4ff017b.jpg",
     category: "Produtos diversos",
-    stock: -13,
+    stock: -14,
     manageStock: false,
   },
   {
