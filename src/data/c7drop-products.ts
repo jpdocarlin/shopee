@@ -5957,7 +5957,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f2b31d2d31-1-8.jpg",
     category: "Relogios e Smartwatchs",
-    stock: -29,
+    stock: -30,
     manageStock: false,
   },
   {
@@ -9081,7 +9081,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -57,
+    stock: -58,
     manageStock: false,
   },
   {
@@ -14834,7 +14834,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/0223a406c9-8-45.webp",
     category: "Produtos diversos",
-    stock: 47,
+    stock: 46,
     manageStock: true,
   },
   {
