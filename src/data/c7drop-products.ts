@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-20 — 1385 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-21 — 1385 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -68,7 +68,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     id: "cmwgzh0s009kv1yg2owvei85c",
     name: "Suporte De Celular Veicular Ventilação Firme Sem Trepidação",
     slug: "suporte-de-celular-veicular-ventilacao-firme-sem-trepidacao",
-    priceCents: 1900,
+    priceCents: 1500,
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1794695288348-ae4f6ed0.webp",
     category: "Ring Light & Suportes",
@@ -292,7 +292,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1794255538536-43dcb613.webp",
     category: "Casa e Utensílios Domésticos",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -688,7 +688,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1791939763407-de77ada2.webp",
     category: "Produtos diversos",
-    stock: 10,
+    stock: 9,
     manageStock: true,
   },
   {
@@ -1205,7 +1205,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788355737322-fa2d2bc6.webp",
     category: "Relogios e Smartwatchs",
-    stock: 42,
+    stock: 41,
     manageStock: true,
   },
   {
@@ -1491,7 +1491,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1787855356529-2950f74d.webp",
     category: "Produtos diversos",
-    stock: 21,
+    stock: 20,
     manageStock: true,
   },
   {
@@ -3570,7 +3570,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3a0242b045-1-17.jpg",
     category: "Produtos diversos",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -15197,7 +15197,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/43a3eda1ab-11-1.jpg",
     category: "Ring Light & Suportes",
-    stock: -2,
+    stock: -3,
     manageStock: false,
   },
   {
