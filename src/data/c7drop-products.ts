@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-21 — 1385 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-21 — 1388 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -20,6 +20,39 @@ export type C7DropProduct = {
 };
 
 export const C7DROP_PRODUCTS: C7DropProduct[] = [
+  {
+    id: "cmwqhe9dh119vcyepo25g5rza",
+    name: "Benjamin Adaptador De Tomada Tripolar 4 Saídas 10a",
+    slug: "benjamin-adaptador-de-tomada-tripolar-4-saidas-10a",
+    priceCents: 2700,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1795269442165-2bd3c4e8.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwqglwp0116mcyepi5fj40ro",
+    name: "Tomada Macho Bivolts 10a Extensão Ou Trocar A Sua Quebrada",
+    slug: "tomada-macho-bivolts-10a-extensao-ou-trocar-a-sua-quebrada",
+    priceCents: 600,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1795268264818-fbf88ef8.webp",
+    category: "Casa e Utensílios Domésticos",
+    stock: 50,
+    manageStock: true,
+  },
+  {
+    id: "cmwqf773u10xfcyeprqpj04rf",
+    name: "Suporte De Pescoço Magnético 360° Para Celular Com Clipe",
+    slug: "suporte-de-pescoco-magnetico-360-para-celular-com-clipe",
+    priceCents: 6700,
+    compareAtPriceCents: null,
+    image: "https://arquivos.c7drop.com.br/uploads/1795265922187-5c5d2c5c.webp",
+    category: "Ring Light & Suportes",
+    stock: 50,
+    manageStock: true,
+  },
   {
     id: "cmwmk4k1h09gpcyepfaj5tg8j",
     name: "Lanterna Profissional Holofote Lanterna de acampamento LED portátil Recarregável",
@@ -226,7 +259,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1794334855760-b9e852dd.webp",
     category: "Informática",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -1227,7 +1260,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1788268540502-23a3d6cd.webp",
     category: "Fones de Ouvido",
-    stock: 31,
+    stock: 30,
     manageStock: true,
   },
   {
@@ -2844,7 +2877,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/14e18b2388-1-51.jpg",
     category: "Caixas de Som",
-    stock: -6,
+    stock: -7,
     manageStock: false,
   },
   {
@@ -9081,7 +9114,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/f4abcae5d2-5-29.jpg",
     category: "Casa e Utensílios Domésticos",
-    stock: -58,
+    stock: -59,
     manageStock: false,
   },
   {
@@ -10181,7 +10214,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/ed43731e9a-Design-sem-nome.png",
     category: "Produtos diversos",
-    stock: -26,
+    stock: -27,
     manageStock: false,
   },
   {
@@ -11567,7 +11600,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/84525cbab8-Prancheta-1-9.png",
     category: "Fones de Ouvido",
-    stock: -18,
+    stock: -19,
     manageStock: false,
   },
   {
@@ -12414,7 +12447,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/72a549a992-1-9.jpg",
     category: "Relogios e Smartwatchs",
-    stock: -13,
+    stock: -14,
     manageStock: false,
   },
   {
@@ -15153,7 +15186,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/392b9ac81e-MiniLiquidificadorPorttilShakeSucoJuiceCup-792431-MLB53456753600_012023.jpeg",
     category: "Casa e Utensílios Domésticos",
-    stock: -22,
+    stock: -23,
     manageStock: false,
   },
   {
