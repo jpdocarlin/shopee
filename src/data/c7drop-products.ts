@@ -721,7 +721,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1791939763407-de77ada2.webp",
     category: "Produtos diversos",
-    stock: 9,
+    stock: 8,
     manageStock: true,
   },
   {
@@ -3504,7 +3504,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/61366e5208-1-27.jpg",
     category: "Produtos diversos",
-    stock: -20,
+    stock: -21,
     manageStock: false,
   },
   {
@@ -5792,7 +5792,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/c1c135febe-4-23.jpg",
     category: "Produtos diversos",
-    stock: -64,
+    stock: -65,
     manageStock: false,
   },
   {
@@ -6342,7 +6342,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/763209e2eb-2-38.jpg",
     category: "Iluminação",
-    stock: -3,
+    stock: -4,
     manageStock: false,
   },
   {
@@ -11600,7 +11600,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/84525cbab8-Prancheta-1-9.png",
     category: "Fones de Ouvido",
-    stock: -19,
+    stock: -20,
     manageStock: false,
   },
   {
@@ -12601,7 +12601,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3d2c6c5ecf-1.png",
     category: "Brinquedos",
-    stock: -22,
+    stock: -23,
     manageStock: false,
   },
   {
@@ -12953,7 +12953,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/2bf7863297-1-1.png",
     category: "Caixas de Som",
-    stock: -7,
+    stock: -8,
     manageStock: false,
   },
   {
@@ -13778,7 +13778,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/75f1416e32-AspiradorPorttilAutomotivoPotenteRecarregvel-833424-MLB52275247199_112022.jpeg",
     category: "Promoções do Mês",
-    stock: -66,
+    stock: -67,
     manageStock: false,
   },
   {
