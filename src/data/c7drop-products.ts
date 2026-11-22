@@ -2,7 +2,7 @@
 // (c7drop.com.br) via API pública. Preço é o custo do fornecedor — quem
 // revende define sua própria margem em cima disso. Sem descrição: o texto
 // do anúncio é gerado por IA na hora, não fica salvo aqui.
-// Snapshot de 2026-11-21 — 1388 produtos, na ordem retornada pela API
+// Snapshot de 2026-11-22 — 1388 produtos, na ordem retornada pela API
 // (sort=relevance). As categorias "Fora de Estoque" e "Anúncios em Massa"
 // ficam no arquivo de propósito: quem filtra é o c7drop-product-picker.
 export type C7DropProduct = {
@@ -237,7 +237,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1794348516623-e21d7ca6.webp",
     category: "Iluminação",
-    stock: 49,
+    stock: 48,
     manageStock: true,
   },
   {
@@ -545,7 +545,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/uploads/1792614214693-08a191a1.webp",
     category: "Fones de Ouvido",
-    stock: 38,
+    stock: 37,
     manageStock: true,
   },
   {
@@ -6947,7 +6947,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/66f560efd2-1-24.jpg",
     category: "Fora de Estoque",
-    stock: 46,
+    stock: 44,
     manageStock: true,
   },
   {
@@ -9829,7 +9829,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/44064e137a-Prancheta-7.png",
     category: "Produtos diversos",
-    stock: -21,
+    stock: -22,
     manageStock: false,
   },
   {
@@ -12601,7 +12601,7 @@ export const C7DROP_PRODUCTS: C7DropProduct[] = [
     compareAtPriceCents: null,
     image: "https://arquivos.c7drop.com.br/produtos-imagens/3d2c6c5ecf-1.png",
     category: "Brinquedos",
-    stock: -20,
+    stock: -22,
     manageStock: false,
   },
   {
